@@ -25,7 +25,8 @@ import {
   Globe2,
   Lock,
   Search,
-  Info
+  Info,
+  X
 } from 'lucide-react';
 import { useGame } from '../context/GameContext';
 import { ALL_ARTIFACTS } from '../data/artifactsData';
@@ -35,6 +36,7 @@ export const Header = () => {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeMegaMenu, setActiveMegaMenu] = useState(null); // 'solutions' | 'research' | 'tools' | 'about'
+  const [mobileExpandedSection, setMobileExpandedSection] = useState(null); // 'research' | 'solutions' | 'tools' | 'about'
   const [ecoTooltipOpen, setEcoTooltipOpen] = useState(false);
   const navContainerRef = useRef(null);
 
@@ -43,6 +45,18 @@ export const Header = () => {
     setActiveMegaMenu(null);
     setMobileMenuOpen(false);
   }, [location.pathname]);
+
+  // Prevent background scroll when mobile drawer is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
 
   // Main navigation items
   const navItems = [
@@ -66,25 +80,25 @@ export const Header = () => {
   };
 
   return (
-    <header className="absolute top-0 left-0 right-0 z-50 w-full px-[2vw] pt-7 pb-4 flex items-center justify-between pointer-events-auto select-none">
+    <header className="absolute top-0 left-0 right-0 z-50 w-full px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-3 flex items-center justify-between pointer-events-auto select-none">
       
       {/* ── 1. LOGO (Left side) ── */}
-      <div className="flex items-center min-w-[140px]">
+      <div className="flex items-center min-w-[90px] sm:min-w-[120px] lg:min-w-[140px]">
         <Link 
           to="/"
           onClick={() => playSound(520)}
           className="text-white hover:opacity-95 transition-opacity cursor-pointer flex items-center"
         >
-          <span className="font-manrope font-extrabold text-[22px] tracking-wider text-white uppercase">
+          <span className="font-manrope font-extrabold text-xl sm:text-2xl tracking-wider text-white uppercase">
             NZII
           </span>
         </Link>
       </div>
 
-      {/* ── 2. CENTER PILL NAVIGATION WITH TRANSLUCENT SMOKED GLASS ── */}
+      {/* ── 2. CENTER PILL NAVIGATION (VISIBLE ON DESKTOP & TABLETS >= 1024px) ── */}
       <div 
         ref={navContainerRef}
-        className="hidden md:block absolute left-1/2 -translate-x-1/2 z-50"
+        className="hidden lg:block absolute left-1/2 -translate-x-1/2 z-50"
         onMouseLeave={() => setActiveMegaMenu(null)}
       >
         {/* The compact, translucent Pill Navbar */}
@@ -109,7 +123,7 @@ export const Header = () => {
                       playSound(480);
                       setActiveMegaMenu(null);
                     }}
-                    className={`px-4 py-2 rounded-full text-[13px] font-manrope transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
+                    className={`px-3.5 xl:px-4 py-2 rounded-full text-[12px] xl:text-[13px] font-manrope transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
                       active
                         ? 'bg-white text-black font-bold shadow-sm'
                         : isMenuOpen
@@ -133,7 +147,7 @@ export const Header = () => {
                   playSound(480);
                   setActiveMegaMenu(null);
                 }}
-                className={`px-4 py-2 rounded-full text-[13px] font-manrope transition-all cursor-pointer whitespace-nowrap ${
+                className={`px-3.5 xl:px-4 py-2 rounded-full text-[12px] xl:text-[13px] font-manrope transition-all cursor-pointer whitespace-nowrap ${
                   active
                     ? 'bg-white text-black font-bold shadow-sm'
                     : 'text-white/95 font-medium hover:text-white hover:bg-white/15'
@@ -145,15 +159,15 @@ export const Header = () => {
           })}
         </nav>
 
-        {/* ── MEGA DROPDOWN CONTAINER (SPRINGY SMOOTH DROP-DOWN ENTRANCE ANIMATION) ── */}
+        {/* ── MEGA DROPDOWN CONTAINER (RESPONSIVE DESKTOP FLOATING CONTAINER) ── */}
         {activeMegaMenu && (
           <div 
             key={activeMegaMenu}
-            className="absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50 w-[780px] max-w-[90vw] animate-mega-menu pointer-events-auto"
+            className="absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50 w-[740px] xl:w-[780px] max-w-[92vw] animate-mega-menu pointer-events-auto"
             onMouseEnter={() => setActiveMegaMenu(activeMegaMenu)}
             onMouseLeave={() => setActiveMegaMenu(null)}
           >
-            <div className="p-6 rounded-3xl glass-dropdown border border-white/15 shadow-2xl text-white">
+            <div className="p-5 xl:p-6 rounded-3xl glass-dropdown border border-white/15 shadow-2xl text-white">
               
               {/* ── MEGA MENU: RESEARCH & PUBLICATIONS ── */}
               {activeMegaMenu === 'research' && (
@@ -176,7 +190,6 @@ export const Header = () => {
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
-                    {/* Left col: Working Papers & Publications */}
                     <div className="space-y-2 p-3.5 rounded-2xl bg-black/40 border border-white/10">
                       <div className="flex items-center justify-between">
                         <span className="text-[11px] font-mono font-bold text-coral uppercase">
@@ -218,7 +231,6 @@ export const Header = () => {
                       </div>
                     </div>
 
-                    {/* Right col: Field Pilots */}
                     <div className="space-y-2 p-3.5 rounded-2xl bg-black/40 border border-white/10">
                       <div className="flex items-center justify-between">
                         <span className="text-[11px] font-mono font-bold text-teal-light uppercase">
@@ -425,10 +437,10 @@ export const Header = () => {
         )}
       </div>
 
-      {/* ── 3. RIGHT SIDE: THEME TOGGLE + INTERACTIVE ECO TOOLTIP + MODERN MINIMALIST FLAG ── */}
-      <div className="flex items-center gap-2.5 min-w-[140px] justify-end">
+      {/* ── 3. RIGHT SIDE CONTROLS: THEME + ECO TOOLTIP + MODERN FLAG + MOBILE BURGER ── */}
+      <div className="flex items-center gap-2 sm:gap-2.5 min-w-[90px] sm:min-w-[120px] lg:min-w-[140px] justify-end">
         
-        {/* Dark / Light Toggle Segmented Capsule (DISABLED / LOCKED TO DARK IN ECO MODE) */}
+        {/* Dark / Light Toggle Segmented Capsule */}
         <div className={`flex items-center p-1 rounded-full glass-capsule border border-white/20 ${ecoMode ? 'opacity-40 cursor-not-allowed' : ''}`}>
           <button
             onClick={() => {
@@ -471,19 +483,19 @@ export const Header = () => {
         >
           <button
             onClick={toggleEcoMode}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all cursor-pointer border ${
+            className={`flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all cursor-pointer border ${
               ecoMode
                 ? 'bg-teal-light text-black border-teal-light shadow-sm'
                 : 'glass-capsule text-white/90 border-white/20 hover:bg-white/15'
             }`}
           >
             <Leaf className={`w-3.5 h-3.5 ${ecoMode ? 'text-black' : 'text-teal-light'}`} />
-            <span>ECO</span>
+            <span className="hidden xs:inline sm:inline">ECO</span>
           </button>
 
           {/* Eco Mode Hover Tooltip */}
           {ecoTooltipOpen && (
-            <div className="absolute right-0 top-full mt-2 w-72 p-3 rounded-2xl bg-[#0F0F0F]/95 border border-white/20 shadow-2xl backdrop-blur-2xl text-left z-50 animate-fadeIn pointer-events-none">
+            <div className="absolute right-0 top-full mt-2 w-72 max-w-[85vw] p-3 rounded-2xl bg-[#0F0F0F]/95 border border-white/20 shadow-2xl backdrop-blur-2xl text-left z-50 animate-fadeIn pointer-events-none">
               <div className="flex items-start gap-2 mb-1.5">
                 <Leaf className="w-4 h-4 text-teal-light shrink-0 mt-0.5" />
                 <span className="text-[11px] font-mono font-bold text-white uppercase tracking-wider">
@@ -513,88 +525,197 @@ export const Header = () => {
           </div>
         </div>
 
-        {/* Mobile Hamburger Toggle */}
+        {/* Mobile Hamburger Toggle (Visible on screens < 1024px) */}
         <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 rounded-xl glass-capsule text-white border-white/20 cursor-pointer"
+          onClick={() => {
+            playSound(480);
+            setMobileMenuOpen(!mobileMenuOpen);
+          }}
+          className="lg:hidden p-2 rounded-xl glass-capsule text-white border-white/20 cursor-pointer flex items-center justify-center"
           aria-label="Toggle Navigation Menu"
         >
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            {mobileMenuOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            ) : (
+          {mobileMenuOpen ? (
+            <X className="w-5 h-5 text-white" />
+          ) : (
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
+            </svg>
+          )}
         </button>
       </div>
 
-      {/* ── 4. MOBILE DRAWER MENU (PURE NEUTRAL BLACK & DARK GREY) ── */}
+      {/* ── 4. RESPONSIVE MOBILE & TABLET DRAWER (FULL-HEIGHT MODAL OVERLAY < 1024px) ── */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-4 right-4 mt-2 p-5 rounded-3xl bg-[#0F0F0F]/95 border border-white/20 shadow-2xl backdrop-blur-2xl flex flex-col gap-2.5 z-50 text-white max-h-[80vh] overflow-y-auto">
-          <Link
-            to="/"
-            onClick={() => setMobileMenuOpen(false)}
-            className={`px-4 py-2 rounded-xl text-sm font-manrope ${location.pathname === '/' ? 'bg-white text-black font-bold' : 'hover:bg-white/10'}`}
-          >
-            Home Overview
-          </Link>
-          <Link
-            to="/about"
-            onClick={() => setMobileMenuOpen(false)}
-            className={`px-4 py-2 rounded-xl text-sm font-manrope ${location.pathname === '/about' ? 'bg-white text-black font-bold' : 'hover:bg-white/10'}`}
-          >
-            About Us & Leadership
-          </Link>
-          <Link
-            to="/solutions"
-            onClick={() => setMobileMenuOpen(false)}
-            className={`px-4 py-2 rounded-xl text-sm font-manrope ${location.pathname === '/solutions' ? 'bg-white text-black font-bold' : 'hover:bg-white/10'}`}
-          >
-            Solutions & Sector Pathways
-          </Link>
-          <Link
-            to="/research"
-            onClick={() => setMobileMenuOpen(false)}
-            className={`px-4 py-2 rounded-xl text-sm font-manrope ${location.pathname === '/research' ? 'bg-white text-black font-bold' : 'hover:bg-white/10'}`}
-          >
-            Research & Field Pilots
-          </Link>
-          <Link
-            to="/publications"
-            onClick={() => setMobileMenuOpen(false)}
-            className={`px-4 py-2 rounded-xl text-sm font-manrope ${location.pathname === '/publications' ? 'bg-white text-black font-bold' : 'hover:bg-white/10'}`}
-          >
-            Working Papers & Publications
-          </Link>
-          <Link
-            to="/tools"
-            onClick={() => setMobileMenuOpen(false)}
-            className={`px-4 py-2 rounded-xl text-sm font-manrope ${location.pathname === '/tools' ? 'bg-white text-black font-bold' : 'hover:bg-white/10'}`}
-          >
-            Interactive Tool Suite (16)
-          </Link>
-          <Link
-            to="/data"
-            onClick={() => setMobileMenuOpen(false)}
-            className={`px-4 py-2 rounded-xl text-sm font-manrope ${location.pathname === '/data' ? 'bg-white text-black font-bold' : 'hover:bg-white/10'}`}
-          >
-            Open Data Repository (4.8M)
-          </Link>
-          <Link
-            to="/simulator"
-            onClick={() => setMobileMenuOpen(false)}
-            className={`px-4 py-2 rounded-xl text-sm font-manrope ${location.pathname === '/simulator' ? 'bg-white text-black font-bold' : 'hover:bg-white/10'}`}
-          >
-            Decarbonization Sandbox
-          </Link>
-          <Link
-            to="/contact"
-            onClick={() => setMobileMenuOpen(false)}
-            className={`px-4 py-2 rounded-xl text-sm font-manrope ${location.pathname === '/contact' ? 'bg-white text-black font-bold' : 'hover:bg-white/10'}`}
-          >
-            Contact Secretariat
-          </Link>
+        <div className="lg:hidden fixed inset-0 top-[60px] sm:top-[70px] z-50 bg-[#0A0A0A]/95 backdrop-blur-2xl p-4 sm:p-6 overflow-y-auto border-t border-white/10 flex flex-col justify-between text-white animate-fadeIn">
+          <div className="space-y-3 pb-6">
+            
+            {/* Home Link */}
+            <Link
+              to="/"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`p-3 rounded-2xl flex items-center justify-between font-manrope text-sm font-semibold transition-all ${
+                location.pathname === '/' ? 'bg-white text-black font-bold' : 'bg-white/5 hover:bg-white/10'
+              }`}
+            >
+              <span>Home Overview</span>
+              <ArrowRight className="w-4 h-4 opacity-50" />
+            </Link>
+
+            {/* Research Accordion */}
+            <div className="rounded-2xl bg-white/5 border border-white/10 overflow-hidden">
+              <button
+                onClick={() => setMobileExpandedSection(mobileExpandedSection === 'research' ? null : 'research')}
+                className="w-full p-3.5 flex items-center justify-between text-sm font-manrope font-semibold text-left"
+              >
+                <div className="flex items-center gap-2">
+                  <BookOpen className="w-4 h-4 text-teal-light" />
+                  <span>Research & Publications</span>
+                </div>
+                <ChevronDown className={`w-4 h-4 transition-transform ${mobileExpandedSection === 'research' ? 'rotate-180' : ''}`} />
+              </button>
+              
+              {mobileExpandedSection === 'research' && (
+                <div className="p-3 pt-0 space-y-1.5 border-t border-white/5 bg-black/30 text-xs">
+                  <Link
+                    to="/research"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="p-2 rounded-xl block font-bold text-teal-light hover:bg-white/10"
+                  >
+                    → Research Hub Overview (All 7)
+                  </Link>
+                  <Link
+                    to="/publications"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="p-2 rounded-xl block font-bold text-coral hover:bg-white/10"
+                  >
+                    → Working Papers & Publications Portal
+                  </Link>
+                  <div className="pt-1 border-t border-white/10 text-[11px] opacity-60 px-2 uppercase font-mono">
+                    Key Case Studies:
+                  </div>
+                  {ALL_ARTIFACTS.slice(0, 4).map(art => (
+                    <Link
+                      key={art.id}
+                      to={`/case-studies/${art.id}`}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="p-2 rounded-xl block text-white/80 hover:bg-white/10 truncate"
+                    >
+                      • {art.title}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Solutions Accordion */}
+            <div className="rounded-2xl bg-white/5 border border-white/10 overflow-hidden">
+              <button
+                onClick={() => setMobileExpandedSection(mobileExpandedSection === 'solutions' ? null : 'solutions')}
+                className="w-full p-3.5 flex items-center justify-between text-sm font-manrope font-semibold text-left"
+              >
+                <div className="flex items-center gap-2">
+                  <Layers className="w-4 h-4 text-teal-light" />
+                  <span>Solutions & Decarbonization</span>
+                </div>
+                <ChevronDown className={`w-4 h-4 transition-transform ${mobileExpandedSection === 'solutions' ? 'rotate-180' : ''}`} />
+              </button>
+              
+              {mobileExpandedSection === 'solutions' && (
+                <div className="p-3 pt-0 space-y-1.5 border-t border-white/5 bg-black/30 text-xs">
+                  <Link to="/solutions" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-xl block font-bold text-teal-light hover:bg-white/10">
+                    → Solutions Overview
+                  </Link>
+                  <Link to="/sectors" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-xl block text-white/80 hover:bg-white/10">
+                    • 6 Sector Frontlines
+                  </Link>
+                  <Link to="/simulator" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-xl block text-white/80 hover:bg-white/10">
+                    • Decarbonization Sandbox (Interactive)
+                  </Link>
+                  <Link to="/policy" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-xl block text-white/80 hover:bg-white/10">
+                    • Policy & Finance Framework
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            {/* Tools Accordion */}
+            <div className="rounded-2xl bg-white/5 border border-white/10 overflow-hidden">
+              <button
+                onClick={() => setMobileExpandedSection(mobileExpandedSection === 'tools' ? null : 'tools')}
+                className="w-full p-3.5 flex items-center justify-between text-sm font-manrope font-semibold text-left"
+              >
+                <div className="flex items-center gap-2">
+                  <Sliders className="w-4 h-4 text-teal-light" />
+                  <span>Interactive Tools & Datasets</span>
+                </div>
+                <ChevronDown className={`w-4 h-4 transition-transform ${mobileExpandedSection === 'tools' ? 'rotate-180' : ''}`} />
+              </button>
+              
+              {mobileExpandedSection === 'tools' && (
+                <div className="p-3 pt-0 space-y-1.5 border-t border-white/5 bg-black/30 text-xs">
+                  <Link to="/tools" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-xl block font-bold text-teal-light hover:bg-white/10">
+                    → Interactive Tool Suite (16 Micro-Engines)
+                  </Link>
+                  <Link to="/data" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-xl block text-white/80 hover:bg-white/10">
+                    • Open Science Data Repository (4.8M Data Points)
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            {/* About Us Accordion */}
+            <div className="rounded-2xl bg-white/5 border border-white/10 overflow-hidden">
+              <button
+                onClick={() => setMobileExpandedSection(mobileExpandedSection === 'about' ? null : 'about')}
+                className="w-full p-3.5 flex items-center justify-between text-sm font-manrope font-semibold text-left"
+              >
+                <div className="flex items-center gap-2">
+                  <Users className="w-4 h-4 text-teal-light" />
+                  <span>About Us & Consortium</span>
+                </div>
+                <ChevronDown className={`w-4 h-4 transition-transform ${mobileExpandedSection === 'about' ? 'rotate-180' : ''}`} />
+              </button>
+              
+              {mobileExpandedSection === 'about' && (
+                <div className="p-3 pt-0 space-y-1.5 border-t border-white/5 bg-black/30 text-xs">
+                  <Link to="/about" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-xl block font-bold text-teal-light hover:bg-white/10">
+                    → About Us & Scientific Leadership
+                  </Link>
+                  <Link to="/consortium" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-xl block text-white/80 hover:bg-white/10">
+                    • Consortium Partners (IIT Delhi, IISc, TERI, CEEW)
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            {/* Contact Link */}
+            <Link
+              to="/contact"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`p-3 rounded-2xl flex items-center justify-between font-manrope text-sm font-semibold transition-all ${
+                location.pathname === '/contact' ? 'bg-white text-black font-bold' : 'bg-white/5 hover:bg-white/10'
+              }`}
+            >
+              <span>Contact Secretariat</span>
+              <ArrowRight className="w-4 h-4 opacity-50" />
+            </Link>
+
+          </div>
+
+          {/* Drawer Footer Status */}
+          <div className="p-4 rounded-2xl bg-black/40 border border-white/10 text-xs font-mono space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="opacity-70">Power Mode:</span>
+              <span className={ecoMode ? "text-teal-light font-bold" : "text-white/80"}>
+                {ecoMode ? "ECO Power Save Active" : "Full Interactive"}
+              </span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="opacity-70">Theme:</span>
+              <span className="text-white font-bold">{theme.toUpperCase()}</span>
+            </div>
+          </div>
+
         </div>
       )}
 

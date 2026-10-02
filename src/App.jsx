@@ -32,7 +32,7 @@ const AppContent = () => {
   const isHome = location.pathname === '/';
 
   return (
-    <div className="w-[100vw] max-w-[100vw] min-h-screen font-manrope relative overflow-x-hidden flex flex-col justify-between">
+    <div className="w-full max-w-full min-h-screen font-manrope relative overflow-x-hidden flex flex-col justify-between">
       {/* Top Header */}
       <Header />
 

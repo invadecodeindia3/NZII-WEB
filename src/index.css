@@ -23,11 +23,20 @@
   box-sizing: border-box;
 }
 
-html, body {
+html {
   margin: 0;
   padding: 0;
-  width: 100vw;
-  max-width: 100vw;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
   overflow-x: hidden;
   background-color: #080808;
   font-family: var(--font-manrope);
@@ -38,7 +47,7 @@ html, body {
 }
 
 #root {
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   overflow-x: hidden;
   font-family: var(--font-manrope);
@@ -47,6 +56,7 @@ html, body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-manrope);
   letter-spacing: -0.025em;
+  word-break: break-word;
 }
 
 p, span, a, button, input, div {
@@ -186,4 +196,17 @@ p, span, a, button, input, div {
   animation-iteration-count: 1 !important;
   transition-duration: 0.001ms !important;
   scroll-behavior: auto !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SUPER RESPONSIVE HORIZONTAL SCROLLBAR SUPPRESSION & TOUCH SMOOTHING
+   ───────────────────────────────────────────────────────────── */
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
