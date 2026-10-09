@@ -31,7 +31,7 @@ export const PublicationsPage = () => {
   const publications = [
     {
       id: 'pub-wacc-finance',
-      title: 'Financing Pathways for India's Long-Term Energy Transition',
+      title: "Financing Pathways for India's Long-Term Energy Transition",
       tag: 'MACRO FINANCE',
       abstract: 'A proposed study examining how blended finance, currency risk and the cost of capital could shape clean-energy investments. Research questions and scenarios are illustrative; no completed findings are presented.'
     },
