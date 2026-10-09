@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { GameProvider } from './context/GameContext';
 import { Header } from './components/Header';
+import { MotionController } from './components/MotionController';
 import { Footer } from './components/Footer';
 import { HomePage } from './pages/HomePage';
 import { ResearchHubPage } from './pages/ResearchHubPage';
@@ -73,6 +74,7 @@ export default function App() {
     <BrowserRouter>
       <GameProvider>
         <ScrollToTop />
+        <MotionController />
         <AppContent />
       </GameProvider>
     </BrowserRouter>
