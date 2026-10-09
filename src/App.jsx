@@ -35,22 +35,28 @@ const AppContent = () => {
       <main className="w-full flex-grow relative z-10">
         <Routes>
           <Route path="/" element={<HomePage />} />
+          {/* Prototype calculators and data pages are intentionally unpublished. */}
           <Route path="/simulator" element={<Navigate to="/research" replace />} />
-          <Route path="/simulator" element={<Navigate to="/research" replace />} />
-          <Route path="/simulator" element={<Navigate to="/research" replace />} />
+          <Route path="/simulate" element={<Navigate to="/research" replace />} />
+          <Route path="/simulation" element={<Navigate to="/research" replace />} />
+          <Route path="/tools" element={<Navigate to="/research" replace />} />
+          <Route path="/data" element={<Navigate to="/research" replace />} />
+          <Route path="/solutions" element={<Navigate to="/research" replace />} />
+          <Route path="/sectors" element={<Navigate to="/research" replace />} />
+          <Route path="/policy" element={<Navigate to="/research" replace />} />
+          <Route path="/case-studies" element={<Navigate to="/research" replace />} />
+          <Route path="/projects" element={<Navigate to="/research" replace />} />
+          <Route path="/case-studies/:id" element={<Navigate to="/research" replace />} />
+          <Route path="/articles/:id" element={<Navigate to="/research" replace />} />
+          <Route path="/artifacts/:id" element={<Navigate to="/research" replace />} />
           <Route path="/research" element={<ResearchHubPage />} />
           <Route path="/research/:slug" element={<ResearchThemePage />} />
           <Route path="/news-events" element={<NewsEventsPage />} />
           <Route path="/news-events/:slug" element={<NewsEventDetailPage />} />
-          <Route path="/simulator" element={<Navigate to="/research" replace />} />
-          <Route path="/simulator" element={<Navigate to="/research" replace />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/simulator" element={<Navigate to="/research" replace />} />
-          <Route path="/simulator" element={<Navigate to="/research" replace />} />
           <Route path="/publications" element={<PublicationsPage />} />
           <Route path="/consortium" element={<ConsortiumPage />} />
-          <Route path="/simulator" element={<Navigate to="/research" replace />} />
           {/* Catch-all */}
           <Route path="*" element={<HomePage />} />
         </Routes>
