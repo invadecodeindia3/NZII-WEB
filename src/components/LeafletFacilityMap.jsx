@@ -23,7 +23,7 @@ function loadLeaflet() {
   return pending;
 }
 export function LeafletFacilityMap({assets,selectedAssetId,onSelect,isLight}) {
-  const el=useRef(null),map=useRef(null),points=useRef(null),callback=useRef(onSelect),[error,setError]=useState('');
+  const el=useRef(null),map=useRef(null),points=useRef(null),callback=useRef(onSelect),[error,setError]=useState(''),[ready,setReady]=useState(false);
   callback.current=onSelect;
   useEffect(()=>{
     let cancelled=false;
@@ -34,6 +34,7 @@ export function LeafletFacilityMap({assets,selectedAssetId,onSelect,isLight}) {
         maxZoom:19, attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a>'
       }).addTo(map.current);
       points.current=L.layerGroup().addTo(map.current);
+      setReady(true);
       setTimeout(()=>map.current?.invalidateSize(),100);
     }).catch(e=>{if(!cancelled)setError(e.message)});
     return ()=>{cancelled=true;if(map.current){map.current.remove();map.current=null;points.current=null}};
@@ -49,7 +50,7 @@ export function LeafletFacilityMap({assets,selectedAssetId,onSelect,isLight}) {
       pin.on('click',()=>callback.current(asset.id));
     });
     if(valid.length>0){const bounds=L.latLngBounds(valid.map(a=>[Number(a.lat),Number(a.lng)]));map.current.fitBounds(bounds.pad(0.22),{maxZoom:6});}
-  },[assets,selectedAssetId,error]);
+  },[assets,selectedAssetId,error,ready]);
   return <div className="my-3 space-y-2">
     <div ref={el} role="region" aria-label="Interactive Leaflet map of illustrative facility locations" className="h-[360px] w-full rounded-xl border border-teal/25 overflow-hidden relative z-0 bg-[#14202b]"/>
     {error&&<p role="alert" className="text-xs text-amber-600">{error}. Map tiles require an internet connection.</p>}
