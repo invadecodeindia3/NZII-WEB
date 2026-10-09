@@ -24,7 +24,7 @@ import { BreakthroughTechPillars } from '../components/BreakthroughTechPillars';
 import { AsymmetricCaseStudiesSection } from '../components/AsymmetricCaseStudiesSection';
 import { RevealOnScroll } from '../components/RevealOnScroll';
 import { Footer } from '../components/Footer';
-import { Link } from 'react-router-dom';
+
 import { RESEARCH_THEMES } from '../data/researchThemes';
 import { PUBLISHED_NEWS_EVENTS } from '../data/newsEvents';
 
