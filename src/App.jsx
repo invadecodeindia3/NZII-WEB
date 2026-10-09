@@ -9,6 +9,9 @@ import { SimulatorPage } from './pages/SimulatorPage';
 import { SectorsPage } from './pages/SectorsPage';
 import { SolutionsPage } from './pages/SolutionsPage';
 import { ProjectsPage } from './pages/ProjectsPage';
+import { ResearchHubPage } from './pages/ResearchHubPage';
+import { ResearchThemePage } from './pages/ResearchThemePage';
+import { NewsEventsPage, NewsEventDetailPage } from './pages/NewsEventsPage';
 import { AboutPage } from './pages/AboutPage';
 import { ContactPage } from './pages/ContactPage';
 import { DataPage } from './pages/DataPage';
@@ -45,7 +48,10 @@ const AppContent = () => {
           <Route path="/simulator" element={<SimulatorPage />} />
           <Route path="/sectors" element={<SectorsPage />} />
           <Route path="/solutions" element={<SolutionsPage />} />
-          <Route path="/research" element={<ProjectsPage />} />
+          <Route path="/research" element={<ResearchHubPage />} />
+          <Route path="/research/:slug" element={<ResearchThemePage />} />
+          <Route path="/news-events" element={<NewsEventsPage />} />
+          <Route path="/news-events/:slug" element={<NewsEventDetailPage />} />
           <Route path="/case-studies" element={<ProjectsPage />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/about" element={<AboutPage />} />

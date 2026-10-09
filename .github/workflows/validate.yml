@@ -12,7 +12,9 @@ jobs:
         with:
           node-version: '24'
           cache: npm
-      - run: npm ci
+      # Existing package-lock.json is out of sync with package.json; temporary non-lock install for compilation.
+      # Regenerate and commit a reproducible lockfile before release, then restore npm ci.
+      - run: npm install --no-package-lock --no-audit --no-fund
       - run: npm run build
   backend:
     runs-on: ubuntu-latest

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { LeafletFacilityMap } from './LeafletFacilityMap';
 import { 
   Radio, 
   Database, 
@@ -271,7 +272,7 @@ export const SpatialEmissionsTerminal = () => {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-teal"></span>
               </span>
               <span className="text-[11px] font-mono font-bold tracking-widest text-teal uppercase">
-                Climate TRACE™ National Emissions Explorer
+                Leaflet / Independent Facility Explorer
               </span>
             </div>
             
@@ -373,75 +374,26 @@ export const SpatialEmissionsTerminal = () => {
                   <div className="flex items-center gap-2">
                     <Compass className="w-4 h-4 text-teal animate-spin-slow" />
                     <span className="text-xs font-mono font-bold uppercase text-teal">
-                      Spatial Geometry Radar
+                      Interactive Leaflet Map
                     </span>
                   </div>
                   <span className={`text-[10px] font-mono px-2 py-0.5 rounded ${
                     isLight ? 'bg-white border border-[#CBD5E1] text-[#334155]' : 'bg-white/10 text-white/70'
                   }`}>
-                    5 Indian Grids
+                    Illustrative Locations
                   </span>
                 </div>
 
-                {/* Simulated India Geographic Vector Coordinate Grid with Asset Pins */}
-                <div className="relative w-full h-[360px] my-3 rounded-lg border border-teal/20 bg-[#0B1017] overflow-hidden flex items-center justify-center select-none">
-                  
-                  {/* Subtle Grid Radar Overlay */}
-                  <div className="absolute inset-0 bg-[radial-gradient(#0D9488_1px,transparent_1px)] [background-size:16px_16px] opacity-20"></div>
+                {/* Actual interactive Leaflet map, not a schematic SVG.
+                    All markers remain clearly labelled as illustrative until source verification. */}
+                <LeafletFacilityMap
+                  assets={filteredAssets}
+                  selectedAssetId={selectedAssetId}
+                  onSelect={setSelectedAssetId}
+                  isLight={isLight}
+                />
 
-                  {/* Concentric Scanner Circles */}
-                  <div className="absolute w-64 h-64 rounded-full border border-teal/20 pointer-events-none"></div>
-                  <div className="absolute w-44 h-44 rounded-full border border-teal/30 pointer-events-none"></div>
-
-                  {/* SVG Schematic Contour of India */}
-                  <svg className="absolute inset-0 w-full h-full p-4 pointer-events-none opacity-40" viewBox="0 0 100 100">
-                    <path
-                      d="M 38 18 L 48 14 L 54 22 L 50 30 L 68 34 L 78 38 L 74 48 L 66 58 L 52 74 L 46 88 L 44 86 L 38 72 L 32 58 L 22 48 L 28 34 L 38 18 Z"
-                      fill="none"
-                      stroke="#0D9488"
-                      strokeWidth="1.25"
-                      strokeDasharray="2 2"
-                    />
-                  </svg>
-
-                  {/* Interactive Facility Pins placed at normalized coordinate locations */}
-                  {CLIMATE_TRACE_ASSETS.map((asset) => {
-                    const isSelected = asset.id === selectedAssetId;
-                    return (
-                      <button
-                        key={asset.id}
-                        onClick={() => {
-                          setSelectedAssetId(asset.id);
-                          playSound(520);
-                        }}
-                        style={{ left: `${asset.mapX}%`, top: `${asset.mapY}%` }}
-                        className={`absolute -translate-x-1/2 -translate-y-1/2 group cursor-pointer transition-transform hover:scale-125 z-20`}
-                        title={`${asset.name} (${asset.co2e2025})`}
-                      >
-                        <span className="relative flex h-3.5 w-3.5">
-                          {isSelected && (
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-coral opacity-75"></span>
-                          )}
-                          <span className={`relative inline-flex rounded-full h-3.5 w-3.5 border-2 border-white shadow-md ${
-                            isSelected ? 'bg-coral scale-125' : 'bg-teal'
-                          }`}></span>
-                        </span>
-                        
-                        {/* Micro Tooltip */}
-                        <div className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-1 hidden group-hover:block px-2 py-1 rounded bg-black/90 text-[9px] font-mono text-white whitespace-nowrap z-30 shadow-lg border border-white/20`}>
-                          {asset.name.split(' ')[0]} • {asset.co2e2025}
-                        </div>
-                      </button>
-                    );
-                  })}
-
-                  {/* Active Selected Asset Crosshair Indicator */}
-                  <div className="absolute bottom-2 left-2 px-2.5 py-1 rounded bg-black/80 border border-teal/40 font-mono text-[10px] text-teal-light">
-                    LAT/LNG: {selectedAsset.coordinates}
-                  </div>
-                </div>
-
-                {/* Footer Link */}
+                                {/* Footer Link */}
                 <div className={`pt-2 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-[11px] font-mono ${
                   isLight ? 'text-[#64748B]' : 'text-white/50'
                 }`}>

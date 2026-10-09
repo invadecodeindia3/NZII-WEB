@@ -25,6 +25,9 @@ import { AsymmetricCaseStudiesSection } from '../components/AsymmetricCaseStudie
 import { RevealOnScroll } from '../components/RevealOnScroll';
 import { Footer } from '../components/Footer';
 
+import { RESEARCH_THEMES } from '../data/researchThemes';
+import { PUBLISHED_NEWS_EVENTS } from '../data/newsEvents';
+
 export const HomePage = () => {
   const {
     levers,
@@ -87,63 +90,20 @@ export const HomePage = () => {
         }`}
       >
 
-        {/* ----------------------------------------------------
-            SECTION 2: TRUSTED CONSORTIUM PARTNERS (Infinite Marquee)
-           ---------------------------------------------------- */}
-        <section 
-          className={`w-full pt-16 pb-12 px-[3vw] overflow-hidden rounded-t-[36px] md:rounded-t-[48px] transition-colors duration-500 ${
-            isLight 
-              ? 'bg-[#FFFFFF] border-b border-[#E2E8F0]' 
-              : 'bg-[#141416] border-b border-[#222226]'
-          }`}
-        >
-          <RevealOnScroll direction="up" delay={100}>
-            <div className="w-full mb-6 text-center">
-              <span 
-                className={`text-xs font-mono font-bold uppercase tracking-widest ${
-                  isLight ? 'text-teal-700' : 'text-teal-400'
-                }`}
-              >
-                Collaborating Academic, Policy & Industrial Research Partners
-              </span>
-            </div>
-            <div className="flex overflow-hidden w-full max-w-[1720px] mx-auto">
-              <div className={`flex ${ecoMode ? '' : 'animate-marquee hover-pause'} w-max`}>
-                {['Energy Transitions Commission', 'IIT Delhi', 'CEEW', 'NITI Aayog Pathways', 'TERI', 'Prayas Energy Group', 'Brookings India', 'Shakti Sustainable Energy'].map((org, i) => (
-                  <div
-                    key={`org-${i}`}
-                    className={`mx-3.5 px-6 py-3.5 rounded-2xl flex items-center gap-3 font-manrope font-semibold text-xs tracking-wider uppercase whitespace-nowrap transition-all cursor-default ${
-                      isLight
-                        ? 'bg-[#F8FAFC] border border-[#CBD5E1] text-[#0F172A] shadow-sm hover:border-teal-600 hover:shadow-md'
-                        : 'bg-[#1C1C20] border border-[#2E2E34] text-[#EDEDED] shadow-sm hover:border-teal hover:bg-[#25252B]'
-                    }`}
-                  >
-                    <span className="w-2 h-2 rounded-full bg-teal"></span>
-                    <span>{org}</span>
-                  </div>
-                ))}
-              </div>
-              {!ecoMode && (
-                <div className="flex animate-marquee hover-pause w-max" aria-hidden="true">
-                  {['Energy Transitions Commission', 'IIT Delhi', 'CEEW', 'NITI Aayog Pathways', 'TERI', 'Prayas Energy Group', 'Brookings India', 'Shakti Sustainable Energy'].map((org, i) => (
-                    <div
-                      key={`org-dup-${i}`}
-                      className={`mx-3.5 px-6 py-3.5 rounded-2xl flex items-center gap-3 font-manrope font-semibold text-xs tracking-wider uppercase whitespace-nowrap transition-all cursor-default ${
-                        isLight
-                          ? 'bg-[#F8FAFC] border border-[#CBD5E1] text-[#0F172A] shadow-sm hover:border-teal-600 hover:shadow-md'
-                          : 'bg-[#1C1C20] border border-[#2E2E34] text-[#EDEDED] shadow-sm hover:border-teal hover:bg-[#25252B]'
-                      }`}
-                    >
-                      <span className="w-2 h-2 rounded-full bg-teal"></span>
-                      <span>{org}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </RevealOnScroll>
-        </section>
-
+<section className="px-[4vw] py-20 border-b border-white/10">
+  <div className="max-w-7xl mx-auto">
+    <p className="font-mono uppercase tracking-widest text-xs text-teal">NZII Research Agenda</p>
+    <div className="flex flex-wrap justify-between gap-4 items-end mt-2 mb-8"><div><h2 className="font-manrope text-4xl sm:text-5xl font-extrabold tracking-tight">Nine disciplines. One connected future.</h2><p className="text-sm opacity-70 mt-4 max-w-3xl">Research across energy, land, livelihoods, finance, biodiversity, justice, mobility, modelling and FAIR data.</p></div>
+      <Link to="/research" className="text-teal text-sm font-bold">All research themes →</Link></div>
+    <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">{RESEARCH_THEMES.map((t,i)=><Link to={'/research/'+t.slug} key={t.slug} className="rounded-2xl border border-current/15 p-6 hover:border-teal transition-colors min-h-44 flex flex-col justify-between">
+      <span className="text-teal font-mono text-xs">{String(i+1).padStart(2,'0')}</span><div><h3 className="text-xl font-manrope font-bold mt-4">{t.title}</h3><p className="text-sm opacity-65 mt-2">{t.short}</p></div></Link>)}</div>
+  </div>
+</section>
+<section className="px-[4vw] py-16 border-b border-white/10"><div className="max-w-7xl mx-auto">
+  <div className="flex justify-between flex-wrap gap-4 items-end"><div><p className="text-xs font-mono tracking-widest uppercase text-teal">News & Events</p><h2 className="font-manrope text-3xl font-bold mt-2">From the research community</h2></div>
+   <Link to="/news-events" className="text-teal text-sm font-bold">Explore News & Events →</Link></div>
+  {PUBLISHED_NEWS_EVENTS.length===0?<p className="text-sm opacity-65 mt-5">The six fictional example events below illustrate the intended editorial format. Actual event blurbs are being prepared.</p>:<div className="grid md:grid-cols-3 gap-4 mt-6">{PUBLISHED_NEWS_EVENTS.slice(0,3).map(e=><Link key={e.slug} to={'/news-events/'+e.slug} className="p-6 border border-current/15 rounded-xl hover:border-teal"><p className="text-teal text-xs uppercase">{e.fictional ? "FICTIONAL EXAMPLE" : e.type}</p><h3 className="font-bold mt-3">{e.title}</h3><p className="opacity-65 text-sm mt-2">{e.excerpt}</p></Link>)}</div>}
+</div></section>
         {/* ----------------------------------------------------
             SECTION 3: REAL-TIME SPATIAL EMISSIONS OBSERVATORY & FACILITY RADAR
            ---------------------------------------------------- */}

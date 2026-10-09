@@ -194,13 +194,13 @@ export const NZIIGlassHero = () => {
         
         {/* Main Headline: Strictly 2 lines */}
         <h1 className="hero-title font-manrope text-4xl sm:text-6xl md:text-[68px] lg:text-[72px] font-bold tracking-tight text-white leading-[1.08] mb-5 animate-hero-entrance max-w-4xl">
-          Decarbonization pathways <br className="hidden sm:inline" />
-          for India&apos;s net-zero future.
+          Researching India&apos;s <br className="hidden sm:inline" />
+          sustainable future.
         </h1>
 
         {/* Subtitle */}
         <p className="font-manrope text-base sm:text-lg md:text-[19px] text-white/95 font-normal leading-relaxed max-w-2xl mb-8 animate-hero-sub-entrance">
-          Sustainable transition pathways made accessible, reliable, and tailor-made for India.
+          Interdisciplinary research across energy, land, livelihoods, finance, biodiversity and society—supported by open methods and transparent data.
         </p>
 
         {/* Exact Button: Clean white pill with brand teal circle and horizontal ArrowRight */}
