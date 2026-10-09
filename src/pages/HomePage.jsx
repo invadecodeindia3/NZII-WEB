@@ -92,34 +92,38 @@ export const HomePage = () => {
       </div>
     </section>
 
-    {/* 3. THE DIFFERENCE */}
-    <section className={'px-[3vw] py-24 sm:py-28 ' + soft}>
-      <div className="mx-auto max-w-none">
-        <p className="text-xs font-mono uppercase tracking-[0.16em] text-teal">02 / The difference</p>
-        <h2 className="mt-6 max-w-4xl text-[clamp(2.4rem,4.15vw,4.6rem)] font-semibold leading-tight tracking-[-0.05em]">A more complete picture of India’s net-zero transition</h2>
-        <div className="mt-12 grid gap-x-9 gap-y-10 md:grid-cols-2 xl:grid-cols-4">
-          {differences.map(([title, description, Icon],i) => <div key={title} className={'border-t pt-6 ' + edge}>
-            <div className="flex items-center justify-between text-teal"><Icon size={25} strokeWidth={1.6}/><span className="font-mono text-xs">0{i+1}</span></div>
-            <h3 className="mt-8 text-xl font-semibold">{title}</h3>
-            <p className={'mt-3 text-sm leading-[1.8] ' + muted}>{description}</p>
+    {/* 3 / Difference: magazine-like asymmetric feature with no repeated cards */}
+    <section className={`px-[3vw] py-20 sm:py-28 ${soft}`}>
+      <div className="grid gap-12 lg:grid-cols-[.9fr_1.1fr] lg:gap-20">
+        <div className="lg:sticky lg:top-10 lg:self-start">
+          <p className="text-xs font-mono uppercase tracking-wider text-teal">02 / Our perspective</p>
+          <h2 className="mt-6 max-w-2xl text-[clamp(2.4rem,4vw,4.8rem)] font-semibold leading-[1.12] tracking-[-.05em]">A more complete picture of India’s net-zero transition</h2>
+          <div className="mt-9 h-[2px] w-28 bg-[#2aa99d]"/>
+        </div>
+        <div className={`divide-y ${light?'divide-[#cbdbd3]':'divide-white/15'}`}>
+          {differences.map(([title,description,Icon],i)=><div key={title} className="grid grid-cols-[38px_1fr] gap-4 py-8 sm:grid-cols-[68px_1fr] sm:gap-8">
+            <div className="flex flex-col items-start gap-5 text-teal"><span className="font-mono text-xs">0{i+1}</span><Icon size={26} strokeWidth={1.5}/></div>
+            <div><h3 className="text-[clamp(1.45rem,2vw,2rem)] font-semibold">{title}</h3><p className={`mt-3 max-w-xl text-sm leading-[1.85] ${muted}`}>{description}</p></div>
           </div>)}
         </div>
       </div>
     </section>
 
-    {/* 4. WHAT NZI IS TRYING TO UNDERSTAND */}
-    <section className="bg-[#18354b] px-[3vw] py-24 text-white sm:py-28">
-      <div className="mx-auto max-w-none">
-        <p className="text-xs font-mono uppercase tracking-[0.16em] text-[#9dcc5d]">03 / What NZI is trying to understand</p>
-        <h2 className="mt-6 max-w-5xl text-[clamp(2.5rem,4.6vw,5rem)] font-semibold leading-tight tracking-[-0.05em]">One transition. <em className="font-normal text-[#a8ce4c]">Many connected questions.</em></h2>
-        <div className="mt-12 grid gap-x-12 md:grid-cols-2 xl:grid-cols-3">
-          {questions.map(([title,description,Icon],i) => <div key={title} className="border-t border-white/20 py-8">
-            <div className="flex items-center justify-between text-[#55b9a5]"><Icon size={23} strokeWidth={1.7}/><span className="font-mono text-xs text-white/60">0{i+1}</span></div>
-            <h3 className="mt-8 text-xl font-semibold leading-snug">{title}</h3>
-            <p className="mt-4 text-sm leading-[1.8] text-white/70">{description}</p>
+    {/* 4 / Connected questions in alternating typography, not a dashboard */}
+    <section className={`px-[3vw] py-20 sm:py-28 ${light?'bg-[#e3eee8] text-[#153b4d]':'bg-[#203e51] text-white'}`}>
+      <div className="grid gap-10 lg:grid-cols-[.85fr_1.15fr] lg:gap-20">
+        <div className="lg:sticky lg:top-10 lg:self-start">
+          <p className={`text-xs font-mono uppercase tracking-wider ${light?'text-[#168980]':'text-[#b3d86a]'}`}>03 / Research questions</p>
+          <h2 className="mt-6 max-w-xl text-[clamp(2.6rem,4.5vw,5.2rem)] font-semibold leading-[1.12] tracking-[-.05em]">One transition. <em className={`font-normal ${light?'text-[#168980]':'text-[#bbd781]'}`}>Many connected questions.</em></h2>
+          <Link to="/research" className={`mt-9 inline-flex items-center gap-2 text-sm font-semibold ${light?'text-[#168980]':'text-[#bbd781]'}`}>Explore the Research <ArrowRight size={18}/></Link>
+        </div>
+        <div className="grid gap-x-10 sm:grid-cols-2">
+          {questions.map(([title,description,Icon],i)=><div key={title} className={`border-t py-8 ${light?'border-[#a5beb2]':'border-white/25'}`}>
+            <div className={`flex items-center justify-between ${light?'text-[#168980]':'text-[#87d2c6]'}`}><Icon size={24} strokeWidth={1.5}/><span className="font-mono text-xs">0{i+1}</span></div>
+            <h3 className="mt-7 text-xl font-semibold leading-snug">{title}</h3>
+            <p className={`mt-3 text-sm leading-[1.8] ${light?'text-[#486b77]':'text-white/70'}`}>{description}</p>
           </div>)}
         </div>
-        <div className="mt-7"><Link to="/research" className="inline-flex items-center gap-2 font-semibold text-[#a8ce4c]">Explore the Research <ArrowRight size={18}/></Link></div>
       </div>
     </section>
 
