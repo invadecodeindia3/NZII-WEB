@@ -63,30 +63,30 @@ export const HomePage = () => {
 
   return <div className={'w-full overflow-x-clip '+palette}>
     {/* Full-viewport desktop hero. On very small phones it may grow to avoid clipping content. */}
-    <section className={\`nzi-home-hero relative isolate flex min-h-[100svh] items-center overflow-hidden px-[3%] pb-12 pt-[100px] lg:h-[100svh] lg:min-h-0 lg:pb-12 lg:pt-[104px] \${light?'bg-[#e6f0e8] text-[#16364b]':'bg-[#142c40] text-white'}\`}>
+    <section className={`nzi-home-hero relative isolate flex min-h-[100svh] items-center overflow-hidden px-[3%] pb-12 pt-[100px] lg:h-[100svh] lg:min-h-0 lg:pb-12 lg:pt-[104px] ${light?'bg-[#e6f0e8] text-[#16364b]':'bg-[#142c40] text-white'}`}>
       <img src="/hero.jpg" alt="" aria-hidden="true" fetchPriority="high" decoding="async"
-        className={\`hero-photo pointer-events-none absolute inset-0 -z-30 h-full w-full object-cover object-[67%_center] \${light?'opacity-55':ecoMode?'opacity-55':'opacity-85'}\`}/>
-      <div className={\`pointer-events-none absolute inset-0 -z-20 \${light
+        className={`hero-photo pointer-events-none absolute inset-0 -z-30 h-full w-full object-cover object-[67%_center] ${light?'opacity-55':ecoMode?'opacity-55':'opacity-85'}`}/>
+      <div className={`pointer-events-none absolute inset-0 -z-20 ${light
         ? 'bg-[linear-gradient(90deg,rgba(250,251,247,.98)_0%,rgba(250,251,247,.91)_42%,rgba(250,251,247,.16)_100%)]'
-        : 'bg-[linear-gradient(90deg,rgba(10,34,50,.98)_0%,rgba(10,34,50,.88)_40%,rgba(10,34,50,.12)_100%)]'}\`}/>
-      {!ecoMode&&<HeroContourLines className={\`decorative-lines pointer-events-none absolute -right-[5%] top-[15%] -z-10 h-[70%] w-[58%] \${light?'text-[#128f85] opacity-50':'text-[#8ad6c9] opacity-60'}\`}/>}
+        : 'bg-[linear-gradient(90deg,rgba(10,34,50,.98)_0%,rgba(10,34,50,.88)_40%,rgba(10,34,50,.12)_100%)]'}`}/>
+      {!ecoMode&&<HeroContourLines className={`decorative-lines pointer-events-none absolute -right-[5%] top-[15%] -z-10 h-[70%] w-[58%] ${light?'text-[#128f85] opacity-50':'text-[#8ad6c9] opacity-60'}`}/>}
       <div className="relative w-full">
         <div className="max-w-[780px]">
-          <span className={\`flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[.22em] \${light?'text-[#137d79]':'text-[#aad56d]'}\`}><span className="h-px w-7 bg-current"/>Net Zero India</span>
+          <span className={`flex items-center gap-2.5 text-[10px] font-bold uppercase tracking-[.22em] ${light?'text-[#137d79]':'text-[#aad56d]'}`}><span className="h-px w-7 bg-current"/>Net Zero India</span>
           <h1 className="mt-5 text-[clamp(2rem,3.55vw,3.9rem)] font-semibold leading-[1.12] tracking-[-.045em] sm:mt-6">
             What will it take for India to reach net zero, and what will different paths mean for the country?
           </h1>
-          <div className={\`mt-5 max-w-[690px] space-y-3 text-[clamp(.86rem,.98vw,.99rem)] leading-[1.63] \${light?'text-[#3b5868]':'text-[#e0eaec]'}\`}>
+          <div className={`mt-5 max-w-[690px] space-y-3 text-[clamp(.86rem,.98vw,.99rem)] leading-[1.63] ${light?'text-[#3b5868]':'text-[#e0eaec]'}`}>
             <p>India has committed to achieving net-zero emissions by 2070. Getting there will transform how the country produces and uses energy, builds infrastructure, uses land and resources, and creates livelihoods.</p>
             <p>Net Zero India brings together research, modelling and diverse expertise to understand the pathways India could take, and their implications for development, people and the environment.</p>
           </div>
           <div className="mt-6 flex flex-wrap gap-2.5">
             <Link to="/research" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#258f86] px-5 py-2.5 text-xs font-semibold text-white hover:bg-[#1a716d]">Explore Our Research <ArrowUpRight size={15}/></Link>
-            <Link to="/about" className={\`inline-flex min-h-11 items-center justify-center gap-2 rounded-full border px-5 py-2.5 text-xs font-semibold \${light?'border-[#719e9b] text-[#173e4b] hover:bg-white/50':'border-white/45 text-white hover:bg-white/10'}\`}>About Net Zero India <ArrowRight size={15}/></Link>
+            <Link to="/about" className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full border px-5 py-2.5 text-xs font-semibold ${light?'border-[#719e9b] text-[#173e4b] hover:bg-white/50':'border-white/45 text-white hover:bg-white/10'}`}>About Net Zero India <ArrowRight size={15}/></Link>
           </div>
         </div>
       </div>
-      <a href="#why-nzi" aria-label="Discover why NZI exists" className={\`absolute bottom-4 left-[3%] hidden items-center gap-2 text-[10px] uppercase tracking-[.18em] sm:inline-flex \${light?'text-[#456878]':'text-white/65'}\`}>Discover more <ArrowDown size={14}/></a>
+      <a href="#why-nzi" aria-label="Discover why NZI exists" className={`absolute bottom-4 left-[3%] hidden items-center gap-2 text-[10px] uppercase tracking-[.18em] sm:inline-flex ${light?'text-[#456878]':'text-white/65'}`}>Discover more <ArrowDown size={14}/></a>
     </section>
 
     {/* Why NZI exists — asymmetrical photo editorial with a compact question panel */}
