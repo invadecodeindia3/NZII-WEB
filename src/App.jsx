@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { GameProvider } from './context/GameContext';
 import { Header } from './components/Header';
+import { DataStatusNotice } from './components/DataStatusNotice';
 import { Footer } from './components/Footer';
 import { HomePage } from './pages/HomePage';
 import { SimulatorPage } from './pages/SimulatorPage';
@@ -35,6 +36,7 @@ const AppContent = () => {
     <div className="w-full max-w-full min-h-screen font-manrope relative overflow-x-hidden flex flex-col justify-between">
       {/* Top Header */}
       <Header />
+      <DataStatusNotice />
 
       {/* Main Page Views */}
       <main className="w-full flex-grow relative z-10">

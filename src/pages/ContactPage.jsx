@@ -40,11 +40,8 @@ export const ContactPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // The website has no message delivery backend: create a draft, not a success claim.
     setFormSubmitted(true);
-    playSound(680);
-    if (!ecoMode) {
-      confetti({ particleCount: 50, spread: 70 });
-    }
   };
 
   const contactFaqs = [
@@ -148,18 +145,18 @@ export const ContactPage = () => {
                     <h3 className={`font-manrope font-extrabold text-2xl ${
                       isLight ? 'text-[#0F172A]' : 'text-white'
                     }`}>
-                      Inquiry Dispatched to Secretariat
+                      Draft prepared — not sent
                     </h3>
                     <p className={`text-sm max-w-md mx-auto leading-relaxed ${
                       isLight ? 'text-[#64748B]' : 'text-[#94A3B8]'
                     }`}>
-                      Thank you. Your request regarding <strong>{formData.inquiryType}</strong> has been routed to the respective working group fellows.
+                      No message has been transmitted or stored. Copy this draft and send it using a verified institutional contact channel.
                     </p>
-                    <button
-                      onClick={() => setFormSubmitted(false)}
+                    <textarea readOnly aria-label="Copy enquiry draft" className="w-full min-h-36 rounded-lg border p-3 bg-transparent text-sm" value={`Name: ${formData.name}\nEmail: ${formData.email}\nOrganization: ${formData.organization}\nInquiry: ${formData.inquiryType}\nMessage: ${formData.message}`} />
+                    <button onClick={() => setFormSubmitted(false)}
                       className="px-6 py-2.5 rounded-xl bg-teal text-white text-xs font-manrope font-bold hover:bg-teal-dark transition-all cursor-pointer mt-4"
                     >
-                      Submit Another Inquiry
+                      Edit Inquiry
                     </button>
                   </div>
                 ) : (
@@ -168,10 +165,10 @@ export const ContactPage = () => {
                       <h2 className={`font-manrope font-extrabold text-2xl tracking-tight mb-1 ${
                         isLight ? 'text-[#0F172A]' : 'text-white'
                       }`}>
-                        Direct Inquiry Dispatch
+                        Research Enquiry Draft
                       </h2>
                       <p className={`text-xs ${isLight ? 'text-[#64748B]' : 'text-white/50'}`}>
-                        All scientific queries are handled by accredited consortium researchers.
+                        Draft-only form. Do not send sensitive information until an approved delivery endpoint is available.
                       </p>
                     </div>
 
@@ -288,7 +285,7 @@ export const ContactPage = () => {
                       className="w-full py-3.5 rounded-xl bg-teal hover:bg-teal-dark text-white font-manrope font-bold text-sm flex items-center justify-center gap-2 shadow-md hover:scale-[1.01] transition-all cursor-pointer"
                     >
                       <Send className="w-4 h-4" />
-                      <span>Dispatch Inquiry to Secretariat</span>
+                      <span>Prepare Enquiry Draft</span>
                     </button>
                   </form>
                 )}

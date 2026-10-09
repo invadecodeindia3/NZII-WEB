@@ -57,7 +57,7 @@ export const Footer = () => {
                 NZII
               </span>
               <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-teal/15 text-teal font-bold border border-teal/30">
-                2026 AUDITED
+                RESEARCH PROTOTYPE
               </span>
             </div>
 
@@ -105,7 +105,7 @@ export const Footer = () => {
               {emailSubscribed ? (
                 <div className="p-4 rounded-xl bg-teal/15 border border-teal/30 text-teal text-xs font-mono flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4" />
-                  <span>Subscribed! You will receive quarterly energy models and dispatch briefs.</span>
+                  <span>Not subscribed: newsletter delivery has not been connected. No email address was stored.</span>
                 </div>
               ) : (
                 <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3">
