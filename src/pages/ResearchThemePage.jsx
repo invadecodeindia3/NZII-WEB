@@ -1,35 +1,41 @@
 import React from 'react';
 import {Link,useParams,Navigate} from 'react-router-dom';
-import {ArrowLeft,ArrowRight,BookOpen,Layers,Database} from 'lucide-react';
+import {ArrowLeft,ArrowUpRight,Layers} from 'lucide-react';
 import {useGame} from '../context/GameContext';
 import {RESEARCH_THEMES,getResearchTheme} from '../data/researchThemes';
-
+import {themeMedia,editorialMedia} from '../data/editorialMedia';
+import {EditorialPhoto} from '../components/EditorialPhoto';
 export const ResearchThemePage=()=>{
  const {slug}=useParams(),{theme}=useGame(),light=theme==='light',item=getResearchTheme(slug);
  if(!item)return <Navigate to="/research" replace/>;
- const related=RESEARCH_THEMES.filter(t=>t.slug!==item.slug&&(t.category===item.category)).slice(0,3);
- return <div className={`min-h-screen ${light?'bg-white text-slate-900':'bg-[#142439] text-white'}`}>
-  <header className="pt-40 pb-20 px-[4vw] bg-[#18354b] text-white"><div className="max-w-6xl mx-auto">
-   <Link className="inline-flex gap-2 text-xs text-teal-light items-center hover:underline" to="/research"><ArrowLeft size={16}/> All research themes</Link>
-   <p className="font-mono text-xs uppercase tracking-widest text-teal-light mt-12">{item.category} / Research Theme {String(RESEARCH_THEMES.indexOf(item)+1).padStart(2,'0')}</p>
-   <h1 className="font-manrope text-5xl sm:text-6xl max-w-5xl font-extrabold tracking-tight mt-5">{item.title}</h1>
-   <p className="max-w-3xl text-lg mt-6 leading-relaxed text-white/70">{item.description}</p>
-  </div></header>
-  <main className="max-w-6xl mx-auto px-[4vw] py-16">
-   <div className="grid md:grid-cols-[1.5fr_1fr] gap-10">
-    <section><p className="text-xs font-mono uppercase tracking-widest text-teal">Research directions</p><h2 className="font-manrope text-3xl font-bold mt-3 mb-8">Questions we seek to investigate</h2>
-     <div className="space-y-4">{item.questions.map((q,i)=><div key={q} className={`p-6 rounded-2xl border flex gap-5 ${light?'bg-slate-50 border-slate-200':'bg-[#1c3346] border-white/10'}`}><span className="font-mono text-sm text-teal">0{i+1}</span><p className="text-base font-semibold leading-relaxed">{q}</p></div>)}</div>
-    </section>
-    <aside className={`rounded-2xl border p-7 self-start ${light?'bg-slate-50 border-slate-200':'bg-[#141d2a] border-white/10'}`}>
-     <Layers size={24} className="text-teal"/><h2 className="font-bold text-xl mt-5">Potential approaches</h2>
-     <ul className="mt-5 space-y-3">{item.methods.map(m=><li key={m} className="text-sm opacity-75 border-b border-current/10 pb-3">{m}</li>)}</ul>
-     <p className="mt-7 text-xs opacity-65 leading-relaxed">This is a research agenda, not a declaration of completed studies, validated findings or named project teams.</p>
-    </aside>
-   </div>
-   <section className="border-t border-current/10 mt-16 pt-12"><p className="font-mono text-xs uppercase tracking-widest text-teal">Relevant resources</p>
-    <div className="grid sm:grid-cols-2 gap-4 mt-6">{item.links.filter(link=>!['/simulator','/tools','/data'].includes(link.path)).map(link=><Link key={link.path} to={link.path} className={`rounded-xl border p-5 flex justify-between items-center gap-2 hover:border-teal ${light?'border-slate-200':'border-white/15'}`}>{link.text}<ArrowRight className="text-teal" size={17}/></Link>)}</div>
-   </section>
-   {related.length>0&&<section className="mt-16 border-t border-current/10 pt-12"><h2 className="text-2xl font-bold mb-6">Related research themes</h2><div className="grid md:grid-cols-3 gap-4">{related.map(t=><Link key={t.slug} to={`/research/${t.slug}`} className={`p-6 rounded-xl border hover:border-teal ${light?'border-slate-200':'border-white/15'}`}>{t.title}<ArrowRight size={17} className="text-teal mt-3"/></Link>)}</div></section>}
+ const related=RESEARCH_THEMES.filter(t=>t.slug!==item.slug&&t.category===item.category).slice(0,3);
+ const surface=light?'bg-white border-[#dce4e1]':'bg-[#20384b] border-white/10';
+ return <div className={\`min-h-screen \${light?'bg-[#fafbf8] text-[#183449]':'bg-[#142a3e] text-white'}\`}>
+  <section className="relative isolate overflow-hidden bg-[#1b394a] px-[3%] pb-12 pt-36 text-white sm:pb-16 sm:pt-40">
+    <EditorialPhoto src={themeMedia[item.slug]||editorialMedia.landscape} alt="" className="pointer-events-none absolute inset-0 -z-20 h-full w-full" imageClassName="opacity-40"/>
+    <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#142f43]/95 via-[#142f43]/85 to-[#142f43]/35"/>
+    <div className="relative max-w-[1000px]"><Link to="/research" className="inline-flex items-center gap-2 text-xs font-semibold text-[#8bd4c5]"><ArrowLeft size={15}/> All research themes</Link>
+      <p className="mt-9 text-[10px] font-semibold uppercase tracking-[.2em] text-[#8bd4c5]">{item.category} / Research theme {String(RESEARCH_THEMES.indexOf(item)+1).padStart(2,'0')}</p>
+      <h1 className="mt-4 text-[clamp(2.4rem,3.7vw,4rem)] font-semibold tracking-[-.045em]">{item.title}</h1>
+      <p className="mt-4 max-w-[750px] text-[15px] leading-[1.8] text-white/85">{item.description}</p>
+    </div>
+  </section>
+  <main className="px-[3%] py-14 sm:py-16">
+    <div className="grid gap-7 lg:grid-cols-[1.35fr_.65fr] lg:gap-12">
+      <section><p className="text-[10px] uppercase tracking-widest font-semibold text-[#2aa99d]">Research directions</p><h2 className="mt-2 text-[clamp(1.8rem,2.5vw,2.7rem)] font-semibold">Questions we seek to investigate</h2>
+        <div className="mt-7 grid gap-3">{item.questions.map((q,i)=><div className={\`grid grid-cols-[36px_1fr] items-start gap-3 rounded-xl border p-5 \${surface}\`} key={q}><span className="font-mono text-xs text-[#2aa99d]">0{i+1}</span><p className="text-[15px] font-medium leading-[1.65]">{q}</p></div>)}</div>
+      </section>
+      <aside className={\`h-fit rounded-2xl border p-6 \${surface}\`}><Layers size={23} className="text-[#2aa99d]"/><h2 className="mt-4 text-lg font-semibold">Potential approaches</h2>
+        <ul className="mt-4 divide-y divide-current/10">{item.methods.map(method=><li key={method} className="py-3 text-[13px] leading-[1.6] opacity-75">{method}</li>)}</ul>
+        <p className="mt-5 text-xs leading-[1.7] opacity-65">Research theme descriptions express questions and potential approaches, not completed or independently validated studies.</p>
+      </aside>
+    </div>
+    {related.length>0&&<section className="mt-14"><h2 className="text-2xl font-semibold">Related research themes</h2>
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{related.map(t=><Link to={'/research/'+t.slug} key={t.slug} className={\`group overflow-hidden rounded-2xl border \${surface}\`}>
+        <EditorialPhoto src={themeMedia[t.slug]} alt="" className="h-[145px]"/>
+        <div className="flex items-center justify-between gap-3 p-5"><span className="text-[16px] font-semibold">{t.title}</span><ArrowUpRight size={16} className="shrink-0 text-[#2aa99d]"/></div>
+      </Link>)}</div>
+    </section>}
   </main>
  </div>;
 };
