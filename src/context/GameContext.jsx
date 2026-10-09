@@ -17,55 +17,40 @@ export const GameProvider = ({ children }) => {
   const [showBadgeToast, setShowBadgeToast] = useState(null);
   const [soundEnabled, setSoundEnabled] = useState(false);
 
-  // Low-carbon ECO mode: disables all continuous canvas/DOM animations, marquees, particle loops, and GPU renders
-  // When in ecoMode, system locks strictly to Dark mode (no light mode transition possible to conserve OLED pixels and compute power)
-  const [ecoMode, setEcoMode] = useState(() => {
-    return localStorage.getItem('nzii_eco_mode') === 'true';
+  // One persisted display setting; public site offers three real, independently
+  // selectable modes. Eco is a darker, reduced-motion profile, not a broken toggle.
+  const [displayMode, setDisplayMode] = useState(() => {
+    try {
+      const saved = localStorage.getItem('nzii_display_mode');
+      if (['light', 'dark', 'eco'].includes(saved)) return saved;
+      if (localStorage.getItem('nzii_eco_mode') === 'true') return 'eco';
+      return localStorage.getItem('nzii_theme') === 'light' ? 'light' : 'dark';
+    } catch (_) { return 'dark'; }
   });
-
-  // Theme mode: 'dark' (pure black/dark grey) vs 'light' (high contrast crisp light)
-  const [theme, setTheme] = useState(() => {
-    const saved = localStorage.getItem('nzii_theme') || 'dark';
-    const isEco = localStorage.getItem('nzii_eco_mode') === 'true';
-    return isEco ? 'dark' : saved;
-  });
-
+  const [lastRegularMode, setLastRegularMode] = useState('dark');
+  const theme = displayMode === 'light' ? 'light' : 'dark';
+  const ecoMode = displayMode === 'eco';
   useEffect(() => {
-    localStorage.setItem('nzii_theme', theme);
-  }, [theme]);
+    document.documentElement.dataset.displayMode = displayMode;
+    document.documentElement.classList.toggle('eco-power-save', ecoMode);
+    document.documentElement.style.colorScheme = displayMode === 'light' ? 'light' : 'dark';
+    try {
+      localStorage.setItem('nzii_display_mode', displayMode);
+      localStorage.setItem('nzii_theme', theme);
+      localStorage.setItem('nzii_eco_mode', String(ecoMode));
+    } catch (_) { /* Storage may be disabled in private browsing. */ }
+  }, [displayMode, theme, ecoMode]);
 
-  useEffect(() => {
-    localStorage.setItem('nzii_eco_mode', ecoMode ? 'true' : 'false');
-    if (ecoMode) {
-      document.documentElement.classList.add('eco-power-save');
-      // In ECO mode, force dark mode strictly (black/grey consumes lowest power on OLED displays)
-      setTheme('dark');
-    } else {
-      document.documentElement.classList.remove('eco-power-save');
-    }
-  }, [ecoMode]);
-
-  const toggleTheme = (val) => {
-    // If Eco Mode is active, light mode transition is blocked to save energy
-    if (ecoMode) {
-      return;
-    }
-    if (val) {
-      setTheme(val);
-    } else {
-      setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
-    }
+  const changeDisplayMode = (mode) => {
+    if (!['light', 'dark', 'eco'].includes(mode)) return;
+    if (mode !== 'eco') setLastRegularMode(mode);
+    setDisplayMode(mode);
   };
-
-  const toggleEcoMode = () => {
-    setEcoMode(prev => {
-      const next = !prev;
-      if (next) {
-        setTheme('dark'); // lock to dark mode immediately upon entering eco mode
-      }
-      return next;
-    });
-  };
+  // Compatibility for existing private prototype components.
+  const toggleTheme = (val) => changeDisplayMode(
+    val === 'light' || val === 'dark' ? val : theme === 'light' ? 'dark' : 'light'
+  );
+  const toggleEcoMode = () => changeDisplayMode(ecoMode ? lastRegularMode : 'eco');
 
   // Policy levers shared across pages
   // These are synthetic scenario controls, not measured inventory values.
@@ -163,6 +148,8 @@ export const GameProvider = ({ children }) => {
       levers,
       updateLever,
       theme,
+      displayMode,
+      changeDisplayMode,
       toggleTheme,
       ecoMode,
       toggleEcoMode,
