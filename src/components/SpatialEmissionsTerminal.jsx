@@ -28,7 +28,7 @@ import {
 import { useGame } from '../context/GameContext';
 import { RevealOnScroll } from './RevealOnScroll';
 
-// High-resolution Climate TRACE point-source emissions inventory for India
+// Seven hand-entered illustrative records — not independently verified or ingested via an API
 const CLIMATE_TRACE_ASSETS = [
   {
     id: 'vindhyachal-stps',
@@ -44,7 +44,7 @@ const CLIMATE_TRACE_ASSETS = [
     trend: '-3.1% YoY',
     capacity: '4,760 MW',
     decarbPathway: '10% Biomass Pellets + 1.2GW Solar Park Interconnection',
-    status: 'AUDITED ASSET',
+    status: 'UNVERIFIED SAMPLE',
     statusBadge: 'text-amber-500 bg-amber-500/10 border-amber-500/30',
     gridRegion: 'Western Region (WR)',
     coordinates: '24.10° N, 82.67° E',
@@ -55,7 +55,7 @@ const CLIMATE_TRACE_ASSETS = [
     intensity: '942 g CO2/kWh',
     ownership: 'NTPC Limited',
     primaryFuel: 'Sub-bituminous Coal',
-    confidenceScore: '99.1% (Satellite + CEMS)'
+    confidenceScore: 'Not independently verified'
   },
   {
     id: 'mundra-umpp',
@@ -71,7 +71,7 @@ const CLIMATE_TRACE_ASSETS = [
     trend: '-4.4% YoY',
     capacity: '4,000 MW',
     decarbPathway: 'Offshore Wind + BESS Hybrid Dispatch Integration',
-    status: 'AUDITED ASSET',
+    status: 'UNVERIFIED SAMPLE',
     statusBadge: 'text-amber-500 bg-amber-500/10 border-amber-500/30',
     gridRegion: 'Western Region (WR)',
     coordinates: '22.82° N, 69.53° E',
@@ -82,7 +82,7 @@ const CLIMATE_TRACE_ASSETS = [
     intensity: '880 g CO2/kWh',
     ownership: 'Tata Power / Adani Power',
     primaryFuel: 'Imported Bituminous Coal',
-    confidenceScore: '98.7% (Sentinel-5P Plume)'
+    confidenceScore: 'Not independently verified'
   },
   {
     id: 'jamshedpur-steel',
@@ -109,7 +109,7 @@ const CLIMATE_TRACE_ASSETS = [
     intensity: '1.98 t CO2/t steel',
     ownership: 'Tata Steel Limited',
     primaryFuel: 'Metallurgical Coking Coal',
-    confidenceScore: '97.8% (Multi-spectral Satellite)'
+    confidenceScore: 'Not independently verified'
   },
   {
     id: 'talcher-thermal',
@@ -125,7 +125,7 @@ const CLIMATE_TRACE_ASSETS = [
     trend: '-2.3% YoY',
     capacity: '3,000 MW',
     decarbPathway: 'Supercritical Fleet Retrofit + Captive Solar',
-    status: 'AUDITED ASSET',
+    status: 'UNVERIFIED SAMPLE',
     statusBadge: 'text-amber-500 bg-amber-500/10 border-amber-500/30',
     gridRegion: 'Eastern Region (ER)',
     coordinates: '20.95° N, 85.22° E',
@@ -136,7 +136,7 @@ const CLIMATE_TRACE_ASSETS = [
     intensity: '960 g CO2/kWh',
     ownership: 'NTPC Limited',
     primaryFuel: 'Domestic Thermal Coal',
-    confidenceScore: '98.9% (CEMS Verified)'
+    confidenceScore: 'Not independently verified'
   },
   {
     id: 'wadi-clinker',
@@ -163,7 +163,7 @@ const CLIMATE_TRACE_ASSETS = [
     intensity: '560 kg CO2/t clinker',
     ownership: 'ACC / Ambuja Cement',
     primaryFuel: 'Petcoke & Alternative Fuels',
-    confidenceScore: '96.5% (TROPOMI Audited)'
+    confidenceScore: 'Not independently verified'
   },
   {
     id: 'nh44-freight',
@@ -190,7 +190,7 @@ const CLIMATE_TRACE_ASSETS = [
     intensity: '112 g CO2/t-km',
     ownership: 'National Highways Authority (NHAI)',
     primaryFuel: 'Heavy Diesel',
-    confidenceScore: '95.2% (Weigh-in-Motion Telemetry)'
+    confidenceScore: 'Not independently verified'
   },
   {
     id: 'punjab-stubble-biomass',
@@ -217,12 +217,12 @@ const CLIMATE_TRACE_ASSETS = [
     intensity: '4.2 t CO2e/ha',
     ownership: 'Cooperative Farmers & SATAT Plants',
     primaryFuel: 'Agricultural Residue',
-    confidenceScore: '99.4% (VIIRS Thermal Detection)'
+    confidenceScore: 'Not independently verified'
   }
 ];
 
 const SECTORS_LIST = ['All Sectors', 'Power', 'Manufacturing', 'Mineral Extraction', 'Transportation', 'Agriculture'];
-const GASES_LIST = ['CO2e (100-yr GWP)', 'CO2 Only', 'CH4 (Methane)', 'N2O (Nitrous Oxide)'];
+const GASES_LIST = ['CO2e (sample values only)'];
 const YEARS_LIST = ['2025', '2024', '2023'];
 
 export const SpatialEmissionsTerminal = () => {
@@ -231,7 +231,7 @@ export const SpatialEmissionsTerminal = () => {
   
   // Climate TRACE Parameter Controls
   const [selectedYear, setSelectedYear] = useState('2025');
-  const [selectedGas, setSelectedGas] = useState('CO2e (100-yr GWP)');
+  const [selectedGas, setSelectedGas] = useState(GASES_LIST[0]);
   const [selectedSector, setSelectedSector] = useState('All Sectors');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedAssetId, setSelectedAssetId] = useState('vindhyachal-stps');
@@ -250,7 +250,7 @@ export const SpatialEmissionsTerminal = () => {
 
   // Calculate total emissions of visible assets
   const totalFilteredEmissions = filteredAssets.reduce((acc, curr) => {
-    const val = parseFloat(curr.co2e2025);
+    const val = parseFloat(curr[`co2e${selectedYear}`]);
     return acc + (isNaN(val) ? 0 : val);
   }, 0).toFixed(1);
 
@@ -284,7 +284,7 @@ export const SpatialEmissionsTerminal = () => {
             <p className={`text-sm sm:text-base max-w-2xl leading-relaxed ${
               isLight ? 'text-[#64748B]' : 'text-[#94A3B8]'
             }`}>
-              Satellite-verified point-source greenhouse gas telemetry tracking 1,400+ thermal generators, blast furnaces, clinker kilns, and freight corridors across India.
+              Demonstration explorer displaying seven illustrative facility profiles. No live national inventory is connected; values and attributes must be verified against independent sources.
             </p>
           </div>
         </RevealOnScroll>
@@ -351,7 +351,7 @@ export const SpatialEmissionsTerminal = () => {
                 isLight ? 'bg-teal-50 border-teal-200 text-teal-950' : 'bg-[#182232] border-teal/30 text-teal-light'
               }`}>
                 <Activity className="w-3.5 h-3.5 text-teal animate-pulse" />
-                <span>Audited In View: <strong>{totalFilteredEmissions} Mt {selectedGas.split(' ')[0]}</strong></span>
+                <span>Sample Total: <strong>{totalFilteredEmissions} Mt {selectedGas.split(' ')[0]}</strong></span>
               </div>
             </div>
 
@@ -445,14 +445,14 @@ export const SpatialEmissionsTerminal = () => {
                 <div className={`pt-2 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-[11px] font-mono ${
                   isLight ? 'text-[#64748B]' : 'text-white/50'
                 }`}>
-                  <span>Source: Climate TRACE / CEEW</span>
+                  <span>Illustrative data, not live or independently verified</span>
                   <a 
                     href="https://climatetrace.org/explore" 
                     target="_blank" 
                     rel="noreferrer" 
                     className="text-teal font-bold hover:underline inline-flex items-center gap-1"
                   >
-                    <span>TRACE Data API</span>
+                    <span>Climate TRACE public data</span>
                     <ExternalLink className="w-3 h-3" />
                   </a>
                 </div>
@@ -490,7 +490,7 @@ export const SpatialEmissionsTerminal = () => {
                   <div className="flex items-center justify-between mb-2 text-xs font-mono">
                     <span className="font-bold text-teal">Assets In Scope</span>
                     <span className={isLight ? 'text-[#64748B]' : 'text-white/50'}>
-                      {filteredAssets.length} Facilities Listed
+                      {filteredAssets.length} Sample Records
                     </span>
                   </div>
 

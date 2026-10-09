@@ -26,75 +26,59 @@ export const PublicationsPage = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
+  // Fictional examples for interface prototyping. These do not represent publications,
+  // completed studies, peer reviews, real citations or institutional affiliations.
   const publications = [
     {
       id: 'pub-wacc-finance',
-      title: 'Macroeconomic Equilibrium & Capital Mobilization for India’s $10.1 Trillion Decarbonization Horizon',
-      journal: 'Working Paper No. 14 / Macroeconomics Group',
-      date: 'September 2026',
-      citations: '48 Citations',
+      title: 'Financing Pathways for India's Long-Term Energy Transition',
       tag: 'MACRO FINANCE',
-      abstract: 'Analyzes cross-border currency hedging, blended concessional finance, and priority sector lending quotas to de-risk utility-scale renewable generation and reduce cost of capital from 11.2% to 6.8%.'
+      abstract: 'A proposed study examining how blended finance, currency risk and the cost of capital could shape clean-energy investments. Research questions and scenarios are illustrative; no completed findings are presented.'
     },
     {
       id: 'pub-pypsa-grid',
-      title: '8,760h Unit Commitment and Frequency Stability Under 500 GW Variable Renewable Penetration',
-      journal: 'Journal of Power Systems & Energy Economics',
-      date: 'August 2026',
-      citations: '112 Citations',
+      title: 'Exploring Power-System Flexibility in a High-Renewables India',
       tag: 'POWER & GRID',
-      abstract: 'A comprehensive sub-hourly dispatch simulation investigating dynamic spinning reserves, transmission congestion along Green Energy Corridors, and 63 GW pumped storage deployment.'
+      abstract: 'A hypothetical research brief on hourly dispatch, storage, grid congestion and reliability under changing renewable-energy penetration. No calibrated dispatch simulation or validated outcome is claimed.'
     },
     {
       id: 'pub-h2-steel',
-      title: 'Techno-Economics of Direct Reduced Iron (H2-DRI) Using Captive Renewable Hybrid PPAs',
-      journal: 'Consortium Metallurgy Review',
-      date: 'July 2026',
-      citations: '64 Citations',
+      title: 'Potential Pathways for Hydrogen-Based Steelmaking',
       tag: 'HEAVY INDUSTRY',
-      abstract: 'Evaluates the thermal and chemical reduction kinetics of replacing blast furnace coking coal with 100% green hydrogen, modeling levelized cost parity across 14 steelmaking clusters in India.'
+      abstract: 'A concept note outlining questions about hydrogen-based direct reduced iron, clean-power procurement, input costs and infrastructure readiness. Figures and conclusions would require independent modelling.'
     },
     {
       id: 'pub-just-transition',
-      title: 'Socioeconomic Vulnerability and Fiscal Substitution in India’s 54 Coal-Mining Districts',
-      journal: 'CEEW Policy Dialogue Brief',
-      date: 'June 2026',
-      citations: '86 Citations',
+      title: 'A Research Framework for Coal-Region Economic Transition',
       tag: 'JUST TRANSITION',
-      abstract: 'District-level dependency mapping across Jharkhand, Odisha, and Chhattisgarh, detailing District Mineral Foundation royalty realignment and renewable employment absorption models.'
+      abstract: 'An illustrative study design for understanding employment exposure, regional fiscal dependence and local transition options. No fieldwork, district-level findings or third-party validation are implied.'
     },
     {
       id: 'pub-lc3-cement',
-      title: 'Lifecycle Emission Baselines and 28-Day Strength Curves for Limestone Calcined Clay Cement (LC3)',
-      journal: 'Circular Materials Technical Note',
-      date: 'May 2026',
-      citations: '39 Citations',
+      title: 'Investigating Low-Carbon Cement Alternatives',
       tag: 'MATERIALS',
-      abstract: 'Experimental validation of 50% clinker substitution with low-grade kaolinitic clays, reporting a 40% reduction in net carbon emissions and superior chloride resistance in coastal environments.'
+      abstract: 'A proposed technical literature review on clinker substitution, calcined clay availability and potential lifecycle emissions outcomes. No laboratory testing or material-performance result has been completed.'
     },
     {
       id: 'pub-sebi-brsr',
-      title: 'Cryptographic Audit Trails and Telemetry Standards for Statutory SEBI BRSR Core Disclosures',
-      journal: 'ESG Governance Quarterly',
-      date: 'April 2026',
-      citations: '52 Citations',
+      title: 'Designing Traceable Corporate Carbon-Disclosure Workflows',
       tag: 'REGULATORY ESG',
-      abstract: 'A protocol blueprint for integrating smart-meter telemetry and continuous emission monitoring systems (CEMS) directly into statutory corporate carbon accounting ledgers.'
+      abstract: 'A speculative implementation concept for linking activity data, emission factors and audit trails to corporate sustainability reporting. It is not statutory advice or a validated compliance methodology.'
     }
   ];
 
   const publicationsFaqs = [
     {
-      q: "How can I cite these research publications in academic work?",
-      a: "Standard BibTeX and APA citation blocks are provided in the appendix of each research article on the research portal."
+      q: 'Are these real, published academic papers?',
+      a: 'No. All six entries are fictional research concepts created to demonstrate the platform’s intended information architecture. None is represented as a published study.'
     },
     {
-      q: "Are the underlying mathematical models open source?",
-      a: "Yes. All PyPSA optimization scripts and Gurobi solver equations are published on our Open Science Portal under the CC-BY 4.0 license."
+      q: 'Can I cite the concept notes in academic work?',
+      a: 'No. They have no journal publication, DOI, authorship record, peer-review status or verified findings. Consult primary literature and official datasets instead.'
     },
     {
-      q: "Who conducts peer reviews of NZII publications?",
-      a: "Working papers undergo double-blind review by an independent steering committee comprised of university faculty and power systems engineers."
+      q: 'When will real research appear here?',
+      a: 'Verified papers will be added only when an actual document, author details, publication venue or working-paper record, source links and review status can be checked.'
     }
   ];
 
@@ -106,7 +90,7 @@ export const PublicationsPage = () => {
                      (activeCategory === 'transition' && pub.tag === 'JUST TRANSITION');
     const matchSearch = pub.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                         pub.abstract.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                        pub.journal.toLowerCase().includes(searchQuery.toLowerCase());
+                        pub.tag.toLowerCase().includes(searchQuery.toLowerCase());
     return matchCat && matchSearch;
   });
 
@@ -139,20 +123,20 @@ export const PublicationsPage = () => {
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-xl glass-capsule border border-white/20 mx-auto">
               <BookOpen className="w-3.5 h-3.5 text-teal-light" />
               <span className="text-[11px] font-mono font-bold tracking-widest text-teal-light uppercase">
-                Peer-Reviewed Working Papers & Policy Briefs
+                FICTIONAL RESEARCH CONCEPTS
               </span>
             </div>
           </RevealOnScroll>
 
           <RevealOnScroll direction="up" delay={80}>
             <h1 className="font-manrope text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight max-w-4xl mx-auto">
-              Consortium Publications & Research
+              Illustrative Research Library
             </h1>
           </RevealOnScroll>
 
           <RevealOnScroll direction="up" delay={100}>
             <p className="text-base sm:text-lg leading-relaxed max-w-2xl mx-auto font-normal text-white/85">
-              Empirical modeling methodologies, dispatch optimization formulations, and macroeconomic briefs published under open-access scientific licenses.
+              Six fictional research concepts showing topics the platform could explore. These are interface examples only—not published papers, completed studies or verified scientific results.
             </p>
           </RevealOnScroll>
 
@@ -160,12 +144,12 @@ export const PublicationsPage = () => {
           <RevealOnScroll direction="up" delay={120}>
             <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
               <div className="glass-panel px-6 py-4 rounded-2xl border border-white/15 text-center min-w-[170px]">
-                <span className="text-[10px] font-mono uppercase text-teal-light font-bold block mb-0.5">Published Papers</span>
-                <span className="text-2xl font-mono font-bold text-teal-light">6 Working Papers</span>
+                <span className="text-[10px] font-mono uppercase text-teal-light font-bold block mb-0.5">Research Concepts</span>
+                <span className="text-2xl font-mono font-bold text-teal-light">6 Fictional Concepts</span>
               </div>
               <div className="glass-panel px-6 py-4 rounded-2xl border border-white/15 text-center min-w-[170px]">
-                <span className="text-[10px] font-mono uppercase text-white/60 font-bold block mb-0.5">Total Citations</span>
-                <span className="text-2xl font-mono font-bold text-coral">390+ Academic</span>
+                <span className="text-[10px] font-mono uppercase text-white/60 font-bold block mb-0.5">Publication Status</span>
+                <span className="text-2xl font-mono font-bold text-coral">Not Published</span>
               </div>
             </div>
           </RevealOnScroll>
@@ -187,8 +171,8 @@ export const PublicationsPage = () => {
                     <span className="text-[10px] font-mono font-bold text-teal uppercase tracking-wider px-2.5 py-1 rounded bg-teal/10 border border-teal/20">
                       {pub.tag}
                     </span>
-                    <span className="text-xs font-mono font-bold text-coral">
-                      {pub.citations}
+                    <span className="text-xs font-mono font-bold text-coral uppercase">
+                      FICTIONAL
                     </span>
                   </div>
 
@@ -199,7 +183,7 @@ export const PublicationsPage = () => {
                   </h3>
 
                   <span className={`text-xs font-mono block ${isLight ? 'text-[#64748B]' : 'text-white/50'}`}>
-                    {pub.journal} • {pub.date}
+                    Concept Note • Illustrative Only • Not Peer Reviewed
                   </span>
 
                   <p className={`text-xs sm:text-sm leading-relaxed ${
@@ -217,7 +201,7 @@ export const PublicationsPage = () => {
                     onClick={() => playSound(500)}
                     className="text-xs font-manrope font-bold text-teal hover:underline flex items-center gap-1.5 cursor-pointer"
                   >
-                    <span>Read in Research Portal</span>
+                    <span>Explore Research Topics</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
 
@@ -238,16 +222,16 @@ export const PublicationsPage = () => {
 
       {/* ── SECTION 3: FAQS SECTION ── */}
       <FAQSection 
-        title="Publications & Research FAQs"
-        subtitle="Addressing citation standards, open-access licensing, and code reproducibility"
+        title="Illustrative Research Concepts — FAQs"
+        subtitle="Clarifying fictional status, citation limitations and future verification"
         faqs={publicationsFaqs}
       />
 
       {/* ── SECTION 4: PRE-FOOTER BANNER ── */}
       <PreFooterBanner 
-        tag="CONSORTIUM SCIENTIFIC INTELLIGENCE"
+        tag="EXPLORE A CONCEPTUAL RESEARCH FRAMEWORK"
         title="Test Scientific Assumptions in the Decarbonization Sandbox"
-        subtitle="Adjust 6 coupled policy levers, simulate 8,760h hourly dispatch curves, and evaluate India’s transition in real time."
+        subtitle="Experiment with illustrative policy controls and prototype calculators. Outputs are not validated national emissions projections."
         primaryCtaText="Launch Decarbonization Sandbox"
         primaryCtaLink="/simulator"
         secondaryCtaText="Explore Interactive Tools"

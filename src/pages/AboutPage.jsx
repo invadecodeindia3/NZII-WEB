@@ -174,11 +174,8 @@ export const AboutPage = () => {
 
   const handleFellowshipSubmit = (e) => {
     e.preventDefault();
+    // Demonstration-only form: no recruitment backend is connected.
     setFellowshipSubmitted(true);
-    playSound(680);
-    if (!ecoMode) {
-      confetti({ particleCount: 50, spread: 70 });
-    }
   };
 
   return (
@@ -232,7 +229,7 @@ export const AboutPage = () => {
             <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
               <div className="glass-panel px-6 py-4 rounded-2xl border border-white/15 text-center min-w-[170px]">
                 <span className="text-[10px] font-mono uppercase text-teal-light font-bold block mb-0.5">Consortium Fellows</span>
-                <span className="text-2xl font-mono font-bold text-teal-light">48+ Researchers</span>
+                <span className="text-2xl font-mono font-bold text-teal-light">Unverified Team</span>
               </div>
               <div className="glass-panel px-6 py-4 rounded-2xl border border-white/15 text-center min-w-[170px]">
                 <span className="text-[10px] font-mono uppercase text-white/60 font-bold block mb-0.5">Charter Baseline</span>
@@ -745,10 +742,10 @@ export const AboutPage = () => {
                   <Check className="w-7 h-7" />
                 </div>
                 <h3 className={`font-manrope font-extrabold text-2xl ${isLight ? 'text-[#0F172A]' : 'text-white'}`}>
-                  Fellowship Intent Registered!
+                  Fellowship interest preview
                 </h3>
                 <p className={`text-xs sm:text-sm max-w-md mx-auto ${isLight ? 'text-[#64748B]' : 'text-[#94A3B8]'}`}>
-                  Thank you. Our academic steering committee will review your domain profile for <strong>{fellowshipDomain}</strong> within 3 business days.
+                  No application has been sent or saved. The fellowship programme and its verified submission channel require confirmation.
                 </p>
                 <button
                   onClick={() => setFellowshipSubmitted(false)}
@@ -764,7 +761,7 @@ export const AboutPage = () => {
                     Fast-Track Fellowship Intent
                   </h3>
                   <p className={`text-xs ${isLight ? 'text-[#64748B]' : 'text-white/50'}`}>
-                    Submit your academic background for immediate secretariat evaluation.
+                    This is a demonstration form. No application will be transmitted or retained.
                   </p>
                 </div>
 
@@ -826,7 +823,7 @@ export const AboutPage = () => {
                   className="w-full py-3 rounded-xl bg-teal hover:bg-teal-dark text-white font-manrope font-bold text-xs flex items-center justify-center gap-2 shadow-md hover:scale-[1.01] transition-all cursor-pointer"
                 >
                   <Send className="w-3.5 h-3.5" />
-                  <span>Submit Fellowship Expression of Interest</span>
+                  <span>Preview Fellowship Interest</span>
                 </button>
               </form>
             )}

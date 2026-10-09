@@ -30,6 +30,8 @@ export const ContactPage = () => {
   const isLight = theme === 'light';
 
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formBusy, setFormBusy] = useState(false);
+  const [formError, setFormError] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -38,12 +40,26 @@ export const ContactPage = () => {
     message: ''
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setFormSubmitted(true);
-    playSound(680);
-    if (!ecoMode) {
-      confetti({ particleCount: 50, spread: 70 });
+    if (formBusy) return;
+    setFormBusy(true);
+    setFormError('');
+    try {
+      const response = await fetch(`${import.meta.env.VITE_NZII_API_BASE || ''}/api/v1/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || result.status !== 'accepted') {
+        throw new Error(typeof result.detail === 'string' ? result.detail : 'Contact submission is not yet available.');
+      }
+      setFormSubmitted(true);
+    } catch (error) {
+      setFormError(error.message || 'Unable to submit.');
+    } finally {
+      setFormBusy(false);
     }
   };
 
@@ -148,18 +164,18 @@ export const ContactPage = () => {
                     <h3 className={`font-manrope font-extrabold text-2xl ${
                       isLight ? 'text-[#0F172A]' : 'text-white'
                     }`}>
-                      Inquiry Dispatched to Secretariat
+                      Inquiry received
                     </h3>
                     <p className={`text-sm max-w-md mx-auto leading-relaxed ${
                       isLight ? 'text-[#64748B]' : 'text-[#94A3B8]'
                     }`}>
-                      Thank you. Your request regarding <strong>{formData.inquiryType}</strong> has been routed to the respective working group fellows.
+                      Your inquiry was accepted by the secure backend. The team will contact you if a reply is required.
                     </p>
-                    <button
-                      onClick={() => setFormSubmitted(false)}
+                    <textarea readOnly aria-label="Copy enquiry draft" className="w-full min-h-36 rounded-lg border p-3 bg-transparent text-sm" value={`Name: ${formData.name}\nEmail: ${formData.email}\nOrganization: ${formData.organization}\nInquiry: ${formData.inquiryType}\nMessage: ${formData.message}`} />
+                    <button onClick={() => setFormSubmitted(false)}
                       className="px-6 py-2.5 rounded-xl bg-teal text-white text-xs font-manrope font-bold hover:bg-teal-dark transition-all cursor-pointer mt-4"
                     >
-                      Submit Another Inquiry
+                      Edit Inquiry
                     </button>
                   </div>
                 ) : (
@@ -168,10 +184,10 @@ export const ContactPage = () => {
                       <h2 className={`font-manrope font-extrabold text-2xl tracking-tight mb-1 ${
                         isLight ? 'text-[#0F172A]' : 'text-white'
                       }`}>
-                        Direct Inquiry Dispatch
+                        Research Enquiry Draft
                       </h2>
                       <p className={`text-xs ${isLight ? 'text-[#64748B]' : 'text-white/50'}`}>
-                        All scientific queries are handled by accredited consortium researchers.
+                        Submission is available after secure notifications and hosting have been configured.
                       </p>
                     </div>
 
@@ -283,12 +299,14 @@ export const ContactPage = () => {
                       ></textarea>
                     </div>
 
+                    {formError && <p role="alert" className="text-xs text-red-500">{formError}</p>}
                     <button
                       type="submit"
+                      disabled={formBusy}
                       className="w-full py-3.5 rounded-xl bg-teal hover:bg-teal-dark text-white font-manrope font-bold text-sm flex items-center justify-center gap-2 shadow-md hover:scale-[1.01] transition-all cursor-pointer"
                     >
                       <Send className="w-4 h-4" />
-                      <span>Dispatch Inquiry to Secretariat</span>
+                      <span>{formBusy ? 'Submitting…' : 'Submit Enquiry'}</span>
                     </button>
                   </form>
                 )}
