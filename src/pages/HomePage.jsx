@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight, ArrowDown, Network, MapPin, HeartPulse, BookOpen, Compass, Building2, Sprout, Users, Scale, Handshake, CalendarDays } from 'lucide-react';
 import { useGame } from '../context/GameContext';
 import { Footer } from '../components/Footer';
-import { SparseClusters } from '../components/SparseClusters';
+import { HeroContourLines } from '../components/HeroContourLines';
 import { PUBLISHED_NEWS_EVENTS } from '../data/newsEvents';
 
 const choices = [
@@ -36,10 +36,10 @@ const steps = [
 const TextLink = ({to, children}) => <Link to={to} className="inline-flex items-center gap-2 text-sm font-semibold text-teal hover:underline">{children}<ArrowUpRight size={17}/></Link>;
 
 export const HomePage = () => {
-  const { theme } = useGame();
+  const { theme, displayMode, ecoMode } = useGame();
   const light = theme === 'light';
-  const canvas = light ? 'bg-white text-[#182b46]' : 'bg-[#142439] text-[#f6f7f5]';
-  const soft = light ? 'bg-[#f4f6f3]' : 'bg-[#1c3346]';
+  const canvas = light ? 'bg-[#f9faf7] text-[#182b46]' : displayMode==='eco' ? 'bg-[#102334] text-[#f0f5ef]' : 'bg-[#142a3e] text-[#f6f7f5]';
+  const soft = light ? 'bg-[#eef4f0]' : displayMode==='eco' ? 'bg-[#152c3c]' : 'bg-[#20394c]';
   const muted = light ? 'text-[#5f6e78]' : 'text-[#c0cbd1]';
   const edge = light ? 'border-[#dfe5e4]' : 'border-white/15';
   const confirmedNews = PUBLISHED_NEWS_EVENTS.find(entry => entry.type === 'news' && !entry.fictional);
@@ -48,30 +48,35 @@ export const HomePage = () => {
   const displayedEvent = confirmedEvent || sampleEvent;
 
   return <div className={'w-full ' + canvas}>
-    {/* 1. HERO */}
-    <section className="relative isolate flex min-h-[760px] overflow-hidden bg-[#162e44] px-[5vw] pt-40 pb-24 text-white sm:min-h-[830px] sm:pt-44">
-      <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(ellipse_at_75%_25%,#25465c_0%,#162e44_46%,#102638_100%)]"/>
-      <SparseClusters className="pointer-events-none absolute right-[-120px] top-[28%] -z-10 w-[min(46vw,560px)] min-w-[280px] opacity-35 sm:opacity-70"/>
-      <div className="relative mx-auto flex w-full max-w-[1440px] flex-col justify-center">
-        <p className="mb-7 text-xs font-bold uppercase tracking-[0.22em] text-[#a8ce4c]">Net Zero India</p>
-        <h1 className="max-w-[1010px] text-[clamp(2.75rem,5.45vw,5.9rem)] font-semibold leading-[1.065] tracking-[-0.055em]">
-          What will it take for India to reach net zero, and what will different paths mean for the country?
-        </h1>
-        <div className="mt-9 max-w-[790px] space-y-4 text-base leading-[1.85] text-white/80 sm:text-lg">
-          <p>India has committed to achieving net-zero emissions by 2070. Getting there will transform how the country produces and uses energy, builds infrastructure, uses land and resources, and creates livelihoods.</p>
-          <p>Net Zero India brings together research, modelling and diverse expertise to understand the pathways India could take, and their implications for development, people and the environment.</p>
-        </div>
-        <div className="mt-9 flex flex-wrap gap-3">
-          <Link to="/research" className="inline-flex items-center gap-3 rounded-full bg-[#2ba99b] px-6 py-3.5 text-sm font-bold text-white transition-colors hover:bg-[#218b81]">Explore Our Research <ArrowRight size={17}/></Link>
-          <Link to="/about" className="inline-flex items-center gap-3 rounded-full border border-white/45 px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10">About Net Zero India <ArrowUpRight size={17}/></Link>
+    {/* 1. HERO — photograph, clear typography, restrained pathway lines */}
+    <section className={`relative isolate flex min-h-[780px] items-center overflow-hidden px-[3vw] pb-24 pt-36 sm:min-h-[840px] sm:pt-40 ${light?'bg-[#edf3ee] text-[#173650]':'bg-[#102b40] text-white'}`}>
+      <img className={`hero-photo pointer-events-none absolute inset-0 -z-30 h-full w-full object-cover object-[65%_center] ${ecoMode?'opacity-55':light?'opacity-60':'opacity-80'}`}
+        src="/hero.jpg" alt="" aria-hidden="true" decoding="async" fetchPriority="high"/>
+      <div className={`pointer-events-none absolute inset-0 -z-20 ${light
+        ? 'bg-[linear-gradient(90deg,rgba(249,251,247,0.99)_0%,rgba(249,251,247,0.91)_42%,rgba(249,251,247,0.3)_100%)]'
+        : 'bg-[linear-gradient(90deg,rgba(11,33,49,0.98)_0%,rgba(11,33,49,0.88)_44%,rgba(11,33,49,0.24)_100%)]'}`}/>
+      <HeroContourLines className={`decorative-lines pointer-events-none absolute -right-[6%] top-[12%] -z-10 h-[77%] w-[65%] ${light?'text-[#1a928c] opacity-65':'text-[#86ddcf] opacity-70'}`}/>
+      <div className="relative w-full">
+        <div className="max-w-[1010px]">
+          <p className={`mb-6 flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.2em] ${light?'text-[#176e72]':'text-[#a8d36b]'}`}><span className="h-px w-8 bg-current"/>Net Zero India</p>
+          <h1 className="text-[clamp(2.65rem,5.25vw,5.85rem)] font-semibold leading-[1.09] tracking-[-0.05em]">What will it take for India to reach net zero, and what will different paths mean for the country?</h1>
+          <div className={`mt-8 max-w-[790px] space-y-4 text-[clamp(.96rem,1.17vw,1.125rem)] leading-[1.86] ${light?'text-[#38576c]':'text-white/85'}`}>
+            <p>India has committed to achieving net-zero emissions by 2070. Getting there will transform how the country produces and uses energy, builds infrastructure, uses land and resources, and creates livelihoods.</p>
+            <p>Net Zero India brings together research, modelling and diverse expertise to understand the pathways India could take, and their implications for development, people and the environment.</p>
+          </div>
+          <div className="mt-9 flex flex-wrap gap-3">
+            <Link to="/research" className="inline-flex min-h-12 items-center gap-3 rounded-full bg-[#268f89] px-6 py-3 text-sm font-bold text-white hover:bg-[#16756d]">Explore Our Research <ArrowUpRight size={17}/></Link>
+            <Link to="/about" className={`inline-flex min-h-12 items-center gap-3 rounded-full border px-6 py-3 text-sm font-semibold ${light?'border-[#8aa6a5] text-[#173650] hover:bg-white/40':'border-white/50 text-white hover:bg-white/10'}`}>About Net Zero India <ArrowRight size={17}/></Link>
+          </div>
         </div>
       </div>
-      <a href="#why-nzi" className="absolute bottom-7 left-[5vw] flex items-center gap-2 text-xs uppercase tracking-[0.14em] text-white/65 hover:text-white">Discover more <ArrowDown size={16}/></a>
+      <a href="#why-nzi" className={`absolute bottom-7 left-[3%] inline-flex items-center gap-2 text-[11px] uppercase tracking-wider ${light?'text-[#436777]':'text-white/70'}`}>Discover more <ArrowDown size={16}/></a>
+      {!ecoMode&&<div className={`absolute bottom-7 right-[3%] hidden text-right lg:block ${light?'text-[#274d5c]':'text-white/70'}`}><span className="block text-3xl font-semibold">2070</span><span className="text-[10px] uppercase tracking-wider">India's net-zero commitment</span></div>}
     </section>
 
     {/* 2. WHY NZI EXISTS — replaces the removed 9-card grid; editorial, not another card wall */}
-    <section id="why-nzi" className="px-[5vw] py-24 sm:py-28">
-      <div className="mx-auto grid max-w-[1440px] gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
+    <section id="why-nzi" className="px-[3vw] py-24 sm:py-28">
+      <div className="mx-auto grid max-w-none gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
         <div>
           <p className="text-xs font-mono uppercase tracking-[0.16em] text-teal">01 / Why NZI exists</p>
           <h2 className="mt-6 max-w-[650px] text-[clamp(2.5rem,4.3vw,4.9rem)] font-semibold leading-[1.1] tracking-[-0.05em]">Net zero is not one destination with <em className="font-normal text-teal">one road.</em></h2>
@@ -88,8 +93,8 @@ export const HomePage = () => {
     </section>
 
     {/* 3. THE DIFFERENCE */}
-    <section className={'px-[5vw] py-24 sm:py-28 ' + soft}>
-      <div className="mx-auto max-w-[1440px]">
+    <section className={'px-[3vw] py-24 sm:py-28 ' + soft}>
+      <div className="mx-auto max-w-none">
         <p className="text-xs font-mono uppercase tracking-[0.16em] text-teal">02 / The difference</p>
         <h2 className="mt-6 max-w-4xl text-[clamp(2.4rem,4.15vw,4.6rem)] font-semibold leading-tight tracking-[-0.05em]">A more complete picture of India’s net-zero transition</h2>
         <div className="mt-12 grid gap-x-9 gap-y-10 md:grid-cols-2 xl:grid-cols-4">
@@ -103,8 +108,8 @@ export const HomePage = () => {
     </section>
 
     {/* 4. WHAT NZI IS TRYING TO UNDERSTAND */}
-    <section className="bg-[#18354b] px-[5vw] py-24 text-white sm:py-28">
-      <div className="mx-auto max-w-[1440px]">
+    <section className="bg-[#18354b] px-[3vw] py-24 text-white sm:py-28">
+      <div className="mx-auto max-w-none">
         <p className="text-xs font-mono uppercase tracking-[0.16em] text-[#9dcc5d]">03 / What NZI is trying to understand</p>
         <h2 className="mt-6 max-w-5xl text-[clamp(2.5rem,4.6vw,5rem)] font-semibold leading-tight tracking-[-0.05em]">One transition. <em className="font-normal text-[#a8ce4c]">Many connected questions.</em></h2>
         <div className="mt-12 grid gap-x-12 md:grid-cols-2 xl:grid-cols-3">
@@ -119,8 +124,8 @@ export const HomePage = () => {
     </section>
 
     {/* 5. HOW IT WORKS */}
-    <section className="px-[5vw] py-24 sm:py-28">
-      <div className="mx-auto max-w-[1440px]">
+    <section className="px-[3vw] py-24 sm:py-28">
+      <div className="mx-auto max-w-none">
         <p className="text-xs font-mono uppercase tracking-[0.16em] text-teal">04 / How it works</p>
         <h2 className="mt-6 max-w-4xl text-[clamp(2.4rem,4.3vw,4.7rem)] font-semibold leading-tight tracking-[-0.05em]">From possible futures to evidence for decisions</h2>
         <div className="mt-14 grid gap-8 md:grid-cols-2 xl:grid-cols-4">
@@ -134,7 +139,7 @@ export const HomePage = () => {
     </section>
 
     {/* 6. PHILOSOPHY */}
-    <section className="bg-[#dce8e0] px-[5vw] py-24 text-[#1b3644] sm:py-28">
+    <section className="bg-[#dce8e0] px-[3vw] py-24 text-[#1b3644] sm:py-28">
       <div className="mx-auto max-w-[1140px]">
         <p className="text-xs font-mono uppercase tracking-[0.16em] text-[#278778]">05 / A guiding philosophy</p>
         <h2 className="mt-8 text-[clamp(2.6rem,4.8vw,5.3rem)] font-semibold leading-[1.15] tracking-[-0.05em]">We are not looking for <em className="font-normal">the</em> pathway to net zero.</h2>
@@ -146,8 +151,8 @@ export const HomePage = () => {
     </section>
 
     {/* 7. FEATURED RESEARCH / KNOWLEDGE */}
-    <section className="px-[5vw] py-24 sm:py-28">
-      <div className="mx-auto max-w-[1440px]">
+    <section className="px-[3vw] py-24 sm:py-28">
+      <div className="mx-auto max-w-none">
         <p className="text-xs font-mono uppercase tracking-[0.16em] text-teal">06 / Research & knowledge</p>
         <h2 className="mt-6 text-[clamp(2.4rem,4.3vw,4.7rem)] font-semibold tracking-[-0.05em]">Explore our work</h2>
         <div className="mt-12 grid gap-5 lg:grid-cols-[1.2fr_1fr_1fr]">
@@ -171,8 +176,8 @@ export const HomePage = () => {
     </section>
 
     {/* 8. THE PEOPLE / COLLABORATIVE MODEL */}
-    <section className={'px-[5vw] py-24 sm:py-28 ' + soft}>
-      <div className="mx-auto max-w-[1440px]">
+    <section className={'px-[3vw] py-24 sm:py-28 ' + soft}>
+      <div className="mx-auto max-w-none">
         <p className="text-xs font-mono uppercase tracking-[0.16em] text-teal">07 / People & collaboration</p>
         <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:gap-24">
           <div><h2 className="max-w-3xl text-[clamp(2.4rem,4.1vw,4.7rem)] font-semibold leading-[1.15] tracking-[-0.05em]">Built through collaboration. <em className="font-normal text-teal">Led from India.</em></h2>
@@ -189,8 +194,8 @@ export const HomePage = () => {
     </section>
 
     {/* 9. SUPPORT */}
-    <section className={'border-y px-[5vw] py-14 ' + edge}>
-      <div className="mx-auto flex max-w-[1440px] flex-wrap items-center gap-x-16 gap-y-7">
+    <section className={'border-y px-[3vw] py-14 ' + edge}>
+      <div className="mx-auto flex max-w-none flex-wrap items-center gap-x-16 gap-y-7">
         <h2 className="font-mono text-xs uppercase tracking-[0.16em] text-teal">Supported by</h2>
         <span className="text-xl font-semibold">Schmidt Sciences <small className={'text-sm font-normal ' + muted}>/ AX programme</small></span>
         <span className="text-xl font-semibold">Giving Green</span>
@@ -198,8 +203,8 @@ export const HomePage = () => {
     </section>
 
     {/* 10. LATEST FROM NZI: editorial placeholders, no fabricated outcomes */}
-    <section className="px-[5vw] py-24 sm:py-28">
-      <div className="mx-auto max-w-[1440px]">
+    <section className="px-[3vw] py-24 sm:py-28">
+      <div className="mx-auto max-w-none">
         <p className="text-xs font-mono uppercase tracking-[0.16em] text-teal">08 / News and knowledge</p>
         <h2 className="mt-6 text-[clamp(2.4rem,4.1vw,4.7rem)] font-semibold tracking-[-0.05em]">Latest from Net Zero India</h2>
         <div className="mt-11 grid gap-7 md:grid-cols-3">
@@ -217,8 +222,8 @@ export const HomePage = () => {
     </section>
 
     {/* FINAL CTA */}
-    <section className="bg-[#173448] px-[5vw] py-24 text-white sm:py-28">
-      <div className="mx-auto flex max-w-[1440px] flex-col items-start justify-between gap-10 lg:flex-row lg:items-end">
+    <section className="bg-[#173448] px-[3vw] py-24 text-white sm:py-28">
+      <div className="mx-auto flex max-w-none flex-col items-start justify-between gap-10 lg:flex-row lg:items-end">
         <div><h2 className="max-w-4xl text-[clamp(2.7rem,4.8vw,5.7rem)] font-semibold leading-[1.1] tracking-[-0.055em]">India's path to 2070 is still being written.</h2><p className="mt-6 max-w-2xl text-lg leading-[1.7] text-white/70">Explore the research, evidence and ideas helping us understand the choices ahead.</p></div>
         <Link to="/research" className="inline-flex shrink-0 items-center gap-3 rounded-full bg-[#2ba99b] px-6 py-3.5 text-sm font-bold text-white hover:bg-[#218b81]">Explore Our Research <ArrowRight size={17}/></Link>
       </div>
