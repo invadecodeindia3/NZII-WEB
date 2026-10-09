@@ -79,7 +79,7 @@ export const SectorsPage = () => {
       icon: Trees,
       share: '2.5 to 3.0 Gt CO2 Sink Target',
       target: '33% Forest Canopy Cover',
-      keyLever: 'reforestation',
+      keyLever: 'afforestation',
       color: 'text-emerald-500 bg-emerald-500/10 border-emerald-500/30',
       description: 'Expanding natural terrestrial sinks serves as the ultimate hedge for residual emissions. Precision agroforestry, coastal mangrove restoration, and soil carbon preservation simultaneously secure rural livelihoods and enhance biodiversity.',
       actions: [
@@ -127,7 +127,7 @@ export const SectorsPage = () => {
     },
     {
       q: "Can users adjust sectoral levers simultaneously in the simulation?",
-      a: "Yes. All sector levers are dynamically coupled in our backend so changes in power sector clean energy instantly recalculate electric vehicle carbon intensity."
+      a: "Sector controls currently share a synthetic client-side score. A physically coupled backend has not yet been integrated."
     }
   ];
 

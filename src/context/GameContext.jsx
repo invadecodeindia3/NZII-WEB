@@ -68,18 +68,24 @@ export const GameProvider = ({ children }) => {
   };
 
   // Policy levers shared across pages
-  const [levers, setLevers] = useState({
-    cleanGrid: 48,
-    industrialEff: 32,
-    evAdoption: 28,
-    afforestation: 36,
-    carbonPrice: 42,
-    justTransition: 50,
-  });
+  // These are synthetic scenario controls, not measured inventory values.
+  const DEFAULT_LEVERS = {
+    cleanGrid: 48, industrialEff: 32, evAdoption: 28, afforestation: 36,
+    carbonPrice: 42, justTransition: 50, greenH2: 30, gridModernization: 25,
+  };
+  const [levers, setLevers] = useState({ ...DEFAULT_LEVERS });
+  const resetLevers = () => {
+    setLevers({ ...DEFAULT_LEVERS });
+    calculateImpact(DEFAULT_LEVERS);
+  };
+  // Synthetic, unvalidated demonstration index (3000 is NOT actual MtCO2e).
+  const calculatedEmissions = Math.round(3000 * (1 - Math.min(0.9, impactScore / 440)));
+  const reductionPercent = Math.round((1 - calculatedEmissions / 3000) * 100);
+  const targetYear = 2070 - Math.round(reductionPercent * 0.2);
 
   const updateLever = (key, value) => {
     setLevers(prev => {
-      const updated = { ...prev, [key]: value };
+      const updated = { ...prev, [key]: Math.max(0, Math.min(100, Number(value) || 0)) };
       calculateImpact(updated);
       return updated;
     });
@@ -92,7 +98,9 @@ export const GameProvider = ({ children }) => {
       currentLevers.evAdoption * 0.8 +
       currentLevers.afforestation * 0.6 +
       currentLevers.carbonPrice * 0.5 +
-      currentLevers.justTransition * 0.4
+      currentLevers.justTransition * 0.4 +
+      (currentLevers.greenH2 || 0) * 0.25 +
+      (currentLevers.gridModernization || 0) * 0.25
     );
     setImpactScore(total);
 
@@ -124,7 +132,7 @@ export const GameProvider = ({ children }) => {
   };
 
   const playSound = (freq = 440) => {
-    if (!soundEnabled && typeof window !== 'undefined') {
+    if (soundEnabled && typeof window !== 'undefined') {
       try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const osc = audioCtx.createOscillator();
@@ -146,6 +154,10 @@ export const GameProvider = ({ children }) => {
   return (
     <GameContext.Provider value={{
       impactScore,
+      calculatedEmissions,
+      targetYear,
+      reductionPercent,
+      resetLevers,
       unlockedBadges,
       showBadgeToast,
       levers,

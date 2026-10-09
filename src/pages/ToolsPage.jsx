@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { downloadJSON } from '../utils/download';
 import { Link } from 'react-router-dom';
 import confetti from 'canvas-confetti';
 import { 
@@ -605,15 +606,15 @@ export const ToolsPage = () => {
   const toolsFaqs = [
     {
       q: "How are the mathematical formulations behind these 16 tools validated?",
-      a: "Every tool equation is grounded in peer-reviewed methodologies from Central Electricity Authority (CEA) grid reports, Ministry of Power technical specifications, and National Green Hydrogen Mission techno-economic parameters."
+      a: "These are exploratory calculators. Their assumptions require independent validation before engineering or investment use."
     },
     {
       q: "Can plant managers and policy researchers export simulation parameters?",
-      a: "Yes. Clicking 'Export Simulation Run' formats the full input-output parameter matrix with timestamped provenance for engineering and ESG audit dossiers."
+      a: "Export downloads JSON inputs and demonstration outputs; it is not an audit dossier."
     },
     {
       q: "How do these tools interface with the National Decarbonization Sandbox?",
-      a: "These micro-engines provide granular physical and economic coefficients that feed directly into our national 8,760h unit-commitment simulation."
+      a: "These calculators are not yet connected to a validated national dispatch model."
     }
   ];
 
@@ -668,11 +669,11 @@ export const ToolsPage = () => {
             <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
               <div className="glass-panel px-6 py-4 rounded-2xl border border-white/15 text-center min-w-[170px]">
                 <span className="text-[10px] font-mono uppercase text-teal-light font-bold block mb-0.5">Interactive Tools</span>
-                <span className="text-2xl font-mono font-bold text-teal-light">16 Live Engines</span>
+                <span className="text-2xl font-mono font-bold text-teal-light">16 Prototype Calculators</span>
               </div>
               <div className="glass-panel px-6 py-4 rounded-2xl border border-white/15 text-center min-w-[170px]">
                 <span className="text-[10px] font-mono uppercase text-white/60 font-bold block mb-0.5">Model Resolution</span>
-                <span className="text-2xl font-mono font-bold text-coral">Sub-Hourly Realtime</span>
+                <span className="text-2xl font-mono font-bold text-coral">Instant Demo Outputs</span>
               </div>
               <div className="glass-panel px-6 py-4 rounded-2xl border border-white/15 text-center min-w-[170px]">
                 <span className="text-[10px] font-mono uppercase text-white/60 font-bold block mb-0.5">Format</span>
@@ -964,8 +965,12 @@ export const ToolsPage = () => {
 
                         <button
                           onClick={() => {
+                            downloadJSON('nzii-tool-simulation.json', {
+                              status: 'illustrative_unvalidated', generatedAt: new Date().toISOString(),
+                              tool: activeTool.title, inputs: vals, outputs: output,
+                              warning: 'Demonstration formulas. Not a certified engineering or carbon audit.'
+                            });
                             playSound(680);
-                            if (!ecoMode) confetti({ particleCount: 40, spread: 60 });
                           }}
                           className="w-full py-2.5 rounded-xl bg-teal hover:bg-teal-dark text-white font-manrope font-bold text-xs shadow-md transition-all cursor-pointer flex items-center justify-center gap-1.5 mt-2"
                         >
@@ -985,7 +990,7 @@ export const ToolsPage = () => {
               isLight ? 'bg-[#F8FAFC] border-[#E2E8F0]' : 'bg-[#141A26] border-[#1F293D]'
             }`}>
               <span className={`text-xs font-mono ${isLight ? 'text-[#64748B]' : 'text-white/40'}`}>
-                Calibrated with Central Electricity Authority (CEA) baselines
+                Illustrative calculations — independent validation pending
               </span>
               <button
                 onClick={() => setActiveToolId(null)}

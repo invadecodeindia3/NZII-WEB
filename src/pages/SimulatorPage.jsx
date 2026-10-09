@@ -23,6 +23,7 @@ import { InteractiveDecarbDial } from '../components/InteractiveDecarbDial';
 import { RevealOnScroll } from '../components/RevealOnScroll';
 import { FAQSection } from '../components/FAQSection';
 import { PreFooterBanner } from '../components/PreFooterBanner';
+import { downloadJSON } from '../utils/download';
 
 export const SimulatorPage = () => {
   const {
@@ -89,11 +90,11 @@ export const SimulatorPage = () => {
   const simulatorFaqs = [
     {
       q: "How does the simulation model calculate national emissions abatement in real time?",
-      a: "The engine runs a simplified polynomial response surface calibrated against 8,760-hour unit commitment simulations and bottom-up marginal abatement cost curves (MACC)."
+      a: "This prototype uses synthetic values and weights, not a calibrated national inventory or hourly dispatch simulation."
     },
     {
       q: "Can I export my simulated policy run for further academic analysis?",
-      a: "Yes. Clicking 'Export Run' generates a JSON/CSV configuration package containing all lever percentages and computed sectoral abatement outputs."
+      a: "Export Run downloads a JSON file containing your current demonstration inputs and outputs, marked unvalidated."
     }
   ];
 
@@ -132,7 +133,7 @@ export const SimulatorPage = () => {
                   </span>
                 </div>
                 <h1 className="font-manrope text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
-                  National Decarbonization Sandbox
+                  National Decarbonization Sandbox (Illustrative)
                 </h1>
                 <p className="text-base sm:text-lg leading-relaxed max-w-2xl font-normal text-white/85">
                   Stress-test policy levers, adjust sectoral deployment rates, and simulate India’s carbon trajectory from 2025 to 2070 in real time.
@@ -148,7 +149,7 @@ export const SimulatorPage = () => {
 
                 <div className="glass-panel p-5 rounded-2xl border border-white/15 text-right min-w-[160px]">
                   <span className="text-[10px] font-mono uppercase text-white/60 font-bold block mb-1">Run Rate</span>
-                  <span className="text-2xl font-mono font-bold text-coral">{calculatedEmissions} MT</span>
+                  <span className="text-2xl font-mono font-bold text-coral">{calculatedEmissions} INDEX</span>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
@@ -162,9 +163,11 @@ export const SimulatorPage = () => {
 
                   <button
                     onClick={() => {
-                      if (!ecoMode) {
-                        confetti({ particleCount: 60, spread: 70 });
-                      }
+                      downloadJSON('nzii-scenario.json', {
+                        status: 'illustrative_unvalidated', generatedAt: new Date().toISOString(),
+                        methodology: 'Synthetic baseline 3000; simplified weighted levers; not actual emissions',
+                        levers, impactScore, calculatedEmissions, reductionPercent, targetYear
+                      });
                       playSound(680);
                     }}
                     className="px-5 py-3.5 rounded-xl bg-teal text-white text-xs font-manrope font-bold hover:bg-teal-dark transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
