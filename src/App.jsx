@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { GameProvider } from './context/GameContext';
 import { Header } from './components/Header';
 import { DataStatusNotice } from './components/DataStatusNotice';
@@ -46,6 +46,8 @@ const AppContent = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/simulator" element={<SimulatorPage />} />
+          <Route path="/simulate" element={<Navigate to="/simulator" replace />} />
+          <Route path="/simulation" element={<Navigate to="/simulator" replace />} />
           <Route path="/sectors" element={<SectorsPage />} />
           <Route path="/solutions" element={<SolutionsPage />} />
           <Route path="/research" element={<ResearchHubPage />} />
