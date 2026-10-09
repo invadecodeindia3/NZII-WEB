@@ -80,7 +80,7 @@ export const HomePage = () => {
             <p>India has committed to achieving net-zero emissions by 2070. Getting there will transform how the country produces and uses energy, builds infrastructure, uses land and resources, and creates livelihoods.</p>
             <p>Net Zero India brings together research, modelling and diverse expertise to understand the pathways India could take, and their implications for development, people and the environment.</p>
           </div>
-          <div className="mt-6 flex flex-wrap gap-2.5">
+          <div className="nzi-hero-actions mt-6 flex flex-wrap gap-2.5">
             <Link to="/research" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#258f86] px-5 py-2.5 text-xs font-semibold text-white hover:bg-[#1a716d]">Explore Our Research <ArrowUpRight size={15}/></Link>
             <Link to="/about" className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full border px-5 py-2.5 text-xs font-semibold ${light?'border-[#719e9b] text-[#173e4b] hover:bg-white/50':'border-white/45 text-white hover:bg-white/10'}`}>About Net Zero India <ArrowRight size={15}/></Link>
           </div>
