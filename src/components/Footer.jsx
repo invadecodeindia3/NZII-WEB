@@ -26,13 +26,30 @@ export const Footer = () => {
   const isLight = theme === 'light';
   const [emailSubscribed, setEmailSubscribed] = useState(false);
   const [emailInput, setEmailInput] = useState('');
+  const [subscribeBusy, setSubscribeBusy] = useState(false);
+  const [subscribeError, setSubscribeError] = useState('');
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe = async (e) => {
     e.preventDefault();
-    if (!emailInput.trim()) return;
-    setEmailSubscribed(true);
-    playSound(620);
-    setEmailInput('');
+    if (!emailInput.trim() || subscribeBusy) return;
+    setSubscribeBusy(true);
+    setSubscribeError('');
+    try {
+      const response = await fetch(`${import.meta.env.VITE_NZII_API_BASE || ''}/api/v1/newsletter`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: emailInput.trim(), consent: true }),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || result.status !== 'confirmation_pending') {
+        throw new Error(typeof result.detail === 'string' ? result.detail : 'Newsletter registration is currently unavailable.');
+      }
+      setEmailSubscribed(true);
+      setEmailInput('');
+    } catch (error) {
+      setSubscribeError(error.message || 'Newsletter registration failed.');
+    } finally {
+      setSubscribeBusy(false);
+    }
   };
 
   return (
@@ -105,7 +122,7 @@ export const Footer = () => {
               {emailSubscribed ? (
                 <div className="p-4 rounded-xl bg-teal/15 border border-teal/30 text-teal text-xs font-mono flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4" />
-                  <span>Not subscribed: newsletter delivery has not been connected. No email address was stored.</span>
+                  <span>Check your email for a confirmation link. Subscription activates only after confirmation.</span>
                 </div>
               ) : (
                 <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3">
@@ -123,13 +140,15 @@ export const Footer = () => {
                   />
                   <button
                     type="submit"
+                    disabled={subscribeBusy}
                     className="px-6 py-3 rounded-xl bg-teal hover:bg-teal-dark text-white font-manrope font-bold text-xs flex items-center justify-center gap-2 transition-all shrink-0 cursor-pointer shadow-md"
                   >
-                    <span>Subscribe</span>
+                    <span>{subscribeBusy ? 'Submitting…' : 'Subscribe'}</span>
                     <Send className="w-3.5 h-3.5" />
                   </button>
                 </form>
               )}
+              {subscribeError && <p role="alert" className="text-xs text-red-500 mt-2">{subscribeError}</p>}
             </div>
           </div>
         </div>

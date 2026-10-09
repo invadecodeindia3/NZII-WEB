@@ -30,6 +30,8 @@ export const ContactPage = () => {
   const isLight = theme === 'light';
 
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formBusy, setFormBusy] = useState(false);
+  const [formError, setFormError] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -38,10 +40,27 @@ export const ContactPage = () => {
     message: ''
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // The website has no message delivery backend: create a draft, not a success claim.
-    setFormSubmitted(true);
+    if (formBusy) return;
+    setFormBusy(true);
+    setFormError('');
+    try {
+      const response = await fetch(`${import.meta.env.VITE_NZII_API_BASE || ''}/api/v1/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || result.status !== 'accepted') {
+        throw new Error(typeof result.detail === 'string' ? result.detail : 'Contact submission is not yet available.');
+      }
+      setFormSubmitted(true);
+    } catch (error) {
+      setFormError(error.message || 'Unable to submit.');
+    } finally {
+      setFormBusy(false);
+    }
   };
 
   const contactFaqs = [
@@ -145,12 +164,12 @@ export const ContactPage = () => {
                     <h3 className={`font-manrope font-extrabold text-2xl ${
                       isLight ? 'text-[#0F172A]' : 'text-white'
                     }`}>
-                      Draft prepared — not sent
+                      Inquiry received
                     </h3>
                     <p className={`text-sm max-w-md mx-auto leading-relaxed ${
                       isLight ? 'text-[#64748B]' : 'text-[#94A3B8]'
                     }`}>
-                      No message has been transmitted or stored. Copy this draft and send it using a verified institutional contact channel.
+                      Your inquiry was accepted by the secure backend. The team will contact you if a reply is required.
                     </p>
                     <textarea readOnly aria-label="Copy enquiry draft" className="w-full min-h-36 rounded-lg border p-3 bg-transparent text-sm" value={`Name: ${formData.name}\nEmail: ${formData.email}\nOrganization: ${formData.organization}\nInquiry: ${formData.inquiryType}\nMessage: ${formData.message}`} />
                     <button onClick={() => setFormSubmitted(false)}
@@ -168,7 +187,7 @@ export const ContactPage = () => {
                         Research Enquiry Draft
                       </h2>
                       <p className={`text-xs ${isLight ? 'text-[#64748B]' : 'text-white/50'}`}>
-                        Draft-only form. Do not send sensitive information until an approved delivery endpoint is available.
+                        Submission is available after secure notifications and hosting have been configured.
                       </p>
                     </div>
 
@@ -280,12 +299,14 @@ export const ContactPage = () => {
                       ></textarea>
                     </div>
 
+                    {formError && <p role="alert" className="text-xs text-red-500">{formError}</p>}
                     <button
                       type="submit"
+                      disabled={formBusy}
                       className="w-full py-3.5 rounded-xl bg-teal hover:bg-teal-dark text-white font-manrope font-bold text-sm flex items-center justify-center gap-2 shadow-md hover:scale-[1.01] transition-all cursor-pointer"
                     >
                       <Send className="w-4 h-4" />
-                      <span>Prepare Enquiry Draft</span>
+                      <span>{formBusy ? 'Submitting…' : 'Submit Enquiry'}</span>
                     </button>
                   </form>
                 )}

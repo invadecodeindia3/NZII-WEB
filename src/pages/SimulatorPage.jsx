@@ -65,7 +65,7 @@ export const SimulatorPage = () => {
       icon: Activity
     },
     {
-      key: 'reforestation',
+      key: 'afforestation',
       title: 'Terrestrial Sinks & Agroforestry',
       desc: 'Agroforestry boundaries, coastal mangrove restoration, and soil carbon preservation.',
       stat: '3.0 Gt CO2e Carbon Sink',
