@@ -252,4 +252,4 @@ main [class*="px-[4vw]"], main [class*="px-[5vw]"] {
 @media (prefers-reduced-motion:reduce){
  .nzi-reveal,.nzi-home-hero h1,.nzi-home-hero h1+div,.nzi-hero-actions,.hero-photo,.decorative-lines path{animation:none!important;opacity:1!important;transform:none!important}
 }
-[data-display-mode="eco"] .nzi-reveal,[data-display-mode="eco"] .hero-photo,[data-display-mode="eco"] .decorative-lines path{animation:none!important;opacity:1;transform:none}
+[data-display-mode="eco"] .nzi-reveal,[data-display-mode="eco"] .hero-photo,[data-display-mode="eco"] .decorative-lines path{animation:none!important;transform:none}
