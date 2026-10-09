@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 @theme {
-  --color-navy: #000000;
-  --color-navy-surface: #121212;
-  --color-navy-elevated: #1E1E1E;
-  --color-teal: #0D9488;
-  --color-teal-light: #2DD4BF;
-  --color-teal-dark: #0F766E;
+  --color-navy: #142439;
+  --color-navy-surface: #1c3346;
+  --color-navy-elevated: #244055;
+  --color-teal: #2aa99d;
+  --color-teal-light: #7ccaba;
+  --color-teal-dark: #218d83;
   --color-amber: #F59E0B;
   --color-coral: #E76F51;
-  --color-canvas: #080808;
+  --color-canvas: #142439;
   --color-canvas-light: #F8FAFC;
   --color-card-light: #FFFFFF;
 
@@ -38,7 +38,7 @@ body {
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
-  background-color: #080808;
+  background-color: #142439;
   font-family: var(--font-manrope);
   color: #F8FAFC;
   text-rendering: optimizeLegibility;
@@ -64,7 +64,7 @@ p, span, a, button, input, div {
 }
 
 ::selection {
-  background-color: #0D9488;
+  background-color: #2aa99d;
   color: white;
 }
 
