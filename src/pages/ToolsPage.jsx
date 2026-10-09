@@ -623,197 +623,43 @@ export const ToolsPage = () => {
       isLight ? 'bg-[#FFFFFF] text-[#0F172A]' : 'bg-[#080808] text-white'
     }`}>
       
-      {/* ── SECTION 1: CINEMATIC HERO HEADER (CENTER ALIGNED) ── */}
-      <section className="relative w-full min-h-[580px] lg:min-h-[640px] flex flex-col justify-end pt-36 pb-20 px-[3vw] overflow-hidden select-none border-b border-white/10 bg-[#050B14] text-white">
-        
-        {/* Background Video Layer */}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-45 scale-105"
-        >
-          <source src="/hero-video.mp4" type="video/mp4" />
-          <source src="/hero-video (1).mp4" type="video/mp4" />
-        </video>
-
-        {/* Cinematic Gradient Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-black/60 to-black/80 pointer-events-none z-10"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.7)_100%)] pointer-events-none z-10"></div>
-
-        <div className="relative z-20 w-full max-w-[1280px] mx-auto text-center space-y-6">
-          <RevealOnScroll direction="up" delay={60}>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-xl glass-capsule border border-white/20 mx-auto">
-              <Wrench className="w-3.5 h-3.5 text-teal-light" />
-              <span className="text-[11px] font-mono font-bold tracking-widest text-teal-light uppercase">
-                Interactive Engineering Suite • 16 Dedicated Simulators
-              </span>
-            </div>
-          </RevealOnScroll>
-
-          <RevealOnScroll direction="up" delay={80}>
-            <h1 className="font-manrope text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight max-w-4xl mx-auto">
-              Decarbonization Tool Suite
-            </h1>
-          </RevealOnScroll>
-
-          <RevealOnScroll direction="up" delay={100}>
-            <p className="text-base sm:text-lg leading-relaxed max-w-2xl mx-auto font-normal text-white/85">
-              16 high-precision techno-economic micro-simulators. Select any tool to configure real-time engineering parameters, stress-test cost curves, and compute instant outputs.
-            </p>
-          </RevealOnScroll>
-
-          {/* Status Glass HUD (Center Aligned) */}
-          <RevealOnScroll direction="up" delay={120}>
-            <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-              <div className="glass-panel px-6 py-4 rounded-2xl border border-white/15 text-center min-w-[170px]">
-                <span className="text-[10px] font-mono uppercase text-teal-light font-bold block mb-0.5">Interactive Tools</span>
-                <span className="text-2xl font-mono font-bold text-teal-light">16 Prototype Calculators</span>
-              </div>
-              <div className="glass-panel px-6 py-4 rounded-2xl border border-white/15 text-center min-w-[170px]">
-                <span className="text-[10px] font-mono uppercase text-white/60 font-bold block mb-0.5">Model Resolution</span>
-                <span className="text-2xl font-mono font-bold text-coral">Instant Demo Outputs</span>
-              </div>
-              <div className="glass-panel px-6 py-4 rounded-2xl border border-white/15 text-center min-w-[170px]">
-                <span className="text-[10px] font-mono uppercase text-white/60 font-bold block mb-0.5">Format</span>
-                <span className="text-2xl font-mono font-bold text-teal">1 Tool Per Row</span>
-              </div>
-            </div>
-          </RevealOnScroll>
-        </div>
-      </section>
-
-      {/* ── SECTION 2: SEARCH & SECTOR CATEGORY FILTER STRIP (CENTER ALIGNED) ── */}
-      <section className="w-full max-w-[1720px] mx-auto px-[3vw] pt-12 space-y-8">
-        <RevealOnScroll direction="up" delay={80}>
-          <div className={`p-4 rounded-xl border flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm max-w-5xl mx-auto ${
-            isLight ? 'bg-[#F8FAFC] border-[#E2E8F0]' : 'bg-[#101520] border-[#1D2636]'
-          }`}>
-            <div className="relative w-full sm:w-1/3">
-              <Search className={`w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 ${
-                isLight ? 'text-[#94A3B8]' : 'text-white/40'
-              }`} />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search tools (e.g. 'Hydrogen', 'LCOS', 'SEBI', 'Agrivoltaics')..."
-                className={`w-full pl-10 pr-3 py-2 rounded-lg text-xs sm:text-sm font-manrope outline-none border transition-all ${
-                  isLight 
-                    ? 'bg-white border-[#CBD5E1] text-[#0F172A] focus:border-teal' 
-                    : 'bg-[#181F2C] border-[#2A3446] text-white focus:border-teal'
-                }`}
-              />
-            </div>
-
-            <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => { setActiveCategory(cat); playSound(480); }}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer whitespace-nowrap ${
-                    activeCategory === cat
-                      ? 'bg-teal text-white shadow-sm'
-                      : isLight
-                        ? 'bg-white border border-[#CBD5E1] text-[#334155] hover:border-teal'
-                        : 'bg-[#18202E] border border-[#2B384E] text-white/70 hover:border-teal'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
+      <section className="px-[4vw] pt-40 pb-14 border-b border-current/10 bg-[#0c1920] text-white">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-[1.5fr_1fr] gap-10 items-end">
+          <div><p className="font-mono text-xs uppercase tracking-widest text-teal-light">Research infrastructure / Methods</p>
+            <h1 className="font-manrope text-5xl sm:text-6xl font-extrabold tracking-tight mt-5">Tools for exploration.<br/><span className="text-teal-light">Not black boxes.</span></h1>
+            <p className="mt-6 max-w-2xl text-white/70 leading-relaxed">Explore transparent prototype calculators for energy, ecology, mobility, finance and policy. Modify assumptions, inspect outputs and export scenarios.</p>
           </div>
-        </RevealOnScroll>
-      </section>
-
-      {/* ── SECTION 3: 1 TOOL PER ROW CLEAN LISTING ARCHITECTURE ── */}
-      <section className="w-full max-w-[1280px] mx-auto px-[3vw] py-12 border-b border-black/10 dark:border-white/10 space-y-6">
-        <div className="flex items-center justify-between px-2 mb-2">
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-teal">
-            AVAILABLE ENGINES ({filteredTools.length})
-          </span>
-          <span className={`text-xs font-mono ${isLight ? 'text-[#64748B]' : 'text-white/50'}`}>
-            Click any engine to configure parameters
-          </span>
-        </div>
-
-        <div className="space-y-4">
-          {filteredTools.map((tool, idx) => {
-            const Icon = tool.icon;
-            const vals = getToolValues(tool);
-            const output = tool.calculate(vals);
-
-            return (
-              <RevealOnScroll key={tool.id} direction="up" delay={40 + (idx % 6) * 30}>
-                <div
-                  onClick={() => {
-                    setActiveToolId(tool.id);
-                    playSound(520);
-                  }}
-                  className={`p-6 sm:p-7 rounded-2xl border transition-all duration-300 cursor-pointer group hover:-translate-y-1 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-6 ${
-                    isLight 
-                      ? 'bg-white border-[#E2E8F0] hover:border-teal hover:shadow-xl' 
-                      : 'bg-[#101520] border-[#1D2636] hover:border-teal hover:bg-[#141A26] hover:shadow-2xl'
-                  }`}
-                >
-                  {/* Left info block */}
-                  <div className="flex items-start gap-4 max-w-2xl">
-                    <div className="w-12 h-12 rounded-xl bg-teal/10 text-teal border border-teal/20 flex items-center justify-center font-bold shrink-0 mt-1">
-                      <Icon className="w-6 h-6" />
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-teal/10 text-teal border border-teal/20 uppercase">
-                          TOOL {tool.index} • {tool.badge}
-                        </span>
-                        <span className={`text-[10px] font-mono px-2 py-0.5 rounded ${
-                          tool.difficulty === 'Master' ? 'bg-coral/15 text-coral font-bold' :
-                          tool.difficulty === 'Expert' ? 'bg-amber-500/15 text-amber-500 font-bold' :
-                          'bg-teal/10 text-teal font-bold'
-                        }`}>
-                          {tool.difficulty}
-                        </span>
-                        <span className={`text-[10px] font-mono ${isLight ? 'text-[#64748B]' : 'text-white/40'}`}>
-                          {tool.category}
-                        </span>
-                      </div>
-
-                      <h3 className={`font-manrope font-extrabold text-lg sm:text-xl transition-colors ${
-                        isLight ? 'text-[#0F172A] group-hover:text-teal' : 'text-white group-hover:text-teal'
-                      }`}>
-                        {tool.title}
-                      </h3>
-
-                      <p className={`text-xs sm:text-sm leading-relaxed ${isLight ? 'text-[#475569]' : 'text-[#94A3B8]'}`}>
-                        {tool.summary}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Right quick output preview & open CTA */}
-                  <div className="flex items-center justify-between lg:justify-end gap-6 shrink-0 pt-3 lg:pt-0 border-t lg:border-t-0 border-black/5 dark:border-white/5">
-                    <div className={`text-right p-3.5 rounded-xl border min-w-[200px] ${
-                      isLight ? 'bg-[#F8FAFC] border-[#E2E8F0]' : 'bg-[#161D29] border-[#222E42]'
-                    }`}>
-                      <span className="text-[10px] font-mono uppercase text-teal font-bold block mb-0.5">Live Output Benchmark</span>
-                      <span className="font-mono font-bold text-sm text-teal block">{output.primary}</span>
-                      <span className="text-[10px] text-coral font-semibold block">{output.sub}</span>
-                    </div>
-
-                    <div className="w-10 h-10 rounded-full bg-teal text-white flex items-center justify-center transition-transform group-hover:scale-110 shadow-sm shrink-0">
-                      <ChevronRight className="w-5 h-5" />
-                    </div>
-                  </div>
-                </div>
-              </RevealOnScroll>
-            );
-          })}
+          <div className="lg:border-l lg:pl-8 border-white/20"><p className="font-manrope text-6xl text-teal-light font-semibold">16</p><p className="font-mono text-xs uppercase text-white/70 mt-2">Illustrative calculators</p><p className="text-xs text-white/55 mt-4">Unvalidated demonstration models. Not suitable for engineering certification or investment decisions.</p></div>
         </div>
       </section>
-
+      <section className="max-w-7xl mx-auto px-[4vw] pt-12 pb-24">
+        <div className="flex flex-col lg:flex-row items-stretch gap-7">
+          <aside className="lg:w-64 shrink-0">
+            <div className="lg:sticky lg:top-8 space-y-4">
+              <p className="text-[11px] tracking-widest font-mono text-teal uppercase">Explore by discipline</p>
+              <nav aria-label="Filter research tools" className="flex lg:flex-col gap-1.5 overflow-x-auto pb-2 lg:pb-0">
+                {categories.map(cat=><button key={cat} aria-pressed={cat===activeCategory} onClick={()=>setActiveCategory(cat)} className={`text-left text-xs font-semibold px-4 py-3 rounded-xl whitespace-nowrap border transition-colors ${cat===activeCategory?'bg-teal text-white border-teal':isLight?'border-slate-200 text-slate-600 hover:border-teal':'border-white/10 text-white/60 hover:border-teal'}`}>{cat}</button>)}
+              </nav>
+              <Link to="/research/methodological-advances-modeling" className="inline-flex gap-2 text-xs text-teal font-bold">About our modelling approach <ArrowRight size={15}/></Link>
+            </div>
+          </aside>
+          <div className="flex-1 min-w-0">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-current/10">
+              <div><p className="text-[11px] font-mono uppercase text-teal tracking-widest">Model library</p><h2 className="text-2xl font-manrope font-bold mt-1">{filteredTools.length} tools available</h2></div>
+              <label className={`flex items-center gap-2 border rounded-xl px-4 py-3 ${isLight?'bg-slate-50 border-slate-200':'bg-[#141c29] border-white/15'}`}>
+                <Search size={17} className="text-teal"/><input aria-label="Search tools" value={searchQuery} onChange={e=>setSearchQuery(e.target.value)} placeholder="Search the library…" className="bg-transparent outline-none text-sm w-64 max-w-full"/></label>
+            </div>
+            <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4 mt-7">
+              {filteredTools.map(tool=>{const Icon=tool.icon;return <button key={tool.id} onClick={()=>{setActiveToolId(tool.id);playSound(520)}} className={`group text-left p-6 rounded-2xl border min-h-[245px] flex flex-col justify-between transition-colors hover:border-teal ${isLight?'bg-white border-slate-200':'bg-[#111923] border-white/10'}`}>
+                <div><div className="flex justify-between items-start"><span className="inline-flex items-center justify-center rounded-xl w-11 h-11 bg-teal/10 border border-teal/20 text-teal"><Icon size={22}/></span><ArrowUpRight size={18} className="text-teal group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"/></div>
+                  <p className="font-mono text-[10px] tracking-widest uppercase text-teal mt-5">{tool.category} · {tool.index}</p><h3 className="font-manrope text-lg font-bold mt-2 leading-snug">{tool.title}</h3></div>
+                <div className="mt-6 flex gap-3 items-center justify-between border-t border-current/10 pt-4"><span className="text-xs opacity-60">Illustrative · {tool.inputs.length} parameters</span><span className="text-xs font-bold text-teal">Open model →</span></div>
+              </button>})}
+            </div>
+            {filteredTools.length===0&&<p className="p-8 opacity-60">No models match this search.</p>}
+          </div>
+        </div>
+      </section>
       {/* ── SECTION 4: FULL INTERACTIVE TOOL MODAL DIALOGUE (DEEP PARAMETERS & REAL-TIME ENGINE) ── */}
       {activeTool && (
         <div 

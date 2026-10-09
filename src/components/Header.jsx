@@ -30,6 +30,7 @@ import {
 } from 'lucide-react';
 import { useGame } from '../context/GameContext';
 import { ALL_ARTIFACTS } from '../data/artifactsData';
+import { RESEARCH_THEMES } from '../data/researchThemes';
 
 export const Header = () => {
   const { playSound, theme, toggleTheme, ecoMode, toggleEcoMode } = useGame();
@@ -62,8 +63,10 @@ export const Header = () => {
   const navItems = [
     { id: 'home', path: '/', label: 'Home' },
     { id: 'about', path: '/about', label: 'About Us', hasMegaMenu: true },
-    { id: 'solutions', path: '/solutions', label: 'Solutions', hasMegaMenu: true },
+    { id: 'solutions', path: '/solutions', label: 'Applications', hasMegaMenu: true },
     { id: 'research', path: '/research', label: 'Research', hasMegaMenu: true },
+    { id: 'publications', path: '/publications', label: 'Publications' },
+    { id: 'news', path: '/news-events', label: 'News & Events' },
     { id: 'tools', path: '/tools', label: 'Tools', hasMegaMenu: true },
     { id: 'contact', path: '/contact', label: 'Contact' },
   ];
@@ -72,7 +75,7 @@ export const Header = () => {
   const isItemActive = (item) => {
     if (item.path === '/' && location.pathname === '/') return true;
     if (item.path !== '/' && location.pathname === item.path) return true;
-    if (item.id === 'research' && (location.pathname === '/case-studies' || location.pathname === '/projects' || location.pathname === '/publications' || location.pathname.startsWith('/case-studies/'))) return true;
+    if (item.id === 'research' && (location.pathname.startsWith('/research/') || location.pathname === '/case-studies' || location.pathname === '/projects' || location.pathname === '/publications' || location.pathname.startsWith('/case-studies/'))) return true;
     if (item.id === 'about' && location.pathname === '/consortium') return true;
     if (item.id === 'solutions' && (location.pathname === '/sectors' || location.pathname === '/simulator' || location.pathname === '/policy')) return true;
     if (item.id === 'tools' && location.pathname === '/data') return true;
@@ -169,108 +172,20 @@ export const Header = () => {
           >
             <div className="p-5 xl:p-6 rounded-3xl glass-dropdown border border-white/15 shadow-2xl text-white">
               
-              {/* ── MEGA MENU: RESEARCH & PUBLICATIONS ── */}
+              {/* ── RESEARCH THEMES MEGA MENU ── */}
               {activeMegaMenu === 'research' && (
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                    <div className="flex items-center gap-2">
-                      <BookOpen className="w-4 h-4 text-teal-light" />
-                      <span className="text-xs font-mono font-bold uppercase tracking-wider text-teal-light">
-                        Research Intelligence, Working Papers & Field Pilots
-                      </span>
-                    </div>
-                    <Link
-                      to="/research"
-                      onClick={() => setActiveMegaMenu(null)}
-                      className="text-xs font-mono text-teal-light hover:underline flex items-center gap-1"
-                    >
-                      <span>Explore All Research (7)</span>
-                      <ArrowRight className="w-3 h-3" />
-                    </Link>
+                  <div className="flex justify-between items-center gap-4 border-b border-white/15 pb-3">
+                    <div><p className="font-bold text-sm">Research themes</p><p className="text-[11px] text-white/60">Nine interdisciplinary areas of inquiry</p></div>
+                    <Link onClick={() => setActiveMegaMenu(null)} to="/research" className="text-teal-light text-xs font-bold inline-flex gap-2 items-center">View all <ArrowRight size={14}/></Link>
                   </div>
-
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="space-y-2 p-3.5 rounded-2xl bg-black/40 border border-white/10">
-                      <div className="flex items-center justify-between">
-                        <span className="text-[11px] font-mono font-bold text-coral uppercase">
-                          Working Papers & Publications
-                        </span>
-                        <Link 
-                          to="/publications" 
-                          onClick={() => setActiveMegaMenu(null)}
-                          className="text-[10px] text-white/60 hover:text-white underline font-mono"
-                        >
-                          View Hub
-                        </Link>
-                      </div>
-                      <div className="space-y-1.5">
-                        <Link
-                          to="/publications"
-                          onClick={() => setActiveMegaMenu(null)}
-                          className="block p-2 rounded-xl hover:bg-white/10 transition-colors"
-                        >
-                          <span className="font-bold text-xs block text-white">Macro Finance Working Paper #14</span>
-                          <span className="text-[10px] text-white/60 block truncate">$10.1T WACC Reduction & Sovereign Guarantees</span>
-                        </Link>
-                        <Link
-                          to="/case-studies/blog-monsoon-wind"
-                          onClick={() => setActiveMegaMenu(null)}
-                          className="block p-2 rounded-xl hover:bg-white/10 transition-colors"
-                        >
-                          <span className="font-bold text-xs block text-white">8,760h Grid Dispatch & Monsoon Slump</span>
-                          <span className="text-[10px] text-white/60 block truncate">PyPSA 500 GW Unit Commitment Solver</span>
-                        </Link>
-                        <Link
-                          to="/case-studies/blog-sebi-brsr"
-                          onClick={() => setActiveMegaMenu(null)}
-                          className="block p-2 rounded-xl hover:bg-white/10 transition-colors"
-                        >
-                          <span className="font-bold text-xs block text-white">SEBI BRSR Core Statutory Assurance</span>
-                          <span className="text-[10px] text-white/60 block truncate">Automated Scope 1-3 Cryptographic Telemetry</span>
-                        </Link>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2 p-3.5 rounded-2xl bg-black/40 border border-white/10">
-                      <div className="flex items-center justify-between">
-                        <span className="text-[11px] font-mono font-bold text-teal-light uppercase">
-                          Empirical Field Mega-Pilots
-                        </span>
-                        <Link 
-                          to="/research" 
-                          onClick={() => setActiveMegaMenu(null)}
-                          className="text-[10px] text-white/60 hover:text-white underline font-mono"
-                        >
-                          All Pilots
-                        </Link>
-                      </div>
-                      <div className="space-y-1.5">
-                        <Link
-                          to="/case-studies/vindhyachal-retrofit"
-                          onClick={() => setActiveMegaMenu(null)}
-                          className="block p-2 rounded-xl hover:bg-white/10 transition-colors"
-                        >
-                          <span className="font-bold text-xs block text-white">Vindhyachal 4.7 GW Thermal Retrofit</span>
-                          <span className="text-[10px] text-white/60 block truncate">10% Agro-Biomass + 1.2 GW Solar • 3.4 Mt CO2/yr</span>
-                        </Link>
-                        <Link
-                          to="/case-studies/tata-steel-h2"
-                          onClick={() => setActiveMegaMenu(null)}
-                          className="block p-2 rounded-xl hover:bg-white/10 transition-colors"
-                        >
-                          <span className="font-bold text-xs block text-white">Tata Steel Green H2-DRI Pilot</span>
-                          <span className="text-[10px] text-white/60 block truncate">120 MW PEM Electrolyzer • 1.8 Mt CO2/yr</span>
-                        </Link>
-                        <Link
-                          to="/case-studies/wadi-lc3-cement"
-                          onClick={() => setActiveMegaMenu(null)}
-                          className="block p-2 rounded-xl hover:bg-white/10 transition-colors"
-                        >
-                          <span className="font-bold text-xs block text-white">Wadi LC3 Calcined Clay Cement</span>
-                          <span className="text-[10px] text-white/60 block truncate">50% Clinker Displacement • 960k t CO2/yr</span>
-                        </Link>
-                      </div>
-                    </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    {RESEARCH_THEMES.map((theme,i) => <Link key={theme.slug} to={`/research/${theme.slug}`} onClick={()=>setActiveMegaMenu(null)} className="rounded-xl border border-white/10 bg-white/5 p-3 hover:border-teal transition-colors"><p className="text-[10px] font-mono text-teal-light">0{i+1}</p><p className="font-semibold text-xs mt-1.5">{theme.title}</p></Link>)}
+                  </div>
+                  <div className="flex flex-wrap gap-4 text-xs text-teal-light border-t border-white/10 pt-3">
+                    <Link to="/publications" onClick={()=>setActiveMegaMenu(null)}>Research concepts →</Link>
+                    <Link to="/data" onClick={()=>setActiveMegaMenu(null)}>Open FAIR data →</Link>
+                    <Link to="/news-events" onClick={()=>setActiveMegaMenu(null)}>News & events →</Link>
                   </div>
                 </div>
               )}
@@ -581,26 +496,21 @@ export const Header = () => {
                     onClick={() => setMobileMenuOpen(false)}
                     className="p-2 rounded-xl block font-bold text-teal-light hover:bg-white/10"
                   >
-                    → Research Hub Overview (All 7)
+                    → All nine research themes
                   </Link>
                   <Link
                     to="/publications"
                     onClick={() => setMobileMenuOpen(false)}
                     className="p-2 rounded-xl block font-bold text-coral hover:bg-white/10"
                   >
-                    → Working Papers & Publications Portal
+                    → Illustrative research concepts
                   </Link>
                   <div className="pt-1 border-t border-white/10 text-[11px] opacity-60 px-2 uppercase font-mono">
-                    Key Case Studies:
+                    Research Themes:
                   </div>
-                  {ALL_ARTIFACTS.slice(0, 4).map(art => (
-                    <Link
-                      key={art.id}
-                      to={`/case-studies/${art.id}`}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="p-2 rounded-xl block text-white/80 hover:bg-white/10 truncate"
-                    >
-                      • {art.title}
+                  {RESEARCH_THEMES.map(t => (
+                    <Link key={t.slug} to={`/research/${t.slug}`} onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-xl block text-white/80 hover:bg-white/10">
+                      • {t.title}
                     </Link>
                   ))}
                 </div>
@@ -654,10 +564,10 @@ export const Header = () => {
               {mobileExpandedSection === 'tools' && (
                 <div className="p-3 pt-0 space-y-1.5 border-t border-white/5 bg-black/30 text-xs">
                   <Link to="/tools" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-xl block font-bold text-teal-light hover:bg-white/10">
-                    → Interactive Tool Suite (16 Micro-Engines)
+                    → Research Tools (16 Prototypes)
                   </Link>
                   <Link to="/data" onClick={() => setMobileMenuOpen(false)} className="p-2 rounded-xl block text-white/80 hover:bg-white/10">
-                    • Open Science Data Repository (4.8M Data Points)
+                    • Independent Source Register
                   </Link>
                 </div>
               )}
@@ -688,6 +598,7 @@ export const Header = () => {
               )}
             </div>
 
+            <Link to="/news-events" onClick={() => setMobileMenuOpen(false)} className="p-3 rounded-2xl block bg-white/5 border border-white/10 font-semibold text-sm">News & Events</Link>
             {/* Contact Link */}
             <Link
               to="/contact"
