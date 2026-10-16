@@ -4,6 +4,7 @@ import { GameProvider } from './context/GameContext';
 import { Header } from './components/Header';
 import { MotionController } from './components/MotionController';
 import { Footer } from './components/Footer';
+import { VersionToggle } from './components/VersionToggle';
 import { HomePage } from './pages/HomePage';
 import { ResearchHubPage } from './pages/ResearchHubPage';
 import { ResearchThemePage } from './pages/ResearchThemePage';
@@ -76,6 +77,7 @@ export default function App() {
         <ScrollToTop />
         <MotionController />
         <AppContent />
+        <VersionToggle current="current" />
       </GameProvider>
     </BrowserRouter>
   );

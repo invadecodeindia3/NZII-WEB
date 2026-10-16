@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* The archived Old site (src/old) has its own stylesheet; do not scan it here. */
+@source not "./old";
 
 @theme {
   --color-navy: #142439;

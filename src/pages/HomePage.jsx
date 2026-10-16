@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight, ArrowDown, Network, MapPin, HeartPulse, BookOpen, Compass, Building2, Sprout, Users, Scale, Handshake, CalendarDays } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Network, MapPin, HeartPulse, BookOpen, Compass, Building2, Sprout, Users, Scale, Handshake, CalendarDays } from 'lucide-react';
 import { useGame } from '../context/GameContext';
 import { Footer } from '../components/Footer';
 import { HeroContourLines } from '../components/HeroContourLines';
@@ -73,8 +73,7 @@ export const HomePage = () => {
       {!ecoMode&&<HeroContourLines className={"decorative-lines pointer-events-none absolute -right-[7%] top-[12%] -z-10 h-[76%] w-[60%] " + (light?'text-[#1d9c92] opacity-50':'text-[#7bd4c6] opacity-55')}/>}
       <div className="relative grid w-full items-center gap-8 xl:grid-cols-[minmax(0,820px)_1fr]">
         <div className="min-w-0">
-          <p className={"flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[.2em] " + (light?'text-[#167f78]':'text-[#a8d67d]')}><span className="h-px w-9 bg-current"/><span aria-hidden="true" className="h-2 w-2 rounded-full bg-[#E98D96]"/>Net Zero India</p>
-          <h1 className={"mt-5 max-w-[780px] text-[clamp(2.2rem,3.75vw,4.05rem)] font-semibold leading-[1.1] tracking-[-.055em] "+(light?"text-[#153447]":"text-white")}>What will it take for India to reach net zero, and what will different paths mean for the country?</h1>
+          <h1 className={"max-w-[780px] text-[clamp(2.2rem,3.75vw,4.05rem)] font-semibold leading-[1.1] tracking-[-.055em] "+(light?"text-[#153447]":"text-white")}>What will it take for India to reach net zero, and what will different paths mean for the country?</h1>
           <div className={"mt-6 max-w-[730px] space-y-3 text-[clamp(.88rem,1vw,1rem)] leading-[1.68] " + (light?'text-[#3e596a]':'text-white/85')}>
             <p>India has committed to achieving net-zero emissions by 2070. Getting there will transform how the country produces and uses energy, builds infrastructure, uses land and resources, and creates livelihoods.</p>
             <p>Net Zero India brings together research, modelling and diverse expertise to understand the pathways India could take, and their implications for development, people and the environment.</p>
@@ -84,30 +83,21 @@ export const HomePage = () => {
             <Link to="/about" className={"inline-flex min-h-11 items-center gap-2 rounded-full border px-5 py-3 text-[13px] font-semibold " + (light?'border-[#618b8b] text-[#214356] hover:bg-white/50':'border-white/50 text-white hover:bg-white/10')}>About Net Zero India <ArrowRight size={16}/></Link>
           </div>
         </div>
-        <div className="hidden justify-end self-end xl:flex">
-          <div className={"max-w-[230px] border-l-2 pl-5 "+(light?"border-[#BA5068] text-[#30566B]":"border-[#E98D96] text-white/80")}>
-            <span className={"text-3xl font-semibold "+(light?"text-[#153447]":"text-white")}>2070</span><p className="mt-1 text-[11px] leading-relaxed">India's net-zero commitment</p>
-          </div>
-        </div>
       </div>
-      <a href="#why-nzi" className={"absolute bottom-5 left-[3%] hidden items-center gap-2 text-[11px] uppercase tracking-widest sm:inline-flex " + (light?'text-[#456a73]':'text-white/70')}>Discover more <ArrowDown size={15}/></a>
     </section>
 
     {/* 02 — clear editorial asymmetry: image / questions / conclusion */}
     <section id="why-nzi" className="px-[3%] py-20 sm:py-24 lg:py-28 lg:py-24">
       <div className="grid gap-7 lg:grid-cols-[minmax(0,.93fr)_minmax(0,1.07fr)] lg:gap-12">
         <div>
-          <Label>Why NZI Exists</Label>
-          <Title>Net zero is not one destination with <em className={"font-normal "+(light?"text-[#A93E5B]":"text-[#F4A7B0]")}>one road.</em></Title>
+          <Title className="mt-0!">Net zero is not one destination with <em className={"font-normal "+(light?"text-[#A93E5B]":"text-[#F4A7B0]")}>one road.</em></Title>
           <p className={"mt-4 text-sm font-semibold " + inkMuted}>India's transition will involve choices.</p>
           <Photo src={editorialMedia.agriculture} alt="Illustrative landscape of agricultural land" className="group relative mt-7 h-[290px] rounded-[22px] sm:h-[360px] lg:h-[410px]">
             <div className="absolute inset-0 bg-gradient-to-t from-[#102a36]/40 via-transparent to-transparent"/>
-            <span className="absolute bottom-5 left-5 rounded-full border border-white/30 bg-[#17394b]/70 px-3 py-2 text-[11px] font-medium text-white backdrop-blur-md"></span>
           </Photo>
         </div>
         <div className="flex flex-col justify-between">
           <div className={"rounded-[22px] border p-7 sm:p-9 " + panel}>
-            <div className={"mb-2 flex justify-between border-b pb-4 " + line}><h3 className="text-[15px] font-semibold"></h3><span className="font-mono text-[11px] text-[#29a194]">01—05</span></div>
             <div className={"divide-y " + (light?'divide-[#dce5e1]':'divide-white/10')}>
               {questionsOfTransition.map((item,i)=><div key={item} className="flex gap-4 py-4">
                 <span className={"w-7 shrink-0 pt-0.5 font-mono text-[11px] "+(i%2===1?(light?"text-[#AF4760]":"text-[#F4A7B0]"):"text-[#2aa99d]")}>0{i+1}</span>
@@ -123,13 +113,11 @@ export const HomePage = () => {
     {/* 03 — no repetitive card wall: editorial photograph with two-by-two research principles */}
     <section className={"px-[3%] py-20 sm:py-24 lg:py-28 " + paper}>
       <div className="mb-9 flex flex-wrap items-end justify-between gap-6">
-        <div><Label>The Difference</Label><Title>A more complete picture of India’s net-zero transition</Title></div>
-        <p className={"max-w-md text-[14px] leading-[1.7] " + inkMuted}></p>
+        <div><Title className="mt-0!">A more complete picture of India’s net-zero transition</Title></div>
       </div>
       <div className="grid gap-6 lg:grid-cols-[.9fr_1.1fr]">
         <Photo src={editorialMedia.forest} alt="Illustrative green forest landscape" className="group relative h-[360px] rounded-[22px] lg:h-auto lg:min-h-[440px]">
           <div className="absolute inset-0 bg-gradient-to-t from-[#0b2e37]/65 to-transparent"/>
-          <span className="absolute bottom-6 left-6 max-w-xs text-lg font-medium text-white"></span>
         </Photo>
         <div className="grid gap-3 sm:grid-cols-2">
           {differences.map((d,i)=>{const Icon=d.icon;return <article key={d.title} className={"nzi-raise flex min-h-[185px] flex-col justify-between rounded-[18px] border p-5 sm:min-h-[210px] sm:p-6 " + (i===1?(light?"bg-[#FFF0F0] border-[#F0C5CA]":"bg-[#373747] border-[#AE687D]/30"):panel)}>
@@ -143,7 +131,7 @@ export const HomePage = () => {
     {/* 04 — asymmetric magazine grid, not six equal-sized cards */}
     <section className={"px-[3%] py-20 sm:py-24 lg:py-28 " + (light?'bg-[#e9f1ed]':'bg-[#1b3b4f]')}>
       <div className="flex flex-wrap items-end justify-between gap-6">
-        <div><Label>What NZI Is Trying to Understand</Label><Title>One transition. <em className={"font-normal "+(light?"text-[#A93E5B]":"text-[#F3A3AD]")}>Many connected questions.</em></Title></div>
+        <div><Title className="mt-0!">One transition. <em className={"font-normal "+(light?"text-[#A93E5B]":"text-[#F3A3AD]")}>Many connected questions.</em></Title></div>
         <ArrowLink to="/research">Explore the Research</ArrowLink>
       </div>
       <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-12">
@@ -160,7 +148,7 @@ export const HomePage = () => {
     <section className="px-[3%] py-20 sm:py-24 lg:py-28">
       <div className="grid gap-10 lg:grid-cols-[1fr_.7fr] lg:gap-16">
         <div>
-          <Label>How It Works</Label><Title>From possible futures to evidence for decisions</Title>
+          <Title className="mt-0!">From possible futures to evidence for decisions</Title>
           <div className="relative mt-9 space-y-0">
             <span aria-hidden="true" className={"absolute bottom-6 left-[19px] top-5 w-px " + (light?'bg-[#c0d3ce]':'bg-white/20')}/>
             {methodSteps.map((step,i)=><div className="relative flex gap-5 pb-7 last:pb-0" key={step.title}>
@@ -172,7 +160,6 @@ export const HomePage = () => {
         </div>
         <Photo src={editorialMedia.research} alt="Illustrative research environment" className="group relative h-[330px] rounded-[22px] lg:min-h-[640px] lg:h-auto">
           <div className="absolute inset-0 bg-gradient-to-t from-[#102b3d]/65 via-transparent to-transparent"/>
-          <div className="absolute bottom-6 left-6 right-6 border-t border-white/40 pt-4 text-sm font-medium text-white"></div>
         </Photo>
       </div>
     </section>
@@ -181,8 +168,8 @@ export const HomePage = () => {
     <section className="nzi-feature-photo relative isolate overflow-hidden bg-[#0c2936] px-[3%] py-20 text-white sm:py-24 lg:py-28">
       <img src={editorialMedia.landscape} alt="" loading="lazy" className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover object-center opacity-65"/>
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(8,37,48,.94)_0%,rgba(8,37,48,.82)_57%,rgba(8,37,48,.30)_100%)]"/>
-      <div className="max-w-[1000px]"><Label light>A Statement of Philosophy</Label>
-        <h2 className="mt-7 max-w-4xl text-[clamp(2rem,3.5vw,3.8rem)] font-semibold leading-[1.18] tracking-[-.045em]">We are not looking for <em className="font-normal">the</em> pathway to net zero.</h2>
+      <div className="max-w-[1000px]">
+        <h2 className="max-w-4xl text-[clamp(2rem,3.5vw,3.8rem)] font-semibold leading-[1.18] tracking-[-.045em]">We are not looking for <em className="font-normal">the</em> pathway to net zero.</h2>
         <blockquote className="mt-7 border-l-[3px] border-[#E98D96] pl-5 sm:pl-7"><p className="max-w-[840px] text-[clamp(1.05rem,1.55vw,1.45rem)] leading-[1.65]">We are building the evidence to understand different pathways; their possibilities, consequences and trade-offs.</p>
           <p className="mt-5 max-w-[790px] text-[14px] leading-[1.75] text-white/80">So that decisions about India's transition can be informed by evidence that reflects the country's development priorities, resources and diversity.</p>
         </blockquote>
@@ -191,20 +178,20 @@ export const HomePage = () => {
 
     {/* 07 — oversized feature, two smaller editorial tiles */}
     <section className="px-[3%] py-20 sm:py-24 lg:py-28">
-      <div className="mb-8 flex flex-wrap items-end justify-between gap-4"><div><Label>Featured Research / Knowledge</Label><Title>Explore our work</Title></div><ArrowLink to="/research">Read the research</ArrowLink></div>
+      <div className="mb-8"><Title className="mt-0!">Explore our work</Title></div>
       <div className="grid gap-6 lg:grid-cols-[1.12fr_.88fr]">
         <Link to="/research" className="group relative isolate flex min-h-[410px] flex-col justify-between overflow-hidden rounded-[22px] bg-[#153c43] p-6 text-white sm:p-8 lg:min-h-[515px]">
           <img alt="" src={editorialMedia.solar} loading="lazy" className="absolute inset-0 -z-20 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"/>
           <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#092f39]/95 via-[#0a3440]/45 to-[#183542]/20"/>
           <div className="flex justify-between"><span className="rounded-full border border-[#F7AEB6]/70 bg-[#8B4055]/25 px-3 py-2 text-[10px] font-semibold uppercase tracking-widest text-[#FFD3D8]">Featured Research</span><ArrowUpRight size={21}/></div>
           <div>
-            
+            {/* Client doc slot: [Title / image / short description] — populate once a featured item is approved. */}
             <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#a7d8ce]">Read the research <ArrowRight size={16}/></span>
           </div>
         </Link>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
           {[
-            {tag:'Open Calls & Collaborations',title:'Open Calls & Collaborations',desc:'Explore opportunities to collaborate, contribute to ongoing research, participate in programmes, or engage with the Net Zero India Initiative.',image:editorialMedia.people,url:'/contact',cta:'Explore opportunities'},
+            {tag:'Open Calls & Collaborations',title:'Open Calls & Collaborations',desc:'Explore opportunities to collaborate, contribute to ongoing research, participate in programmes, or engage with the Net Zero India Initiative.',image:editorialMedia.people,url:'/contact',cta:'Explore Opportunities'},
             {tag:'Publications & Outputs',title:'Publications & Outputs',desc:'Working papers, policy briefs, reports, presentations, and other outputs from the initiative.',image:editorialMedia.research,url:'/publications',cta:'View all outputs'}
           ].map(card=><Link key={card.tag} to={card.url} className={"group grid min-h-[210px] overflow-hidden rounded-[22px] border sm:grid-cols-1 lg:grid-cols-[42%_1fr] " + panel}>
             <Photo src={card.image} alt="" className="hidden min-h-full sm:block lg:block"/>
@@ -221,14 +208,13 @@ export const HomePage = () => {
           <Photo src={editorialMedia.people} alt="Illustrative research collaboration" className="h-[380px] rounded-[22px] sm:h-[450px]"/>
           <Photo src={editorialMedia.forest} alt="" className="absolute -bottom-4 right-4 hidden h-32 w-36 rounded-2xl border-4 border-white sm:block"/>
         </div>
-        <div><Label>The People / Collaborative Model</Label><Title>Built through collaboration. <em className="font-normal text-[#279d91]">Led from India.</em></Title>
+        <div><Title className="mt-0!">Built through collaboration. <em className="font-normal text-[#279d91]">Led from India.</em></Title>
           <p className={"mt-4 text-[14px] leading-[1.8] " + inkMuted}>Net Zero India brings together researchers and institutions across energy systems, public policy, land, development, and related fields to build a rigorous, India-specific understanding of the transition.</p>
           <div className={"mt-7 rounded-[18px] border p-5 " + panel}>
             <p className="text-[11px] font-semibold uppercase tracking-wider text-[#2aa99d]">Led by</p><p className="mt-2 text-[17px] font-semibold">School of Public Policy, IIT Delhi</p>
             <div className={"my-5 border-t " + line}/>
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-[#2aa99d]">Research partners</p>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-[#2aa99d]">Research Partners</p>
             <div className="mt-3 flex flex-wrap gap-2"><span className={"rounded-lg border px-3 py-2 text-[13px] font-semibold " + line}>Prayas Energy Group</span><span className={"rounded-lg border px-3 py-2 text-[13px] font-semibold " + line}>Princeton University</span></div>
-            
           </div>
           <div className="mt-6"><ArrowLink to="/consortium">Meet the Team & Partners</ArrowLink></div>
         </div>
@@ -241,17 +227,17 @@ export const HomePage = () => {
         <span className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[.16em] text-[#2aa99d]"><span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-[#E98D96]"/>Supported by</span>
         <span className="text-[19px] font-semibold tracking-tight">Schmidt Sciences <span className={"text-[12px] font-normal " + inkMuted}>/ AX programme</span></span>
         <span className="text-[19px] font-semibold tracking-tight">Giving Green</span>
+        {/* Client doc also lists "Princeton University (if the relevant funding arrangement requires Princeton to appear here as well)" — omitted until that arrangement is confirmed. */}
       </div>
     </section>
 
     {/* 10 — refined editorial news cards */}
     <section className="px-[3%] py-20 sm:py-24 lg:py-28">
-      <div className="mb-8 flex flex-wrap items-end justify-between gap-5"><div><Label>Latest From NZI</Label><Title>Latest from Net Zero India</Title></div><ArrowLink to="/news-events">View All Updates</ArrowLink></div>
+      <div className="mb-8 flex flex-wrap items-end justify-between gap-5"><div><Title className="mt-0!">Latest from Net Zero India</Title></div><ArrowLink to="/news-events">View All Updates</ArrowLink></div>
       <div className="grid gap-6 md:grid-cols-3">
         {latest.map(card=><Link to={card.to} key={card.tag} className={"group overflow-hidden rounded-[22px] border " + panel}>
           <Photo src={card.image} alt="" className="h-[180px] sm:h-[210px]"/>
-          <div className="flex min-h-[200px] flex-col p-5"><Label>{card.tag}</Label><h3 className="mt-5 text-[19px] font-semibold leading-snug">{card.title}</h3>
-            </div>
+          <div className="flex min-h-[200px] flex-col p-5"><Label>{card.tag}</Label><h3 className="mt-5 text-[19px] font-semibold leading-snug">{card.title}</h3></div>
         </Link>)}
       </div>
     </section>
@@ -261,8 +247,8 @@ export const HomePage = () => {
       <img alt="" src={editorialMedia.energy} loading="lazy" className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover object-center opacity-50"/>
       <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r from-[#102c3d]/95 via-[#102c3d]/85 to-[#102c3d]/45"/>
       <div className="flex flex-wrap items-end justify-between gap-8">
-        <div><Label light></Label>
-          <h2 className="mt-4 max-w-4xl text-[clamp(2.1rem,3.4vw,3.6rem)] font-semibold leading-[1.18] tracking-[-.045em]">India's path to 2070 is still being written.</h2>
+        <div>
+          <h2 className="max-w-4xl text-[clamp(2.1rem,3.4vw,3.6rem)] font-semibold leading-[1.18] tracking-[-.045em]">India's path to 2070 is still being written.</h2>
           <p className="mt-5 max-w-2xl text-[15px] leading-[1.75] text-white/80">Explore the research, evidence and ideas helping us understand the choices ahead.</p>
         </div>
         <Link to="/research" className="inline-flex min-h-11 items-center gap-3 rounded-full bg-[#26998e] px-5 py-3 text-[13px] font-semibold text-white hover:bg-[#197c74]">Explore Our Research <ArrowRight size={17}/></Link>

@@ -1,10 +1,12 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+// Chooses which version of the site to boot at load time.
+// "/old" and "/old/*" load the archived Old site; everything else loads the
+// current site. Dynamic imports keep each version's global stylesheet isolated
+// (switching versions is always a full page load via VersionToggle).
+const { pathname } = window.location
+const isOld = pathname === '/old' || pathname.startsWith('/old/')
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+if (isOld) {
+  import('./old/entry.jsx')
+} else {
+  import('./entry.jsx')
+}
