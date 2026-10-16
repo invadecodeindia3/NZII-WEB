@@ -206,7 +206,7 @@ export const HomePage = () => {
       <div className="grid items-center gap-8 lg:grid-cols-[.86fr_1.14fr] lg:gap-14">
         <div className="group relative">
           <Photo src={editorialMedia.people} alt="Illustrative research collaboration" className="h-[380px] rounded-[22px] sm:h-[450px]"/>
-          <Photo src={editorialMedia.forest} alt="" className="absolute -bottom-4 right-4 hidden h-32 w-36 rounded-2xl border-4 border-white sm:block"/>
+          <div className="absolute -bottom-4 right-4 hidden sm:block"><Photo src={editorialMedia.forest} alt="" className={"h-32 w-36 rounded-2xl border-4 "+(light?"border-white":"border-[#1b3749]")}/></div>
         </div>
         <div><Title className="mt-0!">Built through collaboration. <em className="font-normal text-[#279d91]">Led from India.</em></Title>
           <p className={"mt-4 text-[14px] leading-[1.8] " + inkMuted}>Net Zero India brings together researchers and institutions across energy systems, public policy, land, development, and related fields to build a rigorous, India-specific understanding of the transition.</p>
