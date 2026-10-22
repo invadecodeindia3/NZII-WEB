@@ -43,7 +43,7 @@ const methodSteps = [
 const Label = ({children,light=false}) => <p className={"text-[11px] font-semibold uppercase tracking-[.18em] " + (light ? 'text-[#86d3c6]' : 'text-[#249a91]')}>{children}</p>;
 const Title = ({children,className=''}) => <h2 className={"mt-3 max-w-4xl text-[clamp(1.8rem,2.55vw,2.75rem)] font-semibold leading-[1.18] tracking-[-.04em] " + className}>{children}</h2>;
 const ArrowLink = ({to,children,dark=false}) => <Link to={to} className={"inline-flex items-center gap-2 text-sm font-semibold transition-[gap] duration-300 hover:gap-3 " + (dark ? 'text-[#9cdbcd]' : 'text-[#23988c]')}>{children}<ArrowUpRight size={17}/></Link>;
-const Photo = ({src,alt='',className='',children}) => <EditorialPhoto src={src} alt={alt} className={className} imageClassName="transition-transform duration-700 ease-out group-hover:scale-[1.04]">{children}</EditorialPhoto>;
+const Photo = ({src,alt='',className='',imageClassName='',children}) => <EditorialPhoto src={src} alt={alt} className={className} imageClassName={`transition-transform duration-700 ease-out group-hover:scale-[1.04] ${imageClassName}`}>{children}</EditorialPhoto>;
 
 export const HomePage = () => {
   const {theme,ecoMode}=useGame();
@@ -243,7 +243,7 @@ export const HomePage = () => {
       <div className="mb-8 flex flex-wrap items-end justify-between gap-5"><div><Title className="mt-0!">Latest from Net Zero India</Title></div><ArrowLink to="/news-events">View All Updates</ArrowLink></div>
       <div className="grid gap-6 md:grid-cols-3">
         {latest.map(card=><Link to={card.to} key={card.tag} className={"group overflow-hidden rounded-[22px] border " + panel}>
-          <Photo src={card.image} alt="" className="h-[180px] sm:h-[210px]"/>
+          <Photo src={card.image} alt="" className="h-[210px] sm:h-[240px]" imageClassName="object-[center_top]"/>
           <div className="flex min-h-[200px] flex-col p-5"><Label>{card.tag}</Label><h3 className="mt-5 text-[19px] font-semibold leading-snug">{card.title}</h3></div>
         </Link>)}
       </div>
