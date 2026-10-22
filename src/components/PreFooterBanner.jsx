@@ -19,7 +19,7 @@ export const PreFooterBanner = ({
 
   return (
     <section className={`w-full py-20 px-[3vw] border-t transition-colors duration-500 relative overflow-hidden ${
-      isLight ? 'bg-[#FFFFFF] border-[#E2E8F0]' : 'bg-[#080808] border-[#181F2C]'
+      isLight ? 'bg-[#FFFCF6] border-[#E6E2D8]' : 'bg-[#162B46] border-white/10'
     }`}>
       <div className="w-full max-w-[1720px] mx-auto">
         <RevealOnScroll direction="up" delay={80}>
@@ -57,7 +57,7 @@ export const PreFooterBanner = ({
                       confetti({ particleCount: 40, spread: 60 });
                     }
                   }}
-                  className="w-full sm:w-auto px-8 py-4 rounded-xl bg-white text-[#0F172A] font-manrope font-extrabold text-sm shadow-xl hover:scale-105 transition-all inline-flex items-center justify-center gap-3 cursor-pointer"
+                  className="w-full sm:w-auto px-8 py-4 rounded-xl bg-white text-[#1D3658] font-manrope font-extrabold text-sm shadow-xl hover:scale-105 transition-all inline-flex items-center justify-center gap-3 cursor-pointer"
                 >
                   <span>{primaryCtaText}</span>
                   <div className="w-7 h-7 rounded-lg bg-teal text-white flex items-center justify-center">

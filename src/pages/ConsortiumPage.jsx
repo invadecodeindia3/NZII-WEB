@@ -45,11 +45,11 @@ export const ConsortiumPage = () => {
 
   return (
     <div className={`w-full min-h-screen transition-colors duration-500 pb-0 ${
-      isLight ? 'bg-[#FFFFFF] text-[#0F172A]' : 'bg-[#080808] text-white'
+      isLight ? 'bg-[#FFFCF6] text-[#1D3658]' : 'bg-[#1D3658] text-[#FFFCF6]'
     }`}>
       
       {/* ── SECTION 1: CINEMATIC HERO SECTION WITH VIDEO BACKGROUND ── */}
-      <section className="relative w-full min-h-[580px] lg:min-h-[640px] flex flex-col justify-end pt-36 pb-20 px-[3vw] overflow-hidden select-none border-b border-white/10 bg-[#050B14] text-white">
+      <section className="relative w-full min-h-[580px] lg:min-h-[640px] flex flex-col justify-end pt-36 pb-20 px-[3vw] overflow-hidden select-none border-b border-white/10 bg-[#14263D] text-white">
         
         {/* Background Video Layer */}
         <video
@@ -106,20 +106,31 @@ export const ConsortiumPage = () => {
         
         {/* Core Principles Card */}
         <RevealOnScroll direction="up" delay={100}>
-          <div className={`p-8 sm:p-10 rounded-xl border space-y-8 ${
-            isLight ? 'bg-[#F8FAFC] border-[#E2E8F0] shadow-sm' : 'bg-[#101520] border-[#1D2636] shadow-xl'
+          <div className={`relative isolate overflow-hidden p-8 sm:p-10 rounded-xl border space-y-8 ${
+            isLight ? 'bg-[#F4F1E8] border-[#E6E2D8] shadow-sm' : 'bg-[#162B46] border-white/10 shadow-xl'
           }`}>
+            {/* Subtle watermark */}
+            <div 
+              aria-hidden="true" 
+              className="pointer-events-none absolute -right-20 top-1/2 -translate-y-1/2 -z-10 h-[500px] w-[500px] select-none opacity-[0.035] sm:opacity-[0.045]"
+              style={{
+                backgroundImage: 'url(/patterns/pattern-1.png)',
+                backgroundSize: 'contain',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center'
+              }}
+            />
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-teal/10 text-teal flex items-center justify-center font-bold">
                 <Award className="w-5 h-5" />
               </div>
               <div>
                 <h2 className={`font-manrope font-extrabold text-xl sm:text-2xl ${
-                  isLight ? 'text-[#0F172A]' : 'text-white'
+                  isLight ? 'text-[#1D3658]' : 'text-white'
                 }`}>
                   Foundational Modeling Tenets
                 </h2>
-                <span className={`text-xs font-mono ${isLight ? 'text-[#64748B]' : 'text-white/50'}`}>
+                <span className={`text-xs font-mono ${isLight ? 'text-[#4A607A]' : 'text-white/50'}`}>
                   Non-partisan scientific consensus
                 </span>
               </div>
@@ -129,33 +140,38 @@ export const ConsortiumPage = () => {
               {[
                 {
                   title: 'Open Source & Reproducibility',
-                  desc: 'All scenario mathematical formulations, dispatch coefficients, and code repositories are published under open science licenses for third-party auditing.'
+                  desc: 'All scenario mathematical formulations, dispatch coefficients, and code repositories are published under open science licenses for third-party auditing.',
+                  icon: isLight ? '/icons/rigorous-open.png' : '/icons/rigorous-open-light.png'
                 },
                 {
                   title: 'Development-Centric Pathways',
-                  desc: 'Decarbonization trajectories are strictly modeled within the imperative of expanding energy access, eliminating poverty, and creating manufacturing jobs.'
+                  desc: 'Decarbonization trajectories are strictly modeled within the imperative of expanding energy access, eliminating poverty, and creating manufacturing jobs.',
+                  icon: isLight ? '/icons/development-centred.png' : '/icons/development-centred-light.png'
                 },
                 {
                   title: 'Sub-Regional Granularity',
-                  desc: 'Accounting for state-by-state variations in monsoon precipitation, grid transmission congestion, solar irradiation, and coal revenue dependency.'
+                  desc: 'Accounting for state-by-state variations in monsoon precipitation, grid transmission congestion, solar irradiation, and coal revenue dependency.',
+                  icon: isLight ? '/icons/spatially.png' : '/icons/spatially-light.png'
                 }
               ].map((principle, idx) => (
                 <div 
                   key={idx} 
-                  className={`p-6 rounded-xl border space-y-3 ${
+                  className={`p-6 rounded-xl border space-y-4 ${
                     isLight 
-                      ? 'bg-white border-[#E2E8F0]' 
-                      : 'bg-[#141A26] border-[#20293A]'
+                      ? 'bg-white border-[#E6E2D8]' 
+                      : 'bg-[#1A3353] border-white/10'
                   }`}
                 >
-                  <CheckCircle2 className="w-5 h-5 text-teal" />
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-teal/10 p-2">
+                    <img src={principle.icon} alt="" className="h-full w-full object-contain" />
+                  </div>
                   <h3 className={`font-manrope font-extrabold text-base ${
-                    isLight ? 'text-[#0F172A]' : 'text-white'
+                    isLight ? 'text-[#1D3658]' : 'text-white'
                   }`}>
                     {principle.title}
                   </h3>
                   <p className={`text-xs sm:text-sm leading-relaxed ${
-                    isLight ? 'text-[#64748B]' : 'text-[#94A3B8]'
+                    isLight ? 'text-[#4A607A]' : 'text-[#D1DBE5]'
                   }`}>
                     {principle.desc}
                   </p>
@@ -169,7 +185,7 @@ export const ConsortiumPage = () => {
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <h2 className={`font-manrope font-extrabold text-2xl ${
-              isLight ? 'text-[#0F172A]' : 'text-white'
+              isLight ? 'text-[#1D3658]' : 'text-white'
             }`}>
               Consortium Member Institutions
             </h2>
@@ -184,8 +200,8 @@ export const ConsortiumPage = () => {
                 <div 
                   className={`p-7 rounded-xl border transition-all duration-300 flex flex-col justify-between h-full group hover:-translate-y-1 ${
                     isLight
-                      ? 'bg-white border-[#E2E8F0] hover:border-teal hover:shadow-xl'
-                      : 'bg-[#101520] border-[#1D2636] hover:border-teal hover:bg-[#141A26] hover:shadow-2xl'
+                      ? 'bg-white border-[#E6E2D8] hover:border-teal hover:shadow-xl'
+                      : 'bg-[#162B46] border-white/10 hover:border-teal hover:bg-[#1A3353] hover:shadow-2xl'
                   }`}
                 >
                   <div className="space-y-3">
@@ -194,7 +210,7 @@ export const ConsortiumPage = () => {
                     </span>
 
                     <h3 className={`font-manrope font-extrabold text-lg leading-snug transition-colors ${
-                      isLight ? 'text-[#0F172A] group-hover:text-teal' : 'text-white group-hover:text-teal'
+                      isLight ? 'text-[#1D3658] group-hover:text-teal' : 'text-white group-hover:text-teal'
                     }`}>
                       {member.name}
                     </h3>
@@ -207,7 +223,7 @@ export const ConsortiumPage = () => {
                   </div>
 
                   <div className={`pt-5 mt-5 border-t flex items-center justify-between ${
-                    isLight ? 'border-[#E2E8F0]' : 'border-[#1D2636]'
+                    isLight ? 'border-[#E6E2D8]' : 'border-white/10'
                   }`}>
                     <span className={`text-xs font-mono ${isLight ? 'text-[#64748B]' : 'text-white/40'}`}>
                       Active Consortium Partner

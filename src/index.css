@@ -3,16 +3,21 @@
 @source not "./old";
 
 @theme {
-  --color-navy: #142439;
-  --color-navy-surface: #1c3346;
-  --color-navy-elevated: #244055;
-  --color-teal: #2aa99d;
-  --color-teal-light: #7ccaba;
-  --color-teal-dark: #218d83;
-  --color-amber: #F59E0B;
+  --color-navy: #1D3658;
+  --color-navy-surface: #142842;
+  --color-navy-elevated: #244166;
+  --color-teal: #2B9D8F;
+  --color-teal-light: #52B5A8;
+  --color-teal-dark: #207D72;
+  --color-green: #A7C957;
+  --color-lime: #A7C957;
+  --color-amber: #E76F51;
   --color-coral: #E76F51;
-  --color-canvas: #142439;
-  --color-canvas-light: #F8FAFC;
+  --color-salmon: #F28482;
+  --color-pink: #F28482;
+  --color-cream: #FFFCF6;
+  --color-canvas: #1D3658;
+  --color-canvas-light: #FFFCF6;
   --color-card-light: #FFFFFF;
 
   --font-manrope: 'Manrope', system-ui, -apple-system, sans-serif;
@@ -40,9 +45,9 @@ body {
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
-  background-color: #142439;
+  background-color: #1D3658;
   font-family: var(--font-manrope);
-  color: #F8FAFC;
+  color: #FFFCF6;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -66,8 +71,8 @@ p, span, a, button, input, div {
 }
 
 ::selection {
-  background-color: #2aa99d;
-  color: white;
+  background-color: #2B9D8F;
+  color: #FFFCF6;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -220,9 +225,9 @@ main [class*="px-[4vw]"], main [class*="px-[5vw]"] {
   padding-inline: var(--nzii-page-gutter) !important;
 }
 .site-header, .site-footer { padding-inline: var(--nzii-chrome-gutter) !important; }
-[data-display-mode="dark"] body { background: #142a3d; color: #f2f7f7; }
-[data-display-mode="light"] body { background: #f7f8f3; color: #173650; }
-[data-display-mode="eco"] body { background: #102334; color: #f0f5ee; }
+[data-display-mode="dark"] body { background: #1D3658; color: #FFFCF6; }
+[data-display-mode="light"] body { background: #FFFCF6; color: #1D3658; }
+[data-display-mode="eco"] body { background: #13243A; color: #F0F6F5; }
 [data-display-mode="eco"] .decorative-lines { display: none !important; }
 [data-display-mode="eco"] .hero-photo { filter: saturate(0.5) brightness(0.78); }
 @media (prefers-reduced-motion: reduce) {
@@ -256,22 +261,28 @@ main [class*="px-[4vw]"], main [class*="px-[5vw]"] {
 }
 [data-display-mode="eco"] .nzi-reveal,[data-display-mode="eco"] .hero-photo,[data-display-mode="eco"] .decorative-lines path{animation:none!important;transform:none}
 
-/* NZII brand colour system: deep navy, teal, soft coral pink and spring lime. */
+/* NZII brand colour system: deep navy #1D3658, teal #2B9D8F, lime #A7C957, cream #FFFCF6, coral #E76F51, salmon #F28482 */
 :root {
-  --nzi-coral: #E98D96;
-  --nzi-coral-deep: #A93E5B;
-  --nzi-coral-soft: #FFF0F0;
+  --nzi-navy: #1D3658;
+  --nzi-teal: #2B9D8F;
+  --nzi-lime: #A7C957;
+  --nzi-cream: #FFFCF6;
+  --nzi-coral: #E76F51;
+  --nzi-salmon: #F28482;
+
+  --nzi-coral-deep: #D0593B;
+  --nzi-coral-soft: #FDEEEB;
 }
 [data-display-mode="dark"],[data-display-mode="eco"] {
-  --nzi-coral-ink: #F4A7B0;
-  --nzi-coral-surface: #373747;
+  --nzi-coral-ink: #F28482;
+  --nzi-coral-surface: #243E5C;
 }
 [data-display-mode="light"] {
-  --nzi-coral-ink: #A93E5B;
-  --nzi-coral-surface: #FFF0F0;
+  --nzi-coral-ink: #E76F51;
+  --nzi-coral-surface: #FDEEEB;
 }
 /* Invariant: the photographic hero must have a readable foreground in every mode. */
-[data-display-mode="light"] .nzi-home-hero h1 { color: #153447; }
-[data-display-mode="light"] .nzi-home-hero { color: #153447; }
+[data-display-mode="light"] .nzi-home-hero h1 { color: #1D3658; }
+[data-display-mode="light"] .nzi-home-hero { color: #1D3658; }
 [data-display-mode="dark"] .nzi-home-hero h1,
-[data-display-mode="eco"] .nzi-home-hero h1 { color: #ffffff; }
+[data-display-mode="eco"] .nzi-home-hero h1 { color: #FFFCF6; }

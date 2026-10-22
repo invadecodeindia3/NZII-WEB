@@ -1,0 +1,277 @@
+@import "tailwindcss";
+/* The archived Old site (src/old) has its own stylesheet; do not scan it here. */
+@source not "./old";
+
+@theme {
+  --color-navy: #142439;
+  --color-navy-surface: #1c3346;
+  --color-navy-elevated: #244055;
+  --color-teal: #2aa99d;
+  --color-teal-light: #7ccaba;
+  --color-teal-dark: #218d83;
+  --color-amber: #F59E0B;
+  --color-coral: #E76F51;
+  --color-canvas: #142439;
+  --color-canvas-light: #F8FAFC;
+  --color-card-light: #FFFFFF;
+
+  --font-manrope: 'Manrope', system-ui, -apple-system, sans-serif;
+  --font-display: 'Manrope', system-ui, -apple-system, sans-serif;
+  --font-body: 'Manrope', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  background-color: #142439;
+  font-family: var(--font-manrope);
+  color: #F8FAFC;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: var(--font-manrope);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-manrope);
+  letter-spacing: -0.025em;
+  word-break: break-word;
+}
+
+p, span, a, button, input, div {
+  font-family: inherit;
+}
+
+::selection {
+  background-color: #2aa99d;
+  color: white;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   PURE NEUTRAL BLACK & DARK GREY CRYSTAL GLASSMORPHISM (ZERO BLUE TINT)
+   ───────────────────────────────────────────────────────────── */
+.glass-panel {
+  background: rgba(12, 12, 12, 0.45);
+  backdrop-filter: blur(14px) saturate(120%);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-top: 1px solid rgba(255, 255, 255, 0.28);
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.6),
+    0 16px 36px -8px rgba(0, 0, 0, 0.7);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 35%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.0) 100%
+  );
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.glass-capsule {
+  background: rgba(15, 15, 15, 0.40);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-top: 1px solid rgba(255, 255, 255, 0.30);
+  box-shadow:
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.2),
+    0 8px 24px -4px rgba(0, 0, 0, 0.6);
+}
+
+.glass-dropdown {
+  background: rgba(14, 14, 14, 0.85);
+  backdrop-filter: blur(24px) saturate(120%);
+  -webkit-backdrop-filter: blur(24px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-top: 1px solid rgba(255, 255, 255, 0.30);
+  box-shadow:
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.15),
+    0 24px 48px -10px rgba(0, 0, 0, 0.85);
+}
+
+.glass-icon-pod {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  box-shadow:
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.25),
+    0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   MEGA MENU ENTRANCE ANIMATION (SPRINGY SMOOTH DROP-DOWN WITH SCALE & FADE)
+   ───────────────────────────────────────────────────────────── */
+@keyframes megaMenuDrop {
+  0% {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.97);
+    filter: blur(6px);
+  }
+  60% {
+    opacity: 0.95;
+    transform: translateY(2px) scale(1.005);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+  }
+}
+
+.animate-mega-menu {
+  animation: megaMenuDrop 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: top center;
+  will-change: transform, opacity, filter;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   HERO ANIMATIONS & PARALLAX CINEMATIC EFFECTS
+   ───────────────────────────────────────────────────────────── */
+@keyframes heroEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes heroSubEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   ECO POWER SAVE MODE: DISABLE ALL CONTINUOUS ANIMATIONS & TRANSITIONS
+   ───────────────────────────────────────────────────────────── */
+.eco-power-save *,
+.eco-power-save *::before,
+.eco-power-save *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SUPER RESPONSIVE HORIZONTAL SCROLLBAR SUPPRESSION & TOUCH SMOOTHING
+   ───────────────────────────────────────────────────────────── */
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+
+/* Editorial redesign: strict horizontal gutters across visible pages. */
+:root { --nzii-page-gutter: 3%; --nzii-chrome-gutter: 1.5%; }
+main [class*="px-[4vw]"], main [class*="px-[5vw]"] {
+  padding-inline: var(--nzii-page-gutter) !important;
+}
+.site-header, .site-footer { padding-inline: var(--nzii-chrome-gutter) !important; }
+[data-display-mode="dark"] body { background: #142a3d; color: #f2f7f7; }
+[data-display-mode="light"] body { background: #f7f8f3; color: #173650; }
+[data-display-mode="eco"] body { background: #102334; color: #f0f5ee; }
+[data-display-mode="eco"] .decorative-lines { display: none !important; }
+[data-display-mode="eco"] .hero-photo { filter: saturate(0.5) brightness(0.78); }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  *,*::before,*::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+/* High-performance editorial motion: composited transforms/opacity only. */
+@keyframes nziRise {from{opacity:0;transform:translate3d(0,22px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+@keyframes nziFlow {from{stroke-dashoffset:950}to{stroke-dashoffset:0}}
+@keyframes nziPhotoEnter {from{transform:scale(1.07)}to{transform:scale(1)}}
+@keyframes nziGradientDrift {0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.nzi-motion-enabled .nzi-reveal{animation:nziRise .7s cubic-bezier(.2,.8,.2,1) both;animation-play-state:paused}
+.nzi-motion-enabled .nzi-reveal.nzi-visible{animation-play-state:running}
+.nzi-motion-enabled .nzi-home-hero h1{animation:nziRise .85s .09s both cubic-bezier(.16,1,.3,1)}
+.nzi-motion-enabled .nzi-home-hero h1 + div{animation:nziRise .75s .23s both cubic-bezier(.16,1,.3,1)}
+.nzi-motion-enabled .nzi-home-hero .nzi-hero-actions{animation:nziRise .7s .38s both cubic-bezier(.16,1,.3,1)}
+.nzi-motion-enabled .nzi-home-hero .hero-photo{animation:nziPhotoEnter 1.7s cubic-bezier(.2,.8,.2,1) both}
+.nzi-motion-enabled .decorative-lines path{stroke-dasharray:950;animation:nziFlow 2.7s cubic-bezier(.16,1,.3,1) both}
+.nzi-motion-enabled .decorative-lines path:nth-child(2){animation-delay:.25s}
+.nzi-motion-enabled .decorative-lines path:nth-child(3){animation-delay:.5s}
+.nzi-motion-enabled .decorative-lines path:nth-child(4){animation-delay:.75s}
+.nzi-motion-enabled a[class*="rounded-2xl"]:hover,.nzi-motion-enabled .nzi-raise:hover{transform:translate3d(0,-4px,0);box-shadow:0 16px 35px rgba(8,28,37,.12)}
+.nzi-motion-enabled a[class*="rounded-2xl"],.nzi-motion-enabled .nzi-raise{transition:transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s ease,border-color .28s ease}
+.nzi-motion-enabled a[class*="rounded-full"]:hover{transform:translateY(-2px)}
+.nzi-motion-enabled a[class*="rounded-full"]{transition:transform .25s ease,background-color .25s ease}
+.nzi-motion-enabled .nzi-photo img{transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.nzi-motion-enabled .nzi-photo:hover img{transform:scale(1.045)}
+@media (prefers-reduced-motion:reduce){
+ .nzi-reveal,.nzi-home-hero h1,.nzi-home-hero h1+div,.nzi-hero-actions,.hero-photo,.decorative-lines path{animation:none!important;opacity:1!important;transform:none!important}
+}
+[data-display-mode="eco"] .nzi-reveal,[data-display-mode="eco"] .hero-photo,[data-display-mode="eco"] .decorative-lines path{animation:none!important;transform:none}
+
+/* NZII brand colour system: deep navy, teal, soft coral pink and spring lime. */
+:root {
+  --nzi-coral: #E98D96;
+  --nzi-coral-deep: #A93E5B;
+  --nzi-coral-soft: #FFF0F0;
+}
+[data-display-mode="dark"],[data-display-mode="eco"] {
+  --nzi-coral-ink: #F4A7B0;
+  --nzi-coral-surface: #373747;
+}
+[data-display-mode="light"] {
+  --nzi-coral-ink: #A93E5B;
+  --nzi-coral-surface: #FFF0F0;
+}
+/* Invariant: the photographic hero must have a readable foreground in every mode. */
+[data-display-mode="light"] .nzi-home-hero h1 { color: #153447; }
+[data-display-mode="light"] .nzi-home-hero { color: #153447; }
+[data-display-mode="dark"] .nzi-home-hero h1,
+[data-display-mode="eco"] .nzi-home-hero h1 { color: #ffffff; }

@@ -77,7 +77,7 @@ export default function App() {
         <ScrollToTop />
         <MotionController />
         <AppContent />
-        <VersionToggle current="current" />
+        <VersionToggle current="v3" />
       </GameProvider>
     </BrowserRouter>
   );

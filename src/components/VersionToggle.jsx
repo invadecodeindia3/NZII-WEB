@@ -1,23 +1,48 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-// Floating "Old / Current" site-version switcher, shared by both versions.
+// Floating "V1 / V2 / V3" site-version switcher, shared by all versions.
 // Uses inline styles only so it renders identically regardless of which
 // version's global stylesheet is loaded. Links are plain <a href> because
 // switching versions requires a full page load (stylesheets swap).
 
 const OLD_PREFIX = '/old';
+const V2_PREFIX  = '/v2';
 
-const isOldPath = (p) => p === OLD_PREFIX || p.startsWith(`${OLD_PREFIX}/`);
-
-const toOldHref = (p) => `${OLD_PREFIX}${p && p !== '/' ? p : '/'}`;
-
-const toCurrentHref = (p) => {
-  const stripped = p.slice(OLD_PREFIX.length);
-  return stripped && stripped !== '/' ? stripped : '/';
-};
+// ── Path helpers ─────────────────────────────────────────────────────────────
 
 const getPathname = () => (typeof window === 'undefined' ? '/' : window.location.pathname);
+
+/** Strip a known prefix and return the bare subpath (always starts with /). */
+const stripPrefix = (p, prefix) => {
+  const rest = p.slice(prefix.length);
+  return rest && rest !== '/' ? rest : '/';
+};
+
+/** Convert any full pathname → the equivalent OLD (V1) href. */
+const toOldHref = (p) => {
+  if (p === OLD_PREFIX || p.startsWith(`${OLD_PREFIX}/`)) return p;
+  if (p === V2_PREFIX  || p.startsWith(`${V2_PREFIX}/`))
+    return `${OLD_PREFIX}${stripPrefix(p, V2_PREFIX)}`;
+  return `${OLD_PREFIX}${p && p !== '/' ? p : '/'}`;
+};
+
+/** Convert any full pathname → the equivalent V2 href. */
+const toV2Href = (p) => {
+  if (p === V2_PREFIX  || p.startsWith(`${V2_PREFIX}/`))  return p;
+  if (p === OLD_PREFIX || p.startsWith(`${OLD_PREFIX}/`))
+    return `${V2_PREFIX}${stripPrefix(p, OLD_PREFIX)}`;
+  return `${V2_PREFIX}${p && p !== '/' ? p : '/'}`;
+};
+
+/** Convert any full pathname → the equivalent V3 (current) href. */
+const toV3Href = (p) => {
+  if (p === OLD_PREFIX || p.startsWith(`${OLD_PREFIX}/`)) return stripPrefix(p, OLD_PREFIX);
+  if (p === V2_PREFIX  || p.startsWith(`${V2_PREFIX}/`))  return stripPrefix(p, V2_PREFIX);
+  return p;
+};
+
+// ── Responsive hook ───────────────────────────────────────────────────────────
 
 const useNarrow = () => {
   const query = '(max-width: 640px)';
@@ -34,6 +59,8 @@ const useNarrow = () => {
   return narrow;
 };
 
+// ── Segment ───────────────────────────────────────────────────────────────────
+
 const BLUE = '#1f5fae';
 
 const Segment = ({ label, href, active, narrow }) => {
@@ -43,10 +70,10 @@ const Segment = ({ label, href, active, narrow }) => {
     alignItems: 'center',
     justifyContent: 'center',
     boxSizing: 'border-box',
-    padding: narrow ? '6px 12px' : '7px 16px',
+    padding: narrow ? '6px 10px' : '7px 14px',
     borderRadius: 9999,
     fontFamily: "'Manrope', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif",
-    fontSize: narrow ? 12 : 13,
+    fontSize: narrow ? 11 : 13,
     fontWeight: active ? 700 : 600,
     lineHeight: 1,
     letterSpacing: 0,
@@ -80,17 +107,36 @@ const Segment = ({ label, href, active, narrow }) => {
   );
 };
 
+// ── VersionToggle ─────────────────────────────────────────────────────────────
+
+/**
+ * `current` prop: 'old' | 'v1' | 'v2' | 'v3'
+ *   'old' / 'v1' → the V1 (archived) site
+ *   'v2'         → the V2 (archived) site
+ *   'v3'         → the V3 (current/latest) site
+ * When omitted the active version is inferred from window.location.pathname.
+ */
 export const VersionToggle = ({ current }) => {
   const narrow = useNarrow();
-  // Must be rendered inside a <BrowserRouter>: subscribing to the router
-  // location re-renders on client-side navigation; the full (un-basenamed)
-  // path is read from window.location so the /old prefix is visible.
+  // Subscribe to React Router navigation so the toggle re-renders on pushState.
   useLocation();
   const pathname = getPathname();
 
-  const onOld = current ? current === 'old' : isOldPath(pathname);
-  const oldHref = onOld ? pathname : toOldHref(pathname);
-  const currentHref = onOld ? toCurrentHref(pathname) : pathname;
+  // Determine active tab
+  const onOld = current
+    ? current === 'old' || current === 'v1'
+    : pathname === OLD_PREFIX || pathname.startsWith(`${OLD_PREFIX}/`);
+
+  const onV2 = current
+    ? current === 'v2'
+    : !onOld && (pathname === V2_PREFIX || pathname.startsWith(`${V2_PREFIX}/`));
+
+  const onV3 = !onOld && !onV2;
+
+  // Build hrefs
+  const oldHref = toOldHref(pathname);
+  const v2Href  = toV2Href(pathname);
+  const v3Href  = toV3Href(pathname);
 
   const edge = narrow ? 12 : 24;
 
@@ -136,8 +182,9 @@ export const VersionToggle = ({ current }) => {
       >
         Version
       </span>
-      <Segment label="Old" href={oldHref} active={onOld} narrow={narrow} />
-      <Segment label="Current" href={currentHref} active={!onOld} narrow={narrow} />
+      <Segment label="V1" href={oldHref} active={onOld} narrow={narrow} />
+      <Segment label="V2" href={v2Href}  active={onV2}  narrow={narrow} />
+      <Segment label="V3" href={v3Href}  active={onV3}  narrow={narrow} />
     </div>
   );
 };

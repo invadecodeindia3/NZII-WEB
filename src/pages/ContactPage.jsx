@@ -84,11 +84,11 @@ export const ContactPage = () => {
 
   return (
     <div className={`w-full min-h-screen transition-colors duration-500 pb-0 ${
-      isLight ? 'bg-[#FFFFFF] text-[#0F172A]' : 'bg-[#080808] text-white'
+      isLight ? 'bg-[#FFFCF6] text-[#1D3658]' : 'bg-[#1D3658] text-[#FFFCF6]'
     }`}>
       
       {/* ── SECTION 1: CINEMATIC HERO HEADER (CENTER ALIGNED) ── */}
-      <section className="relative w-full min-h-[580px] lg:min-h-[640px] flex flex-col justify-end pt-36 pb-20 px-[3vw] overflow-hidden select-none border-b border-white/10 bg-[#050B14] text-white">
+      <section className="relative w-full min-h-[580px] lg:min-h-[640px] flex flex-col justify-end pt-36 pb-20 px-[3vw] overflow-hidden select-none border-b border-white/10 bg-[#14263D] text-white">
         
         {/* Background Video Layer */}
         <video
@@ -153,8 +153,8 @@ export const ContactPage = () => {
             <RevealOnScroll direction="up" delay={80}>
               <div className={`p-8 sm:p-10 rounded-xl border ${
                 isLight 
-                  ? 'bg-white border-[#E2E8F0] shadow-sm' 
-                  : 'bg-[#101520] border-[#1D2636] shadow-xl'
+                  ? 'bg-white border-[#E6E2D8] shadow-sm' 
+                  : 'bg-[#162B46] border-white/10 shadow-xl'
               }`}>
                 {formSubmitted ? (
                   <div className="text-center py-12 space-y-4">
@@ -162,7 +162,7 @@ export const ContactPage = () => {
                       <CheckCircle2 className="w-8 h-8" />
                     </div>
                     <h3 className={`font-manrope font-extrabold text-2xl ${
-                      isLight ? 'text-[#0F172A]' : 'text-white'
+                      isLight ? 'text-[#1D3658]' : 'text-white'
                     }`}>
                       Inquiry received
                     </h3>
@@ -182,7 +182,7 @@ export const ContactPage = () => {
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                       <h2 className={`font-manrope font-extrabold text-2xl tracking-tight mb-1 ${
-                        isLight ? 'text-[#0F172A]' : 'text-white'
+                        isLight ? 'text-[#1D3658]' : 'text-white'
                       }`}>
                         Research Enquiry Draft
                       </h2>
@@ -206,8 +206,8 @@ export const ContactPage = () => {
                           placeholder="e.g. Researcher / Policy Lead"
                           className={`w-full px-4 py-3 rounded-lg text-xs sm:text-sm font-manrope outline-none border transition-all ${
                             isLight 
-                              ? 'bg-[#F8FAFC] border-[#CBD5E1] text-[#0F172A] focus:border-teal' 
-                              : 'bg-[#181F2C] border-[#2A3446] text-white focus:border-teal'
+                              ? 'bg-[#F4F1E8] border-[#CBD5E1] text-[#1D3658] focus:border-teal' 
+                              : 'bg-[#1D3658] border-[#2A3446] text-white focus:border-teal'
                           }`}
                         />
                       </div>
@@ -226,8 +226,8 @@ export const ContactPage = () => {
                           placeholder="name@institution.ac.in"
                           className={`w-full px-4 py-3 rounded-lg text-xs sm:text-sm font-manrope outline-none border transition-all ${
                             isLight 
-                              ? 'bg-[#F8FAFC] border-[#CBD5E1] text-[#0F172A] focus:border-teal' 
-                              : 'bg-[#181F2C] border-[#2A3446] text-white focus:border-teal'
+                              ? 'bg-[#F4F1E8] border-[#CBD5E1] text-[#1D3658] focus:border-teal' 
+                              : 'bg-[#1D3658] border-[#2A3446] text-white focus:border-teal'
                           }`}
                         />
                       </div>
@@ -248,8 +248,8 @@ export const ContactPage = () => {
                           placeholder="e.g. IIT Bombay / Ministry of Power"
                           className={`w-full px-4 py-3 rounded-lg text-xs sm:text-sm font-manrope outline-none border transition-all ${
                             isLight 
-                              ? 'bg-[#F8FAFC] border-[#CBD5E1] text-[#0F172A] focus:border-teal' 
-                              : 'bg-[#181F2C] border-[#2A3446] text-white focus:border-teal'
+                              ? 'bg-[#F4F1E8] border-[#CBD5E1] text-[#1D3658] focus:border-teal' 
+                              : 'bg-[#1D3658] border-[#2A3446] text-white focus:border-teal'
                           }`}
                         />
                       </div>
@@ -265,8 +265,8 @@ export const ContactPage = () => {
                           onChange={(e) => setFormData({ ...formData, inquiryType: e.target.value })}
                           className={`w-full px-4 py-3 rounded-lg text-xs sm:text-sm font-manrope outline-none border transition-all cursor-pointer ${
                             isLight 
-                              ? 'bg-[#F8FAFC] border-[#CBD5E1] text-[#0F172A] focus:border-teal' 
-                              : 'bg-[#181F2C] border-[#2A3446] text-white focus:border-teal'
+                              ? 'bg-[#F4F1E8] border-[#CBD5E1] text-[#1D3658] focus:border-teal' 
+                              : 'bg-[#1D3658] border-[#2A3446] text-white focus:border-teal'
                           }`}
                         >
                           <option value="Research Partnership">Research Partnership</option>
@@ -293,8 +293,8 @@ export const ContactPage = () => {
                         placeholder="Please describe your research scope, modeling questions, or required dataset formats..."
                         className={`w-full px-4 py-3 rounded-lg text-xs sm:text-sm font-manrope outline-none border transition-all ${
                           isLight 
-                            ? 'bg-[#F8FAFC] border-[#CBD5E1] text-[#0F172A] focus:border-teal' 
-                            : 'bg-[#181F2C] border-[#2A3446] text-white focus:border-teal'
+                            ? 'bg-[#F4F1E8] border-[#CBD5E1] text-[#1D3658] focus:border-teal' 
+                            : 'bg-[#1D3658] border-[#2A3446] text-white focus:border-teal'
                         }`}
                       ></textarea>
                     </div>
@@ -317,11 +317,22 @@ export const ContactPage = () => {
           {/* Right: Institutional Directory (5 cols) */}
           <div className="lg:col-span-5 space-y-6">
             <RevealOnScroll direction="up" delay={120}>
-              <div className={`p-8 rounded-xl border space-y-6 ${
-                isLight ? 'bg-[#F8FAFC] border-[#E2E8F0]' : 'bg-[#101520] border-[#1D2636]'
+              <div className={`relative isolate overflow-hidden p-8 rounded-xl border space-y-6 ${
+                isLight ? 'bg-[#F4F1E8] border-[#E6E2D8]' : 'bg-[#162B46] border-white/10'
               }`}>
+                {/* Subtle watermark */}
+                <div 
+                  aria-hidden="true" 
+                  className="pointer-events-none absolute -right-20 -bottom-20 -z-10 h-[360px] w-[360px] select-none opacity-[0.035] sm:opacity-[0.045]"
+                  style={{
+                    backgroundImage: 'url(/patterns/pattern-2.png)',
+                    backgroundSize: 'contain',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center'
+                  }}
+                />
                 <h3 className={`font-manrope font-extrabold text-xl ${
-                  isLight ? 'text-[#0F172A]' : 'text-white'
+                  isLight ? 'text-[#1D3658]' : 'text-white'
                 }`}>
                   Secretariat Coordination Hubs
                 </h3>
@@ -359,7 +370,7 @@ export const ContactPage = () => {
                 </div>
 
                 <div className={`pt-4 border-t ${
-                  isLight ? 'border-[#E2E8F0]' : 'border-[#1D2636]'
+                  isLight ? 'border-[#E6E2D8]' : 'border-white/10'
                 }`}>
                   <span className="text-[10px] font-mono font-bold uppercase text-teal block mb-1">
                     Direct Taskforce Dispatch

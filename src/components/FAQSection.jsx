@@ -35,7 +35,7 @@ export const FAQSection = ({
 
   return (
     <section className={`w-full py-20 px-[3vw] border-t transition-colors duration-500 ${
-      isLight ? 'bg-[#F8FAFC] border-[#E2E8F0] text-[#0F172A]' : 'bg-[#0A0D14] border-[#181F2C] text-white'
+      isLight ? 'bg-[#FFFCF6] border-[#E6E2D8] text-[#1D3658]' : 'bg-[#162B46] border-white/10 text-[#FFFCF6]'
     }`}>
       <div className="w-full max-w-[1280px] mx-auto space-y-12">
         
@@ -49,7 +49,7 @@ export const FAQSection = ({
               </span>
             </div>
             <h2 className={`font-manrope text-3xl sm:text-4xl font-extrabold tracking-tight ${
-              isLight ? 'text-[#0F172A]' : 'text-white'
+              isLight ? 'text-[#1D3658]' : 'text-white'
             }`}>
               {title}
             </h2>
@@ -74,7 +74,7 @@ export const FAQSection = ({
                         ? 'bg-white border-teal shadow-md ring-1 ring-teal/20' 
                         : 'bg-[#121824] border-teal shadow-lg ring-1 ring-teal/30'
                       : isLight 
-                        ? 'bg-white border-[#E2E8F0] hover:border-teal/50' 
+                        ? 'bg-white border-[#E6E2D8] hover:border-teal/50' 
                         : 'bg-[#10141C] border-[#1C2534] hover:border-teal/30'
                   }`}
                 >
@@ -86,7 +86,7 @@ export const FAQSection = ({
                     className="w-full p-6 text-left flex items-center justify-between gap-4 cursor-pointer"
                   >
                     <span className={`font-manrope font-extrabold text-base sm:text-lg transition-colors ${
-                      isOpen ? 'text-teal' : isLight ? 'text-[#0F172A]' : 'text-white'
+                      isOpen ? 'text-teal' : isLight ? 'text-[#1D3658]' : 'text-white'
                     }`}>
                       {item.q}
                     </span>
@@ -99,7 +99,7 @@ export const FAQSection = ({
 
                   {isOpen && (
                     <div className={`px-6 pb-6 pt-1 text-xs sm:text-sm leading-relaxed border-t ${
-                      isLight ? 'text-[#475569] border-[#E2E8F0]' : 'text-[#94A3B8] border-[#1E2636]'
+                      isLight ? 'text-[#475569] border-[#E6E2D8]' : 'text-[#94A3B8] border-[#1E2636]'
                     }`}>
                       {item.a}
                     </div>

@@ -96,11 +96,11 @@ export const PublicationsPage = () => {
 
   return (
     <div className={`w-full min-h-screen transition-colors duration-500 pb-0 ${
-      isLight ? 'bg-[#FFFFFF] text-[#0F172A]' : 'bg-[#080808] text-white'
+      isLight ? 'bg-[#FFFCF6] text-[#1D3658]' : 'bg-[#1D3658] text-[#FFFCF6]'
     }`}>
       
       {/* ── SECTION 1: CINEMATIC HERO HEADER (CENTER ALIGNED) ── */}
-      <section className="relative w-full min-h-[580px] lg:min-h-[640px] flex flex-col justify-end pt-36 pb-20 px-[3vw] overflow-hidden select-none border-b border-white/10 bg-[#050B14] text-white">
+      <section className="relative w-full min-h-[580px] lg:min-h-[640px] flex flex-col justify-end pt-36 pb-20 px-[3vw] overflow-hidden select-none border-b border-white/10 bg-[#14263D] text-white">
         
         {/* Background Video Layer */}
         <video
@@ -163,8 +163,8 @@ export const PublicationsPage = () => {
             <RevealOnScroll key={pub.id} direction="up" delay={80 + i * 50}>
               <div className={`p-8 rounded-xl border transition-all duration-300 flex flex-col justify-between h-full ${
                 isLight 
-                  ? 'bg-white border-[#E2E8F0] shadow-sm hover:border-teal hover:shadow-xl' 
-                  : 'bg-[#101520] border-[#1D2636] shadow-md hover:border-teal hover:bg-[#141A26] hover:shadow-2xl'
+                  ? 'bg-white border-[#E6E2D8] shadow-sm hover:border-teal hover:shadow-xl' 
+                  : 'bg-[#162B46] border-white/10 shadow-md hover:border-teal hover:bg-[#1A3353] hover:shadow-2xl'
               }`}>
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
@@ -177,7 +177,7 @@ export const PublicationsPage = () => {
                   </div>
 
                   <h3 className={`font-manrope font-extrabold text-xl tracking-tight leading-snug ${
-                    isLight ? 'text-[#0F172A]' : 'text-white'
+                    isLight ? 'text-[#1D3658]' : 'text-white'
                   }`}>
                     {pub.title}
                   </h3>
@@ -194,7 +194,7 @@ export const PublicationsPage = () => {
                 </div>
 
                 <div className={`pt-5 mt-6 border-t flex items-center justify-between ${
-                  isLight ? 'border-[#E2E8F0]' : 'border-[#1D2636]'
+                  isLight ? 'border-[#E6E2D8]' : 'border-white/10'
                 }`}>
                   <Link
                     to="/research"

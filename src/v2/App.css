@@ -1,0 +1,126 @@
+/* Clean app resets and advanced cinema/motion animation styles */
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 25px rgba(43, 157, 143, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 55px rgba(43, 157, 143, 0.7);
+  }
+}
+
+@keyframes radarSweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes spinSlow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes spinReverseSlow {
+  0% { transform: rotate(360deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes floatOrb {
+  0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+  50% { transform: translateY(-24px) rotate(180deg) scale(1.08); }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(1000%); }
+}
+
+@keyframes energyRings {
+  0% { transform: scale(0.85); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 0.3; }
+  100% { transform: scale(0.85); opacity: 0.8; }
+}
+
+@keyframes waveDrift {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(-25%); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes waveDriftReverse {
+  0% { transform: translateX(-25%); }
+  50% { transform: translateX(0); }
+  100% { transform: translateX(-25%); }
+}
+
+@keyframes laserSweepHorizontal {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradientShift 6s ease infinite;
+}
+
+.animate-spin-slow {
+  animation: spinSlow 28s linear infinite;
+}
+
+.animate-spin-reverse-slow {
+  animation: spinReverseSlow 34s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s infinite ease-in-out;
+}
+
+.animate-float-orb {
+  animation: floatOrb 12s infinite ease-in-out;
+}
+
+.animate-radar-sweep {
+  animation: radarSweep 6s linear infinite;
+}
+
+.animate-energy-rings {
+  animation: energyRings 5s ease-in-out infinite;
+}
+
+.animate-wave-drift {
+  animation: waveDrift 18s ease-in-out infinite;
+}
+
+.animate-wave-drift-reverse {
+  animation: waveDriftReverse 22s ease-in-out infinite;
+}
+
+.animate-laser-line {
+  animation: laserSweepHorizontal 5s ease-in-out infinite;
+}
+
+/* Custom interactive custom cursor indicator */
+.magnetic-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.magnetic-glow::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(43, 157, 143, 0.25), transparent 40%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.magnetic-glow:hover::after {
+  opacity: 1;
+}

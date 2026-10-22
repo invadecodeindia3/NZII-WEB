@@ -84,7 +84,7 @@ export default function App() {
       <GameProvider>
         <ScrollToTop />
         <AppContent />
-        <VersionToggle current="old" />
+        <VersionToggle current="v1" />
       </GameProvider>
     </BrowserRouter>
   );
