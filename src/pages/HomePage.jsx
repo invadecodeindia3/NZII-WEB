@@ -42,6 +42,7 @@ const methodSteps = [
 
 const Label = ({children,light=false}) => <p className={"text-[11px] font-semibold uppercase tracking-[.18em] " + (light ? 'text-[#A7C957]' : 'text-[#2B9D8F]')}>{children}</p>;
 const Title = ({children,className=''}) => <h2 className={"mt-3 max-w-4xl text-[clamp(1.8rem,2.55vw,2.75rem)] font-semibold leading-[1.18] tracking-[-.04em] " + className}>{children}</h2>;
+const ArrowLink = ({to,children,dark=false}) => <Link to={to} className={"inline-flex items-center gap-2 text-sm font-semibold transition-[gap] duration-300 hover:gap-3 " + (dark ? 'text-[#A7C957]' : 'text-[#2B9D8F]')}>{children}<ArrowUpRight size={17}/></Link>;
 const Photo = ({src,alt='',className='',imageClassName='',children}) => <EditorialPhoto src={src} alt={alt} className={className} imageClassName={`transition-transform duration-700 ease-out group-hover:scale-[1.04] ${imageClassName}`}>{children}</EditorialPhoto>;
 
 export const HomePage = () => {
