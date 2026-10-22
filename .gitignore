@@ -34,8 +34,10 @@ banner_png_road.png
 test_rendered_circle.png
 Artboard 1.svg
 Colored NZII Logo.png
-Images/
-PNG/
+/Images/
+/PNG/
+!public/images/
+!public/images/*
 backend/
 bun.lock
 merge-tabs.cjs
