@@ -37,14 +37,14 @@ html[data-mode="eco"] *{transition:none!important;animation:none!important}
 
 *{box-sizing:border-box}
 /* Fluid sizing: text scales from 15px (phones) to 20px (large screens); layout always fills the screen */
-html{scroll-behavior:smooth;font-size:clamp(14px,0.42vw + 8.5px,16px)}
+html{scroll-behavior:smooth;font-size:clamp(15px,0.55vw + 9px,20px)}
 body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:1rem;line-height:1.6;transition:background .3s,color .3s}
 .container{width:100%;padding-inline:clamp(16px,5vw,120px)}
 /* Headlines in Space Grotesk Medium; body, header, footer and labels in Inter */
 h1,h2,h3{font-family:var(--f-serif);margin:0;line-height:1.12;letter-spacing:-.01em;text-wrap:balance;font-optical-sizing:auto}
-h1{font-size:clamp(2rem,4.6vw,3rem);font-weight:500}
-h2{font-size:clamp(1.3rem,2.6vw,1.7rem);font-weight:500}
-h3{font-size:1.1rem;font-weight:500;letter-spacing:0}
+h1{font-size:clamp(2.3rem,5.4vw,3.5rem);font-weight:500}
+h2{font-size:clamp(1.45rem,3vw,1.9rem);font-weight:500}
+h3{font-size:1.2rem;font-weight:500;letter-spacing:0}
 p{margin:0;max-width:68ch;text-wrap:pretty}
 li,dd,dt,summary,small,td,th,label,.meta span{text-wrap:pretty}
 .nb{white-space:nowrap}
@@ -70,13 +70,13 @@ svg{flex-shrink:0}
 .hd-row{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .hd-logo{display:flex;align-items:center;flex-shrink:0;transition:transform .3s}
 .hd-logo:hover{transform:scale(1.02)}
-.hd-logo img{width:auto;height:48px;object-fit:contain;transition:height .3s;filter:drop-shadow(0 1px 1px rgba(0,0,0,.05))}
-@media (min-width:640px){.hd-logo img{height:60px}}
-@media (min-width:768px){.hd-logo img{height:68px}}
-@media (min-width:1024px){.hd-logo img{height:72px}}
-.scrolled .hd-logo img{height:36px}
-@media (min-width:640px){.scrolled .hd-logo img{height:44px}}
-@media (min-width:768px){.scrolled .hd-logo img{height:48px}}
+.hd-logo img{width:auto;height:56px;object-fit:contain;transition:height .3s;filter:drop-shadow(0 1px 1px rgba(0,0,0,.05))}
+@media (min-width:640px){.hd-logo img{height:72px}}
+@media (min-width:768px){.hd-logo img{height:80px}}
+@media (min-width:1024px){.hd-logo img{height:88px}}
+.scrolled .hd-logo img{height:44px}
+@media (min-width:640px){.scrolled .hd-logo img{height:52px}}
+@media (min-width:768px){.scrolled .hd-logo img{height:56px}}
 .pill{display:flex;align-items:center;gap:8px;border-radius:999px;border:1px solid var(--pill-border);background:var(--pill-bg);color:var(--pill-ink);padding:8px 12px;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:var(--pill-shadow)}
 @media (min-width:640px){.pill{gap:12px;padding:10px 16px}}
 .main-nav{display:none;align-items:center;gap:2px;min-width:0}
@@ -130,7 +130,7 @@ main{display:block}
 
 /* Headline template: second line in teal, short teal rule underneath */
 .hl{display:flex;flex-direction:column;gap:20px}
-.hl h2{font-size:clamp(1.65rem,3vw,2.2rem)}
+.hl h2{font-size:clamp(1.9rem,3.6vw,2.7rem)}
 .hl h2 .teal,.hero h1 .teal{display:block}
 .hl h2.one .teal{display:inline}
 /* Type rhythm: balanced headings, no orphans in body text, consistent line length */
@@ -168,7 +168,7 @@ p,li{text-wrap:pretty}
 .hero{position:relative;isolation:isolate;display:flex;align-items:center;min-height:min(92vh, 980px);padding:clamp(112px,10vw,144px) clamp(16px,3vw,48px) clamp(48px,5vw,80px);background:var(--hero-bg);color:var(--hero-ink);overflow:hidden}
 .hero-in{display:grid;width:100%;max-width:1720px;margin:0 auto;align-items:center;gap:32px;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr)}
 @media (min-width:1280px){.hero-in{grid-template-columns:minmax(0,800px) 1fr}}
-.hero h1{max-width:780px;font-family:var(--f-serif);font-size:clamp(2rem,3.6vw,3.6rem);font-weight:500;line-height:1.06;letter-spacing:-.015em;color:var(--hero-ink)}
+.hero h1{max-width:780px;font-family:var(--f-serif);font-size:clamp(2.4rem,4.1vw,4.4rem);font-weight:500;line-height:1.06;letter-spacing:-.015em;color:var(--hero-ink)}
 /* Hero headline: one line per phrase, all Space Grotesk Medium like every other headline */
 .hero h1 span{display:block}
 .hero h1 .hl-1,.hero h1 .hl-2,.hero h1 .hl-3{font-weight:500}
@@ -177,7 +177,7 @@ p,li{text-wrap:pretty}
 .hero h1{animation:.85s cubic-bezier(.16,1,.3,1) 90ms both nziRise}
 .hero-txt{animation:.75s cubic-bezier(.16,1,.3,1) .23s both nziRise}
 .hero-act{animation:.7s cubic-bezier(.16,1,.3,1) .38s both nziRise}
-.hero-txt{margin-top:24px;max-width:730px;display:grid;gap:12px;font-size:clamp(.82rem,.9vw,.95rem);line-height:1.68;color:var(--hero-ink-2)}
+.hero-txt{margin-top:24px;max-width:730px;display:grid;gap:12px;font-size:clamp(.88rem,1vw,1rem);line-height:1.68;color:var(--hero-ink-2)}
 .hero-txt p{max-width:none;color:inherit}
 .hero-act{margin-top:24px;display:flex;flex-wrap:wrap;align-items:center;gap:12px}
 .hero-act a{display:inline-flex;min-height:44px;align-items:center;gap:8px;border-radius:999px;padding:12px 20px;font:600 13px var(--f-head);text-decoration:none;transition:background .2s,color .2s}
@@ -203,7 +203,7 @@ html[data-mode="dark"],html[data-mode="eco"]{--hero-dotn:#2b4e78;--hero-dotn-s:#
 .why-copy{display:flex;flex-direction:column;gap:22px}
 .why-copy h3{font-size:1.3rem}
 .choices{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-.choices li{position:relative;isolation:isolate;overflow:hidden;padding:12px 16px 12px 40px;border-bottom:1px solid var(--line);font-size:.95rem;transition:padding .35s}
+.choices li{position:relative;isolation:isolate;overflow:hidden;padding:15px 16px 15px 40px;border-bottom:1px solid var(--line);font-size:1.02rem;transition:padding .35s}
 .choices li::before,.choices li::after{content:"";position:absolute;left:14px;top:50%;width:10px;height:10px;margin-top:-5px;border-radius:50%;background:var(--c)}
 /* hover: the marker dot "blooms" into a soft wash of its colour */
 .choices li::after{z-index:-1;opacity:0;transform:scale(.2);transition:transform .6s cubic-bezier(.2,.7,.2,1),opacity .4s}
@@ -369,7 +369,7 @@ html[data-mode="eco"] .cluster circle.pl{animation:none}
 .modes button[aria-pressed="true"]{background:var(--teal-dark)}
 html[data-mode="dark"],html[data-mode="eco"]{--btn-ink:#14243a}
 /* Home hero (31 Oct): intro text at least 16px on phones; primary button in the deeper teal so its label reads clearly */
-.hero-txt{font-size:clamp(14px,1vw,16px)}
+.hero-txt{font-size:clamp(16px,1.1vw,18px)}
 .hero-act .pri{background:var(--teal-dark)}
 .hero-act .pri:hover{background:#185e56}
 /* Supported by on phones: label on its own line, the three logos share one even row */
