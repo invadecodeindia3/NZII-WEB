@@ -46,19 +46,26 @@ body {
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
-  font-family: var(--f-body);
-  /* typography and colors handled by pbh.css matching Lovable reference */
-  line-height: 1.6;
+  background-color: #1D3658;
+  font-family: var(--font-manrope);
+  color: #FFFCF6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
   width: 100%;
   min-height: 100vh;
   overflow-x: hidden;
-  font-family: var(--f-body);
+  font-family: var(--font-manrope);
 }
 
-/* Headings letter-spacing and typography handled entirely by pbh.css */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-manrope);
+  letter-spacing: -0.025em;
+  word-break: break-word;
+}
 
 p, span, a, button, input, div {
   font-family: inherit;
@@ -218,7 +225,7 @@ p, span, a, button, input, div {
 main [class*="px-[4vw]"], main [class*="px-[5vw]"] {
   padding-inline: var(--nzii-page-gutter) !important;
 }
-/* site-header padding controlled by pbh.css */
+.site-header, .site-footer { padding-inline: var(--nzii-chrome-gutter) !important; }
 [data-display-mode="dark"] body { background: #1D3658; color: #FFFCF6; }
 [data-display-mode="light"] body { background: #FFFCF6; color: #1D3658; }
 [data-display-mode="eco"] body { background: #13243A; color: #F0F6F5; }
