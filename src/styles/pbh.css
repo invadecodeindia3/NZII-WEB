@@ -1,3 +1,4 @@
+
 /* NZII brand (PurpleBlue House guidelines). Header and footer match the live PBH site (nzii2.vercel.app). */
 :root{
   --navy:#1d3658; --teal:#2b9d8f; --teal-dark:#207d72; --lime:#a7c957; --coral:#e76f51; --pink:#f28482; --cream:#fffcf6;
@@ -165,7 +166,7 @@ p,li{text-wrap:pretty}
 .card:hover::before{opacity:.32}
 
 /* ---------- 01 Hero: original PBH design (nzii2.vercel.app) ---------- */
-.hero{position:relative;isolation:isolate;display:flex;align-items:center;min-height:min(92vh, 980px);padding:clamp(112px,10vw,144px) clamp(16px,3vw,48px) clamp(48px,5vw,80px);background:var(--hero-bg);color:var(--hero-ink);overflow:hidden}
+.hero{position:relative;isolation:isolate;display:flex;align-items:center;min-height:92svh;padding:clamp(112px,10vw,144px) clamp(16px,3vw,48px) clamp(48px,5vw,80px);background:var(--hero-bg);color:var(--hero-ink);overflow:hidden}
 .hero-in{display:grid;width:100%;max-width:1720px;margin:0 auto;align-items:center;gap:32px;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr)}
 @media (min-width:1280px){.hero-in{grid-template-columns:minmax(0,800px) 1fr}}
 .hero h1{max-width:780px;font-family:var(--f-serif);font-size:clamp(2.4rem,4.1vw,4.4rem);font-weight:500;line-height:1.06;letter-spacing:-.015em;color:var(--hero-ink)}
