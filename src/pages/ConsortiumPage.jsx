@@ -264,7 +264,7 @@ export const ConsortiumPage = () => {
   }, []);
 
   return (
-    <div className="container page people-wrapper" style={{ paddingTop: "clamp(110px,10vw,150px)" }}>
+    <div className="container page people-wrapper" style={{ paddingTop: "clamp(80px,8vw,100px)" }}>
 
       {/* ---- Open Calls ---- */}
       <section className="oc-start" id="open-calls">

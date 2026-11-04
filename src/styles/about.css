@@ -669,4 +669,4 @@ div.card.static:hover{transform:none;box-shadow:none;border-color:var(--line)}
 div.card.static:hover::before{opacity:0}
 .pp-news li{display:grid;gap:4px}
 
-.about-wrapper{padding-top:calc(clamp(110px,10vw,150px) + 32px)!important}
+.about-wrapper{padding-top:clamp(80px,8vw,100px)!important}
