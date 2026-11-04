@@ -1,338 +1,607 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight, Network, MapPin, HeartPulse, BookOpen, Compass, Building2, Sprout, Users, Scale, Handshake, CalendarDays } from 'lucide-react';
 import { useGame } from '../context/GameContext';
-import { Footer } from '../components/Footer';
-import { HeroContourLines } from '../components/HeroContourLines';
-import { EditorialPhoto } from '../components/EditorialPhoto';
-import { editorialMedia, homeImages } from '../data/editorialMedia';
-import { PUBLISHED_NEWS_EVENTS } from '../data/newsEvents';
-
-const questionsOfTransition = [
-  'Where should new energy infrastructure be built?',
-  'How much land and water could different pathways require?',
-  'What happens to jobs and livelihoods?',
-  'How might energy choices affect air quality and health? Where will investment flow?',
-  'And will the costs and benefits of the transition be shared equitably?'
-];
-
-const differences = [
-  {title:'Integrated',desc:'Connecting energy and emissions with development and natural-resource outcomes.',icon:'/icons/integrated.png',iconLight:'/icons/integrated-light.png'},
-  {title:'Spatially resolved',desc:'Moving beyond national averages to understand how pathways and impacts could differ across states, districts and places.',icon:'/icons/spatially.png',iconLight:'/icons/spatially-light.png'},
-  {title:'Development-centred',desc:'Keeping employment, health, energy access, equity and economic development alongside mitigation.',icon:'/icons/development-centred.png',iconLight:'/icons/development-centred-light.png'},
-  {title:'Rigorous & Open',desc:'Building robust research, models and datasets that others can examine, use and build upon.',icon:'/icons/rigorous-open.png',iconLight:'/icons/rigorous-open-light.png'}
-];
-
-const researchQuestions = [
-  {title:"How might India's energy needs change?",desc:'Explore future demand across households, transport, industry and agriculture.',image:homeImages.themeEnergyNeeds},
-  {title:'How could India meet those needs?',desc:'Understand different combinations of energy technologies, infrastructure and investment.',image:homeImages.themeMeetNeeds},
-  {title:'Where could the transition happen?',desc:"Explore where new infrastructure may be required and what this could mean across India's regions.",image:homeImages.themeWhereTransition},
-  {title:'What resources could it require?',desc:'Examine interactions between energy infrastructure, land, water, agriculture, forests and biodiversity.',image:homeImages.themeResources},
-  {title:'What could it mean for people?',desc:'Study implications for employment, health, energy access and equity.',image:homeImages.themePeople},
-  {title:'What choices and trade-offs emerge?',desc:"Understand how different development and mitigation choices interact on India's path to 2070.",image:homeImages.themeTradeOffs}
-];
-
-const methodSteps = [
-  {title:'Understand the possibilities',desc:"Data, stakeholder engagement and scenario development help identify the forces that could shape India's future."},
-  {title:'Model different pathways',desc:'Integrated energy and land modelling explores how different development and mitigation futures could unfold.'},
-  {title:'Understand their implications',desc:'Spatial and post-modelling analysis examines what those pathways could mean for infrastructure, resources, development, people and ecosystems.'},
-  {title:'Make the evidence usable',desc:'Research, data, models and insights are shared to support further research and better-informed policy and planning.'}
-];
-
-
-const Label = ({children,light=false}) => <p className={"text-[11px] font-semibold uppercase tracking-[.18em] " + (light ? 'text-[#A7C957]' : 'text-[#2B9D8F]')}>{children}</p>;
-const Title = ({children,className=''}) => <h2 className={"mt-3 max-w-4xl text-[clamp(1.8rem,2.55vw,2.75rem)] font-semibold leading-[1.18] tracking-[-.04em] " + className}>{children}</h2>;
-const ArrowLink = ({to,children,dark=false}) => <Link to={to} className={"inline-flex items-center gap-2 text-sm font-semibold transition-[gap] duration-300 hover:gap-3 " + (dark ? 'text-[#A7C957]' : 'text-[#2B9D8F]')}>{children}<ArrowUpRight size={17}/></Link>;
-const Photo = ({src,alt='',className='',imageClassName='',children}) => <EditorialPhoto src={src} alt={alt} className={className} imageClassName={`transition-transform duration-700 ease-out group-hover:scale-[1.04] ${imageClassName}`}>{children}</EditorialPhoto>;
 
 export const HomePage = () => {
-  const {theme,ecoMode}=useGame();
-  const light=theme==='light';
-  const page=light?'bg-[#FFFCF6] text-[#1D3658]':'bg-[#1D3658] text-[#FFFCF6]';
-  const paper=light?'bg-[#F4F1E8]':'bg-[#162B46]';
-  const panel=light?'bg-white border-[#E6E2D8]':'bg-[#244166] border-white/10';
-  const inkMuted=light?'text-[#4A607A]':'text-[#D1DBE5]';
-  const line=light?'border-[#E2DED4]':'border-white/15';
+  const { displayMode } = useGame();
+  const heroSvgRef = useRef(null);
 
-  const verifiedNews=PUBLISHED_NEWS_EVENTS.find(item=>item.type==='news'&&!item.fictional);
-  const verifiedEvent=PUBLISHED_NEWS_EVENTS.find(item=>item.type==='event'&&!item.fictional);
-  const sampleEvent=PUBLISHED_NEWS_EVENTS.find(item=>item.type==='event'&&item.fictional);
-  const displayEvent=verifiedEvent||sampleEvent;
-  // Client document specifies editorial slots, not actual approved stories.
-  const latest=[
-    {tag:'Research & Publications',title:'Latest paper/report',image:homeImages.latestPubs,to:'/publications'},
-    {tag:'News & Updates',title:'Latest project update',image:homeImages.latestUpdates,to:'/news-events'},
-    {tag:'Workshops & Events',title:'Latest consultation/event',image:homeImages.latestEvents,to:'/news-events'}
-  ];
+  // Dynamic animated SVG dot clusters on photo corners
+  useEffect(() => {
+    const ns = 'http://www.w3.org/2000/svg';
+    const PAL = ['#2b9d8f', '#a7c957', '#e76f51', '#f28482'];
+    function rng(seed) {
+      return function () {
+        seed = (seed * 9301 + 49297) % 233280;
+        return seed / 233280;
+      };
+    }
 
-  return <div className={"nzi-editorial nzi-doc-copy w-full overflow-x-clip " + page}>
-    {/* HERO — Two-column responsive banner: Left has verbatim V2 font & spacing; Right has PBH bubbles */}
-    <section
-      className={"nzi-home-hero relative isolate flex min-h-[92svh] items-center overflow-hidden px-[3%] pt-28 pb-12 sm:pt-32 sm:pb-16 lg:pt-36 lg:pb-20 " + (light ? 'bg-[#FFFCF6] text-[#1D3658]' : 'bg-[#14263D] text-white')}
-    >
-      <div className="relative grid w-full items-center gap-8 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,.92fr)] xl:grid-cols-[minmax(0,800px)_1fr] max-w-[1720px] mx-auto z-10">
-        {/* Left Column: Exactly the font, weight, size, line-height, and paragraph spacing of the old version (V2) */}
-        <div className="min-w-0">
-          <h1 className={"max-w-[780px] text-[clamp(2.2rem,3.75vw,4.05rem)] font-semibold leading-[1.1] tracking-[-.055em] " + (light ? "text-[#1D3658]" : "text-white")}>
-            What will it take for India to reach net zero, and what will different paths mean for the country?
-          </h1>
-          <div className={"mt-6 max-w-[730px] space-y-3 text-[clamp(.88rem,1vw,1rem)] leading-[1.68] " + (light ? 'text-[#4A607A]' : 'text-white/85')}>
-            <p>India has committed to achieving net-zero emissions by 2070. Getting there will transform how the country produces and uses energy, builds infrastructure, uses land and resources, and creates livelihoods.</p>
-            <p>Net Zero India brings together research, modelling and diverse expertise to understand the pathways India could take, and their implications for development, people and the environment.</p>
-          </div>
-          <div className="nzi-hero-actions mt-6 flex flex-wrap items-center gap-3">
-            <Link
-              to="/research"
-              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[#2B9D8F] px-5 py-3 text-[13px] font-semibold text-white hover:bg-[#207D72] transition-colors shadow-sm"
-            >
-              Explore Our Research <ArrowUpRight size={16}/>
-            </Link>
-            <Link
-              to="/about"
-              className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-5 py-3 text-[13px] font-semibold transition-colors ${
-                light
-                  ? 'border-[#1D3658]/30 bg-white/50 text-[#1D3658] hover:bg-white'
-                  : 'border-white/30 text-white hover:bg-white/10'
-              }`}
-            >
-              About Net Zero India <ArrowRight size={16}/>
-            </Link>
-          </div>
-        </div>
+    const drawClusters = () => {
+      document.querySelectorAll('svg[data-cluster]').forEach((svg, i) => {
+        while (svg.firstChild) svg.removeChild(svg.firstChild);
+        const r = rng(11 + i * 5);
+        const bg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#fffcf6';
+        for (let y = 0; y < 5; y++) {
+          for (let x = 0; x < 7; x++) {
+            const d = (x + y) / 10;
+            if (r() > d) continue; // denser towards corner
+            const c = document.createElementNS(ns, 'circle');
+            c.setAttribute('cx', String(8 + x * 17));
+            c.setAttribute('cy', String(8 + y * 18));
+            c.setAttribute('r', (1.5 + d * 5 * r()).toFixed(1));
+            c.setAttribute('fill', d > 0.75 ? bg : PAL[Math.floor(r() * PAL.length)]);
+            if (d <= 0.75) {
+              c.setAttribute('class', 'pl');
+              c.style.setProperty('--dl', ((6 - x) + (4 - y)) * 0.22 + 's');
+            }
+            svg.appendChild(c);
+          }
+        }
+      });
+    };
 
-        {/* Right Column: Original PBH bubbles collage (transparent vector background, theme-adaptive) */}
-        <div className="relative flex items-center justify-center lg:justify-end">
-          <img
-            src={light ? '/banner-bubbles.svg' : '/banner-bubbles-dark.svg'}
-            alt="Pathways, Community, Innovation, Research"
-            className="w-full max-w-[560px] sm:max-w-[620px] lg:max-w-[680px] xl:max-w-[720px] h-auto object-contain select-none transition-transform duration-500 hover:scale-[1.01]"
-            loading="eager"
-            fetchPriority="high"
-          />
-        </div>
-      </div>
-    </section>
+    drawClusters();
+    window.addEventListener('nzii-mode', drawClusters);
+    window.addEventListener('resize', drawClusters);
 
+    return () => {
+      window.removeEventListener('nzii-mode', drawClusters);
+      window.removeEventListener('resize', drawClusters);
+    };
+  }, [displayMode]);
 
-    {/* 02 — clear editorial asymmetry: image / questions / conclusion */}
-    <section id="why-nzi" className="relative isolate overflow-hidden px-[3%] py-20 sm:py-24 lg:py-28 lg:py-24">
-      {/* Subtle background watermark pattern */}
-      <div 
-        aria-hidden="true" 
-        className="pointer-events-none absolute -right-24 top-1/2 -translate-y-1/2 -z-10 h-[580px] w-[580px] select-none opacity-[0.035] sm:opacity-[0.045]"
-        style={{
-          backgroundImage: 'url(/patterns/pattern-1.png)',
-          backgroundSize: 'contain',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center'
-        }}
-      />
-      <div className="grid gap-7 lg:grid-cols-[minmax(0,.93fr)_minmax(0,1.07fr)] lg:gap-12">
-        <div>
-          <Title className="mt-0!">Net zero is not one destination with <em className={"font-normal "+(light?"text-[#A93E5B]":"text-[#F4A7B0]")}>one road.</em></Title>
-          <p className={"mt-4 text-sm font-semibold " + inkMuted}>India's transition will involve choices.</p>
-          <Photo src={homeImages.whyNzi} alt="Agricultural land" className="group relative mt-7 h-[290px] rounded-[22px] sm:h-[360px] lg:h-[410px]">
-            <div className="absolute inset-0 bg-gradient-to-t from-[#102a36]/40 via-transparent to-transparent"/>
-          </Photo>
-        </div>
-        <div className="flex flex-col justify-between">
-          <div className={"rounded-[22px] border p-7 sm:p-9 " + panel}>
-            <div className={"divide-y " + (light?'divide-[#E2DED4]':'divide-white/10')}>
-              {questionsOfTransition.map((item,i)=><div key={item} className="flex gap-4 py-4">
-                <span className={"w-7 shrink-0 pt-0.5 font-mono text-[11px] "+(i%2===1?(light?"text-[#E76F51]":"text-[#F28482]"):"text-[#2B9D8F]")}>0{i+1}</span>
-                <p className="text-[clamp(.94rem,1.08vw,1.1rem)] font-medium leading-[1.48]">{item}</p>
-              </div>)}
-            </div>
-          </div>
-          <p className={"mt-6 max-w-[700px] border-l-[3px] border-[#2B9D8F] pl-5 text-[14px] leading-[1.85] " + inkMuted}>These questions cannot be understood in isolation. We study the connections between energy, development, land, water, biodiversity, health, employment, and equity to understand both, whether India can reach net zero, and, what different ways of getting there could mean.</p>
-        </div>
-      </div>
-    </section>
+  // Card cursor dot spotlight
+  useEffect(() => {
+    const handlePointerMove = (e) => {
+      const card = e.currentTarget;
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      card.style.setProperty('--my', `${e.clientY - r.top}px`);
+    };
 
-    {/* 03 — no repetitive card wall: editorial photograph with two-by-two research principles */}
-    <section className={"relative isolate overflow-hidden px-[3%] py-20 sm:py-24 lg:py-28 " + paper}>
-      <div className="mb-9 flex flex-wrap items-end justify-between gap-6">
-        <div><Title className="mt-0!">A more complete picture of India’s net-zero transition</Title></div>
-      </div>
-      <div className="grid gap-6 lg:grid-cols-[.9fr_1.1fr]">
-        <Photo src={homeImages.pictureOfTransition} alt="India net-zero transition" className="group relative h-[360px] rounded-[22px] lg:h-auto lg:min-h-[440px]">
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0b2e37]/65 to-transparent"/>
-        </Photo>
-        <div className="grid gap-3 sm:grid-cols-2">
-          {differences.map((d,i)=>{
-            const iconSrc = light ? d.icon : d.iconLight;
-            return <article key={d.title} className={"nzi-raise group flex min-h-[185px] flex-col justify-between rounded-[18px] border p-5 sm:min-h-[210px] sm:p-6 transition-all duration-300 " + (i===1?(light?"bg-[#FDEEEB] border-[#F28482]/40":"bg-[#243E5C] border-[#F28482]/30"):panel)}>
-            <div className="flex items-center justify-between">
-              <div className={"flex h-11 w-11 items-center justify-center rounded-xl p-2 transition-transform duration-300 group-hover:scale-105 " + (i===1?(light?"bg-[#E76F51]/10":"bg-[#F28482]/15"):(light?"bg-[#2B9D8F]/10":"bg-[#2B9D8F]/15"))}>
-                <img src={iconSrc} alt={d.title} className="h-full w-full object-contain" />
-              </div>
-              <span className={"font-mono text-xs " + (i===1?(light?"text-[#E76F51]":"text-[#F28482]"):"text-[#2B9D8F]")}>0{i+1}</span>
-            </div>
-            <div className="mt-7"><h3 className="text-[18px] font-semibold">{d.title}</h3><p className={"mt-2 text-[13px] leading-[1.65] " + inkMuted}>{d.desc}</p></div>
-          </article>})}
-        </div>
-      </div>
-    </section>
+    const cards = document.querySelectorAll('.card');
+    cards.forEach((card) => card.addEventListener('pointermove', handlePointerMove));
 
-    {/* 04 — asymmetric magazine grid, not six equal-sized cards */}
-    <section className={"px-[3%] py-20 sm:py-24 lg:py-28 " + (light?'bg-[#F4F1E8]':'bg-[#162B46]')}>
-      <div className="flex flex-wrap items-end justify-between gap-6">
-        <div><Title className="mt-0!">One transition. <em className={"font-normal "+(light?"text-[#E76F51]":"text-[#F28482]")}>Many connected questions.</em></Title></div>
-        <ArrowLink to="/research">Explore the Research</ArrowLink>
-      </div>
-      <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-12">
-        {researchQuestions.map((q,i)=><Link to="/research" key={q.title} className={"group relative isolate flex min-h-[270px] flex-col justify-end overflow-hidden rounded-[22px] border border-white/15 bg-[#1D3658] text-white md:min-h-[300px] " + (i===0?'lg:col-span-7 lg:min-h-[360px]':i===1?'lg:col-span-5':'lg:col-span-3')}>
-          <img src={q.image} alt="" loading="lazy" decoding="async" className="nzi-card-image absolute inset-0 -z-20 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"/>
-          <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#1D3658]/95 via-[#1D3658]/40 to-transparent"/>
-          <span className={"absolute left-5 top-5 rounded-full px-3 py-1.5 font-mono text-[11px] text-white backdrop-blur-sm "+(i===1||i===4?"bg-[#E76F51]/90":"bg-[#1D3658]/85")}>0{i+1}</span>
-          <div className="p-6 sm:p-8"><h3 className={"font-semibold leading-tight tracking-tight " + (i===0?'text-[clamp(1.55rem,2.2vw,2.25rem)]':'text-[clamp(1.16rem,1.35vw,1.45rem)]')}>{q.title}</h3><p className="mt-2 max-w-lg text-[13px] leading-[1.7] text-white/80">{q.desc}</p></div>
-        </Link>)}
-      </div>
-    </section>
+    return () => {
+      cards.forEach((card) => card.removeEventListener('pointermove', handlePointerMove));
+    };
+  }, []);
 
-    {/* 05 — connected journey, no card grid */}
-    <section className="relative isolate overflow-hidden px-[3%] py-20 sm:py-24 lg:py-28">
-      {/* Watermark pattern 2 — orbital planetary sphere behind methodology */}
-      <div 
-        aria-hidden="true" 
-        className="pointer-events-none absolute -left-20 top-1/2 -translate-y-1/2 -z-10 h-[580px] w-[580px] select-none opacity-[0.035] sm:opacity-[0.045]"
-        style={{
-          backgroundImage: 'url(/patterns/pattern-2.png)',
-          backgroundSize: 'contain',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center'
-        }}
-      />
-      <div className="grid gap-10 lg:grid-cols-[1fr_.7fr] lg:gap-16">
-        <div>
-          <Title className="mt-0!">From possible futures to evidence for decisions</Title>
-          <div className="relative mt-9 space-y-0">
-            <span aria-hidden="true" className={"absolute bottom-6 left-[19px] top-5 w-px " + (light?'bg-[#E2DED4]':'bg-white/20')}/>
-            {methodSteps.map((step,i)=><div className="relative flex gap-5 pb-7 last:pb-0" key={step.title}>
-              <span className={"relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-[11px] font-semibold text-white "+(i===2?"border-[#F28482] bg-[#E76F51]":"border-[#2B9D8F] bg-[#2B9D8F]")}>{String(i+1).padStart(2,'0')}</span>
-              <div className={"flex-1 border-b pb-6 last:border-b-0 " + line}><h3 className="text-[17px] font-semibold">{step.title}</h3><p className={"mt-2 max-w-[650px] text-[14px] leading-[1.75] " + inkMuted}>{step.desc}</p></div>
-            </div>)}
-          </div>
-          <div className="mt-7"><ArrowLink to="/research/methodological-advances-modeling">Explore Our Approach</ArrowLink></div>
-        </div>
-        <Photo src={homeImages.futuresEvidence} alt="Evidence for decisions" className="group relative h-[330px] rounded-[22px] lg:min-h-[640px] lg:h-auto">
-          <div className="absolute inset-0 bg-gradient-to-t from-[#102b3d]/65 via-transparent to-transparent"/>
-        </Photo>
-      </div>
-    </section>
+  // Reveal on scroll
+  useEffect(() => {
+    const items = Array.from(document.querySelectorAll('.rv'));
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { rootMargin: '0px 0px -10% 0px' }
+      );
+      items.forEach((el, i) => {
+        el.style.transitionDelay = `${(i % 4) * 70}ms`;
+        io.observe(el);
+      });
+      return () => io.disconnect();
+    } else {
+      items.forEach((el) => el.classList.add('in'));
+    }
+  }, []);
 
-    {/* 06 — atmospheric full-bleed quotation */}
-    <section className="nzi-feature-photo relative isolate overflow-hidden bg-[#0c2936] px-[3%] py-20 text-white sm:py-24 lg:py-28">
-      <img src={homeImages.statementBanner} alt="" loading="lazy" className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover object-center opacity-65"/>
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(8,37,48,.94)_0%,rgba(8,37,48,.82)_57%,rgba(8,37,48,.30)_100%)]"/>
-      {/* Watermark in atmospheric statement banner */}
-      <div 
-        aria-hidden="true" 
-        className="pointer-events-none absolute right-[5%] top-1/2 -translate-y-1/2 -z-10 h-[620px] w-[620px] select-none opacity-[0.04] sm:opacity-[0.06]"
-        style={{
-          backgroundImage: 'url(/patterns/pattern-2.png)',
-          backgroundSize: 'contain',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center'
-        }}
-      />
-      <div className="max-w-[1000px]">
-        <h2 className="max-w-4xl text-[clamp(2rem,3.5vw,3.8rem)] font-semibold leading-[1.18] tracking-[-.045em]">We are not looking for <em className="font-normal">the</em> pathway to net zero.</h2>
-        <blockquote className="mt-7 border-l-[3px] border-[#E98D96] pl-5 sm:pl-7"><p className="max-w-[840px] text-[clamp(1.05rem,1.55vw,1.45rem)] leading-[1.65]">We are building the evidence to understand different pathways; their possibilities, consequences and trade-offs.</p>
-          <p className="mt-5 max-w-[790px] text-[14px] leading-[1.75] text-white/80">So that decisions about India's transition can be informed by evidence that reflects the country's development priorities, resources and diversity.</p>
-        </blockquote>
-      </div>
-    </section>
+  // Hero SVG PBH bubble animation & hover interaction
+  useEffect(() => {
+    const svg = heroSvgRef.current;
+    if (!svg) return;
 
-    {/* 07 — oversized feature, two smaller editorial tiles */}
-    <section className="px-[3%] py-20 sm:py-24 lg:py-28">
-      <div className="mb-8"><Title className="mt-0!">Explore our work</Title></div>
-      <div className="grid gap-6 lg:grid-cols-[1.12fr_.88fr]">
-        <Link to="/research" className="group relative isolate flex min-h-[410px] flex-col justify-between overflow-hidden rounded-[22px] bg-[#153c43] p-6 text-white sm:p-8 lg:min-h-[515px]">
-          <img alt="" src={homeImages.exploreFeatured} loading="lazy" className="absolute inset-0 -z-20 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"/>
-          <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#092f39]/95 via-[#0a3440]/45 to-[#183542]/20"/>
-          <div className="flex justify-between"><span className="rounded-full border border-[#F7AEB6]/70 bg-[#8B4055]/25 px-3 py-2 text-[10px] font-semibold uppercase tracking-widest text-[#FFD3D8]">Featured Research</span><ArrowUpRight size={21}/></div>
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const still = () => reduce.matches || document.documentElement.getAttribute('data-mode') === 'eco';
+
+    const order = ['pathways', 'community', 'innovation', 'research', 'netzero'];
+    const items = Array.from(svg.querySelectorAll('.b')).map((el) => ({
+      el,
+      cx: +el.dataset.cx,
+      cy: +el.dataset.cy,
+      k: el.dataset.k || '',
+      photo: el.classList.contains('photo'),
+      s: 1,
+      ts: 1,
+      o: 1,
+      to: 1,
+      lbl: el.dataset.k ? svg.querySelector(`.lbl[data-for="${el.dataset.k}"]`) : null,
+    }));
+
+    let di = 0;
+    items.forEach((it) => {
+      if (it.photo) {
+        const n = order.indexOf(it.k);
+        it.start = 0.55 + n * 0.22;
+        it.dur = 1.15;
+      } else {
+        it.start = 0.1 + di++ * 0.05;
+        it.dur = 0.55;
+      }
+    });
+
+    const t0 = performance.now();
+    let raf = 0;
+    let focus = null;
+
+    const easeOut = (x) => 1 - Math.pow(1 - x, 4);
+    const around = (cx, cy, s) =>
+      `translate(${cx} ${cy}) scale(${s.toFixed(4)}) translate(${-cx} ${-cy})`;
+
+    const frame = (now) => {
+      const t = (now - t0) / 1000;
+      const calm = still();
+      let busy = false;
+
+      items.forEach((it) => {
+        const e = calm ? 1 : Math.min(1, Math.max(0, (t - it.start) / it.dur));
+        if (e < 1) busy = true;
+        const grow = it.photo ? 0.06 + 0.94 * easeOut(e) : 0.3 + 0.7 * easeOut(e);
+        it.ts = focus ? (focus === it ? 1.025 : 1) : 1;
+        it.to = focus && focus !== it && it.photo ? 0.55 : 1;
+        it.s += (it.ts - it.s) * 0.12;
+        it.o += (it.to - it.o) * 0.12;
+
+        if (Math.abs(it.ts - it.s) > 0.0005 || Math.abs(it.to - it.o) > 0.005) {
+          busy = true;
+        }
+
+        it.el.setAttribute('transform', around(it.cx, it.cy, grow * it.s));
+        it.el.style.opacity = (Math.min(1, e * 2.5) * it.o).toFixed(3);
+        if (it.lbl && e > 0.6) it.lbl.classList.add('shown');
+      });
+
+      raf = busy ? requestAnimationFrame(frame) : 0;
+    };
+
+    const kick = () => {
+      if (!raf) raf = requestAnimationFrame(frame);
+    };
+
+    const listeners = [];
+    items.forEach((it) => {
+      if (!it.photo) return;
+      const onEnter = () => {
+        focus = it;
+        svg.classList.add('focus');
+        if (it.lbl) it.lbl.classList.add('on');
+        kick();
+      };
+      const onLeave = () => {
+        focus = null;
+        svg.classList.remove('focus');
+        if (it.lbl) it.lbl.classList.remove('on');
+        kick();
+      };
+      it.el.addEventListener('pointerenter', onEnter);
+      it.el.addEventListener('pointerleave', onLeave);
+      listeners.push({ el: it.el, onEnter, onLeave });
+    });
+
+    kick();
+
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+      listeners.forEach(({ el, onEnter, onLeave }) => {
+        el.removeEventListener('pointerenter', onEnter);
+        el.removeEventListener('pointerleave', onLeave);
+      });
+    };
+  }, []);
+
+  return (
+    <div className="home-wrapper w-full">
+      {/* 01 Hero: PBH design */}
+      <section className="hero" aria-labelledby="h-hero">
+        <div className="hero-in">
           <div>
-            {/* Client doc slot: [Title / image / short description] — populate once a featured item is approved. */}
-            <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#a7d8ce]">Read the research <ArrowRight size={16}/></span>
+            <h1 id="h-hero">
+              <span className="hl-1">What will it take</span>{' '}
+              <span className="hl-2">for India to reach</span>{' '}
+              <span className="hl-3">net&nbsp;zero?</span>
+            </h1>
+            <div className="hero-txt">
+              <p>
+                India has committed to achieving net-zero emissions by 2070. Getting there will transform how the country produces and uses energy, builds infrastructure, uses land and resources, and creates livelihoods.
+              </p>
+              <p>
+                The Net Zero India Initiative brings together research, modelling and diverse expertise to understand the pathways India could take, and their implications for development, people and the environment.
+              </p>
+            </div>
+            <div className="hero-act">
+              <Link className="pri" to="/about">
+                About the Net Zero India Initiative{' '}
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
+              </Link>
+            </div>
           </div>
-        </Link>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-          {[
-            {tag:'Open Calls & Collaborations',title:'Open Calls & Collaborations',desc:'Explore opportunities to collaborate, contribute to ongoing research, participate in programmes, or engage with the Net Zero India Initiative.',image:homeImages.exploreCalls,url:'/contact',cta:'Explore Opportunities'},
-            {tag:'Publications & Outputs',title:'Publications & Outputs',desc:'Working papers, policy briefs, reports, presentations, and other outputs from the initiative.',image:homeImages.explorePubs,url:'/publications',cta:'View all outputs'}
-          ].map(card=><Link key={card.tag} to={card.url} className={"group grid min-h-[210px] overflow-hidden rounded-[22px] border sm:grid-cols-1 lg:grid-cols-[42%_1fr] " + panel}>
-            <Photo src={card.image} alt="" className="hidden min-h-full sm:block lg:block"/>
-            <div className="flex flex-col justify-between p-5"><div><Label>{card.tag}</Label><p className={"mt-5 text-[14px] leading-[1.8] " + inkMuted}>{card.desc}</p></div><span className="mt-3 inline-flex items-center gap-2 text-[13px] font-semibold text-[#2fa99c]">{card.cta}<ArrowUpRight size={16}/></span></div>
-          </Link>)}
-        </div>
-      </div>
-    </section>
-
-    {/* 08 — collaboration / brand associations only supplied by the client */}
-    <section className={"relative isolate overflow-hidden px-[3%] py-20 sm:py-24 lg:py-28 " + paper}>
-      {/* Watermark pattern */}
-      <div 
-        aria-hidden="true" 
-        className="pointer-events-none absolute -right-20 top-1/2 -translate-y-1/2 -z-10 h-[540px] w-[540px] select-none opacity-[0.03] sm:opacity-[0.04]"
-        style={{
-          backgroundImage: 'url(/patterns/pattern-1.png)',
-          backgroundSize: 'contain',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center'
-        }}
-      />
-      <div className="grid items-center gap-8 lg:grid-cols-[.86fr_1.14fr] lg:gap-14">
-        <div className="group relative">
-          <Photo src={homeImages.collaborationMain} alt="Research collaboration" className="h-[380px] rounded-[22px] sm:h-[450px]"/>
-          <div className="absolute -bottom-4 right-4 hidden sm:block"><Photo src={homeImages.collaborationInset} alt="" className={"h-32 w-36 rounded-2xl border-4 "+(light?"border-white":"border-[#1b3749]")}/></div>
-        </div>
-        <div><Title className="mt-0!">Built through collaboration. <em className="font-normal text-[#2B9D8F]">Led from India.</em></Title>
-          <p className={"mt-4 text-[14px] leading-[1.8] " + inkMuted}>Net Zero India brings together researchers and institutions across energy systems, public policy, land, development, and related fields to build a rigorous, India-specific understanding of the transition.</p>
-          <div className={"mt-7 rounded-[18px] border p-5 " + panel}>
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-[#2B9D8F]">Led by</p><p className="mt-2 text-[17px] font-semibold">School of Public Policy, IIT Delhi</p>
-            <div className={"my-5 border-t " + line}/>
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-[#2B9D8F]">Research Partners</p>
-            <div className="mt-3 flex flex-wrap gap-2"><span className={"rounded-lg border px-3 py-2 text-[13px] font-semibold " + line}>Prayas Energy Group</span><span className={"rounded-lg border px-3 py-2 text-[13px] font-semibold " + line}>Princeton University</span></div>
+          <div className="hero-art">
+            <svg
+              ref={heroSvgRef}
+              className="hero-svg"
+              viewBox="1040 20 820 960"
+              role="img"
+              aria-label="Pathways, Community, Innovation, Research"
+            >
+              <defs>
+                <clipPath id="hc-inn">
+                  <circle cx="1259.19" cy="683.82" r="107.64" />
+                </clipPath>
+                <clipPath id="hc-cen">
+                  <circle cx="1418.59" cy="502.08" r="199.03" />
+                </clipPath>
+                <clipPath id="hc-res">
+                  <circle cx="1680.12" cy="604.52" r="140.86" />
+                </clipPath>
+                <clipPath id="hc-pat">
+                  <circle cx="1169.98" cy="330.23" r="89.22" />
+                </clipPath>
+                <clipPath id="hc-nz">
+                  <circle cx="1566.29" cy="236.64" r="188.99" />
+                </clipPath>
+              </defs>
+              <text className="lbl" data-for="community" x="1361.64" y="758.9">
+                Community
+              </text>
+              <text className="lbl" data-for="pathways" x="1208.1" y="152.93">
+                Pathways
+              </text>
+              <text className="lbl" data-for="research" x="1678.51" y="439.16">
+                Research
+              </text>
+              <g className="b photo" data-k="innovation" data-cx="1259.19" data-cy="683.82" data-d="14">
+                <g clipPath="url(#hc-inn)">
+                  <g className="in">
+                    <image
+                      href="/assets/pbh/hero/innovation.jpg"
+                      width="1280"
+                      height="720"
+                      transform="translate(1057.1693 564.6356) scale(.3318)"
+                      preserveAspectRatio="none"
+                    />
+                  </g>
+                </g>
+              </g>
+              <g className="b photo" data-k="community" data-cx="1418.59" data-cy="502.08" data-d="8">
+                <g clipPath="url(#hc-cen)">
+                  <g className="in">
+                    <image
+                      href="/assets/pbh/hero/centre.jpg"
+                      width="768"
+                      height="512"
+                      transform="translate(1219.5628 296.5158) scale(.803)"
+                      preserveAspectRatio="none"
+                    />
+                  </g>
+                </g>
+              </g>
+              <g className="b photo" data-k="research" data-cx="1680.12" data-cy="604.52" data-d="12">
+                <g clipPath="url(#hc-res)">
+                  <g className="in">
+                    <image
+                      href="/assets/pbh/hero/research.jpg"
+                      width="1557"
+                      height="1010"
+                      transform="translate(1425.4771 460.8054) scale(.285)"
+                      preserveAspectRatio="none"
+                    />
+                  </g>
+                </g>
+              </g>
+              <g className="b" data-cx="1303.81" data-cy="230.29" data-d="26">
+                <circle cx="1303.81" cy="230.29" r="44.61" fill="#2b9d8f" />
+              </g>
+              <g className="b" data-cx="1460.96" data-cy="922.5" data-d="22">
+                <circle cx="1460.96" cy="922.5" r="44.61" fill="#a7c957" />
+              </g>
+              <g className="b" data-cx="1234.26" data-cy="401.12" data-d="24">
+                <circle cx="1234.26" cy="401.12" r="44.61" fill="#a7c957" />
+              </g>
+              <g className="b" data-cx="1766.45" data-cy="362.71" data-d="30">
+                <circle className="dn" cx="1766.45" cy="362.71" r="32.48" />
+              </g>
+              <g className="b" data-cx="1306.64" data-cy="632.4" data-d="28">
+                <circle className="dn" cx="1306.64" cy="632.4" r="32.48" />
+              </g>
+              <g className="b" data-cx="1566.29" data-cy="814.13" data-d="20">
+                <circle className="dn" cx="1566.29" cy="814.13" r="44.61" />
+              </g>
+              <g className="b photo" data-k="pathways" data-cx="1169.98" data-cy="330.23" data-d="18">
+                <g clipPath="url(#hc-pat)">
+                  <g className="in">
+                    <image
+                      href="/assets/pbh/hero/pathways.jpg"
+                      width="350"
+                      height="196"
+                      transform="translate(1006.6743 234.8324) scale(.9735)"
+                      preserveAspectRatio="none"
+                    />
+                  </g>
+                </g>
+              </g>
+              <g className="b" data-cx="1182.42" data-cy="559.22" data-d="30">
+                <circle cx="1182.42" cy="559.22" r="37.05" fill="#e76f51" />
+              </g>
+              <g className="b" data-cx="1097.74" data-cy="581.65" data-d="34">
+                <circle cx="1097.74" cy="581.65" r="27.1" fill="#f28482" />
+              </g>
+              <g className="b" data-cx="1712.33" data-cy="803.92" data-d="26">
+                <circle cx="1712.33" cy="803.92" r="37.05" fill="#e76f51" />
+              </g>
+              <g className="b" data-cx="1761.08" data-cy="719.91" data-d="32">
+                <circle cx="1761.08" cy="719.91" r="27.1" fill="#f28482" />
+              </g>
+              <text className="lbl" data-for="innovation" x="1219.38" y="866.84">
+                Innovation
+              </text>
+              <g className="b photo" data-k="netzero" data-cx="1566.29" data-cy="236.64" data-d="10">
+                <g clipPath="url(#hc-nz)">
+                  <g className="in">
+                    <image
+                      href="/assets/pbh/hero/netzero.jpg"
+                      width="1200"
+                      height="652"
+                      transform="translate(1266.4716 17.4717) scale(.6433)"
+                      preserveAspectRatio="none"
+                    />
+                  </g>
+                </g>
+              </g>
+            </svg>
           </div>
-          <div className="mt-6"><ArrowLink to="/consortium">Meet the Team & Partners</ArrowLink></div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    {/* 09 — intentionally very quiet */}
-    <section className={"border-y px-[3%] py-9 " + line}>
-      <div className="flex flex-wrap items-center gap-x-12 gap-y-5">
-        <span className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[.16em] text-[#2B9D8F]"><span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-[#F28482]"/>Supported by</span>
-        <span className="text-[19px] font-semibold tracking-tight">Schmidt Sciences <span className={"text-[12px] font-normal " + inkMuted}>/ AX programme</span></span>
-        <span className="text-[19px] font-semibold tracking-tight">Giving Green</span>
-        {/* Client doc also lists "Princeton University (if the relevant funding arrangement requires Princeton to appear here as well)" — omitted until that arrangement is confirmed. */}
-      </div>
-    </section>
-
-    {/* 10 — refined editorial news cards */}
-    <section className="px-[3%] py-20 sm:py-24 lg:py-28">
-      <div className="mb-8 flex flex-wrap items-end justify-between gap-5"><div><Title className="mt-0!">Latest from Net Zero India</Title></div><ArrowLink to="/news-events">View All Updates</ArrowLink></div>
-      <div className="grid gap-6 md:grid-cols-3">
-        {latest.map(card=><Link to={card.to} key={card.tag} className={"group overflow-hidden rounded-[22px] border " + panel}>
-          <Photo src={card.image} alt="" className="h-[210px] sm:h-[240px]" imageClassName="object-[center_top]"/>
-          <div className="flex min-h-[200px] flex-col p-5"><Label>{card.tag}</Label><h3 className="mt-5 text-[19px] font-semibold leading-snug">{card.title}</h3></div>
-        </Link>)}
-      </div>
-    </section>
-
-    {/* FINAL — end on a photographic invitation */}
-    <section className="nzi-feature-photo relative isolate overflow-hidden bg-[#1D3658] px-[3%] py-20 text-white sm:py-24">
-      <img alt="" src={editorialMedia.energy} loading="lazy" className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover object-center opacity-50"/>
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r from-[#1D3658]/95 via-[#1D3658]/85 to-[#1D3658]/45"/>
-      <div className="flex flex-wrap items-end justify-between gap-8">
-        <div>
-          <h2 className="max-w-4xl text-[clamp(2.1rem,3.4vw,3.6rem)] font-semibold leading-[1.18] tracking-[-.045em]">India's path to 2070 is still being written.</h2>
-          <p className="mt-5 max-w-2xl text-[15px] leading-[1.75] text-white/80">Explore the research, evidence and ideas helping us understand the choices ahead.</p>
+      {/* 02 Why NZII exists + The difference */}
+      <section className="wrap sec" aria-labelledby="h-why">
+        <div className="why">
+          <div className="why-copy">
+            <div className="hl rv">
+              <span className="eyebrow">Why NZII exists</span>
+              <h2 id="h-why">
+                Net zero can take many forms.{' '}
+                <span className="teal">So can India’s path to&nbsp;it.</span>
+              </h2>
+              <div className="rule" aria-hidden="true"></div>
+            </div>
+            <h3 className="rv">India’s transition will involve choices.</h3>
+            <ul className="choices rv">
+              <li className="c-teal">Where should new energy infrastructure be built?</li>
+              <li className="c-teal">How much land and water could different pathways require?</li>
+              <li className="c-teal">What happens to jobs and livelihoods?</li>
+              <li className="c-teal">How might energy choices affect air quality and health?</li>
+              <li className="c-teal">Where will investment flow?</li>
+              <li className="c-teal">And will the costs and benefits of the transition be shared equitably?</li>
+            </ul>
+            <p className="closing rv">
+              These questions cannot be understood in isolation. We study the connections between energy, development, land, water, biodiversity, health, employment, and equity to understand both, whether India can reach net zero, and, what different ways of getting there could mean.
+            </p>
+          </div>
+          <figure className="photo rv" style={{ margin: 0 }}>
+            <img
+              src="/assets/photos/12_Urbanisation_Sep2024_photo2_group_exercise.jpg"
+              alt="Participants working together in a group exercise at an NZII workshop on urbanisation, IIT Delhi"
+              loading="lazy"
+            />
+            <svg className="cluster" data-cluster viewBox="0 0 120 90" aria-hidden="true"></svg>
+          </figure>
         </div>
-        <Link to="/research" className="inline-flex min-h-11 items-center gap-3 rounded-full bg-[#2B9D8F] px-5 py-3 text-[13px] font-semibold text-white hover:bg-[#207D72]">Explore Our Research <ArrowRight size={17}/></Link>
-      </div>
-    </section>
-    <Footer/>
-  </div>;
+
+        <div className="picture">
+          <div className="pic-head rv">
+            <h3>NZII presents a more complete picture of India’s net-zero transition</h3>
+            <div className="rule" aria-hidden="true"></div>
+            <p className="lead-in">That picture is more complete because our research&nbsp;is:</p>
+          </div>
+          <div className="qual">
+            <article className="card c-teal rv">
+              <span className="num">01</span>
+              <b>Integrated</b>
+              <p>Connecting energy and emissions with development and natural-resource outcomes.</p>
+            </article>
+            <article className="card c-teal rv">
+              <span className="num">02</span>
+              <b>Spatially resolved</b>
+              <p>Moving beyond national averages to understand how pathways and impacts could differ across states, districts and places.</p>
+            </article>
+            <article className="card c-teal rv">
+              <span className="num">03</span>
+              <b>Development-centred</b>
+              <p>Keeping employment, health, energy access, equity and economic development alongside mitigation.</p>
+            </article>
+            <article className="card c-teal rv">
+              <span className="num">04</span>
+              <b>Rigorous &amp; Open</b>
+              <p>Building robust research, models and datasets that others can examine, use and build upon.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      {/* 04 Led by India */}
+      <section className="wrap sec" aria-labelledby="h-led">
+        <div className="led">
+          <figure className="photo rv" style={{ margin: 0 }}>
+            <img
+              src="/assets/photos/12_Agriculture_Dec2024_photo2_room.jpg"
+              alt="Researchers and practitioners in discussion at an NZII workshop on agriculture, IIT Delhi"
+              loading="lazy"
+            />
+            <svg className="cluster" data-cluster viewBox="0 0 120 90" aria-hidden="true"></svg>
+          </figure>
+          <div className="led-copy">
+            <div className="hl rv">
+              <span className="eyebrow">Collaborative model</span>
+              <h2 id="h-led">
+                Led by India. <span className="teal">Built through collaboration.</span>
+              </h2>
+              <div className="rule" aria-hidden="true"></div>
+            </div>
+            <p className="rv">
+              The Net Zero India Initiative brings together researchers and institutions across energy systems, public policy, land, development, and related fields to build a rigorous, India-specific understanding of the transition.
+            </p>
+            <div className="insts rv">
+              <div>
+                <span className="eyebrow c-teal">Led by</span>
+                <div className="logos">
+                  <span className="lg">
+                    <img src="/assets/logos/spp-iit-delhi.png" alt="School of Public Policy, IIT Delhi" />
+                  </span>
+                </div>
+                <b>School of Public Policy, IIT&nbsp;Delhi</b>
+              </div>
+              <div>
+                <span className="eyebrow c-teal">Core partners</span>
+                <div className="logos">
+                  <span className="lg">
+                    <img src="/assets/logos/prayas-energy-group.png" alt="Prayas (Energy Group)" />
+                  </span>
+                  <span className="lg">
+                    <img src="/assets/logos/princeton-university.png" alt="Princeton University" />
+                  </span>
+                </div>
+                <b>
+                  Prayas (Energy Group)
+                  <br />
+                  Princeton University
+                </b>
+              </div>
+            </div>
+            <div className="rv">
+              <Link className="btn line" to="/about#people">
+                Meet the team &amp; partners <span className="ar" aria-hidden="true">→</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div className="support rv">
+          <span className="eyebrow c-teal">Supported by</span>
+          <span className="lg">
+            <img src="/assets/logos/schmidt-sciences.svg" alt="Schmidt Sciences" />
+          </span>
+          <span className="lg">
+            <img src="/assets/logos/giving-green.webp" alt="Giving Green" />
+          </span>
+          <span className="lg">
+            <img src="/assets/logos/princeton-university.png" alt="Princeton University" />
+          </span>
+        </div>
+      </section>
+
+      {/* 05 Explore our work */}
+      <section className="wrap sec" aria-labelledby="h-work">
+        <div className="hl rv" style={{ marginBottom: 'clamp(40px, 5vw, 64px)' }}>
+          <h2 id="h-work" className="one">
+            Explore <span className="teal">our work</span>
+          </h2>
+          <div className="rule" aria-hidden="true"></div>
+        </div>
+        <div className="work">
+          <div className="card feat c-teal rv static">
+            <div className="photo">
+              <img src="/assets/photos/12_Agriculture_Dec2024_photo1_room.jpg" alt="" loading="lazy" />
+              <svg className="cluster" data-cluster viewBox="0 0 120 90" aria-hidden="true"></svg>
+            </div>
+            <div className="body">
+              <span className="eyebrow c-teal">Featured research</span>
+              <h3>First results from NZII’s Reference scenario</h3>
+              <p>
+                A baseline of how India’s energy demand, electricity supply and land-sector emissions could evolve to 2070, presented to NZII’s Advisory Committee in September 2026.
+              </p>
+            </div>
+          </div>
+          <div className="side">
+            <Link className="card c-teal rv" to="/consortium">
+              <span className="eyebrow c-teal">Get involved</span>
+              <h3>Explore Our Collaborations</h3>
+              <p>
+                Explore opportunities to collaborate, contribute to ongoing research, participate in programmes, or engage with the Net Zero India Initiative.
+              </p>
+              <span className="go">
+                Explore opportunities <span className="ar" aria-hidden="true">→</span>
+              </span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 06 Latest from the Net Zero India Initiative */}
+      <section className="wrap sec" aria-labelledby="h-news">
+        <div className="head">
+          <div className="hl rv">
+            <h2 id="h-news" className="one">
+              Latest from the <span className="teal">Net Zero India Initiative</span>
+            </h2>
+            <div className="rule" aria-hidden="true"></div>
+          </div>
+        </div>
+        <div className="news">
+          <div className="card c-teal rv static">
+            <div className="photo">
+              <img src="/assets/photos/03_Launch_Jul2024_photo1_room.jpg" alt="" loading="lazy" />
+              <svg className="cluster" data-cluster viewBox="0 0 120 90" aria-hidden="true"></svg>
+            </div>
+            <div className="body">
+              <span className="eyebrow c-teal">News &amp; Updates</span>
+              <h3>NZII presents its development-compatible approach at Princeton’s NZx workshop</h3>
+              <time dateTime="2026-09">September 2026</time>
+            </div>
+          </div>
+          <div className="card c-teal rv static">
+            <div className="photo">
+              <img src="/assets/photos/12_Urbanisation_Sep2024_photo1_group.jpg" alt="" loading="lazy" />
+              <svg className="cluster" data-cluster viewBox="0 0 120 90" aria-hidden="true"></svg>
+            </div>
+            <div className="body">
+              <span className="eyebrow c-teal">Workshops &amp; Events</span>
+              <h3>Workshop asks how land for solar and wind can be governed fairly</h3>
+              <time dateTime="2026-05">May 2026</time>
+            </div>
+          </div>
+          <div className="card c-teal rv static">
+            <div className="photo">
+              <img src="/assets/photos/12_Industry_Dec2024_photo1_room.jpg" alt="" loading="lazy" />
+              <svg className="cluster" data-cluster viewBox="0 0 120 90" aria-hidden="true"></svg>
+            </div>
+            <div className="body">
+              <span className="eyebrow c-teal">Research &amp; Publications</span>
+              <h3>NZII researchers write the opening chapter of the ICEF report</h3>
+              <time dateTime="2026-04">April 2026</time>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 07 Final CTA */}
+      <section className="wrap final" aria-labelledby="h-cta">
+        <div className="final-in rv">
+          <h2 id="h-cta">
+            India’s path to 2070 <span className="teal">is still being written.</span>
+          </h2>
+          <div className="rule" aria-hidden="true"></div>
+          <p>Explore the research, evidence and ideas helping us understand the choices ahead.</p>
+        </div>
+      </section>
+    </div>
+  );
 };

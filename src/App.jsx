@@ -23,21 +23,31 @@ const ScrollToTop = () => {
   return null;
 };
 
-// Layout component to handle non-home pages
+// Layout component to handle page rendering
 const AppContent = () => {
-  const location = useLocation();
-  const isHome = location.pathname === '/';
-
   return (
-    <div className="w-full max-w-full min-h-screen font-manrope relative overflow-x-hidden flex flex-col justify-between">
+    <div className="w-full max-w-full min-h-screen relative overflow-x-hidden flex flex-col justify-between" style={{ background: 'var(--bg)', color: 'var(--ink)' }}>
       {/* Top Header */}
       <Header />
 
       {/* Main Page Views */}
-      <main className="w-full flex-grow relative z-10">
+      <main className="w-full flex-grow relative z-10" id="content">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          {/* Prototype calculators and data pages are intentionally unpublished. */}
+          <Route path="/NZII_Home_Page.html" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/NZII_About_Page.html" element={<AboutPage />} />
+          <Route path="/consortium" element={<ConsortiumPage />} />
+          <Route path="/collaborations" element={<ConsortiumPage />} />
+          <Route path="/NZII_People_Page.html" element={<ConsortiumPage />} />
+          <Route path="/research" element={<ResearchHubPage />} />
+          <Route path="/research/:slug" element={<ResearchThemePage />} />
+          <Route path="/news-events" element={<NewsEventsPage />} />
+          <Route path="/news-events/:slug" element={<NewsEventDetailPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/publications" element={<PublicationsPage />} />
+
+          {/* Prototype calculators and data pages redirect to research */}
           <Route path="/simulator" element={<Navigate to="/research" replace />} />
           <Route path="/simulate" element={<Navigate to="/research" replace />} />
           <Route path="/simulation" element={<Navigate to="/research" replace />} />
@@ -51,21 +61,14 @@ const AppContent = () => {
           <Route path="/case-studies/:id" element={<Navigate to="/research" replace />} />
           <Route path="/articles/:id" element={<Navigate to="/research" replace />} />
           <Route path="/artifacts/:id" element={<Navigate to="/research" replace />} />
-          <Route path="/research" element={<ResearchHubPage />} />
-          <Route path="/research/:slug" element={<ResearchThemePage />} />
-          <Route path="/news-events" element={<NewsEventsPage />} />
-          <Route path="/news-events/:slug" element={<NewsEventDetailPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/publications" element={<PublicationsPage />} />
-          <Route path="/consortium" element={<ConsortiumPage />} />
+
           {/* Catch-all */}
           <Route path="*" element={<HomePage />} />
         </Routes>
       </main>
 
-      {/* For non-home pages, render footer at root level */}
-      {!isHome && <Footer />}
+      {/* Consistent Footer */}
+      <Footer />
     </div>
   );
 };

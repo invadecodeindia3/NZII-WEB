@@ -1,189 +1,147 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Sun, Moon, Leaf, Menu, X, ArrowUpRight } from 'lucide-react';
 import { useGame } from '../context/GameContext';
-
-const LINKS = [
-  {path: '/', label:'Home'},
-  {path: '/about', label:'About NZI'},
-  {path: '/research', label:'Research'},
-  {path: '/publications', label:'Publications'},
-  {path: '/news-events', label:'News & Events'},
-  {path: '/consortium', label:'People & Partners'},
-  {path: '/contact', label:'Contact'}
-];
-const MODES = [
-  { value: 'light', label: 'Light', Icon: Sun },
-  { value: 'dark', label: 'Dark', Icon: Moon },
-  { value: 'eco', label: 'Eco', Icon: Leaf }
-];
 
 export const Header = () => {
   const { displayMode, changeDisplayMode } = useGame();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const light = displayMode === 'light';
-  const isActive = path => path === '/' ? location.pathname === '/' : (location.pathname === path || (path === '/research' && location.pathname.startsWith('/research/')));
+
+  const isHome = location.pathname === '/' || location.pathname === '/NZII_Home_Page.html';
+  const isAbout = location.pathname === '/about' || location.pathname === '/NZII_About_Page.html';
+  const isCollab = location.pathname === '/consortium' || location.pathname === '/NZII_People_Page.html';
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 24);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => setMobileMenuOpen(false), [location.pathname]);
   useEffect(() => {
-    if (!mobileMenuOpen) return undefined;
-    const keyHandler = e => { if (e.key === 'Escape') setMobileMenuOpen(false); };
-    window.addEventListener('keydown', keyHandler);
-    return () => window.removeEventListener('keydown', keyHandler);
-  }, [mobileMenuOpen]);
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
 
   return (
-    <header className={`site-header fixed top-0 inset-x-0 z-50 w-full px-4 sm:px-8 py-2.5 sm:py-3 transition-all duration-300 ${
-      scrolled
-        ? light
-          ? 'bg-[#FFFCF6]/90 backdrop-blur-md shadow-xs'
-          : 'bg-[#1D3658]/90 backdrop-blur-md shadow-md border-b border-white/10'
-        : 'bg-transparent'
-    }`}>
-      <div className="flex w-full items-center justify-between gap-4">
-        {/* ── Standalone Large Logo (NOT inside the nav pill, no background behind it) ── */}
-        <Link
-          to="/"
-          aria-label="Net Zero India homepage"
-          className="flex shrink-0 items-center transition-transform hover:scale-[1.02]"
-        >
+    <header className={`site-header ${scrolled ? 'scrolled' : ''}`} id="site-header">
+      <div className="hd-row">
+        <Link to="/" className="hd-logo" aria-label="Net Zero India Initiative homepage">
           <img
-            src={light ? '/nzii-logo.png' : '/nzii-logo-dark.png'}
+            className="logo-l"
             alt="Net Zero India Initiative"
-            className={`w-auto object-contain block drop-shadow-xs transition-all duration-300 ${
-              scrolled ? 'h-11 sm:h-13 md:h-14' : 'h-14 sm:h-18 md:h-20 lg:h-22'
-            }`}
+            src="/assets/logos/nzii-logo-colour.svg"
+            width="1497"
+            height="692"
+          />
+          <img
+            className="logo-d"
+            alt="Net Zero India Initiative"
+            src="/assets/logos/nzii-logo-pale-yellow.svg"
+            width="1497"
+            height="692"
           />
         </Link>
-
-        {/* ── Separate Floating Navigation Bar Capsule ── */}
-        <div
-          className={`flex items-center gap-2 sm:gap-3 rounded-full border px-3 py-2 sm:px-4 sm:py-2.5 ${
-            light
-              ? 'border-[#1D3658]/12 bg-[#FFFCF6]/92 text-[#1D3658] shadow-sm'
-              : 'border-white/20 bg-[#1D3658]/88 text-white'
-          } backdrop-blur-xl`}
-        >
-          {/* Desktop Nav Links */}
-          <nav className="hidden min-w-0 items-center justify-center gap-0.5 xl:flex" aria-label="Main navigation">
-            {LINKS.map(link => (
-              <Link
-                key={link.path}
-                to={link.path}
-                aria-current={isActive(link.path) ? 'page' : undefined}
-                className={`rounded-full px-2.5 py-2 text-[11px] font-semibold whitespace-nowrap transition-colors 2xl:px-3.5 2xl:text-xs ${
-                  isActive(link.path)
-                    ? light
-                      ? 'bg-[#E2F2EE] text-[#207D72]'
-                      : 'bg-[#2B9D8F]/25 text-[#A7C957]'
-                    : light
-                    ? 'text-[#4A607A] hover:bg-[#F4F1E8]'
-                    : 'text-white/80 hover:bg-white/10 hover:text-white'
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+        <div className="pill">
+          <nav className="main-nav" aria-label="Main navigation">
+            <Link to="/" aria-current={isHome ? 'page' : undefined}>
+              Home
+            </Link>
+            <Link to="/about" aria-current={isAbout ? 'page' : undefined}>
+              About NZII
+            </Link>
+            <Link to="/consortium" aria-current={isCollab ? 'page' : undefined}>
+              Explore Our Collaborations
+            </Link>
           </nav>
-
-          {/* Mode Switch & Mobile Toggle */}
-          <div className="flex shrink-0 items-center gap-2">
-            <div
-              className={`hidden items-center rounded-full p-1 sm:flex ${
-                light ? 'bg-[#F4F1E8]' : 'bg-white/10'
-              }`}
-              role="group"
-              aria-label="Display mode"
-            >
-              {MODES.map(({ value, label, Icon }) => (
-                <button
-                  key={value}
-                  type="button"
-                  aria-pressed={displayMode === value}
-                  onClick={() => changeDisplayMode(value)}
-                  className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-[11px] font-semibold transition-colors ${
-                    displayMode === value
-                      ? 'bg-[#2B9D8F] text-white shadow-sm'
-                      : light
-                      ? 'text-[#4A607A] hover:bg-white/60'
-                      : 'text-white/80 hover:bg-white/15'
-                  }`}
-                >
-                  <Icon size={13} strokeWidth={2} />
-                  <span>{label}</span>
-                </button>
-              ))}
+          <div className="hd-tools">
+            <div className="modes" role="group" aria-label="Display mode">
+              <button
+                type="button"
+                data-mode="light"
+                aria-pressed={displayMode === 'light'}
+                onClick={() => changeDisplayMode('light')}
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="4"/>
+                  <path d="M12 2v2M12 20v2m-7.07-17.07 1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                </svg>
+                <span>Light</span>
+              </button>
+              <button
+                type="button"
+                data-mode="dark"
+                aria-pressed={displayMode === 'dark'}
+                onClick={() => changeDisplayMode('dark')}
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/>
+                </svg>
+                <span>Dark</span>
+              </button>
+              <button
+                type="button"
+                data-mode="eco"
+                aria-pressed={displayMode === 'eco'}
+                onClick={() => changeDisplayMode('eco')}
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M11 20a10 10 0 0010-10 25.9 25.9 0 00-1.04-7.281 1 1 0 00-1.755-.325C15.833 5.5 13 5.5 9.8 6.1A7 7 0 0011 20"/>
+                  <path d="M2 21a5 5 0 012.911-4.544C7.613 15.212 8.351 15.24 11 13"/>
+                </svg>
+                <span>Eco</span>
+              </button>
             </div>
-
-            <label className="sm:hidden">
+            <label className="mode-select">
               <span className="sr-only">Display mode</span>
               <select
+                id="mode-select"
                 value={displayMode}
-                onChange={e => changeDisplayMode(e.target.value)}
-                className={`max-w-[84px] rounded-full border px-2 py-1.5 text-xs font-bold ${
-                  light ? 'border-[#E6E2D8] bg-[#FFFCF6] text-[#1D3658]' : 'border-white/20 bg-[#1D3658] text-white'
-                }`}
+                onChange={(e) => changeDisplayMode(e.target.value)}
               >
                 <option value="light">Light</option>
                 <option value="dark">Dark</option>
                 <option value="eco">Eco</option>
               </select>
             </label>
-
             <button
               type="button"
-              onClick={() => setMobileMenuOpen(v => !v)}
+              className="burger"
+              id="burger"
               aria-expanded={mobileMenuOpen}
               aria-controls="nzii-mobile-navigation"
               aria-label={mobileMenuOpen ? 'Close navigation' : 'Open navigation'}
-              className={`inline-flex h-8 w-8 items-center justify-center rounded-full border xl:hidden ${
-                light ? 'border-[#E6E2D8]' : 'border-white/25'
-              }`}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              {mobileMenuOpen ? <X size={17} /> : <Menu size={17} />}
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                <path d="M4 5h16M4 12h16M4 19h16"/>
+              </svg>
             </button>
           </div>
         </div>
       </div>
-
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <nav
-          id="nzii-mobile-navigation"
-          aria-label="Mobile navigation"
-          className={`mt-2 grid gap-1 rounded-2xl border p-3 shadow-xl xl:hidden ${
-            light ? 'border-[#E6E2D8] bg-[#FFFCF6] text-[#1D3658]' : 'border-white/15 bg-[#1D3658] text-white'
-          }`}
-        >
-          {LINKS.map(link => (
-            <Link
-              key={link.path}
-              to={link.path}
-              onClick={() => setMobileMenuOpen(false)}
-              className={`flex min-h-11 items-center justify-between rounded-xl px-4 py-2.5 text-sm font-semibold ${
-                isActive(link.path)
-                  ? 'bg-[#2B9D8F]/20 text-[#2B9D8F]'
-                  : light
-                  ? 'hover:bg-[#F4F1E8]'
-                  : 'hover:bg-white/10'
-              }`}
-            >
-              {link.label}
-              <ArrowUpRight size={16} />
-            </Link>
-          ))}
-        </nav>
-      )}
+      <nav className="mobile-nav" id="nzii-mobile-navigation" aria-label="Mobile navigation" hidden={!mobileMenuOpen}>
+        <Link to="/" aria-current={isHome ? 'page' : undefined} onClick={() => setMobileMenuOpen(false)}>
+          Home
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+        </Link>
+        <Link to="/about" aria-current={isAbout ? 'page' : undefined} onClick={() => setMobileMenuOpen(false)}>
+          About NZII
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+        </Link>
+        <Link to="/consortium" aria-current={isCollab ? 'page' : undefined} onClick={() => setMobileMenuOpen(false)}>
+          Explore Our Collaborations
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+        </Link>
+      </nav>
     </header>
   );
 };

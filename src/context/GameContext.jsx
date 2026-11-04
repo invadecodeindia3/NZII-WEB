@@ -18,24 +18,26 @@ export const GameProvider = ({ children }) => {
   const [soundEnabled, setSoundEnabled] = useState(false);
 
   // One persisted display setting; public site offers three real, independently
-  // selectable modes. Eco is a darker, reduced-motion profile, not a broken toggle.
+  // selectable modes: light (default), dark, and eco.
   const [displayMode, setDisplayMode] = useState(() => {
     try {
-      const saved = localStorage.getItem('nzii_display_mode');
+      const saved = localStorage.getItem('nzii_display_mode') || localStorage.getItem('nzii-mode');
       if (['light', 'dark', 'eco'].includes(saved)) return saved;
-      if (localStorage.getItem('nzii_eco_mode') === 'true') return 'eco';
-      return localStorage.getItem('nzii_theme') === 'light' ? 'light' : 'dark';
-    } catch (_) { return 'dark'; }
+      return 'light';
+    } catch (_) { return 'light'; }
   });
-  const [lastRegularMode, setLastRegularMode] = useState('dark');
+  const [lastRegularMode, setLastRegularMode] = useState('light');
   const theme = displayMode === 'light' ? 'light' : 'dark';
   const ecoMode = displayMode === 'eco';
   useEffect(() => {
     document.documentElement.dataset.displayMode = displayMode;
+    document.documentElement.setAttribute('data-mode', displayMode);
     document.documentElement.classList.toggle('eco-power-save', ecoMode);
     document.documentElement.style.colorScheme = displayMode === 'light' ? 'light' : 'dark';
+    window.dispatchEvent(new Event('nzii-mode'));
     try {
       localStorage.setItem('nzii_display_mode', displayMode);
+      localStorage.setItem('nzii-mode', displayMode);
       localStorage.setItem('nzii_theme', theme);
       localStorage.setItem('nzii_eco_mode', String(ecoMode));
     } catch (_) { /* Storage may be disabled in private browsing. */ }

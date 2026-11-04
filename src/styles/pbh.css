@@ -1,0 +1,391 @@
+/* NZII brand (PurpleBlue House guidelines). Header and footer match the live PBH site (nzii2.vercel.app). */
+:root{
+  --navy:#1d3658; --teal:#2b9d8f; --teal-dark:#207d72; --lime:#a7c957; --coral:#e76f51; --pink:#f28482; --cream:#fffcf6;
+  --f-head:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-serif:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-body:"Inter",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  /* Light mode (default) */
+  --bg:#fffcf6; --surface:#ffffff; --ink:#1d3658; --ink-2:#55657a; --line:#e6e3da; --accent:#207d72; --grey:#b9b6ad; --dot-base:#1d3658;
+  --tint:#e2f2ee; --error:#b4412a; --error-bg:#fbe9e4;
+  --btn-bg:#1d3658; --btn-ink:#ffffff;
+  /* Header (light) */
+  --hd-scrolled:rgba(255,252,246,.9); --hd-shadow:0 1px 2px rgba(0,0,0,.05); --hd-border:transparent;
+  --pill-bg:rgba(255,252,246,.92); --pill-border:rgba(29,54,88,.12); --pill-ink:#1d3658; --pill-shadow:0 1px 3px rgba(0,0,0,.1);
+  --nav-ink:#4a607a; --nav-hover:#f4f1e8; --nav-on-bg:#e2f2ee; --nav-on-ink:#207d72;
+  --mode-bg:#f4f1e8; --mode-hover:rgba(255,255,255,.6); --burger-border:rgba(29,54,88,.15);
+  --menu-bg:#fffcf6; --menu-border:#e6e2d8; --menu-on-bg:rgba(43,157,143,.2); --menu-on-ink:#2b9d8f;
+  /* Footer (light) */
+  --ft-bg:#f4f1e8; --ft-ink:#1d3658; --ft-border:#e6e2d8;
+  --logo-light:block; --logo-dark:none;
+  color-scheme:light;
+}
+html[data-mode="dark"],html[data-mode="eco"]{
+  --bg:#14243a; --surface:#1a2e48; --ink:#fffcf6; --ink-2:#b3c0d0; --line:#2b4363; --accent:#52b5a8; --grey:#6b7d93; --dot-base:#fffcf6;
+  --tint:#173a3d; --error:#f08b72; --error-bg:#3a2420;
+  --btn-bg:#2b9d8f; --btn-ink:#ffffff;
+  --hd-scrolled:rgba(29,54,88,.9); --hd-shadow:0 4px 6px rgba(0,0,0,.15); --hd-border:rgba(255,255,255,.1);
+  --pill-bg:rgba(29,54,88,.88); --pill-border:rgba(255,255,255,.2); --pill-ink:#ffffff; --pill-shadow:none;
+  --nav-ink:rgba(255,255,255,.8); --nav-hover:rgba(255,255,255,.1); --nav-on-bg:rgba(43,157,143,.25); --nav-on-ink:#a7c957;
+  --mode-bg:rgba(255,255,255,.1); --mode-hover:rgba(255,255,255,.15); --burger-border:rgba(255,255,255,.25);
+  --menu-bg:#1d3658; --menu-border:rgba(255,255,255,.15); --menu-on-bg:rgba(43,157,143,.2); --menu-on-ink:#2b9d8f;
+  --ft-bg:#162b46; --ft-ink:#fffcf6; --ft-border:rgba(255,255,255,.15);
+  --logo-light:none; --logo-dark:block;
+  color-scheme:dark;
+}
+html[data-mode="eco"]{ --bg:#101e31; --surface:#15263c; --ft-bg:#13243a; --ft-border:#243e5c }
+html[data-mode="eco"] *{transition:none!important;animation:none!important}
+
+*{box-sizing:border-box}
+/* Fluid sizing: text scales from 15px (phones) to 20px (large screens); layout always fills the screen */
+html{scroll-behavior:smooth;font-size:clamp(15px,0.55vw + 9px,20px)}
+body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:1rem;line-height:1.6;transition:background .3s,color .3s}
+.container{width:100%;padding-inline:clamp(16px,5vw,120px)}
+/* Headlines in Space Grotesk Medium; body, header, footer and labels in Inter */
+h1,h2,h3{font-family:var(--f-serif);margin:0;line-height:1.12;letter-spacing:-.01em;text-wrap:balance;font-optical-sizing:auto}
+h1{font-size:clamp(2.3rem,5.4vw,3.5rem);font-weight:500}
+h2{font-size:clamp(1.45rem,3vw,1.9rem);font-weight:500}
+h3{font-size:1.2rem;font-weight:500;letter-spacing:0}
+p{margin:0;max-width:68ch;text-wrap:pretty}
+li,dd,dt,summary,small,td,th,label,.meta span{text-wrap:pretty}
+.nb{white-space:nowrap}
+a{color:inherit}
+.link{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+.link:hover{text-decoration-thickness:2px}
+svg{flex-shrink:0}
+.teal{color:var(--accent)}
+.muted{color:var(--ink-2)}
+.lead{font-size:1.08rem;color:var(--ink-2)}
+.rule{width:56px;height:3px;background:var(--teal);border:0;margin:0}
+.label{font-family:var(--f-head);font-weight:700;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:-999px}.skip:focus{left:16px;top:16px;background:var(--surface);padding:8px 12px;z-index:100}
+.logo-l{display:var(--logo-light)} .logo-d{display:var(--logo-dark)}
+[hidden]{display:none!important}
+
+/* ===== Header (as on PBH site) ===== */
+.site-header{position:fixed;top:0;left:0;right:0;z-index:50;padding:10px clamp(16px,5vw,120px);background:transparent;border-bottom:1px solid transparent;font-family:var(--f-head);transition:all .3s}
+@media (min-width:640px){.site-header{padding-block:12px}}
+.site-header.scrolled{background:var(--hd-scrolled);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:var(--hd-shadow);border-bottom-color:var(--hd-border)}
+.hd-row{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.hd-logo{display:flex;align-items:center;flex-shrink:0;transition:transform .3s}
+.hd-logo:hover{transform:scale(1.02)}
+.hd-logo img{width:auto;height:56px;object-fit:contain;transition:height .3s;filter:drop-shadow(0 1px 1px rgba(0,0,0,.05))}
+@media (min-width:640px){.hd-logo img{height:72px}}
+@media (min-width:768px){.hd-logo img{height:80px}}
+@media (min-width:1024px){.hd-logo img{height:88px}}
+.scrolled .hd-logo img{height:44px}
+@media (min-width:640px){.scrolled .hd-logo img{height:52px}}
+@media (min-width:768px){.scrolled .hd-logo img{height:56px}}
+.pill{display:flex;align-items:center;gap:8px;border-radius:999px;border:1px solid var(--pill-border);background:var(--pill-bg);color:var(--pill-ink);padding:8px 12px;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:var(--pill-shadow)}
+@media (min-width:640px){.pill{gap:12px;padding:10px 16px}}
+.main-nav{display:none;align-items:center;gap:2px;min-width:0}
+@media (min-width:1280px){.main-nav{display:flex}}
+.main-nav a{border-radius:999px;padding:8px 10px;font-size:11px;font-weight:600;white-space:nowrap;text-decoration:none;color:var(--nav-ink);transition:background .2s,color .2s}
+@media (min-width:1536px){.main-nav a{padding:8px 14px;font-size:12px}}
+.main-nav a:hover{background:var(--nav-hover);color:var(--pill-ink)}
+.main-nav a[aria-current="page"]{background:var(--nav-on-bg);color:var(--nav-on-ink)}
+.hd-tools{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.modes{display:none;align-items:center;border-radius:999px;padding:4px;background:var(--mode-bg)}
+@media (min-width:640px){.modes{display:flex}}
+.modes button{display:inline-flex;align-items:center;gap:6px;border:0;border-radius:999px;padding:6px 10px;font:600 11px var(--f-head);background:transparent;color:var(--nav-ink);cursor:pointer;transition:background .2s}
+.modes button:hover{background:var(--mode-hover)}
+.modes button[aria-pressed="true"]{background:var(--teal);color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.mode-select{display:block}
+@media (min-width:640px){.mode-select{display:none}}
+.mode-select select{max-width:84px;border-radius:999px;border:1px solid var(--pill-border);padding:6px 8px;font:700 12px var(--f-head);background:var(--pill-bg);color:var(--pill-ink)}
+.burger{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:999px;border:1px solid var(--burger-border);background:transparent;color:var(--pill-ink);cursor:pointer}
+@media (min-width:1280px){.burger{display:none}}
+.mobile-nav{margin-top:8px;display:grid;gap:4px;border-radius:16px;border:1px solid var(--menu-border);background:var(--menu-bg);color:var(--pill-ink);padding:12px;box-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);font-family:var(--f-head)}
+@media (min-width:1280px){.mobile-nav{display:none!important}}
+.mobile-nav a{display:flex;align-items:center;justify-content:space-between;border-radius:12px;padding:12px 16px;font-size:14px;font-weight:700;text-decoration:none}
+.mobile-nav a:hover{background:var(--nav-hover)}
+.mobile-nav a[aria-current="page"]{background:var(--menu-on-bg);color:var(--menu-on-ink)}
+
+/* ===== Footer (as on PBH site) ===== */
+.site-footer{border-top:1px solid var(--ft-border);background:var(--ft-bg);color:var(--ft-ink);padding:64px clamp(16px,5vw,120px);margin-top:96px;font-family:var(--f-head)}
+.ft-top{display:grid;gap:48px;padding-bottom:56px;border-bottom:1px solid color-mix(in srgb,currentColor 15%,transparent)}
+@media (min-width:1024px){.ft-top{grid-template-columns:1.2fr 1fr}}
+.ft-brand{max-width:36rem}
+.ft-brand img{height:56px;width:auto;object-fit:contain}
+@media (min-width:640px){.ft-brand img{height:64px}}   /* final logo (3 Nov): tall enough for "Led by IIT Delhi" to read */
+.ft-brand p{margin-top:20px;font-size:15px;line-height:2;opacity:.75}
+.ft-cta{margin-top:28px;display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#2b9d8f;text-decoration:none}
+.ft-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 20px;align-self:start;font-size:14px}
+@media (min-width:640px){.ft-nav{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.ft-nav a{min-width:0;font-weight:500;opacity:.8;text-decoration:none;transition:opacity .2s}
+.ft-nav a:hover{opacity:1}
+.ft-bottom{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding-top:28px;font-size:12px;opacity:.75}   /* 3 Nov: .6 gave 3.5:1 on the light footer; .75 gives 5.3:1 (WCAG AA), as .ft-brand p */
+.ar{display:inline-block}
+/* ===================================================================
+   HOME PAGE
+   Brand: cream ground, navy ink, teal accent; lime / coral / pink used
+   only as small dots and rules. Dots are the supporting motif.
+   =================================================================== */
+main{display:block}
+.wrap{width:100%;padding-inline:clamp(16px,5vw,120px)}
+.sec{padding-block:clamp(72px,9vw,128px)}
+.sec + .sec{border-top:1px solid var(--line)}
+.c-teal{--c:var(--teal)} .c-lime{--c:var(--lime)} .c-coral{--c:var(--coral)} .c-pink{--c:var(--pink)} .c-navy{--c:var(--dot-base)}
+
+/* Headline template: second line in teal, short teal rule underneath */
+.hl{display:flex;flex-direction:column;gap:20px}
+.hl h2{font-size:clamp(1.9rem,3.6vw,2.7rem)}
+.hl h2 .teal,.hero h1 .teal{display:block}
+.hl h2.one .teal{display:inline}
+/* Type rhythm: balanced headings, no orphans in body text, consistent line length */
+h1,h2,h3{text-wrap:balance}
+p,li{text-wrap:pretty}
+.why-copy p,.led-copy > p,.hero-txt p{max-width:62ch}
+.hl .rule,.hero .rule{width:56px;height:3px;background:var(--teal);border-radius:2px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font:700 .72rem var(--f-head);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c,var(--teal))}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;font:600 .95rem var(--f-head);padding:13px 22px;border-radius:999px;border:1px solid var(--btn-bg);background:var(--btn-bg);color:var(--btn-ink);text-decoration:none;transition:background .25s,border-color .25s,color .25s,transform .25s}
+.btn:hover{background:var(--teal-dark);border-color:var(--teal-dark);color:#fff}
+.btn.line{background:transparent;color:var(--ink);border-color:color-mix(in srgb,var(--ink) 25%,transparent)}
+.btn.line:hover{border-color:var(--teal);color:var(--accent)}
+.btn .ar,.go .ar{transition:transform .25s}
+.btn:hover .ar,.go:hover .ar,.card:hover .go .ar{transform:translateX(4px)}
+.go{display:inline-flex;align-items:center;gap:8px;font:700 .92rem var(--f-head);color:var(--accent);text-decoration:none}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+
+/* Reveal on scroll (only when JS is on) */
+.js .rv{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.js .rv.in{opacity:1;transform:none}
+
+/* ---------- Card: lift + "dot spotlight" that follows the cursor ---------- */
+.card{position:relative;isolation:isolate;overflow:hidden;background:var(--surface);border:1px solid var(--line);border-radius:16px;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s}
+.card::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity .35s;
+  background-image:radial-gradient(circle,var(--c,var(--teal)) 1.5px,transparent 1.8px);background-size:14px 14px;
+  -webkit-mask-image:radial-gradient(220px circle at var(--mx,50%) var(--my,50%),#000,transparent 70%);
+          mask-image:radial-gradient(220px circle at var(--mx,50%) var(--my,50%),#000,transparent 70%)}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 40px -18px color-mix(in srgb,var(--navy) 35%,transparent);border-color:color-mix(in srgb,var(--c,var(--teal)) 45%,var(--line))}
+.card:hover::before{opacity:.32}
+
+/* ---------- 01 Hero: original PBH design (nzii2.vercel.app) ---------- */
+.hero{position:relative;isolation:isolate;display:flex;align-items:center;min-height:min(92vh, 980px);padding:clamp(112px,10vw,144px) clamp(16px,3vw,48px) clamp(48px,5vw,80px);background:var(--hero-bg);color:var(--hero-ink);overflow:hidden}
+.hero-in{display:grid;width:100%;max-width:1720px;margin:0 auto;align-items:center;gap:32px;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr)}
+@media (min-width:1280px){.hero-in{grid-template-columns:minmax(0,800px) 1fr}}
+.hero h1{max-width:780px;font-family:var(--f-serif);font-size:clamp(2.4rem,4.1vw,4.4rem);font-weight:500;line-height:1.06;letter-spacing:-.015em;color:var(--hero-ink)}
+/* Hero headline: one line per phrase, all Space Grotesk Medium like every other headline */
+.hero h1 span{display:block}
+.hero h1 .hl-1,.hero h1 .hl-2,.hero h1 .hl-3{font-weight:500}
+/* PBH entrance animation */
+@keyframes nziRise{0%{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translate(0)}}
+.hero h1{animation:.85s cubic-bezier(.16,1,.3,1) 90ms both nziRise}
+.hero-txt{animation:.75s cubic-bezier(.16,1,.3,1) .23s both nziRise}
+.hero-act{animation:.7s cubic-bezier(.16,1,.3,1) .38s both nziRise}
+.hero-txt{margin-top:24px;max-width:730px;display:grid;gap:12px;font-size:clamp(.88rem,1vw,1rem);line-height:1.68;color:var(--hero-ink-2)}
+.hero-txt p{max-width:none;color:inherit}
+.hero-act{margin-top:24px;display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.hero-act a{display:inline-flex;min-height:44px;align-items:center;gap:8px;border-radius:999px;padding:12px 20px;font:600 13px var(--f-head);text-decoration:none;transition:background .2s,color .2s}
+.hero-act .pri{background:var(--teal);color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.hero-act .pri:hover{background:var(--teal-dark)}
+.hero-act .sec{border:1px solid var(--hero-line);color:var(--hero-ink)}
+.hero-act .sec:hover{background:var(--hero-hover)}
+.hero-art{display:flex;align-items:center;justify-content:center}
+.hero-svg{width:100%;max-width:680px;height:auto;overflow:visible;user-select:none}
+.hero-svg .lbl{font:600 32.35px var(--f-head);letter-spacing:-.02em;fill:var(--hero-ink);opacity:0;transition:fill .3s,opacity .7s ease}
+.hero-svg .lbl.shown{opacity:1}
+.hero-svg.focus .lbl.shown:not(.on){opacity:.45}
+.hero-svg .lbl.on{fill:var(--teal)}
+.hero-svg .b.photo{cursor:pointer}
+.hero-svg .dn{fill:var(--hero-dotn);stroke:var(--hero-dotn-s);stroke-width:1.5}
+@media (min-width:1024px){.hero-art{justify-content:flex-end}}
+@media (max-width:1023px){.hero-in{grid-template-columns:1fr}.hero-svg{max-width:560px}}
+:root{--hero-dotn:#1d3658;--hero-dotn-s:transparent;--hero-bg:var(--bg);--hero-ink:#1d3658;--hero-ink-2:rgba(29,54,88,.85);--hero-line:rgba(29,54,88,.3);--hero-hover:rgba(29,54,88,.06)}
+html[data-mode="dark"],html[data-mode="eco"]{--hero-dotn:#2b4e78;--hero-dotn-s:#5d87ba;--hero-bg:#14263d;--hero-ink:#fff;--hero-ink-2:rgba(255,255,255,.85);--hero-line:rgba(255,255,255,.3);--hero-hover:rgba(255,255,255,.1)}
+
+/* ---------- 02 Why NZII exists + the difference ---------- */
+.why{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,96px);align-items:start}
+.why-copy{display:flex;flex-direction:column;gap:22px}
+.why-copy h3{font-size:1.3rem}
+.choices{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.choices li{position:relative;isolation:isolate;overflow:hidden;padding:15px 16px 15px 40px;border-bottom:1px solid var(--line);font-size:1.02rem;transition:padding .35s}
+.choices li::before,.choices li::after{content:"";position:absolute;left:14px;top:50%;width:10px;height:10px;margin-top:-5px;border-radius:50%;background:var(--c)}
+/* hover: the marker dot "blooms" into a soft wash of its colour */
+.choices li::after{z-index:-1;opacity:0;transform:scale(.2);transition:transform .6s cubic-bezier(.2,.7,.2,1),opacity .4s}
+.choices li:hover{padding-left:46px}
+.choices li:hover::after{opacity:.14;transform:scale(90)}
+.why-copy .closing{color:var(--ink-2)}
+.photo{position:relative;border-radius:18px;overflow:hidden;background:var(--line)}
+.photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.photo:hover img{transform:scale(1.04)}
+/* photo matches the height of the text beside it; cropped from the top so the people stay in frame */
+.why{align-items:stretch}
+.why .photo{position:relative;min-height:420px}
+.why .photo img{position:absolute;inset:0;object-position:50% 78%}
+/* small dot cluster that sits on a photo corner */
+.cluster{position:absolute;width:120px;height:90px;pointer-events:none}
+.why .cluster{right:-1px;bottom:-1px}
+/* The statement and its four reasons read as one: statement, then "because our research is:", then the four qualities that finish the sentence */
+.picture{margin-top:clamp(64px,8vw,104px);display:flex;flex-direction:column;gap:32px}
+.pic-head{display:flex;flex-direction:column;gap:18px}
+.pic-head .rule{border-radius:2px}
+.picture h3{font-size:clamp(1.55rem,2.6vw,2.1rem);line-height:1.18}
+.qual{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.qual .card{padding:28px 24px 30px;display:flex;flex-direction:column;gap:10px;border-top:3px solid var(--c)}
+.qual .card:hover{border-top-color:var(--c)}
+.qual b{font:800 1.1rem var(--f-head)}
+.qual p{color:var(--ink-2);font-size:.96rem}
+.num{font:700 .72rem var(--f-head);letter-spacing:.12em;color:var(--ink-2)}
+@media (max-width:1000px){.why{grid-template-columns:1fr}.why .photo{aspect-ratio:4/3;min-height:0}.qual{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.qual{grid-template-columns:1fr}}
+
+/* ---------- 03 How it works ---------- */
+.head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:clamp(40px,5vw,64px)}
+/* One thin line that fills as the section comes into view: the process moving forward */
+/* How it works: four boxes; the arrows from the copy (→) sit between them as small badges */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:30px}
+.steps .card{overflow:visible;padding:28px 26px 32px;display:flex;flex-direction:column;gap:12px}
+.card::before{border-radius:inherit}
+.steps .card:not(:last-child)::after{content:"→";position:absolute;top:50%;right:-31px;z-index:2;width:32px;height:32px;margin-top:-16px;
+  display:grid;place-items:center;border-radius:50%;background:var(--bg);border:1px solid var(--line);color:var(--accent);font:700 .95rem var(--f-head)}
+.steps .num{display:inline-flex;align-self:flex-start;padding:4px 10px;border-radius:999px;background:color-mix(in srgb,var(--teal) 12%,transparent);color:var(--accent);font:700 .74rem var(--f-head);letter-spacing:.1em}
+.steps h3{font-size:1.2rem;text-wrap:balance}
+.steps p{color:var(--ink-2);font-size:.96rem}
+.steps .card:nth-child(2){transition-delay:.1s}.steps .card:nth-child(3){transition-delay:.2s}.steps .card:nth-child(4){transition-delay:.3s}
+@media (max-width:1000px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}.steps .card:nth-child(2)::after{display:none}}
+@media (max-width:560px){.steps{grid-template-columns:1fr}.steps .card:not(:last-child)::after{content:"↓";top:auto;bottom:-31px;right:50%;margin:0 -16px 0 0}.steps .card:nth-child(2)::after{display:grid}}
+/* ---------- 04 Led by India ---------- */
+.led{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,96px);align-items:center}
+.led .photo{aspect-ratio:5/4}
+.led .cluster{left:-1px;top:-1px;transform:scaleX(-1) scaleY(-1)}
+.news .cluster,.feat .cluster{width:96px;height:72px;right:-1px;bottom:-1px}
+.news .card:nth-child(2) .cluster{right:auto;bottom:auto;left:-1px;top:-1px;transform:scale(-1,-1)}
+.feat .cluster{width:120px;height:90px}
+.led-copy{display:flex;flex-direction:column;gap:24px}
+.led-copy > p{font-size:1.06rem}
+.insts{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;padding-top:24px;border-top:1px solid var(--line)}
+.insts > div{display:flex;flex-direction:column;gap:10px}
+.insts b{font:700 .98rem/1.45 var(--f-head)}
+.logos{display:flex;gap:10px;flex-wrap:wrap}
+.logo-slot{height:52px;min-width:116px;padding:0 14px;border:1px dashed color-mix(in srgb,var(--ink) 25%,transparent);border-radius:10px;display:grid;place-items:center;font:600 .72rem var(--f-head);color:var(--ink-2)}
+.support{margin-top:clamp(48px,6vw,72px);display:flex;flex-wrap:wrap;align-items:center;gap:16px 32px;padding:22px 28px;border-radius:14px;background:color-mix(in srgb,var(--ink) 4%,transparent)}
+.support .logo-slot{border-style:solid;border-color:transparent;background:var(--bg)}
+/* Partner logos (sample files pulled from each organisation's website) */
+.lg{display:inline-flex;align-items:center;height:60px;padding:8px 12px;border-radius:10px;background:var(--lg-bg);transition:transform .3s,box-shadow .3s}
+.lg img{height:100%;width:auto;max-width:210px;object-fit:contain}
+.lg:hover{transform:translateY(-2px);box-shadow:0 8px 20px -12px rgba(29,54,88,.4)}
+.insts .lg{padding-left:0;height:76px}
+.insts .logos{align-items:center;flex-wrap:nowrap}
+html[data-mode="dark"] .insts .lg,html[data-mode="eco"] .insts .lg{height:62px;padding:6px 10px}
+.insts .logos .lg + .lg{border-left:1px solid color-mix(in srgb,var(--ink) 22%,transparent);padding-left:18px;margin-left:6px;border-radius:0}
+html[data-mode="dark"] .insts .logos .lg + .lg,html[data-mode="eco"] .insts .logos .lg + .lg{border-left:0;border-radius:10px}
+.insts .lg img[src*="spp-iit-delhi"]{max-width:270px}
+.insts .lg img[src*="princeton"]{height:66%}
+html[data-mode="dark"] .insts .lg,html[data-mode="eco"] .insts .lg{padding-left:12px}
+.support .lg{height:52px;background:#fffcf6}
+.support sup{font-size:.85rem;color:var(--navy);align-self:flex-start;margin-left:4px}
+:root{--lg-bg:transparent}
+html[data-mode="dark"],html[data-mode="eco"]{--lg-bg:#fffcf6}
+.support small{font-size:.78rem;color:var(--ink-2);max-width:26ch}
+@media (max-width:1000px){.led{grid-template-columns:1fr}}
+
+/* ---------- 05 Latest ---------- */
+.news{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.news .card{display:flex;flex-direction:column;text-decoration:none;color:inherit}
+.news .photo{border-radius:0;aspect-ratio:16/10}
+.news .card:hover .photo img{transform:scale(1.05)}
+.news .body{padding:20px 22px 24px;display:flex;flex-direction:column;gap:10px;flex:1}
+.news h3{font-size:1.15rem;transition:color .25s}
+.news .card:hover h3{color:var(--accent)}
+.news time{margin-top:auto;font:600 .8rem var(--f-head);color:var(--ink-2)}
+@media (max-width:1000px){.news{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.news{grid-template-columns:1fr}}
+
+/* ---------- 06 Explore our work ---------- */
+.work{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:20px}
+.work .card{text-decoration:none;color:inherit}
+.feat{display:flex;flex-direction:column}
+.feat .photo{border-radius:0;aspect-ratio:16/9}
+.feat:hover .photo img{transform:scale(1.04)}
+.feat .body{padding:26px 28px 30px;display:flex;flex-direction:column;gap:12px}
+.feat h3{font-size:clamp(1.3rem,2.2vw,1.65rem)}
+.side{display:grid;gap:20px}
+.side .card{padding:32px 30px;display:flex;flex-direction:column;justify-content:center;gap:12px}
+.side h3{font-size:1.35rem}
+.side p,.feat p{color:var(--ink-2)}
+@media (max-width:900px){.work{grid-template-columns:1fr}}
+
+/* ---------- 07 Final CTA: centred, simple ---------- */
+.final{padding-block:clamp(88px,10vw,140px);border-top:1px solid var(--line)}
+.final-in{max-width:none;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center;gap:20px}
+.final h2{font-size:clamp(2rem,4vw,3rem)}
+.final h2 .teal{display:inline}
+.final .rule{width:56px;height:3px;background:var(--teal);border-radius:2px}
+.final p{color:var(--ink-2);font-size:1.08rem;max-width:none}
+@media (min-width:960px){.final h2,.final p{white-space:nowrap}}
+.final .btn{margin-top:8px}
+.site-footer{margin-top:0}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}.js .rv{opacity:1;transform:none}.track .fill{width:100%}}
+.picture .lead-in{color:var(--ink-2);font-size:1.05rem}
+
+/* Dot clusters: each dot is a place. A slow ripple runs out from the dense corner, like activity
+   spreading from one place to the next. Still in Eco mode and with reduced motion. */
+.cluster circle.pl{transform-box:fill-box;transform-origin:center;animation:cl-ripple 7s ease-in-out infinite;animation-delay:var(--dl,0s)}
+@keyframes cl-ripple{0%,55%,100%{transform:scale(1);opacity:1}25%{transform:scale(1.35);opacity:.8}}
+html[data-mode="eco"] .cluster circle.pl{animation:none}
+@media (prefers-reduced-motion:reduce){.cluster circle.pl{animation:none}}
+/* Led by / Core partners: one column on phones so the logos never push the page sideways */
+.insts .lg{max-width:100%}
+.insts .lg img{max-width:100%}
+@media (max-width:760px){.insts{grid-template-columns:1fr}.insts .logos{flex-wrap:wrap}}
+/* Princeton logo with shield (29 Oct): sized up to match the others */
+.insts .lg img[src*="princeton"]{height:92%}
+.support .lg img[src*="princeton"]{height:44px;max-width:none}
+/* ===== Type system (30 Oct) — the same on every page =====
+   H1 Space Grotesk Medium 38–70px · H2 Space Grotesk Medium 30–43px · H3/subhead Inter SemiBold 18–22px
+   Lead Inter Regular 18–20px · Body Inter Regular 16px · Label Inter Bold capitals 12px.
+   Key figures (dates, amounts, round) and quotes stay in Space Grotesk Medium as display text. */
+#content h1,#content h2{font-family:var(--f-serif);font-weight:500}
+#content h2{font-size:clamp(30px,3vw,43px);line-height:1.15}
+#content .picture h3{font:500 clamp(30px,2.6vw,36px)/1.18 var(--f-serif);letter-spacing:-.01em}
+#content b,#content strong{font-weight:600}
+/* Subheads */
+#content h3,#content h4,#content .about-card h2,#content .before h2,#content legend h2,
+#content .card > b,#content #principles li > b,#content .insts b,#content .partner b,#content .pis b,
+#content .tile b,#content .callopt b,#content .panel b,#content .doc b,#content .names.wide b{font-family:var(--f-body);font-weight:600;letter-spacing:-.005em;line-height:1.3}
+#content .why-copy h3,#content .feat h3,#content a.card > h3,#content .about-card h2{font-size:22px}
+#content .card > b,#content #principles li > b,#content .news h3,#content .side h3,#content .card h3,#content legend h2,#content .before h2,#content .sb h3{font-size:20px}
+#content .insts b,#content .partner b,#content .pis b,#content .team h3,#content .group .sub,#content .tile b,#content .callopt b,#content .panel b,#content .doc b,#content .names.wide b{font-size:18px}
+/* Lead lines */
+#content .lead,#content .lead-in,#content .led-copy > p,#content .final-in > p{font-size:clamp(18px,1.3vw,20px)}
+/* Labels stay labels; display figures stay in the headline face */
+#content .group h3{font:700 12px var(--f-head);letter-spacing:.12em;text-transform:uppercase}
+#content .glance b,#content .offers b{font-family:var(--f-serif);font-weight:500}
+#content #open-calls .home-main > .section > h2{font-size:clamp(30px,3vw,43px)}
+#content h3 a{font-size:inherit;font-weight:inherit}
+#content .feature h3{font-size:20px}
+#content .names b,#content .names.wide b{font-size:16px}
+#content #side-call{font-family:var(--f-body)!important;font-size:18px!important;font-weight:600!important}
+/* ===== Design pass (31 Oct): readable contrast in every mode =====
+   Accent text a shade deeper (passes 4.5:1 on cream and on the pale teal tint); the chosen
+   Light/Dark/Eco pill uses the deeper teal; dark and eco buttons get navy text on teal. */
+:root{--accent:#1d7369;--nav-on-ink:#1d7369}
+.modes button[aria-pressed="true"]{background:var(--teal-dark)}
+html[data-mode="dark"],html[data-mode="eco"]{--btn-ink:#14243a}
+/* Home hero (31 Oct): intro text at least 16px on phones; primary button in the deeper teal so its label reads clearly */
+.hero-txt{font-size:clamp(16px,1.1vw,18px)}
+.hero-act .pri{background:var(--teal-dark)}
+.hero-act .pri:hover{background:#185e56}
+/* Supported by on phones: label on its own line, the three logos share one even row */
+@media (max-width:640px){
+  .support{gap:12px;padding:18px}
+  .support .eyebrow{flex-basis:100%}
+  .support .lg{flex:1 1 0;min-width:0;justify-content:center;height:48px;padding:6px 8px}
+  .support .lg img,.support .lg img[src*="princeton"]{height:auto;max-height:30px;max-width:100%}
+}
+/* Home (31 Oct): hero buttons the same size as every other button; side cards in "Explore our work"
+   start at the top with their link at the bottom, instead of floating in the middle of the card */
+.hero-act a{font-size:.95rem;padding:13px 22px}
+.side .card{justify-content:flex-start}
+.side .card .go{margin-top:auto;padding-top:4px}
+/* 2 Nov: Research, Publications, News & Events and Contact are not ready, so nothing links to them; cards that used to link stay as content */
+div.card.static{cursor:default}
+div.card.static:hover{transform:none;box-shadow:none;border-color:var(--line)}
+div.card.static:hover::before{opacity:0}
+.pp-news li{display:grid;gap:4px}
