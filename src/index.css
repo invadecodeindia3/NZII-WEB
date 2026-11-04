@@ -47,10 +47,8 @@ body {
   max-width: 100%;
   overflow-x: hidden;
   font-family: var(--f-body);
-  /* color and background set by pbh.css via CSS vars */
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* typography and colors handled by pbh.css matching Lovable reference */
+  line-height: 1.6;
 }
 
 #root {
