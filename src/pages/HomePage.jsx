@@ -197,7 +197,7 @@ export const HomePage = () => {
   }, []);
 
   return (
-    <div className="home-wrapper w-full">
+    <main id="content" className="home-wrapper w-full">
       {/* 01 Hero: PBH design */}
       <section className="hero" aria-labelledby="h-hero">
         <div className="hero-in">
@@ -602,6 +602,6 @@ export const HomePage = () => {
           <p>Explore the research, evidence and ideas helping us understand the choices ahead.</p>
         </div>
       </section>
-    </div>
+    </main>
   );
 };
