@@ -1,266 +1,372 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import {ArrowUpRight, ArrowDown, Network, MapPinned, ShieldCheck, Compass, Users, BookOpen, Building2, Landmark, Zap} from 'lucide-react';
-import {useGame} from '../context/GameContext';
-import {EditorialPhoto} from '../components/EditorialPhoto';
-import {HeroContourLines} from '../components/HeroContourLines';
-import {editorialMedia, aboutImages} from '../data/editorialMedia';
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import "../styles/about.css";
 
-// All visible copy is verbatim from the approved NZI About document.
-const principles=[
- {name:'Rigorous',icon:'/icons/rigorous.png',iconDark:'/icons/rigorous-dark.png',desc:'Our research is designed to withstand scrutiny, drawing on robust methods, high-quality research and expertise across disciplines.'},
- {name:'Independent',icon:'/icons/independent.png',iconDark:'/icons/independent-dark.png',desc:'Our research questions are driven by the evidence and the challenges India needs to understand. NZI does not advocate for a predetermined pathway.'},
- {name:'Collaborative',icon:'/icons/collaborative.png',iconDark:'/icons/collaborative-dark.png',desc:'Complex questions require diverse expertise. We work across institutions, disciplines and stakeholder groups to strengthen how the transition is understood.'},
- {name:'Open',icon:'/icons/open.png',iconDark:'/icons/open-dark.png',desc:'We aim to make research, methods, models and data increasingly accessible so others can examine, use and build upon the work.'}
-];
-const approach=[
- {title:'Systems that connect',icon:'/icons/fields.png',image:aboutImages.systemsConnect,desc:'Energy, land, water, agriculture, forests, infrastructure and development outcomes influence one another. NZI brings these dimensions together to understand how a choice in one part of the system can create consequences elsewhere.'},
- {title:'National scale, local detail',icon:'/icons/clusters.png',image:aboutImages.nationalDetail,desc:'National averages can hide significant differences between regions. Spatially resolved analysis helps examine where infrastructure may be required, where resources may be under pressure, and how the opportunities and impacts of the transition could vary across India.'}
-];
-const institutions=[
- {name:'School of Public Policy, IIT Delhi',role:'Lead Institution',icon:Landmark,description:'Leading the Net Zero India Initiative and bringing together its research, policy and interdisciplinary dimensions.'},
- {name:'Prayas Energy Group',role:'Research Partner',icon:Zap,description:'Contributing to energy-related analysis, including energy-demand modelling.'},
- {name:'Princeton University / Andlinger Center for Energy and the Environment',role:'Core Partner',icon:Building2,description:'Contributing to energy-system and supply-side modelling and related research.'}
-];
+export const AboutPage = () => {
+  useEffect(() => {
+    // 1. Draw small corner dot clusters
+    const ns = "http://www.w3.org/2000/svg";
+    const PAL = ["#2b9d8f", "#a7c957", "#e76f51", "#f28482"];
+    const root = document.documentElement;
+    const bg = getComputedStyle(root).getPropertyValue("--bg").trim() || "#fffcf6";
 
-const Eyebrow=({children,light=false})=><p className={"text-[11px] font-semibold uppercase tracking-[.18em] "+(light?'text-[#A7C957]':'text-[#2B9D8F]')}>{children}</p>;
-const Title=({children,className=''})=><h2 className={"max-w-4xl text-[clamp(1.8rem,2.55vw,2.75rem)] font-semibold leading-[1.18] tracking-[-.04em] "+className}>{children}</h2>;
-const Photo=({src,alt='',className='',children})=><EditorialPhoto src={src} alt={alt} className={className} imageClassName="transition-transform duration-700 ease-out group-hover:scale-[1.04]">{children}</EditorialPhoto>;
+    document.querySelectorAll("svg[data-cluster]").forEach((svg, i) => {
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      let seed = 11 + i * 5;
+      function r() {
+        seed = (seed * 9301 + 49297) % 233280;
+        return seed / 233280;
+      }
+      for (let y = 0; y < 5; y++) {
+        for (let x = 0; x < 7; x++) {
+          const d = (x + y) / 10;
+          if (r() > d) continue;
+          const c = document.createElementNS(ns, "circle");
+          c.setAttribute("cx", 8 + x * 17);
+          c.setAttribute("cy", 8 + y * 18);
+          c.setAttribute("r", (1.5 + d * 5 * r()).toFixed(1));
+          c.setAttribute("fill", d > 0.75 ? bg : PAL[Math.floor(r() * PAL.length)]);
+          if (d <= 0.75) {
+            c.setAttribute("class", "pl");
+            c.style.setProperty("--dl", (6 - x + (4 - y)) * 0.22 + "s");
+          }
+          svg.appendChild(c);
+        }
+      }
+    });
 
-/** Decorative: one national block resolving into finer regional cells. */
-const GranularityVisual=({light})=>{
- const tone=light?'#2B9D8F':'#A7C957';
- const cells=Array.from({length:64},(_,i)=>i);
- return <div aria-hidden="true" className="flex items-center gap-4 sm:gap-6">
-  <div className="h-20 w-20 shrink-0 rounded-xl sm:h-32 sm:w-32" style={{background:tone,opacity:.85}}/>
-  <ArrowUpRight size={22} className="shrink-0 rotate-45 opacity-50"/>
-  <div className="grid h-20 w-20 shrink-0 grid-cols-3 gap-1 sm:h-32 sm:w-32">{cells.slice(0,9).map(i=><span key={i} className="rounded-md" style={{background:i===4?'#F28482':tone,opacity:.35+(i%4)*.15}}/>)}</div>
-  <ArrowUpRight size={22} className="shrink-0 rotate-45 opacity-50"/>
-  <div className="grid h-20 w-20 shrink-0 grid-cols-8 gap-[3px] sm:h-32 sm:w-32">{cells.map(i=><span key={i} className="rounded-[2px]" style={{background:[13,22,41,50].includes(i)?'#F28482':tone,opacity:.2+((i*7)%5)*.17}}/>)}</div>
- </div>;
-};
+    // 2. People hero dots
+    const peopleLayout = (svg) => {
+      if (!matchMedia("(max-width:900px)").matches) {
+        const sw = (svg.parentNode && svg.parentNode.getBoundingClientRect().width) || 520;
+        const sc = Math.max(16, Math.min(28, Math.floor((sw / 1.28 - 24) / 25) + 1));
+        const k = sw / (24 + (sc - 1) * 25);
+        const ht = document.querySelector(".hero .hero-text");
+        const th = ht ? ht.getBoundingClientRect().height : 0;
+        const sr = Math.max(9, Math.min(24, Math.floor((th / k - 24) / 24.5) + 1));
+        return { mode: "side-" + sc + "x" + sr, cols: sc, rows: sr };
+      }
+      const w = (svg.parentNode && svg.parentNode.getBoundingClientRect().width) || 360;
+      return w >= 520
+        ? { mode: "band", cols: 24, rows: 7 }
+        : w >= 400
+        ? { mode: "mid", cols: 18, rows: 8 }
+        : { mode: "phone", cols: 13, rows: 10 };
+    };
 
-export const AboutPage=()=>{
- const {theme,ecoMode}=useGame(),light=theme==='light';
- const page=light?'bg-[#FFFCF6] text-[#1D3658]':'bg-[#1D3658] text-[#FFFCF6]';
- const paper=light?'bg-[#F4F1E8]':'bg-[#162B46]';
- const panel=light?'bg-white border-[#E6E2D8]':'bg-[#244166] border-white/10';
- const inkMuted=light?'text-[#4A607A]':'text-[#D1DBE5]';
- const line=light?'border-[#E2DED4]':'border-white/15';
- const strong='font-semibold '+(light?'text-[#1D3658]':'text-white');
- const coral=light?'text-[#E76F51]':'text-[#F28482]';
- const body='text-[15px] leading-[1.85] '+inkMuted;
+    const drawPeopleDots = (svg) => {
+      if (!svg) return;
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      const tip = svg.parentNode.querySelector(".pdot-tip");
+      const wrap = svg.parentNode;
+      const groups = [
+        ["pi", ".pis li"],
+        ["res", "#iitd-team .team-col.research li"],
+        ["adm", "#iitd-team .team-col.admin li"],
+        ["org", "#partner-teams li"],
+      ];
+      const people = [];
+      groups.forEach((g) => {
+        document.querySelectorAll(g[1]).forEach((li) => {
+          const b = li.querySelector("b");
+          if (!b) return;
+          const c = b.cloneNode(true);
+          c.querySelectorAll(".gs-ar").forEach((x) => x.remove());
+          const name = c.textContent.trim();
+          let role = li.querySelector(".role,.label");
+          role = role ? role.textContent.trim() : "";
+          if (g[0] === "pi") role = "Principal Investigator";
+          const org = li.closest(".team-col.org");
+          if (org) {
+            const h = org.querySelector("h3");
+            role = (role ? role + ", " : "") + (h ? h.textContent.trim() : "");
+          }
+          if (!li.id)
+            li.id = "person-" + name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+          people.push({
+            g: g[0],
+            lead: g[0] === "pi" || li.classList.contains("is-lead"),
+            name,
+            role,
+            id: li.id,
+          });
+        });
+      });
 
- return <div className={"nzi-editorial w-full overflow-x-clip "+page}>
-  {/* Full-width banner */}
-  <header className={"nzi-feature-photo relative isolate flex min-h-[86svh] items-end overflow-hidden px-[3%] pb-16 pt-36 sm:pb-20 "+(light?'bg-[#F4F1E8] text-[#1D3658]':'bg-[#14263D] text-white')}>
-   <img src={editorialMedia.landscape} alt="" aria-hidden="true" fetchPriority="high" className={"hero-photo pointer-events-none absolute inset-0 -z-30 h-full w-full object-cover object-center "+(light?'opacity-90':ecoMode?'opacity-50':'opacity-75')}/>
-   <div className={"pointer-events-none absolute inset-0 -z-20 "+(light?'bg-[linear-gradient(90deg,rgba(255,252,246,.98)_0%,rgba(255,252,246,.9)_42%,rgba(255,252,246,.35)_100%)]':'bg-[linear-gradient(90deg,rgba(29,54,88,.97)_0%,rgba(29,54,88,.85)_48%,rgba(29,54,88,.25)_100%)]')}/>
-   {!ecoMode&&<HeroContourLines className={"decorative-lines pointer-events-none absolute -right-[6%] top-[10%] -z-10 h-[80%] w-[58%] "+(light?'text-[#2B9D8F] opacity-50':'text-[#A7C957] opacity-55')}/>}
-   <div className="max-w-[860px]">
-    <h1 className={"text-[clamp(2.3rem,4vw,4.2rem)] font-semibold leading-[1.08] tracking-[-.05em] "+(light?'text-[#1D3658]':'text-white')}>Building a deeper understanding of India’s path to net&nbsp;zero.</h1>
-    <div className={"mt-7 grid gap-5 text-[clamp(.9rem,1vw,1.02rem)] leading-[1.75] sm:grid-cols-2 sm:gap-8 "+(light?'text-[#4A607A]':'text-white/85')}>
-     <p>Net Zero India is a research initiative led by the <strong className={light?'font-semibold text-[#1D3658]':'font-semibold text-white'}>School of Public Policy, IIT Delhi</strong>, bringing together researchers and institutions to examine how India could reach net-zero emissions by 2070, and what different pathways could mean for the country’s development, people and natural resources.</p>
-     <p className={"border-l-2 pl-5 "+(light?'border-[#E76F51]':'border-[#F28482]')}>Our aim is to build rigorous, spatially detailed and accessible evidence that can strengthen research, inform policy and enable more inclusive conversations about India’s transition.</p>
-    </div>
-   </div>
-   <a href="#development" aria-label="Scroll to next section" className={"absolute bottom-6 right-[3%] hidden h-11 w-11 items-center justify-center rounded-full border sm:inline-flex "+(light?'border-[#9bb7b3] text-[#456a73]':'border-white/40 text-white/80')}><ArrowDown size={17}/></a>
-  </header>
+      const L = peopleLayout(svg);
+      const C = L.cols;
+      const Rw = L.rows;
+      const W = 24 + (C - 1) * 25;
+      const H = 24 + (Rw - 1) * 24.5;
+      svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+      svg.dataset.mode = L.mode;
+      const x0 = Math.floor(C * 0.36);
+      const all = [];
+      for (let x = x0; x < C; x++)
+        for (let y = 0; y < Rw; y++) if ((x + y) % 3 === 0) all.push([x, y]);
 
-  <main>
-   {/* Why Net Zero India exists — narrative with pull quote */}
-   <section id="development" className="px-[3%] py-20 sm:py-24 lg:py-28">
-    <div className="grid gap-10 lg:grid-cols-[minmax(0,.95fr)_minmax(0,1.05fr)] lg:gap-16">
-     <div className="lg:sticky lg:top-28 lg:self-start">
-      <Title>India’s net-zero transition is also a <em className={"font-normal "+coral}>development transition.</em></Title>
-      <p className={"mt-6 max-w-xl "+body}>India’s path to net zero will unfold alongside profound changes in its economy and society. In the decades leading to 2070, the country will continue to urbanise, build infrastructure, expand access to services, transform industries and respond to changing aspirations and patterns of consumption.</p>
-      <div className="group mt-8 grid grid-cols-[1.3fr_1fr] items-start gap-3">
-       <Photo src={aboutImages.transitionWheat} alt="Illustrative agricultural landscape" className="h-[220px] rounded-[20px] sm:h-[260px]"/>
-       <Photo src={aboutImages.transitionSolar} alt="Illustrative solar installation" className="h-[220px] rounded-[20px] sm:h-[260px]"/>
+      const cells = [];
+      for (let k = 0; k < people.length && k < all.length; k++)
+        cells.push(all[Math.floor((k * all.length) / people.length)]);
+      const taken = {};
+      cells.forEach((c) => {
+        taken[c[0] + "," + c[1]] = 1;
+      });
+
+      const base = getComputedStyle(root).getPropertyValue("--dot-base").trim() || "#1d3658";
+      const fcols = [base, "#2b9d8f", "#a7c957", "#e76f51", "#f28482"];
+      let seed = 7;
+      function rr() {
+        seed = (seed * 9301 + 49297) % 233280;
+        return seed / 233280;
+      }
+
+      for (let fy = 0; fy < Rw; fy++) {
+        for (let fx = 0; fx < C; fx++) {
+          const px = fx / (C - 1);
+          if (rr() > 0.25 + px * 0.7) continue;
+          const fc = document.createElementNS(ns, "circle");
+          fc.setAttribute("cx", 12 + fx * 25);
+          fc.setAttribute("cy", 12 + fy * 24.5);
+          fc.setAttribute("r", (2 + px * 8 * rr()).toFixed(1));
+          fc.setAttribute("fill", px < 0.35 ? base : fcols[Math.floor(rr() * fcols.length)]);
+          if (taken[fx + "," + fy]) continue;
+          fc.setAttribute("class", "pfield");
+          svg.appendChild(fc);
+        }
+      }
+
+      function hide() {
+        if (tip) {
+          tip.hidden = true;
+          tip.classList.remove("below");
+        }
+      }
+
+      function show(c, p) {
+        if (!tip) return;
+        tip.innerHTML = "<b></b><span></span>";
+        tip.firstChild.textContent = p.name;
+        tip.lastChild.textContent = p.role;
+        tip.classList.remove("below");
+        tip.hidden = false;
+        const r = c.getBoundingClientRect();
+        const w = wrap.getBoundingClientRect();
+        const tw = tip.offsetWidth;
+        const th = tip.offsetHeight;
+        const left = Math.max(tw / 2, Math.min(w.width - tw / 2, r.left + r.width / 2 - w.left));
+        const below = r.top - th - 14 < 80;
+        tip.classList.toggle("below", below);
+        tip.style.left = left + "px";
+        tip.style.top = ((below ? r.bottom : r.top) - w.top) + "px";
+      }
+
+      people.forEach((p, i) => {
+        if (!cells[i]) return;
+        const a = document.createElementNS(ns, "a");
+        a.setAttribute("href", "#" + p.id);
+        a.setAttribute("class", "pdot pd-" + p.g + (p.lead ? " lead" : ""));
+        a.setAttribute("aria-label", p.name + (p.role ? ", " + p.role : ""));
+        const cx = 12 + cells[i][0] * 25;
+        const cy = 12 + cells[i][1] * 24.5;
+        const hitc = document.createElementNS(ns, "circle");
+        hitc.setAttribute("cx", cx);
+        hitc.setAttribute("cy", cy);
+        hitc.setAttribute("r", 16);
+        hitc.setAttribute("class", "phit");
+        a.appendChild(hitc);
+        const c = document.createElementNS(ns, "circle");
+        c.setAttribute("cx", cx);
+        c.setAttribute("cy", cy);
+        c.setAttribute("r", p.g === "pi" ? 8.5 : 7);
+        a.appendChild(c);
+        a.addEventListener("pointerenter", (e) => {
+          if (e.pointerType === "mouse") show(c, p);
+        });
+        a.addEventListener("focus", () => show(c, p));
+        a.addEventListener("pointerleave", hide);
+        a.addEventListener("blur", hide);
+        a.addEventListener("click", (e) => {
+          hide();
+          const t = document.getElementById(p.id);
+          if (!t) return;
+          e.preventDefault();
+          t.scrollIntoView({
+            behavior: matchMedia("(prefers-reduced-motion:reduce)").matches ? "auto" : "smooth",
+            block: "center",
+          });
+          try {
+            history.replaceState(null, "", "#" + p.id);
+          } catch (err) {}
+          t.classList.remove("pflash");
+          void t.offsetWidth;
+          t.classList.add("pflash");
+          setTimeout(() => t.classList.remove("pflash"), 2200);
+        });
+        svg.appendChild(a);
+      });
+    };
+
+    const pdotsSvg = document.querySelector("svg.pdots");
+    if (pdotsSvg) {
+      drawPeopleDots(pdotsSvg);
+    }
+
+    const handleResize = () => {
+      const svg = document.querySelector("svg.pdots");
+      if (svg && svg.dataset.mode !== peopleLayout(svg).mode) {
+        drawPeopleDots(svg);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+
+    // 3. Card cursor spotlights
+    const handlePointerMove = (e) => {
+      const el = e.currentTarget;
+      const r = el.getBoundingClientRect();
+      el.style.setProperty("--mx", e.clientX - r.left + "px");
+      el.style.setProperty("--my", e.clientY - r.top + "px");
+    };
+
+    const cards = document.querySelectorAll(".card");
+    cards.forEach((el) => el.addEventListener("pointermove", handlePointerMove));
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      cards.forEach((el) => el.removeEventListener("pointermove", handlePointerMove));
+    };
+  }, []);
+
+  return (
+    <div className="container page about-wrapper w-full">
+      <section className="hero" id="overview">
+      <div className="hero-text">
+        <h1>Building a deeper understanding of India’s path to <span className="teal">net&nbsp;zero.</span></h1>
+        <hr className="rule" />
+        <p className="lead">The Net Zero India Initiative is a research initiative led by the School of Public Policy, IIT Delhi, aimed at building rigorous, spatially detailed, and accessible evidence that can inform policy and enable more inclusive conversations about India’s&nbsp;transition.</p>
+        <p className="lead">Started in 2024, the NZII comprises a diverse team of more than 30 researchers across 4&nbsp;institutions.</p>
       </div>
-     </div>
-     <div className="flex flex-col gap-6">
-      <blockquote className={"rounded-[22px] border p-7 sm:p-9 "+panel}>
-       <p className="text-[clamp(1.35rem,2vw,2rem)] font-semibold leading-[1.3] tracking-[-.03em]">The choices made along the way will shape <em className={"font-normal "+coral}>more than emissions.</em></p>
-      </blockquote>
-      <p className={body}>A rapid expansion of renewable energy, for instance, will require land and infrastructure. Where these are located can have implications for agriculture, forests, water and biodiversity. Changes in the energy system can create new employment opportunities while reshaping existing livelihoods. Technology and investment choices can influence energy access, public health and how the costs and benefits of the transition are distributed.</p>
-      <div className="rounded-[22px] bg-[#1D3658] p-7 text-white sm:p-9">
-       <p className="text-[clamp(1.1rem,1.5vw,1.4rem)] leading-[1.5]"><strong className="font-semibold">Understanding India’s path to net zero therefore requires understanding climate and development together.</strong></p>
-       <p className="mt-5 border-t border-white/20 pt-5 text-[14px] text-[#A7C957]">This is the starting point for Net Zero India.</p>
+      {/*  Hero dots (2 Nov, Aswini): one dot per person listed in "The people behind the NZII" (past researchers left out),
+           in their team colour; hover shows the name, a click jumps to the person  */}
+      <div className="pdots-wrap"><svg className="dots pdots" viewBox="0 0 400 220" data-people role="group" aria-label="The NZII team, one dot per person"></svg><div className="pdot-tip" hidden></div></div>
+    </section>
+
+    <section className="section" id="principles">
+      <h2>Our principles</h2>
+      <ul className="p2">
+        <li style={{ "--c": "var(--teal)" }}><b>Rigorous</b><span>Research designed to withstand&nbsp;scrutiny.</span></li>
+        <li style={{ "--c": "var(--lime)" }}><b>Independent</b><span>NZII does not advocate for a predetermined&nbsp;pathway.</span></li>
+        <li style={{ "--c": "var(--coral)" }}><b>Collaborative</b><span>We work across institutions, disciplines and stakeholder&nbsp;groups.</span></li>
+        <li style={{ "--c": "var(--pink)" }}><b>Open</b><span>We aim to make research, methods, models and data increasingly&nbsp;accessible.</span></li>
+      </ul>
+    </section>
+
+    <section className="section" id="partners">
+      <h2>Built through partnership</h2>
+      <div className="partners">
+        <div className="partner card"><span className="lg"><img src="assets/logos/spp-iit-delhi.png" alt="School of Public Policy, IIT Delhi" /></span><span className="eyebrow">Lead Institution</span><b>School of Public Policy, IIT&nbsp;Delhi</b><span className="muted">Leading the initiative and bringing together its research, policy and interdisciplinary&nbsp;dimensions.</span></div>
+        <div className="partner card"><span className="lg"><img src="assets/logos/prayas-energy-group.png" alt="Prayas (Energy Group)" /></span><span className="eyebrow">Core Partner</span><b>Prayas (Energy Group)</b><span className="muted">Energy-related analysis, including energy-demand&nbsp;modelling.</span></div>
+        <div className="partner card"><span className="lg"><img src="assets/logos/princeton-university.png" alt="Princeton University" /></span><span className="eyebrow">Core Partner</span><b>Princeton University / Andlinger Center for Energy and the Environment</b><span className="muted">Energy-system and supply-side modelling and related&nbsp;research.</span></div>
       </div>
-     </div>
-    </div>
-   </section>
-
-   {/* The gap — national to granular */}
-   <section className={"relative isolate overflow-hidden px-[3%] py-20 sm:py-24 lg:py-28 "+paper}>
-    {/* Watermark pattern 2 — orbital planetary sphere */}
-    <div 
-      aria-hidden="true" 
-      className="pointer-events-none absolute -left-20 top-1/2 -translate-y-1/2 -z-10 h-[580px] w-[580px] select-none opacity-[0.035] sm:opacity-[0.045]"
-      style={{
-        backgroundImage: 'url(/patterns/pattern-2.png)',
-        backgroundSize: 'contain',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center'
-      }}
-    />
-    <div className="flex flex-wrap items-end justify-between gap-8">
-     <div className="max-w-3xl"><Title>Moving from national pathways to a more <em className={"font-normal "+coral}>granular picture.</em></Title>
-      <p className="mt-5 text-[clamp(1.05rem,1.3vw,1.25rem)] font-medium leading-[1.55]">A growing body of research is exploring how India could reach net zero. Yet important questions remain.</p>
-     </div>
-     <GranularityVisual light={light}/>
-    </div>
-    <div className={"mt-12 grid gap-8 border-t pt-10 md:grid-cols-3 "+line}>
-     <p className={body}>Many studies focus on national-level pathways, individual sectors or emissions outcomes. We still need a more connected understanding of where the transition could unfold, how different systems interact, and what different pathways could mean for people, resources and regions across India.</p>
-     <div>
-      <p className={"text-[17px] font-semibold leading-[1.5] "+coral}>Net Zero India was created to help build that understanding.</p>
-      <p className={"mt-4 "+body}>The initiative combines research across energy, land and development outcomes with spatially detailed analysis. This allows it to explore not only how much India's energy system may need to change, but where those changes could take place and what their wider implications could be.</p>
-     </div>
-     <p className={body}>It brings questions of land, water, biodiversity, employment, health, energy access, equity and investment into the study of India's net-zero pathways — rather than treating them as separate conversations.</p>
-    </div>
-   </section>
-
-   {/* What we are building — large statement / visual break */}
-   <section className="nzi-feature-photo relative isolate overflow-hidden bg-[#14263D] px-[3%] py-20 text-white sm:py-24 lg:py-28">
-    <img src={aboutImages.choicesVisible} alt="" loading="lazy" className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover object-center opacity-55"/>
-    <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(29,54,88,.95)_0%,rgba(29,54,88,.85)_55%,rgba(29,54,88,.45)_100%)]"/>
-    <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:gap-16">
-     <div>
-      <Title className="text-white">Research that helps make the choices and consequences visible.</Title>
-      <div className="mt-6 space-y-4 text-[15px] leading-[1.8] text-white/80">
-       <p>Net Zero India is building a research and modelling initiative supported by an open knowledge and decision-support platform.</p>
-       <p>Rather than identifying one prescribed route to net zero, the initiative explores <strong className="font-semibold text-white">multiple possible pathways</strong> and examines what changes under different assumptions and choices.</p>
+      <div className="supported">
+        <span className="eyebrow">Supported by</span>
+        <ul className="sup-tiles">
+          <li><span className="sup-logo"><img src="assets/logos/schmidt-sciences.svg" alt="" /></span><span className="sup-name">Schmidt Sciences / AX programme</span></li>
+          <li><span className="sup-logo"><img src="assets/logos/giving-green.webp" alt="" /></span><span className="sup-name">Giving Green</span></li>
+          <li><span className="sup-logo"><img src="assets/logos/princeton-university.png" alt="" /></span><span className="sup-name">Princeton University</span></li>
+        </ul>
       </div>
-     </div>
-     <div className="lg:pt-2">
-      <p className="text-[13px] uppercase tracking-[.14em] text-[#A7C957]">The aim is to make it possible to ask:</p>
-      <blockquote className="mt-5 border-l-[3px] border-[#E76F51] pl-6"><p className="text-[clamp(1.7rem,3vw,3rem)] font-semibold leading-[1.15] tracking-[-.04em]">What happens if India takes one pathway rather than another?</p></blockquote>
-     </div>
-    </div>
-    <div className="mt-12 grid gap-8 border-t border-white/20 pt-8 text-[14px] leading-[1.8] text-white/75 md:grid-cols-2">
-     <p>And then examine that question across energy systems, infrastructure, land and natural resources, as well as development outcomes such as employment, health, energy access and equity.</p>
-     <p>Over time, the models, data, scenarios and research generated through NZI are intended to become a resource that researchers can build upon and policymakers and other stakeholders can use to better understand the implications of long-term choices.</p>
-    </div>
-   </section>
+    </section>
 
-   {/* Our approach — two image-led parts */}
-   <section className="px-[3%] py-20 sm:py-24 lg:py-28">
-    <Eyebrow>Our approach.</Eyebrow><Title className="mt-3">Built for the complexity of the transition.</Title>
-    <div className="mt-10 grid gap-6 md:grid-cols-2">
-     {approach.map((a,i)=><article key={a.title} className={"group nzi-raise overflow-hidden rounded-[22px] border "+panel}>
-      <Photo src={a.image} alt="" className="h-[220px] sm:h-[260px]">
-       <div className="absolute inset-0 bg-gradient-to-t from-[#1D3658]/70 to-transparent"/>
-       <span className={"absolute left-5 top-5 flex h-11 w-11 items-center justify-center rounded-xl p-2 text-white backdrop-blur-sm "+(i===1?'bg-[#E76F51]/90':'bg-[#1D3658]/85')}>
-         <img src={a.icon} alt="" className="h-full w-full object-contain" />
-       </span>
-       <h3 className="absolute bottom-5 left-6 right-6 text-[clamp(1.3rem,1.8vw,1.7rem)] font-semibold tracking-tight text-white">{a.title}</h3>
-      </Photo>
-      <p className={"p-6 sm:p-8 "+body}>{a.desc}</p>
-     </article>)}
-    </div>
-   </section>
-
-   {/* Our principles — four short principles, not clickable */}
-   <section className={"relative isolate overflow-hidden px-[3%] py-20 sm:py-24 lg:py-28 "+paper}>
-    {/* Subtle watermark pattern 1 */}
-    <div 
-      aria-hidden="true" 
-      className="pointer-events-none absolute -right-24 top-1/2 -translate-y-1/2 -z-10 h-[560px] w-[560px] select-none opacity-[0.035] sm:opacity-[0.045]"
-      style={{
-        backgroundImage: 'url(/patterns/pattern-1.png)',
-        backgroundSize: 'contain',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center'
-      }}
-    />
-    <Title>Our principles</Title>
-    <div className="mt-10 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-     {principles.map((p,i)=><div key={p.name} className={"group border-t-2 pt-6 "+(i===1?'border-[#F28482]':'border-[#2B9D8F]')}>
-      <div className="flex items-center justify-between">
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#1D3658] p-2.5 shadow-sm transition-transform duration-300 group-hover:scale-105 border border-white/10">
-          <img src={p.icon} alt={p.name} className="h-full w-full object-contain" />
+    <section className="section" id="people">
+      <h2>The people behind the Net Zero India&nbsp;Initiative</h2>
+      <p className="muted">A multidisciplinary team for a multidimensional&nbsp;challenge.</p>
+      <span className="eyebrow pi-label"><span>Meet the PI<span className="nc">s</span></span></span>
+      <ul className="pis big compact">
+        <li className="card"><img className="photo" src="assets/people/pi-kaveri-iychettira.jpg" alt="" loading="lazy" /><span className="pi-txt"><b>Kaveri Iychettira</b><span className="label">Principal Investigator</span><span className="muted">IIT&nbsp;Delhi</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=0yQF0u8AAAAJ&amp;hl=en" target="_blank" rel="noopener" aria-label="Kaveri Iychettira on Google Scholar (opens in a new tab)" title="Google Scholar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V16h2V9L12 3z"/><path d="M5 13.18v3.6L12 21l7-4.22v-3.6L12 17l-7-3.82z"/></svg></a><a className="plk" href="https://www.linkedin.com/in/kiychettira/" target="_blank" rel="noopener" aria-label="Kaveri Iychettira on LinkedIn (opens in a new tab)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3V9.5zm6.5 0h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.27c0-1.26-.02-2.88-1.75-2.88-1.76 0-2.03 1.37-2.03 2.79V21h-4V9.5z"/></svg></a></span></span></li>
+        <li className="card"><img className="photo" src="assets/people/pi-ambuj-sagar.jpg" alt="" loading="lazy" /><span className="pi-txt"><b>Ambuj Sagar</b><span className="label">Principal Investigator</span><span className="muted">IIT&nbsp;Delhi</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=k8Lrh_4AAAAJ&amp;hl=en" target="_blank" rel="noopener" aria-label="Ambuj Sagar on Google Scholar (opens in a new tab)" title="Google Scholar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V16h2V9L12 3z"/><path d="M5 13.18v3.6L12 21l7-4.22v-3.6L12 17l-7-3.82z"/></svg></a><a className="plk" href="https://www.linkedin.com/in/ambuj-sagar-1983379/" target="_blank" rel="noopener" aria-label="Ambuj Sagar on LinkedIn (opens in a new tab)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3V9.5zm6.5 0h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.27c0-1.26-.02-2.88-1.75-2.88-1.76 0-2.03 1.37-2.03 2.79V21h-4V9.5z"/></svg></a></span></span></li>
+        <li className="card"><img className="photo" src="assets/people/pi-rajarshi-dasgupta.jpg" alt="" loading="lazy" /><span className="pi-txt"><b>Rajarshi Dasgupta</b><span className="label">Principal Investigator</span><span className="muted">IIT&nbsp;Delhi</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=KfcluxcAAAAJ&amp;hl=en" target="_blank" rel="noopener" aria-label="Rajarshi Dasgupta on Google Scholar (opens in a new tab)" title="Google Scholar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V16h2V9L12 3z"/><path d="M5 13.18v3.6L12 21l7-4.22v-3.6L12 17l-7-3.82z"/></svg></a><a className="plk" href="https://www.linkedin.com/in/drrajarshidasgupta/" target="_blank" rel="noopener" aria-label="Rajarshi Dasgupta on LinkedIn (opens in a new tab)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3V9.5zm6.5 0h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.27c0-1.26-.02-2.88-1.75-2.88-1.76 0-2.03 1.37-2.03 2.79V21h-4V9.5z"/></svg></a></span></span></li>
+      </ul>
+      <div className="team" id="iitd-team">
+        <span className="eyebrow"><span>IIT&nbsp;Delhi</span></span>
+        <div className="team-cols">
+          <div className="team-col research">
+            <h3>Researchers</h3>
+            <ul className="team-list cols-3">
+            <li className="is-lead"><span className="av" aria-hidden="true">TK</span><b>Tarun Khanna</b><span className="role">Lead</span></li>
+            <li><span className="av" aria-hidden="true">SG</span><b>Srishti Gwal</b><span className="role">Postdoctoral Fellow</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=uodwEL4AAAAJ&amp;hl=en" target="_blank" rel="noopener" aria-label="Srishti Gwal on Google Scholar (opens in a new tab)" title="Google Scholar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V16h2V9L12 3z"/><path d="M5 13.18v3.6L12 21l7-4.22v-3.6L12 17l-7-3.82z"/></svg></a></span></li>
+            <li><span className="av" aria-hidden="true">AS</span><b>Aditya Sharma</b><span className="role">Postdoctoral Fellow</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=I8oSB0AAAAJ&amp;hl=en" target="_blank" rel="noopener" aria-label="Aditya Sharma on Google Scholar (opens in a new tab)" title="Google Scholar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V16h2V9L12 3z"/><path d="M5 13.18v3.6L12 21l7-4.22v-3.6L12 17l-7-3.82z"/></svg></a></span></li>
+            <li><span className="av" aria-hidden="true">SB</span><b>Subhadip Bhattacharya</b><span className="role">Postdoctoral Fellow</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=jvTl6zIAAAAJ&amp;hl=en" target="_blank" rel="noopener" aria-label="Subhadip Bhattacharya on Google Scholar (opens in a new tab)" title="Google Scholar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V16h2V9L12 3z"/><path d="M5 13.18v3.6L12 21l7-4.22v-3.6L12 17l-7-3.82z"/></svg></a><a className="plk" href="https://www.linkedin.com/in/subhadip-bhattacharya-2b98281b" target="_blank" rel="noopener" aria-label="Subhadip Bhattacharya on LinkedIn (opens in a new tab)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3V9.5zm6.5 0h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.27c0-1.26-.02-2.88-1.75-2.88-1.76 0-2.03 1.37-2.03 2.79V21h-4V9.5z"/></svg></a></span></li>
+            <li><span className="av" aria-hidden="true">SP</span><b>Shashank Prabhakar</b><span className="role">Postdoctoral Fellow</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=mX0zyNMAAAAJ&amp;hl=en" target="_blank" rel="noopener" aria-label="Shashank Prabhakar on Google Scholar (opens in a new tab)" title="Google Scholar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V16h2V9L12 3z"/><path d="M5 13.18v3.6L12 21l7-4.22v-3.6L12 17l-7-3.82z"/></svg></a></span></li>
+            <li><span className="av" aria-hidden="true">SB</span><b>Senjuty Bhowmik</b><span className="role">Postdoctoral Fellow</span></li>
+            <li><span className="av" aria-hidden="true">SS</span><b>Somya Srivastava</b><span className="role">Research Associate</span></li>
+            <li><span className="av" aria-hidden="true">AA</span><b>Anshul Angira</b><span className="role">Research Associate</span></li>
+            <li><span className="av" aria-hidden="true">SP</span><b>Satyam Prakash</b><span className="role">Research Associate</span><span className="plinks"><a className="plk" href="https://www.linkedin.com/in/satyam-prakash04/" target="_blank" rel="noopener" aria-label="Satyam Prakash on LinkedIn (opens in a new tab)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3V9.5zm6.5 0h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.27c0-1.26-.02-2.88-1.75-2.88-1.76 0-2.03 1.37-2.03 2.79V21h-4V9.5z"/></svg></a></span></li>
+            <li><span className="av" aria-hidden="true">MB</span><b>Mallika Bhuyan</b><span className="role">Research Associate</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=5CkvpKkAAAAJ&amp;hl=en" target="_blank" rel="noopener" aria-label="Mallika Bhuyan on Google Scholar (opens in a new tab)" title="Google Scholar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V16h2V9L12 3z"/><path d="M5 13.18v3.6L12 21l7-4.22v-3.6L12 17l-7-3.82z"/></svg></a></span></li>
+            <li><span className="av" aria-hidden="true">AR</span><b>AN Rohith</b><span className="role">Researcher</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=qKYOv2oAAAAJ&amp;hl=en" target="_blank" rel="noopener" aria-label="AN Rohith on Google Scholar (opens in a new tab)" title="Google Scholar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V16h2V9L12 3z"/><path d="M5 13.18v3.6L12 21l7-4.22v-3.6L12 17l-7-3.82z"/></svg></a></span></li>
+            </ul>
+          </div>
+          <div className="team-col admin">
+            <h3>Admin and Communications team</h3>
+            <ul className="team-list cols-1">
+            <li><span className="av" aria-hidden="true">AM</span><b>Ashwini Mudgal</b><span className="role">Project Manager</span><span className="plinks"><a className="plk" href="https://www.linkedin.com/in/ashwini-mudgal-9443774/" target="_blank" rel="noopener" aria-label="Ashwini Mudgal on LinkedIn (opens in a new tab)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3V9.5zm6.5 0h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.27c0-1.26-.02-2.88-1.75-2.88-1.76 0-2.03 1.37-2.03 2.79V21h-4V9.5z"/></svg></a></span></li>
+            <li><span className="av" aria-hidden="true">EB</span><b>Ekta Baranwal</b><span className="role">Postdoctoral Fellow &amp; Coordinator</span><span className="plinks"><a className="plk" href="https://www.linkedin.com/in/dr-ekta-baranwal-10963732/" target="_blank" rel="noopener" aria-label="Ekta Baranwal on LinkedIn (opens in a new tab)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3V9.5zm6.5 0h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.27c0-1.26-.02-2.88-1.75-2.88-1.76 0-2.03 1.37-2.03 2.79V21h-4V9.5z"/></svg></a></span></li>
+            <li><span className="av" aria-hidden="true">VS</span><b>Varsha Seharawat</b><span className="role">Senior Project Assistant</span></li>
+            <li><span className="av" aria-hidden="true">MD</span><b>Manash Pratim Deka</b><span className="role">Project Assistant</span></li>
+            <li><span className="av" aria-hidden="true">MN</span><b>Manoj Singh Negi</b><span className="role">Communications Expert</span><span className="plinks"><a className="plk" href="https://www.linkedin.com/in/negimanoj/" target="_blank" rel="noopener" aria-label="Manoj Singh Negi on LinkedIn (opens in a new tab)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3V9.5zm6.5 0h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.27c0-1.26-.02-2.88-1.75-2.88-1.76 0-2.03 1.37-2.03 2.79V21h-4V9.5z"/></svg></a></span></li>
+            </ul>
+          </div>
         </div>
-        <span className={"font-mono text-xs "+(i===1?coral:'text-[#2B9D8F]')}>0{i+1}</span>
+        <details className="past">
+          <summary>Past researchers</summary>
+          <ul className="team-list cols-4">
+            <li><span className="av" aria-hidden="true">AC</span><b>Akhil Chauhan</b><span className="role">Research Associate</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=MF0VIhEAAAAJ&amp;hl=en" target="_blank" rel="noopener" aria-label="Akhil Chauhan on Google Scholar (opens in a new tab)" title="Google Scholar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V16h2V9L12 3z"/><path d="M5 13.18v3.6L12 21l7-4.22v-3.6L12 17l-7-3.82z"/></svg></a></span></li>
+            <li><span className="av" aria-hidden="true">AG</span><b>Anuj Gurjar</b><span className="role">Research Associate</span></li>
+            <li><span className="av" aria-hidden="true">DM</span><b>Divyangi Mishra</b><span className="role">Research Associate</span></li>
+            <li><span className="av" aria-hidden="true">AB</span><b>Aishwarya Bhave</b><span className="role">Research Associate</span></li>
+            <li><span className="av" aria-hidden="true">MS</span><b>Manpreet Singh</b><span className="role">Research Associate</span></li>
+            <li><span className="av" aria-hidden="true">SD</span><b>Susan Das</b><span className="role">Research Associate</span></li>
+            <li><span className="av" aria-hidden="true">YV</span><b>Yeshu Vashishtha</b><span className="role">Research Associate</span></li>
+            <li><span className="av" aria-hidden="true">NS</span><b>Niranjan S</b><span className="role">Intern</span></li>
+          </ul>
+        </details>
       </div>
-      <h3 className="mt-6 text-[22px] font-semibold tracking-tight">{p.name}</h3>
-      <p className={"mt-3 text-[14px] leading-[1.75] "+inkMuted}>{p.desc}</p>
-     </div>)}
-    </div>
-   </section>
-
-   {/* Growing an ecosystem */}
-   <section className="relative isolate overflow-hidden px-[3%] py-20 sm:py-24 lg:py-28">
-    {/* Subtle watermark pattern 2 */}
-    <div 
-      aria-hidden="true" 
-      className="pointer-events-none absolute -left-20 top-1/2 -translate-y-1/2 -z-10 h-[560px] w-[560px] select-none opacity-[0.03] sm:opacity-[0.04]"
-      style={{
-        backgroundImage: 'url(/patterns/pattern-2.png)',
-        backgroundSize: 'contain',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center'
-      }}
-    />
-    <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_.95fr] lg:gap-16">
-     <div>
-      <Title>Growing an ecosystem for <em className={"font-normal "+coral}>long-term research.</em></Title>
-      <p className={"mt-6 "+body}>Net Zero India has been conceived as more than a single research output. It brings together a growing body of research, modelling, data, collaborations and engagement around one of India's defining long-term questions.</p>
-      <p className={"mt-6 rounded-[18px] border p-6 text-[15px] leading-[1.8] "+panel+" "+inkMuted}>As the work develops, the ambition is for NZI to grow as an <strong className={strong}>open research platform</strong>, enabling new research, bringing different forms of expertise into the conversation and creating space for deeper engagement around India's development and mitigation choices.</p>
-     </div>
-     <div className="group relative">
-      <Photo src={aboutImages.ecosystemMain} alt="Illustrative research environment" className="h-[340px] rounded-[22px] sm:h-[420px]"/>
-      <div className="absolute -bottom-5 -left-4 hidden sm:block"><Photo src={aboutImages.ecosystemInset} alt="" className={"h-32 w-40 rounded-2xl border-4 "+(light?'border-[#FFFCF6]':'border-[#1D3658]')}/></div>
-     </div>
-    </div>
-   </section>
-
-   {/* Built through partnership */}
-   <section className={"px-[3%] py-20 sm:py-24 lg:py-28 "+paper}>
-    <div className="flex flex-wrap items-end justify-between gap-6">
-     <Title>Built through partnership</Title>
-     <p className={"max-w-xl "+body}>Net Zero India is led by the <strong className={strong}>School of Public Policy, IIT Delhi</strong>, in collaboration with research partners who bring complementary expertise to different parts of the initiative.</p>
-    </div>
-    <div className="mt-10 grid gap-5 lg:grid-cols-[1.15fr_1fr_1fr]">
-     {institutions.map((inst,i)=>{const Icon=inst.icon;return <article key={inst.name} className={"nzi-raise flex min-h-[260px] flex-col justify-between rounded-[22px] border p-7 "+(i===0?'border-transparent bg-[#1D3658] text-white':panel)}>
-      <div className="flex items-start justify-between gap-4">
-       <span className={"rounded-full px-3 py-1.5 text-[10px] font-semibold uppercase tracking-widest "+(i===0?'bg-white/15 text-[#A7C957]':light?'bg-[#e3f1ed] text-[#1d7f77]':'bg-[#2B9D8F]/20 text-[#A7C957]')}>{inst.role}</span>
-       <Icon size={22} strokeWidth={1.5} className={i===0?'text-[#A7C957]':'text-[#2B9D8F]'}/>
+      <div className="team" id="partner-teams">
+        <span className="eyebrow"><span>Core Partners</span></span>
+        <div className="team-cols orgs">
+          <div className="team-col org prayas">
+            <h3>Prayas (Energy Group)</h3>
+            <ul className="team-list cols-2">
+            <li className="is-lead"><span className="av" aria-hidden="true">AS</span><b>Ashok Sreenivas</b><span className="role">Lead</span></li>
+            <li className="is-lead"><span className="av" aria-hidden="true">SD</span><b>Srihari Dukkipati</b><span className="role">Lead</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=MCoCRpkAAAAJ&amp;hl=en" target="_blank" rel="noopener" aria-label="Srihari Dukkipati on Google Scholar (opens in a new tab)" title="Google Scholar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V16h2V9L12 3z"/><path d="M5 13.18v3.6L12 21l7-4.22v-3.6L12 17l-7-3.82z"/></svg></a></span></li>
+            <li className="no-role"><span className="av" aria-hidden="true">NP</span><b>Narendra Pai</b></li>
+            <li className="no-role"><span className="av" aria-hidden="true">AK</span><b>Aniruddha Ketkar</b></li>
+            <li className="no-role"><span className="av" aria-hidden="true">VN</span><b>Varun Nair</b></li>
+            </ul>
+          </div>
+          <div className="team-col org princeton">
+            <h3>Princeton University</h3>
+            <ul className="team-list cols-2">
+            <li className="is-lead"><span className="av" aria-hidden="true">CG</span><b>Chris Greig</b><span className="role">Lead</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=AxDVkNMAAAAJ&amp;hl=en" target="_blank" rel="noopener" aria-label="Chris Greig on Google Scholar (opens in a new tab)" title="Google Scholar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V16h2V9L12 3z"/><path d="M5 13.18v3.6L12 21l7-4.22v-3.6L12 17l-7-3.82z"/></svg></a></span></li>
+            <li className="no-role"><span className="av" aria-hidden="true">AP</span><b>Andrew Pascale</b><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=LfEPhqYAAAAJ&amp;hl=en" target="_blank" rel="noopener" aria-label="Andrew Pascale on Google Scholar (opens in a new tab)" title="Google Scholar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V16h2V9L12 3z"/><path d="M5 13.18v3.6L12 21l7-4.22v-3.6L12 17l-7-3.82z"/></svg></a></span></li>
+            <li className="no-role"><span className="av" aria-hidden="true">GH</span><b>Ganesh Hegde</b><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=tg57FhcAAAAJ&amp;hl=en" target="_blank" rel="noopener" aria-label="Ganesh Hegde on Google Scholar (opens in a new tab)" title="Google Scholar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V16h2V9L12 3z"/><path d="M5 13.18v3.6L12 21l7-4.22v-3.6L12 17l-7-3.82z"/></svg></a></span></li>
+            <li className="no-role"><span className="av" aria-hidden="true">MN</span><b>Malini Nambiar</b><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=cbwiuSAAAAAJ&amp;hl=en" target="_blank" rel="noopener" aria-label="Malini Nambiar on Google Scholar (opens in a new tab)" title="Google Scholar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V16h2V9L12 3z"/><path d="M5 13.18v3.6L12 21l7-4.22v-3.6L12 17l-7-3.82z"/></svg></a></span></li>
+            <li className="no-role"><span className="av" aria-hidden="true">LB</span><b>Luca Bonaldo</b><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=-mUhRVkAAAAJ&amp;hl=en" target="_blank" rel="noopener" aria-label="Luca Bonaldo on Google Scholar (opens in a new tab)" title="Google Scholar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V16h2V9L12 3z"/><path d="M5 13.18v3.6L12 21l7-4.22v-3.6L12 17l-7-3.82z"/></svg></a></span></li>
+            <li className="no-role"><span className="av" aria-hidden="true">JJ</span><b>Jesse Jenkins</b><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=iCJvalsAAAAJ&amp;hl=en" target="_blank" rel="noopener" aria-label="Jesse Jenkins on Google Scholar (opens in a new tab)" title="Google Scholar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V16h2V9L12 3z"/><path d="M5 13.18v3.6L12 21l7-4.22v-3.6L12 17l-7-3.82z"/></svg></a></span></li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div className="mt-10"><h3 className="text-[clamp(1.15rem,1.4vw,1.4rem)] font-semibold leading-snug tracking-tight">{inst.name}</h3>
-       <p className={"mt-3 text-[14px] leading-[1.75] "+(i===0?'text-white/80':inkMuted)}>{inst.description}</p></div>
-     </article>})}
-    </div>
-    <div className={"mt-8 flex items-start gap-3 border-t pt-6 text-[14px] leading-[1.75] "+line+" "+inkMuted}>
-     <span aria-hidden="true" className="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#F28482]"/>
-     <p>The initiative is supported by organisations including Schmidt Sciences / AX programme, Giving Green and Princeton University through the relevant project support arrangement.</p>
-    </div>
-   </section>
+      <p className="more">Read more about the Net Zero India Initiative team on our <a href="/consortium">Explore Our Collaborations</a>&nbsp;page.</p>
+    </section>
 
-   {/* The people behind Net Zero India */}
-   <section className="px-[3%] py-20 sm:py-24 lg:py-28">
-    <div className="grid items-center gap-10 lg:grid-cols-[.9fr_1.1fr] lg:gap-16">
-     <div className="group relative">
-      <Photo src={aboutImages.teamMain} alt="Illustrative research collaboration" className="h-[360px] rounded-[22px] sm:h-[440px]"/>
-      <div className="absolute -bottom-5 right-4 hidden sm:block"><Photo src={aboutImages.teamInset} alt="" className={"h-32 w-40 rounded-2xl border-4 "+(light?'border-[#FFFCF6]':'border-[#1D3658]')}/></div>
-     </div>
-     <div>
-      <Eyebrow>The people behind Net Zero India</Eyebrow>
-      <Title className="mt-3">A multidisciplinary team for a <em className={"font-normal "+coral}>multidimensional challenge.</em></Title>
-      <p className={"mt-6 "+body}>Net Zero India brings together researchers working across public policy, energy systems, modelling, land, development and related fields.</p>
-      <p className={"mt-4 "+body}>Together, the team combines different disciplines and institutional perspectives to examine India's transition as an interconnected challenge, and to build evidence that can stand up to academic scrutiny while remaining relevant to real-world decisions.</p>
-      <Link to="/consortium" className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-full bg-[#2B9D8F] px-5 py-3 text-[13px] font-semibold text-white hover:bg-[#207D72]">Meet the People Behind NZI <ArrowUpRight size={16}/></Link>
-     </div>
+    <section className="g1" id="involved">
+      <h2>Get involved</h2>
+      <div className="rule" aria-hidden="true"></div>
+      <div className="btns">
+        <a className="btn" href="/consortium">Explore Our Collaborations <span className="ar" aria-hidden="true">→</span></a>
+      </div>
+    </section>
     </div>
-   </section>
-
-   {/* Full-width closing banner — no button */}
-   <section className="nzi-feature-photo relative isolate overflow-hidden bg-[#1D3658] px-[3%] py-20 text-white sm:py-28">
-    <img alt="" src={editorialMedia.nature} loading="lazy" className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover object-center opacity-50"/>
-    <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r from-[#1D3658]/95 via-[#1D3658]/85 to-[#1D3658]/45"/>
-    <p className="max-w-4xl text-[clamp(1.1rem,1.6vw,1.5rem)] leading-[1.6] text-white/80">India's journey to net zero will involve choices whose consequences will unfold over decades.</p>
-    <h2 className="mt-6 max-w-5xl text-[clamp(2rem,3.4vw,3.6rem)] font-semibold leading-[1.15] tracking-[-.045em]"><strong className="font-semibold">Net Zero India exists to make those choices and what they could mean for the country, easier to understand.</strong></h2>
-   </section>
-  </main>
- </div>;
+  );
 };

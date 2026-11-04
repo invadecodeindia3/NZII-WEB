@@ -1,259 +1,393 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import confetti from 'canvas-confetti';
-import { 
-  CheckCircle2, 
-  Building, 
-  ShieldCheck, 
-  Mail, 
-  ArrowRight, 
-  ExternalLink, 
-  Globe2, 
-  Award, 
-  Users,
-  Sparkles,
-  BookOpen
-} from 'lucide-react';
-import { useGame } from '../context/GameContext';
-import { RevealOnScroll } from '../components/RevealOnScroll';
-import { FAQSection } from '../components/FAQSection';
-import { PreFooterBanner } from '../components/PreFooterBanner';
+import React, { useEffect } from "react";
+import "../styles/people.css";
 
-export const ConsortiumPage = () => {
-  const { playSound, theme, ecoMode } = useGame();
-  const isLight = theme === 'light';
-
-  const members = [
-    { name: 'Energy Transitions Commission (ETC)', type: 'Global Industrial Decarbonization', focus: 'Hard-to-abate sector pathways, marginal abatement cost curves, and clean power capital financing.' },
-    { name: 'Indian Institute of Technology (IIT) Delhi', type: 'Atmospheric & Climate Science', focus: 'Sub-hourly grid unit commitment simulations, regional air quality dispersion, and renewable variability modeling.' },
-    { name: 'Council on Energy, Environment and Water (CEEW)', type: 'Policy & Livelihoods', focus: 'Socio-economic district mapping, energy-water nexus analysis, and distributed clean livelihood transitions.' },
-    { name: 'NITI Aayog Pathways Secretariat', type: 'Government Decarbonization', focus: 'Federal and state-level policy harmonization, regulatory targets, and sectoral NDC execution matrices.' },
-    { name: 'The Energy and Resources Institute (TERI)', type: 'Industrial Energy Efficiency', focus: 'Industrial symbiosis, circular economy models, biogenic waste-to-energy, and agroforestry carbon sinks.' },
-    { name: 'Prayas (Energy Group)', type: 'Electricity Market Regulation', focus: 'Power distribution utility (DISCOM) financial viability, time-of-day tariffs, and decentralized solar equity.' },
-  ];
-
-  const consortiumFaqs = [
-    {
-      q: "How can academic institutions join the Research Consortium?",
-      a: "Accredited universities and research institutes can apply through the Secretariat by submitting faculty modeling proposals in power systems, industrial decarbonization, or just transition economics."
+/* ====================================================================
+   Collaborator pop-up data  (matches collab-data in NZII_People_Page.html)
+   ==================================================================== */
+const COLLAB_DATA = {
+  newsBase: "https://nzi-web.vercel.app/news-events",
+  people: {
+    "anurag-gumber": {
+      name: "Anurag Gumber", initials: "AG",
+      photo: "/assets/people/collab-anurag-gumber.jpg",
+      scholar: "https://scholar.google.com/citations?user=3Ys1yoAAAAAJ&hl=en",
+      linkedin: "https://www.linkedin.com/in/anurag-gumber/",
+      role: "Assistant Professor, HKUST (Guangzhou)",
+      news: [{ id: "2026-01-anurag-gumber", title: "Anurag Gumber on how much capital India's net-zero transition could need", meta: "January 2026 · IIT Delhi", date: "2026-01" }]
     },
-    {
-      q: "Is consortium membership open to international climate think tanks?",
-      a: "Yes. International partners providing open modeling benchmarks and climate finance mechanisms participate via specialized working group fellowships."
+    "sarath-guttikunda": {
+      name: "Sarath Guttikunda", initials: "SG",
+      photo: "/assets/people/collab-sarath-guttikunda.jpg",
+      scholar: "https://scholar.google.com/citations?user=XyEvdnMAAAAJ&hl=en",
+      linkedin: "https://www.linkedin.com/in/sarath-guttikunda-3a01149/",
+      role: "Founder, UrbanEmissions.info", news: []
+    },
+    "narasimha-rao": {
+      name: "Narasimha Rao", initials: "NR",
+      photo: "/assets/people/collab-narasimha-rao.jpg",
+      scholar: "https://scholar.google.com/citations?user=cwli_mwAAAAJ&hl=en",
+      linkedin: "https://www.linkedin.com/in/narasimhadrao/",
+      role: "Professor of Energy Systems, Yale School of the Environment", news: []
+    },
+    "sara-constantino": {
+      name: "Sara Constantino", initials: "SC",
+      photo: "/assets/people/collab-sara-constantino.jpg",
+      scholar: "https://scholar.google.com/citations?user=3ShGgmcAAAAJ&hl=en",
+      role: "Assistant Professor, Stanford University", news: []
+    },
+    "pranab-choudhury": {
+      name: "Pranab Choudhury", initials: "PC",
+      photo: "/assets/people/collab-pranab-choudhury.jpg",
+      scholar: "https://scholar.google.com/citations?user=SPz4QrwAAAAJ&hl=en",
+      linkedin: "https://www.linkedin.com/in/prchoudhury/",
+      role: "Co-founder & CEO, Landstack", news: []
+    },
+    "shalini-dhyani": {
+      name: "Shalini Dhyani", initials: "SD",
+      photo: "/assets/people/collab-shalini-dhyani.jpg",
+      scholar: "https://scholar.google.com/citations?user=alsuByQAAAAJ&hl=en",
+      linkedin: "https://www.linkedin.com/in/shalini-d-84b81332/",
+      role: "Principal Scientist, CSIR-NEERI", news: []
+    },
+    "ps-roy": {
+      name: "PS Roy", initials: "PR",
+      photo: "/assets/people/collab-ps-roy.jpg",
+      scholar: "https://scholar.google.com/citations?user=DyxITKYAAAAJ&hl=en",
+      linkedin: "https://www.linkedin.com/in/parth-sarathi-roy-74831761/",
+      role: "Former Director, NRSC Hyderabad", news: []
     }
-  ];
+  }
+};
+
+/* Open Calls data */
+const OC_CALLS = [
+  { id: "employment", no: 1, theme: "Employment", title: "Modelling employment shifts in India's energy transition", stay: "3 to 6 months" },
+  { id: "biodiversity", no: 2, theme: "Biodiversity", title: "Modelling multitaxa habitat suitability and optimising spatial buffers for long-term biodiversity persistence", stay: "Up to 6 months" },
+  { id: "capital", no: 3, theme: "Capital mobilisation", title: "Modelling capital mobilisation for India's energy transition", stay: "3 to 6 months" },
+  { id: "agent-based", no: 4, theme: "Agent-based modelling", title: "Agent-based modelling of India's energy transition", stay: "3 to 6 months" }
+];
+const OC_SITE = "/collaborations";
+
+/* ====================================================================
+   SVG icons
+   ==================================================================== */
+const GsIcon = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 3 1 9l11 6 9-4.91V16h2V9L12 3z"/>
+    <path d="M5 13.18v3.6L12 21l7-4.22v-3.6L12 17l-7-3.82z"/>
+  </svg>
+);
+const LiIcon = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3V9.5zm6.5 0h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.27c0-1.26-.02-2.88-1.75-2.88-1.76 0-2.03 1.37-2.03 2.79V21h-4V9.5z"/>
+  </svg>
+);
+
+/* ====================================================================
+   ConsortiumPage component
+   ==================================================================== */
+export const ConsortiumPage = () => {
+
+  useEffect(() => {
+    // ---- Open Calls tiles + feature panel ----
+    const list = document.getElementById("theme-list");
+    const feat = document.getElementById("feature");
+    if (list && feat) {
+      const days = null; // deadline TBC
+      const S = { cls: "s-open", label: "Live", open: true, days: null };
+      const when = "Deadline to be confirmed";
+
+      list.innerHTML = OC_CALLS.map(c =>
+        `<li class="tile"><a href="${OC_SITE}#call-${c.id}">` +
+        `<span class="tile-top"><span class="call-no">Call ${c.no} · ${c.theme}</span></span>` +
+        `<b>${c.title}</b><span class="tile-meta">Stay: ${c.stay}</span>` +
+        `<span class="tile-go" aria-hidden="true">↗</span></a></li>`
+      ).join("");
+
+      feat.innerHTML =
+        `<div class="call-top"><span class="st ${S.cls}">${S.label}</span><b class="round">Round 2</b></div>` +
+        `<dl class="facts-mini"><div><dt>Deadline</dt><dd class="tbc">To be confirmed</dd></div>` +
+        `<div><dt>Honorarium</dt><dd class="tbc">To be confirmed</dd></div></dl>` +
+        `<a class="btn" href="${OC_SITE}">Explore Open Calls <span class="ar" aria-hidden="true">↗</span></a>` +
+        `<a class="go" href="${OC_SITE}#how-it-works">How to apply <span class="ar" aria-hidden="true">→</span></a>`;
+    }
+
+    // ---- Dot field (SVG, one dot per person) ----
+    const ns = "http://www.w3.org/2000/svg";
+    const root = document.documentElement;
+    const drawDotsIn = (svg) => {
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      const base = getComputedStyle(root).getPropertyValue("--dot-base").trim() || "#1d3658";
+      const cols = [base, "#2b9d8f", "#a7c957", "#e76f51", "#f28482"];
+      let seed = 7;
+      function r() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+      for (let y = 0; y < 9; y++) {
+        for (let x = 0; x < 16; x++) {
+          const px = x / 15;
+          if (r() > 0.25 + px * 0.7) continue;
+          const c = document.createElementNS(ns, "circle");
+          c.setAttribute("cx", 12 + x * 25);
+          c.setAttribute("cy", 12 + y * 24.5);
+          c.setAttribute("r", (2 + px * 8 * r()).toFixed(1));
+          c.setAttribute("fill", px < 0.35 ? base : cols[Math.floor(r() * cols.length)]);
+          svg.appendChild(c);
+        }
+      }
+    };
+    document.querySelectorAll("svg.dots:not([data-people])").forEach(drawDotsIn);
+
+    // ---- Collaborator pop-up ----
+    const P = COLLAB_DATA.people;
+    const NEWS_BASE = COLLAB_DATA.newsBase;
+    let cur = null, pinned = false, tOpen = 0, tClose = 0, tHide = 0;
+    const mouse = matchMedia("(hover:hover) and (pointer:fine)");
+    const phone = matchMedia("(max-width:640px)");
+
+    const pop = document.createElement("div");
+    pop.className = "pp";
+    pop.id = "person-pop";
+    pop.hidden = true;
+    pop.tabIndex = -1;
+    document.body.appendChild(pop);
+
+    const esc = (v) => String(v).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+
+    function buildPop(b) {
+      const p = P[b.dataset.person];
+      if (!p) return;
+      const news = (p.news || []).slice(0, 2);
+      const newsHtml = news.length
+        ? `<ul class="pp-news">${news.map(n =>
+          `<li><a href="${esc(NEWS_BASE + "/" + n.id)}">${esc(n.title)}<span class="pp-meta">${esc(n.meta)}</span></a></li>`
+        ).join("")}</ul>`
+        : "";
+      const links = [
+        p.scholar ? `<a class="pp-lk" href="${esc(p.scholar)}" target="_blank" rel="noopener" aria-label="${esc(p.name)} on Google Scholar" title="Google Scholar"><GsIcon/></a>` : "",
+        p.linkedin ? `<a class="pp-lk" href="${esc(p.linkedin)}" target="_blank" rel="noopener" aria-label="${esc(p.name)} on LinkedIn" title="LinkedIn"><LiIcon/></a>` : ""
+      ].join("").replace(/<GsIcon\/>/g, '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V16h2V9L12 3z"/><path d="M5 13.18v3.6L12 21l7-4.22v-3.6L12 17l-7-3.82z"/></svg>').replace(/<LiIcon\/>/g, '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3V9.5zm6.5 0h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.27c0-1.26-.02-2.88-1.75-2.88-1.76 0-2.03 1.37-2.03 2.79V21h-4V9.5z"/></svg>');
+
+      pop.innerHTML =
+        `<div class="pp-inner">` +
+        `<div class="pp-head"><img class="pp-photo" src="${esc(p.photo)}" alt="" loading="lazy">` +
+        `<div class="pp-info"><b class="pp-name">${esc(p.name)}</b><span class="pp-role muted">${esc(p.role || "")}</span>` +
+        `${links ? `<span class="plinks pp-links">${links}</span>` : ""}</div></div>` +
+        `${newsHtml}` +
+        `</div><button type="button" class="pp-close" aria-label="Close">×</button>`;
+    }
+
+    function positionPop(b) {
+      const rect = b.closest("li").getBoundingClientRect();
+      const ph = phone.matches;
+      pop.style.position = "fixed";
+      if (ph) {
+        pop.style.left = "16px";
+        pop.style.right = "16px";
+        pop.style.width = "auto";
+        pop.style.top = Math.min(rect.bottom + 8, window.innerHeight - 320) + "px";
+      } else {
+        const pw = Math.min(340, window.innerWidth - 32);
+        const left = Math.min(Math.max(16, rect.left + rect.width / 2 - pw / 2), window.innerWidth - pw - 16);
+        pop.style.left = left + "px";
+        pop.style.width = pw + "px";
+        pop.style.right = "auto";
+        const spaceBelow = window.innerHeight - rect.bottom - 8;
+        pop.style.top = spaceBelow > 200 ? (rect.bottom + 8 + window.scrollY) + "px" : (rect.top - 8 + window.scrollY) + "px";
+        pop.style.transform = spaceBelow > 200 ? "none" : "translateY(-100%)";
+      }
+    }
+
+    function openPop(b, pin) {
+      clearTimeout(tHide);
+      buildPop(b);
+      positionPop(b);
+      pop.hidden = false;
+      pinned = pin;
+      cur = b;
+      b.setAttribute("aria-expanded", "true");
+      b.setAttribute("aria-controls", "person-pop");
+      if (pin) { pop.focus(); }
+    }
+
+    function closePop(refocus) {
+      const b = cur;
+      clearTimeout(tHide);
+      tHide = setTimeout(() => { pop.hidden = true; }, matchMedia("(prefers-reduced-motion:reduce)").matches ? 0 : 230);
+      if (b) { b.setAttribute("aria-expanded", "false"); b.removeAttribute("aria-controls"); }
+      if (refocus && b) b.focus();
+      cur = null;
+      pinned = false;
+    }
+
+    function closeSoon() { clearTimeout(tClose); tClose = setTimeout(() => { if (!pinned) closePop(false); }, 220); }
+
+    document.querySelectorAll(".pp-btn[data-person]").forEach(b => {
+      const li = b.closest("li");
+      li.addEventListener("pointerenter", e => {
+        if (e.pointerType !== "mouse" || !mouse.matches || pinned) return;
+        clearTimeout(tClose); clearTimeout(tOpen);
+        if (cur !== b) tOpen = setTimeout(() => openPop(b, false), 140);
+      });
+      li.addEventListener("pointerleave", e => {
+        if (e.pointerType !== "mouse") return;
+        clearTimeout(tOpen); closeSoon();
+      });
+    });
+
+    pop.addEventListener("pointerenter", () => clearTimeout(tClose));
+    pop.addEventListener("pointerleave", e => { if (e.pointerType === "mouse" && !pinned) closeSoon(); });
+    document.addEventListener("click", e => {
+      const b = e.target.closest(".pp-btn[data-person]");
+      if (b) { if (cur === b && pinned) closePop(true); else openPop(b, true); return; }
+      if (e.target.closest(".pp-close")) { closePop(true); return; }
+      if (cur && !pop.contains(e.target)) closePop(false);
+    });
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && cur) closePop(true); });
+    pop.addEventListener("focusout", e => {
+      const t = e.relatedTarget;
+      if (cur && pinned && t && !pop.contains(t) && t !== cur) closePop(false);
+    });
+
+    // ---- Card cursor spotlights ----
+    const handlePointerMove = (e) => {
+      const el = e.currentTarget;
+      const r = el.getBoundingClientRect();
+      el.style.setProperty("--mx", e.clientX - r.left + "px");
+      el.style.setProperty("--my", e.clientY - r.top + "px");
+    };
+    const cards = document.querySelectorAll(".card");
+    cards.forEach(el => el.addEventListener("pointermove", handlePointerMove));
+
+    return () => {
+      cards.forEach(el => el.removeEventListener("pointermove", handlePointerMove));
+      if (pop.parentNode) pop.parentNode.removeChild(pop);
+    };
+  }, []);
 
   return (
-    <div className={`w-full min-h-screen transition-colors duration-500 pb-0 ${
-      isLight ? 'bg-[#FFFCF6] text-[#1D3658]' : 'bg-[#1D3658] text-[#FFFCF6]'
-    }`}>
-      
-      {/* ── SECTION 1: CINEMATIC HERO SECTION WITH VIDEO BACKGROUND ── */}
-      <section className="relative w-full min-h-[580px] lg:min-h-[640px] flex flex-col justify-end pt-36 pb-20 px-[3vw] overflow-hidden select-none border-b border-white/10 bg-[#14263D] text-white">
-        
-        {/* Background Video Layer */}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-45 scale-105"
-        >
-          <source src="/hero-video.mp4" type="video/mp4" />
-          <source src="/hero-video (1).mp4" type="video/mp4" />
-        </video>
+    <div className="container page people-wrapper" style={{ paddingTop: "clamp(110px,10vw,150px)" }}>
 
-        {/* Cinematic Gradient Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-black/60 to-black/80 pointer-events-none z-10"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.7)_100%)] pointer-events-none z-10"></div>
-
-        <div className="relative z-20 w-full max-w-[1720px] mx-auto">
-          <RevealOnScroll direction="up" delay={60}>
-            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
-              <div className="max-w-3xl space-y-4">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-xl glass-capsule border border-white/20">
-                  <Users className="w-3.5 h-3.5 text-teal-light" />
-                  <span className="text-[11px] font-mono font-bold tracking-widest text-teal-light uppercase">
-                    Institutional Scientific Alliance
-                  </span>
-                </div>
-                <h1 className="font-manrope text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
-                  The NetZero India Research Consortium
-                </h1>
-                <p className="text-base sm:text-lg leading-relaxed max-w-2xl font-normal text-white/85">
-                  An open academic and institutional alliance uniting premier universities, macroeconomic think tanks, and policy architects to anchor India&apos;s net-zero transition in rigorous empirical modeling.
-                </p>
-              </div>
-
-              {/* Consortium Quick Header Counter */}
-              <div className="flex items-center gap-3 shrink-0">
-                <div className="glass-panel p-5 rounded-2xl border border-white/15 text-right min-w-[170px]">
-                  <span className="text-[10px] font-mono uppercase text-teal-light font-bold block mb-1">Consortium Bodies</span>
-                  <span className="text-2xl font-mono font-bold text-teal-light">6 Entities</span>
-                </div>
-                <div className="glass-panel p-5 rounded-2xl border border-white/15 text-right min-w-[170px]">
-                  <span className="text-[10px] font-mono uppercase text-white/60 font-bold block mb-1">Scope Alignment</span>
-                  <span className="text-2xl font-mono font-bold text-coral">2070 NDC</span>
-                </div>
-              </div>
-            </div>
-          </RevealOnScroll>
+      {/* ---- Open Calls ---- */}
+      <section className="oc-start" id="open-calls">
+        <div className="oc-head">
+          <span className="label">Explore Our Collaborations</span>
+          <h1>IIT Delhi's Open Calls for Collaboration under&nbsp;<abbr title="Research Frontier Networks">RFNs</abbr></h1>
+          <hr className="rule" />
+          <p className="lead">Through the open calls for collaboration, funded by Schmidt Sciences, the IIT Delhi NZII team aims to identify and address emergent capacity deficits across several thematic areas of the Net Zero India Initiative (NZII). In this round, we release four calls for collaboration along the following themes; each theme is described in detail in the corresponding links&nbsp;below.</p>
         </div>
+        <aside className="home-side oc-side" aria-label="Current round">
+          <div className="panel feature" id="feature"></div>
+        </aside>
+        <ul className="tiles" id="theme-list"></ul>
       </section>
 
-      {/* ── SECTION 2: PRINCIPLES & MEMBERS SECTION ── */}
-      <section className="w-full max-w-[1720px] mx-auto px-[3vw] py-14 space-y-12">
-        
-        {/* Core Principles Card */}
-        <RevealOnScroll direction="up" delay={100}>
-          <div className={`relative isolate overflow-hidden p-8 sm:p-10 rounded-xl border space-y-8 ${
-            isLight ? 'bg-[#F4F1E8] border-[#E6E2D8] shadow-sm' : 'bg-[#162B46] border-white/10 shadow-xl'
-          }`}>
-            {/* Subtle watermark */}
-            <div 
-              aria-hidden="true" 
-              className="pointer-events-none absolute -right-20 top-1/2 -translate-y-1/2 -z-10 h-[500px] w-[500px] select-none opacity-[0.035] sm:opacity-[0.045]"
-              style={{
-                backgroundImage: 'url(/patterns/pattern-1.png)',
-                backgroundSize: 'contain',
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center'
-              }}
-            />
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-teal/10 text-teal flex items-center justify-center font-bold">
-                <Award className="w-5 h-5" />
-              </div>
-              <div>
-                <h2 className={`font-manrope font-extrabold text-xl sm:text-2xl ${
-                  isLight ? 'text-[#1D3658]' : 'text-white'
-                }`}>
-                  Foundational Modeling Tenets
-                </h2>
-                <span className={`text-xs font-mono ${isLight ? 'text-[#4A607A]' : 'text-white/50'}`}>
-                  Non-partisan scientific consensus
+      {/* ---- Collaborators ---- */}
+      <section className="section" id="collaborators">
+        <h2>Meet the collaborators</h2>
+        <div className="group current">
+          <ul className="pis big compact collab-cards">
+            <li className="card">
+              <img className="photo" src="/assets/people/collab-anurag-gumber.jpg" alt="" loading="lazy" />
+              <span className="pi-txt">
+                <b><button type="button" className="pp-btn" data-person="anurag-gumber" aria-haspopup="dialog" aria-expanded="false">Anurag Gumber<span className="pp-ic" aria-hidden="true"></span></button></b>
+                <span className="muted">Assistant Professor, HKUST (Guangzhou)</span>
+                <span className="plinks">
+                  <a className="plk" href="https://scholar.google.com/citations?user=3Ys1yoAAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Anurag Gumber on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a>
+                  <a className="plk" href="https://www.linkedin.com/in/anurag-gumber/" target="_blank" rel="noopener" aria-label="Anurag Gumber on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a>
                 </span>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-3 gap-6">
-              {[
-                {
-                  title: 'Open Source & Reproducibility',
-                  desc: 'All scenario mathematical formulations, dispatch coefficients, and code repositories are published under open science licenses for third-party auditing.',
-                  icon: isLight ? '/icons/rigorous-open.png' : '/icons/rigorous-open-light.png'
-                },
-                {
-                  title: 'Development-Centric Pathways',
-                  desc: 'Decarbonization trajectories are strictly modeled within the imperative of expanding energy access, eliminating poverty, and creating manufacturing jobs.',
-                  icon: isLight ? '/icons/development-centred.png' : '/icons/development-centred-light.png'
-                },
-                {
-                  title: 'Sub-Regional Granularity',
-                  desc: 'Accounting for state-by-state variations in monsoon precipitation, grid transmission congestion, solar irradiation, and coal revenue dependency.',
-                  icon: isLight ? '/icons/spatially.png' : '/icons/spatially-light.png'
-                }
-              ].map((principle, idx) => (
-                <div 
-                  key={idx} 
-                  className={`p-6 rounded-xl border space-y-4 ${
-                    isLight 
-                      ? 'bg-white border-[#E6E2D8]' 
-                      : 'bg-[#1A3353] border-white/10'
-                  }`}
-                >
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-teal/10 p-2">
-                    <img src={principle.icon} alt="" className="h-full w-full object-contain" />
-                  </div>
-                  <h3 className={`font-manrope font-extrabold text-base ${
-                    isLight ? 'text-[#1D3658]' : 'text-white'
-                  }`}>
-                    {principle.title}
-                  </h3>
-                  <p className={`text-xs sm:text-sm leading-relaxed ${
-                    isLight ? 'text-[#4A607A]' : 'text-[#D1DBE5]'
-                  }`}>
-                    {principle.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </RevealOnScroll>
-
-        {/* Member Organizations Grid */}
-        <div className="space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className={`font-manrope font-extrabold text-2xl ${
-              isLight ? 'text-[#1D3658]' : 'text-white'
-            }`}>
-              Consortium Member Institutions
-            </h2>
-            <span className={`text-xs font-mono ${isLight ? 'text-[#64748B]' : 'text-white/50'}`}>
-              6 Lead Collaborators
-            </span>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 2xl:gap-8">
-            {members.map((member, i) => (
-              <RevealOnScroll key={member.name} direction="up" delay={100 + i * 60}>
-                <div 
-                  className={`p-7 rounded-xl border transition-all duration-300 flex flex-col justify-between h-full group hover:-translate-y-1 ${
-                    isLight
-                      ? 'bg-white border-[#E6E2D8] hover:border-teal hover:shadow-xl'
-                      : 'bg-[#162B46] border-white/10 hover:border-teal hover:bg-[#1A3353] hover:shadow-2xl'
-                  }`}
-                >
-                  <div className="space-y-3">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-teal block">
-                      {member.type}
-                    </span>
-
-                    <h3 className={`font-manrope font-extrabold text-lg leading-snug transition-colors ${
-                      isLight ? 'text-[#1D3658] group-hover:text-teal' : 'text-white group-hover:text-teal'
-                    }`}>
-                      {member.name}
-                    </h3>
-
-                    <p className={`text-xs sm:text-sm leading-relaxed ${
-                      isLight ? 'text-[#64748B]' : 'text-[#94A3B8]'
-                    }`}>
-                      {member.focus}
-                    </p>
-                  </div>
-
-                  <div className={`pt-5 mt-5 border-t flex items-center justify-between ${
-                    isLight ? 'border-[#E6E2D8]' : 'border-white/10'
-                  }`}>
-                    <span className={`text-xs font-mono ${isLight ? 'text-[#64748B]' : 'text-white/40'}`}>
-                      Active Consortium Partner
-                    </span>
-                    <Building className="w-4 h-4 text-teal" />
-                  </div>
-                </div>
-              </RevealOnScroll>
-            ))}
-          </div>
+              </span>
+            </li>
+            <li className="card">
+              <img className="photo" src="/assets/people/collab-sarath-guttikunda.jpg" alt="" loading="lazy" />
+              <span className="pi-txt">
+                <b>Sarath Guttikunda</b>
+                <span className="muted">Founder, UrbanEmissions.info</span>
+                <span className="plinks">
+                  <a className="plk" href="https://scholar.google.com/citations?user=XyEvdnMAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Sarath Guttikunda on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a>
+                  <a className="plk" href="https://www.linkedin.com/in/sarath-guttikunda-3a01149/" target="_blank" rel="noopener" aria-label="Sarath Guttikunda on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a>
+                </span>
+              </span>
+            </li>
+            <li className="card">
+              <img className="photo" src="/assets/people/collab-narasimha-rao.jpg" alt="" loading="lazy" />
+              <span className="pi-txt">
+                <b><button type="button" className="pp-btn" data-person="narasimha-rao" aria-haspopup="dialog" aria-expanded="false">Narasimha Rao<span className="pp-ic" aria-hidden="true"></span></button></b>
+                <span className="muted">Professor of Energy Systems, Yale School of the Environment</span>
+                <span className="plinks">
+                  <a className="plk" href="https://scholar.google.com/citations?user=cwli_mwAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Narasimha Rao on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a>
+                  <a className="plk" href="https://www.linkedin.com/in/narasimhadrao/" target="_blank" rel="noopener" aria-label="Narasimha Rao on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a>
+                </span>
+              </span>
+            </li>
+            <li className="card">
+              <img className="photo" src="/assets/people/collab-sara-constantino.jpg" alt="" loading="lazy" />
+              <span className="pi-txt">
+                <b>Sara Constantino</b>
+                <span className="muted">Assistant Professor, Stanford University</span>
+                <span className="plinks">
+                  <a className="plk" href="https://scholar.google.com/citations?user=3ShGgmcAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Sara Constantino on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a>
+                </span>
+              </span>
+            </li>
+            <li className="card">
+              <img className="photo" src="/assets/people/collab-pranab-choudhury.jpg" alt="" loading="lazy" />
+              <span className="pi-txt">
+                <b><button type="button" className="pp-btn" data-person="pranab-choudhury" aria-haspopup="dialog" aria-expanded="false">Pranab Choudhury<span className="pp-ic" aria-hidden="true"></span></button></b>
+                <span className="muted">Co-founder &amp; CEO, Landstack</span>
+                <span className="plinks">
+                  <a className="plk" href="https://scholar.google.com/citations?user=SPz4QrwAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Pranab Choudhury on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a>
+                  <a className="plk" href="https://www.linkedin.com/in/prchoudhury/" target="_blank" rel="noopener" aria-label="Pranab Choudhury on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a>
+                </span>
+              </span>
+            </li>
+            <li className="card">
+              <img className="photo" src="/assets/people/collab-shalini-dhyani.jpg" alt="" loading="lazy" />
+              <span className="pi-txt">
+                <b><button type="button" className="pp-btn" data-person="shalini-dhyani" aria-haspopup="dialog" aria-expanded="false">Shalini Dhyani<span className="pp-ic" aria-hidden="true"></span></button></b>
+                <span className="muted">Principal Scientist, CSIR-NEERI</span>
+                <span className="plinks">
+                  <a className="plk" href="https://scholar.google.com/citations?user=alsuByQAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Shalini Dhyani on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a>
+                  <a className="plk" href="https://www.linkedin.com/in/shalini-d-84b81332/" target="_blank" rel="noopener" aria-label="Shalini Dhyani on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a>
+                </span>
+              </span>
+            </li>
+            <li className="card">
+              <img className="photo" src="/assets/people/collab-ps-roy.jpg" alt="" loading="lazy" />
+              <span className="pi-txt">
+                <b>PS Roy</b>
+                <span className="muted">Former Director, NRSC Hyderabad</span>
+                <span className="plinks">
+                  <a className="plk" href="https://scholar.google.com/citations?user=DyxITKYAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="PS Roy on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a>
+                  <a className="plk" href="https://www.linkedin.com/in/parth-sarathi-roy-74831761/" target="_blank" rel="noopener" aria-label="PS Roy on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a>
+                </span>
+              </span>
+            </li>
+          </ul>
         </div>
       </section>
 
-      {/* ── SECTION 3: FAQS SECTION ── */}
-      <FAQSection 
-        title="Research Consortium FAQs"
-        subtitle="Addressing university alliances, peer review procedures, and global climate think tank engagement"
-        faqs={consortiumFaqs}
-      />
-
-      {/* ── SECTION 4: PRE-FOOTER BANNER ── */}
-      <PreFooterBanner 
-        tag="CONSORTIUM SCIENTIFIC ALLIANCE"
-        title="Join Leading Universities & Policy Architects"
-        subtitle="Partner with the NetZero India Research Consortium to ground regional transition models in peer-reviewed science."
-        primaryCtaText="Launch Decarbonization Sandbox"
-        primaryCtaLink="/simulator"
-        secondaryCtaText="Contact Consortium Secretariat"
-        secondaryCtaLink="/contact"
-      />
+      {/* ---- Advisory Committee ---- */}
+      <section className="section" id="advisory">
+        <h2>Advisory Committee</h2>
+        <ul className="adcom-list">
+          <li><span className="av" aria-hidden="true">RP</span><b>Rohini Pande</b><span className="role">Henry J. Heinz II Professor of Economics and Director of EPoD, Yale University</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=BRf6JDEAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Rohini Pande on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a><a className="plk" href="https://www.linkedin.com/in/rohini-pande-b1538226/" target="_blank" rel="noopener" aria-label="Rohini Pande on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
+          <li><span className="av" aria-hidden="true">KS</span><b>Kirit Somaiya</b><span className="role">Member of Parliament (Lok Sabha), India</span></li>
+          <li><span className="av" aria-hidden="true">SJ</span><b>Sharachchandra Lélé</b><span className="role">Distinguished Fellow, ATREE</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=iuIIw_UAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Sharachchandra Lélé on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a></span></li>
+          <li><span className="av" aria-hidden="true">PJ</span><b>Partha Mukhopadhyay</b><span className="role">Senior Fellow, Centre for Policy Research, New Delhi</span><span className="plinks"><a className="plk" href="https://www.linkedin.com/in/partha-mukhopadhyay-5a79a8b/" target="_blank" rel="noopener" aria-label="Partha Mukhopadhyay on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
+          <li><span className="av" aria-hidden="true">MP</span><b>Minal Pathak</b><span className="role">Ahmedabad University</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=SbnZ-BsAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Minal Pathak on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a><a className="plk" href="https://www.linkedin.com/in/minal-pathak-318827130/" target="_blank" rel="noopener" aria-label="Minal Pathak on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
+          <li><span className="av" aria-hidden="true">KA</span><b>Kiran Ananth</b><span className="role">Executive Director – Energy Efficiency, Renewable Energy &amp; Green Entrepreneurship, CII</span><span className="plinks"><a className="plk" href="https://www.linkedin.com/in/kiranananth/" target="_blank" rel="noopener" aria-label="Kiran Ananth on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
+          <li><span className="av" aria-hidden="true">SC</span><b>Shoibal Chakravarty</b><span className="role">Professor, Indian Institute of Science</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=BMNFCO8AAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Shoibal Chakravarty on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a><a className="plk" href="https://www.linkedin.com/in/shoibalc/" target="_blank" rel="noopener" aria-label="Shoibal Chakravarty on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
+          <li><span className="av" aria-hidden="true">NA</span><b>Nagaraj Adve</b><span className="role">Founder member, Teachers Against the Climate Crisis (TACC)</span></li>
+          <li><span className="av" aria-hidden="true">GT</span><b>Gautam Talukdar</b><span className="role">Wildlife Institute of India</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=RGeadBIAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Gautam Talukdar on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a></span></li>
+          <li><span className="av" aria-hidden="true">PR</span><b>PS Roy</b><span className="role">Former Director, NRSC Hyderabad</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=DyxITKYAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="PS Roy on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a><a className="plk" href="https://www.linkedin.com/in/parth-sarathi-roy-74831761/" target="_blank" rel="noopener" aria-label="PS Roy on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
+          <li><span className="av" aria-hidden="true">SS</span><b>Sushil Saigal</b><span className="role">TNC</span></li>
+          <li><span className="av" aria-hidden="true">DP</span><b>Deepender Pandey</b><span className="role">Former Director, Forest Survey of India (FSI)</span><span className="plinks"><a className="plk" href="https://www.linkedin.com/in/devendra-pandey-6553782b/" target="_blank" rel="noopener" aria-label="Deepender Pandey on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
+          <li><span className="av" aria-hidden="true">NR</span><b>Narasimha Rao</b><span className="role">Professor of Energy Systems, Yale School of the Environment</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=cwli_mwAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Narasimha Rao on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a><a className="plk" href="https://www.linkedin.com/in/narasimhadrao/" target="_blank" rel="noopener" aria-label="Narasimha Rao on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
+          <li><span className="av" aria-hidden="true">BJ</span><b>Bharath Jairaj</b><span className="role">Executive Director, WRI</span><span className="plinks"><a className="plk" href="https://www.linkedin.com/in/bharathjairaj/" target="_blank" rel="noopener" aria-label="Bharath Jairaj on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
+          <li><span className="av" aria-hidden="true">AS</span><b>Ajay Shankar</b><span className="role">The Energy &amp; Resources Institute (TERI)</span></li>
+          <li><span className="av" aria-hidden="true">GS</span><b>Gauri Singh</b><span className="role">International Renewable Energy Agency (IRENA)</span></li>
+          <li><span className="av" aria-hidden="true">PS</span><b>Praveer Sinha</b><span className="role">Tata Power</span></li>
+        </ul>
+      </section>
 
     </div>
   );

@@ -41,3 +41,5 @@ Colored NZII Logo.png
 backend/
 bun.lock
 merge-tabs.cjs
+.vercel
+.env*
