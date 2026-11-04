@@ -70,13 +70,13 @@ svg{flex-shrink:0}
 .hd-row{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .hd-logo{display:flex;align-items:center;flex-shrink:0;transition:transform .3s}
 .hd-logo:hover{transform:scale(1.02)}
-.hd-logo img{width:auto;height:48px;object-fit:contain;transition:height .3s;filter:drop-shadow(0 1px 1px rgba(0,0,0,.05))}
-@media (min-width:640px){.hd-logo img{height:60px}}
-@media (min-width:768px){.hd-logo img{height:68px}}
-@media (min-width:1024px){.hd-logo img{height:72px}}
-.scrolled .hd-logo img{height:36px}
-@media (min-width:640px){.scrolled .hd-logo img{height:44px}}
-@media (min-width:768px){.scrolled .hd-logo img{height:48px}}
+.hd-logo img{width:auto;height:56px;object-fit:contain;transition:height .3s;filter:drop-shadow(0 1px 1px rgba(0,0,0,.05))}
+@media (min-width:640px){.hd-logo img{height:72px}}
+@media (min-width:768px){.hd-logo img{height:80px}}
+@media (min-width:1024px){.hd-logo img{height:88px}}
+.scrolled .hd-logo img{height:44px}
+@media (min-width:640px){.scrolled .hd-logo img{height:52px}}
+@media (min-width:768px){.scrolled .hd-logo img{height:56px}}
 .pill{display:flex;align-items:center;gap:8px;border-radius:999px;border:1px solid var(--pill-border);background:var(--pill-bg);color:var(--pill-ink);padding:8px 12px;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:var(--pill-shadow)}
 @media (min-width:640px){.pill{gap:12px;padding:10px 16px}}
 .main-nav{display:none;align-items:center;gap:2px;min-width:0}
@@ -165,7 +165,7 @@ p,li{text-wrap:pretty}
 .card:hover::before{opacity:.32}
 
 /* ---------- 01 Hero: original PBH design (nzii2.vercel.app) ---------- */
-.hero{position:relative;isolation:isolate;display:flex;align-items:center;min-height:min(92vh, 980px);padding:clamp(112px,10vw,144px) clamp(16px,3vw,48px) clamp(48px,5vw,80px);background:var(--hero-bg);color:var(--hero-ink);overflow:hidden}
+.hero{position:relative;isolation:isolate;display:flex;align-items:center;min-height:92svh;padding:clamp(112px,10vw,144px) clamp(16px,3vw,48px) clamp(48px,5vw,80px);background:var(--hero-bg);color:var(--hero-ink);overflow:hidden}
 .hero-in{display:grid;width:100%;max-width:1720px;margin:0 auto;align-items:center;gap:32px;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr)}
 @media (min-width:1280px){.hero-in{grid-template-columns:minmax(0,800px) 1fr}}
 .hero h1{max-width:780px;font-family:var(--f-serif);font-size:clamp(2.4rem,4.1vw,4.4rem);font-weight:500;line-height:1.06;letter-spacing:-.015em;color:var(--hero-ink)}

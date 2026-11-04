@@ -60,11 +60,7 @@ body {
   font-family: var(--f-body);
 }
 
-h1, h2, h3, h4, h5, h6 {
-  /* font-family handled by pbh.css (Space Grotesk for headings) */
-  letter-spacing: -0.025em;
-  word-break: break-word;
-}
+/* Headings letter-spacing and typography handled entirely by pbh.css */
 
 p, span, a, button, input, div {
   font-family: inherit;
