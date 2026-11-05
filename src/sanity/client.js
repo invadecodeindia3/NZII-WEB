@@ -34,3 +34,4 @@ export async function safeFetch(query, params = {}, fallback = null) {
     return fallback;
   }
 }
+

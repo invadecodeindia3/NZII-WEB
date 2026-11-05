@@ -1,9 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/pbh.css';
+import { useSanity } from '../sanity/useSanity';
+import { homePageQuery } from '../sanity/queries';
 
 export const HomePage = () => {
   const heroSvgRef = useRef(null);
+  const { data: cms } = useSanity(homePageQuery);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -190,13 +193,20 @@ export const HomePage = () => {
 <section className="hero" aria-labelledby="h-hero">
   <div className="hero-in">
     <div>
-      <h1 id="h-hero"><span className="hl-1">What will it take</span> <span className="hl-2">for India to reach</span> <span className="hl-3">net&nbsp;zero?</span></h1>
+      <h1 id="h-hero">
+        <span className="hl-1">{cms?.heroHeadline1 || "What will it take"}</span>{" "}
+        <span className="hl-2">{cms?.heroHeadline2 || "for India to reach"}</span>{" "}
+        <span className="hl-3">{cms?.heroHeadline3 || "net\u00A0zero?"}</span>
+      </h1>
       <div className="hero-txt">
-        <p>India has committed to achieving net-zero emissions by 2070. Getting there will transform how the country produces and uses energy, builds infrastructure, uses land and resources, and creates livelihoods.</p>
-        <p>The Net Zero India Initiative brings together research, modelling and diverse expertise to understand the pathways India could take, and their implications for development, people and the environment.</p>
+        <p>{cms?.heroParagraph1 || "India has committed to achieving net-zero emissions by 2070. Getting there will transform how the country produces and uses energy, builds infrastructure, uses land and resources, and creates livelihoods."}</p>
+        <p>{cms?.heroParagraph2 || "The Net Zero India Initiative brings together research, modelling and diverse expertise to understand the pathways India could take, and their implications for development, people and the environment."}</p>
       </div>
       <div className="hero-act">
-        <a className="pri" href="/about">About the Net Zero India Initiative <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <a className="pri" href={cms?.heroButtonLink || "/about"}>
+          {cms?.heroButtonText || "About the Net Zero India Initiative"}{" "}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
       </div>
     </div>
     <div className="hero-art">
@@ -211,22 +221,22 @@ export const HomePage = () => {
       <text className="lbl" data-for="community" x="1361.64" y="758.9">Community</text>
       <text className="lbl" data-for="pathways" x="1208.1" y="152.93">Pathways</text>
       <text className="lbl" data-for="research" x="1678.51" y="439.16">Research</text>
-      <g className="b photo" data-k="innovation" data-cx="1259.19" data-cy="683.82" data-d="14"><g clipPath="url(#hc-inn)"><g className="in"><image href="/assets/pbh/hero/innovation.jpg" width="1280" height="720" transform="translate(1057.1693 564.6356) scale(.3318)" preserveAspectRatio="none"/></g></g></g>
-      <g className="b photo" data-k="community" data-cx="1418.59" data-cy="502.08" data-d="8"><g clipPath="url(#hc-cen)"><g className="in"><image href="/assets/pbh/hero/centre.jpg" width="768" height="512" transform="translate(1219.5628 296.5158) scale(.803)" preserveAspectRatio="none"/></g></g></g>
-      <g className="b photo" data-k="research" data-cx="1680.12" data-cy="604.52" data-d="12"><g clipPath="url(#hc-res)"><g className="in"><image href="/assets/pbh/hero/research.jpg" width="1557" height="1010" transform="translate(1425.4771 460.8054) scale(.285)" preserveAspectRatio="none"/></g></g></g>
+      <g className="b photo" data-k="innovation" data-cx="1259.19" data-cy="683.82" data-d="14"><g clipPath="url(#hc-inn)"><g className="in"><image href={cms?.heroImageInnovation || "/assets/pbh/hero/innovation.jpg"} width="1280" height="720" transform="translate(1057.1693 564.6356) scale(.3318)" preserveAspectRatio="none"/></g></g></g>
+      <g className="b photo" data-k="community" data-cx="1418.59" data-cy="502.08" data-d="8"><g clipPath="url(#hc-cen)"><g className="in"><image href={cms?.heroImageCentre || "/assets/pbh/hero/centre.jpg"} width="768" height="512" transform="translate(1219.5628 296.5158) scale(.803)" preserveAspectRatio="none"/></g></g></g>
+      <g className="b photo" data-k="research" data-cx="1680.12" data-cy="604.52" data-d="12"><g clipPath="url(#hc-res)"><g className="in"><image href={cms?.heroImageResearch || "/assets/pbh/hero/research.jpg"} width="1557" height="1010" transform="translate(1425.4771 460.8054) scale(.285)" preserveAspectRatio="none"/></g></g></g>
       <g className="b" data-cx="1303.81" data-cy="230.29" data-d="26"><circle cx="1303.81" cy="230.29" r="44.61" fill="#2b9d8f"/></g>
       <g className="b" data-cx="1460.96" data-cy="922.5" data-d="22"><circle cx="1460.96" cy="922.5" r="44.61" fill="#a7c957"/></g>
       <g className="b" data-cx="1234.26" data-cy="401.12" data-d="24"><circle cx="1234.26" cy="401.12" r="44.61" fill="#a7c957"/></g>
       <g className="b" data-cx="1766.45" data-cy="362.71" data-d="30"><circle className="dn" cx="1766.45" cy="362.71" r="32.48"/></g>
       <g className="b" data-cx="1306.64" data-cy="632.4" data-d="28"><circle className="dn" cx="1306.64" cy="632.4" r="32.48"/></g>
       <g className="b" data-cx="1566.29" data-cy="814.13" data-d="20"><circle className="dn" cx="1566.29" cy="814.13" r="44.61"/></g>
-      <g className="b photo" data-k="pathways" data-cx="1169.98" data-cy="330.23" data-d="18"><g clipPath="url(#hc-pat)"><g className="in"><image href="/assets/pbh/hero/pathways.jpg" width="350" height="196" transform="translate(1006.6743 234.8324) scale(.9735)" preserveAspectRatio="none"/></g></g></g>
+      <g className="b photo" data-k="pathways" data-cx="1169.98" data-cy="330.23" data-d="18"><g clipPath="url(#hc-pat)"><g className="in"><image href={cms?.heroImagePathways || "/assets/pbh/hero/pathways.jpg"} width="350" height="196" transform="translate(1006.6743 234.8324) scale(.9735)" preserveAspectRatio="none"/></g></g></g>
       <g className="b" data-cx="1182.42" data-cy="559.22" data-d="30"><circle cx="1182.42" cy="559.22" r="37.05" fill="#e76f51"/></g>
       <g className="b" data-cx="1097.74" data-cy="581.65" data-d="34"><circle cx="1097.74" cy="581.65" r="27.1" fill="#f28482"/></g>
       <g className="b" data-cx="1712.33" data-cy="803.92" data-d="26"><circle cx="1712.33" cy="803.92" r="37.05" fill="#e76f51"/></g>
       <g className="b" data-cx="1761.08" data-cy="719.91" data-d="32"><circle cx="1761.08" cy="719.91" r="27.1" fill="#f28482"/></g>
       <text className="lbl" data-for="innovation" x="1219.38" y="866.84">Innovation</text>
-      <g className="b photo" data-k="netzero" data-cx="1566.29" data-cy="236.64" data-d="10"><g clipPath="url(#hc-nz)"><g className="in"><image href="/assets/pbh/hero/netzero.jpg" width="1200" height="652" transform="translate(1266.4716 17.4717) scale(.6433)" preserveAspectRatio="none"/></g></g></g>
+      <g className="b photo" data-k="netzero" data-cx="1566.29" data-cy="236.64" data-d="10"><g clipPath="url(#hc-nz)"><g className="in"><image href={cms?.heroImageNetZero || "/assets/pbh/hero/netzero.jpg"} width="1200" height="652" transform="translate(1266.4716 17.4717) scale(.6433)" preserveAspectRatio="none"/></g></g></g>
     </svg>
     </div>
   </div>
@@ -237,20 +247,33 @@ export const HomePage = () => {
   <div className="why">
     <div className="why-copy">
       <div className="hl rv">
-        <span className="eyebrow">Why NZII exists</span>
-        <h2 id="h-why">Net zero can take many forms. <span className="teal">So can India’s path to&nbsp;it.</span></h2>
+        <span className="eyebrow">{cms?.whyEyebrow || "Why NZII exists"}</span>
+        <h2 id="h-why">
+          {cms?.whyTitle || "Net zero can take many forms."}{" "}
+          <span className="teal">{cms?.whyTitleAccent || "So can India’s path to\u00A0it."}</span>
+        </h2>
         <div className="rule" aria-hidden="true"></div>
       </div>
-      <h3 className="rv">India’s transition will involve choices.</h3>
+      <h3 className="rv">{cms?.whySubhead || "India’s transition will involve choices."}</h3>
       <ul className="choices rv">
-        <li className="c-teal">Where should new energy infrastructure be built?</li>
-        <li className="c-teal">How much land and water could different pathways require?</li>
-        <li className="c-teal">What happens to jobs and livelihoods?</li>
-        <li className="c-teal">How might energy choices affect air quality and health?</li>
-        <li className="c-teal">Where will investment flow?</li>
-        <li className="c-teal">And will the costs and benefits of the transition be shared equitably?</li>
+        {cms?.whyChoices && cms.whyChoices.length > 0 ? (
+          cms.whyChoices.map((choice, i) => (
+            <li key={i} className="c-teal">{choice}</li>
+          ))
+        ) : (
+          <>
+            <li className="c-teal">Where should new energy infrastructure be built?</li>
+            <li className="c-teal">How much land and water could different pathways require?</li>
+            <li className="c-teal">What happens to jobs and livelihoods?</li>
+            <li className="c-teal">How might energy choices affect air quality and health?</li>
+            <li className="c-teal">Where will investment flow?</li>
+            <li className="c-teal">And will the costs and benefits of the transition be shared equitably?</li>
+          </>
+        )}
       </ul>
-      <p className="closing rv">These questions cannot be understood in isolation. We study the connections between energy, development, land, water, biodiversity, health, employment, and equity to understand both, whether India can reach net zero, and, what different ways of getting there could mean.</p>
+      <p className="closing rv">
+        {cms?.whyClosing || "These questions cannot be understood in isolation. We study the connections between energy, development, land, water, biodiversity, health, employment, and equity to understand both, whether India can reach net zero, and, what different ways of getting there could mean."}
+      </p>
     </div>
     <figure className="photo rv" style={{margin: 0}}>
       <img src="/assets/photos/12_Urbanisation_Sep2024_photo2_group_exercise.jpg" alt="Participants working together in a group exercise at an NZII workshop on urbanisation, IIT Delhi" loading="lazy" />
@@ -260,15 +283,27 @@ export const HomePage = () => {
 
   <div className="picture">
     <div className="pic-head rv">
-      <h3>NZII presents a more complete picture of India’s net-zero transition</h3>
+      <h3>{cms?.pillarsTitle || "NZII presents a more complete picture of India’s net-zero transition"}</h3>
       <div className="rule" aria-hidden="true"></div>
-      <p className="lead-in">That picture is more complete because our research&nbsp;is:</p>
+      <p className="lead-in">{cms?.pillarsIntro || "That picture is more complete because our research\u00A0is:"}</p>
     </div>
     <div className="qual">
-      <article className="card c-teal rv"><span className="num">01</span><b>Integrated</b><p>Connecting energy and emissions with development and natural-resource outcomes.</p></article>
-      <article className="card c-teal rv"><span className="num">02</span><b>Spatially resolved</b><p>Moving beyond national averages to understand how pathways and impacts could differ across states, districts and places.</p></article>
-      <article className="card c-teal rv"><span className="num">03</span><b>Development-centred</b><p>Keeping employment, health, energy access, equity and economic development alongside mitigation.</p></article>
-      <article className="card c-teal rv"><span className="num">04</span><b>Rigorous &amp; Open</b><p>Building robust research, models and datasets that others can examine, use and build upon.</p></article>
+      {cms?.pillars && cms.pillars.length > 0 ? (
+        cms.pillars.map((p, idx) => (
+          <article key={idx} className="card c-teal rv">
+            <span className="num">{p.num || `0${idx + 1}`}</span>
+            <b>{p.title}</b>
+            <p>{p.description}</p>
+          </article>
+        ))
+      ) : (
+        <>
+          <article className="card c-teal rv"><span className="num">01</span><b>Integrated</b><p>Connecting energy and emissions with development and natural-resource outcomes.</p></article>
+          <article className="card c-teal rv"><span className="num">02</span><b>Spatially resolved</b><p>Moving beyond national averages to understand how pathways and impacts could differ across states, districts and places.</p></article>
+          <article className="card c-teal rv"><span className="num">03</span><b>Development-centred</b><p>Keeping employment, health, energy access, equity and economic development alongside mitigation.</p></article>
+          <article className="card c-teal rv"><span className="num">04</span><b>Rigorous &amp; Open</b><p>Building robust research, models and datasets that others can examine, use and build upon.</p></article>
+        </>
+      )}
     </div>
   </div>
 </section>
@@ -282,11 +317,16 @@ export const HomePage = () => {
     </figure>
     <div className="led-copy">
       <div className="hl rv">
-        <span className="eyebrow">Collaborative model</span>
-        <h2 id="h-led">Led by India. <span className="teal">Built through collaboration.</span></h2>
+        <span className="eyebrow">{cms?.ledEyebrow || "Collaborative model"}</span>
+        <h2 id="h-led">
+          {cms?.ledTitle || "Led by India."}{" "}
+          <span className="teal">{cms?.ledTitleAccent || "Built through collaboration."}</span>
+        </h2>
         <div className="rule" aria-hidden="true"></div>
       </div>
-      <p className="rv">The Net Zero India Initiative brings together researchers and institutions across energy systems, public policy, land, development, and related fields to build a rigorous, India-specific understanding of the transition.</p>
+      <p className="rv">
+        {cms?.ledDescription || "The Net Zero India Initiative brings together researchers and institutions across energy systems, public policy, land, development, and related fields to build a rigorous, India-specific understanding of the transition."}
+      </p>
       <div className="insts rv">
         <div><span className="eyebrow c-teal">Led by</span><div className="logos"><span className="lg"><img src="/assets/logos/spp-iit-delhi.png" alt="School of Public Policy, IIT Delhi" /></span></div><b>School of Public Policy, IIT&nbsp;Delhi</b></div>
         <div><span className="eyebrow c-teal">Core partners</span><div className="logos"><span className="lg"><img src="/assets/logos/prayas-energy-group.png" alt="Prayas (Energy Group)" /></span><span className="lg"><img src="/assets/logos/princeton-university.png" alt="Princeton University" /></span></div><b>Prayas (Energy Group)<br />Princeton University</b></div>
@@ -305,7 +345,10 @@ export const HomePage = () => {
 {/* 05 Explore our work */}
 <section className="wrap sec" aria-labelledby="h-work">
   <div className="hl rv" style={{marginBottom: "clamp(40px, 5vw, 64px)"}}>
-    <h2 id="h-work" className="one">Explore <span className="teal">our work</span></h2>
+    <h2 id="h-work" className="one">
+      {cms?.workTitle || "Explore"}{" "}
+      <span className="teal">{cms?.workTitleAccent || "our work"}</span>
+    </h2>
     <div className="rule" aria-hidden="true"></div>
   </div>
   <div className="work">
@@ -328,11 +371,14 @@ export const HomePage = () => {
   </div>
 </section>
 
-{/* 06 Latest from NZII (cards fill automatically from the latest posts; sample items shown) */}
+{/* 06 Latest from NZII */}
 <section className="wrap sec" aria-labelledby="h-news">
   <div className="head">
     <div className="hl rv">
-      <h2 id="h-news" className="one">Latest from the <span className="teal">Net Zero India Initiative</span></h2>
+      <h2 id="h-news" className="one">
+        {cms?.newsTitle || "Latest from the"}{" "}
+        <span className="teal">{cms?.newsTitleAccent || "Net Zero India Initiative"}</span>
+      </h2>
       <div className="rule" aria-hidden="true"></div>
     </div>
   </div>
@@ -355,9 +401,12 @@ export const HomePage = () => {
 {/* 07 Final CTA */}
 <section className="wrap final" aria-labelledby="h-cta">
   <div className="final-in rv">
-    <h2 id="h-cta">India’s path to 2070 <span className="teal">is still being written.</span></h2>
+    <h2 id="h-cta">
+      {cms?.ctaTitle || "India’s path to 2070"}{" "}
+      <span className="teal">{cms?.ctaTitleAccent || "is still being written."}</span>
+    </h2>
     <div className="rule" aria-hidden="true"></div>
-    <p>Explore the research, evidence and ideas helping us understand the choices ahead.</p>
+    <p>{cms?.ctaDescription || "Explore the research, evidence and ideas helping us understand the choices ahead."}</p>
   </div>
 </section>
     </div>

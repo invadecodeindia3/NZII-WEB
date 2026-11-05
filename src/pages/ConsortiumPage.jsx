@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import "../styles/people.css";
+import { useSanity } from "../sanity/useSanity";
+import { advisoryQuery, collaborationsPageQuery, collaboratorsQuery } from "../sanity/queries";
 
 /* ====================================================================
    Collaborator pop-up data  (matches collab-data in NZII_People_Page.html)
@@ -87,6 +89,9 @@ const LiIcon = () => (
    ConsortiumPage component
    ==================================================================== */
 export const ConsortiumPage = () => {
+  const { data: pageCms } = useSanity(collaborationsPageQuery);
+  const { data: sanityAdvisory } = useSanity(advisoryQuery);
+  const { data: sanityCollabs } = useSanity(collaboratorsQuery);
 
   useEffect(() => {
     // ---- Open Calls tiles + feature panel ----
@@ -269,10 +274,10 @@ export const ConsortiumPage = () => {
       {/* ---- Open Calls ---- */}
       <section className="oc-start" id="open-calls">
         <div className="oc-head">
-          <span className="label">Explore Our Collaborations</span>
-          <h1>IIT Delhi's Open Calls for Collaboration under&nbsp;<abbr title="Research Frontier Networks">RFNs</abbr></h1>
+          <span className="label">{pageCms?.introLabel || "Explore Our Collaborations"}</span>
+          <h1>{pageCms?.introHeadline || <>IIT Delhi's Open Calls for Collaboration under&nbsp;<abbr title="Research Frontier Networks">RFNs</abbr></>}</h1>
           <hr className="rule" />
-          <p className="lead">Through the open calls for collaboration, funded by Schmidt Sciences, the IIT Delhi NZII team aims to identify and address emergent capacity deficits across several thematic areas of the Net Zero India Initiative (NZII). In this round, we release four calls for collaboration along the following themes; each theme is described in detail in the corresponding links&nbsp;below.</p>
+          <p className="lead">{pageCms?.introLead || "Through the open calls for collaboration, funded by Schmidt Sciences, the IIT Delhi NZII team aims to identify and address emergent capacity deficits across several thematic areas of the Net Zero India Initiative (NZII). In this round, we release four calls for collaboration along the following themes; each theme is described in detail in the corresponding links\u00A0below."}</p>
         </div>
         <aside className="home-side oc-side" aria-label="Current round">
           <div className="panel feature" id="feature"></div>
@@ -282,7 +287,7 @@ export const ConsortiumPage = () => {
 
       {/* ---- Collaborators ---- */}
       <section className="section" id="collaborators">
-        <h2>Meet the collaborators</h2>
+        <h2>{pageCms?.collaboratorsTitle || "Meet the collaborators"}</h2>
         <div className="group current">
           <ul className="pis big compact collab-cards">
             <li className="card">
@@ -367,28 +372,54 @@ export const ConsortiumPage = () => {
 
       {/* ---- Advisory Committee ---- */}
       <section className="section" id="advisory">
-        <h2>Advisory Committee</h2>
+        <h2>{pageCms?.advisoryTitle || "Advisory Committee"}</h2>
         <ul className="team-list cols-4">
-          <li><span className="av" aria-hidden="true">AM</span><b>Ajay Mathur</b><span className="role">SPP, IIT Delhi</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=kCsLryIAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Ajay Mathur on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a><a className="plk" href="https://www.linkedin.com/in/ajay-mathur-3666b3334/" target="_blank" rel="noopener" aria-label="Ajay Mathur on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
-          <li><span className="av" aria-hidden="true">NR</span><b>NH Ravindranath</b><span className="role">Professor, Indian Institute of Science</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=INRlltAAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="NH Ravindranath on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a></span></li>
-          <li><span className="av" aria-hidden="true">SB</span><b>Sutirtha Bhattacharya</b><span className="role">Former Chairman & MD, Coal India Limited</span></li>
-          <li><span className="av" aria-hidden="true">JR</span><b>Joyashree Roy</b><span className="role">Asian Institute of Technology, Thailand</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=BUPe_h4AAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Joyashree Roy on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a><a className="plk" href="https://www.linkedin.com/in/joyashree-roy-716722182/" target="_blank" rel="noopener" aria-label="Joyashree Roy on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
-          <li><span className="av" aria-hidden="true">ND</span><b>Navroz Dubash</b><span className="role">Professor, Princeton University</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=jfpM418AAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Navroz Dubash on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a><a className="plk" href="https://www.linkedin.com/in/navroz-k-dubash-bb2b58151/" target="_blank" rel="noopener" aria-label="Navroz Dubash on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
-          <li><span className="av" aria-hidden="true">AL</span><b>Ashok Lavasa</b><span className="role">Former Finance and MoEFCC Secretary</span><span className="plinks"><a className="plk" href="https://www.linkedin.com/in/ashok-lavasa-31322480/" target="_blank" rel="noopener" aria-label="Ashok Lavasa on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
-          <li><span className="av" aria-hidden="true">BP</span><b>Balachandra Patil</b><span className="role">Professor, Indian Institute of Science</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=adNmZG4AAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Balachandra Patil on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a><a className="plk" href="https://www.linkedin.com/in/balachandra-patil-685b126/" target="_blank" rel="noopener" aria-label="Balachandra Patil on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
-          <li><span className="av" aria-hidden="true">MP</span><b>Minal Pathak</b><span className="role">Ahmedabad University</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=SbnZ-BsAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Minal Pathak on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a><a className="plk" href="https://www.linkedin.com/in/minal-pathak-318827130/" target="_blank" rel="noopener" aria-label="Minal Pathak on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
-          <li><span className="av" aria-hidden="true">KA</span><b>Kiran Ananth</b><span className="role">Executive Director – Energy Efficiency, Renewable Energy & Green Entrepreneurship, CII</span><span className="plinks"><a className="plk" href="https://www.linkedin.com/in/kiranananth/" target="_blank" rel="noopener" aria-label="Kiran Ananth on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
-          <li><span className="av" aria-hidden="true">SC</span><b>Shoibal Chakravarty</b><span className="role">Professor, Indian Institute of Science</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=BMNFCO8AAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Shoibal Chakravarty on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a><a className="plk" href="https://www.linkedin.com/in/shoibalc/" target="_blank" rel="noopener" aria-label="Shoibal Chakravarty on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
-          <li><span className="av" aria-hidden="true">NA</span><b>Nagaraj Adve</b><span className="role">Founder member, Teachers Against the Climate Crisis (TACC)</span></li>
-          <li><span className="av" aria-hidden="true">GT</span><b>Gautam Talukdar</b><span className="role">Wildlife Institute of India</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=RGeadBIAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Gautam Talukdar on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a></span></li>
-          <li><span className="av" aria-hidden="true">PR</span><b>PS Roy</b><span className="role">Former Director, NRSC Hyderabad</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=DyxITKYAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="PS Roy on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a><a className="plk" href="https://www.linkedin.com/in/parth-sarathi-roy-74831761/" target="_blank" rel="noopener" aria-label="PS Roy on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
-          <li><span className="av" aria-hidden="true">SS</span><b>Sushil Saigal</b><span className="role">TNC</span></li>
-          <li><span className="av" aria-hidden="true">DP</span><b>Deepender Pandey</b><span className="role">Former Director, Forest Survey of India (FSI)</span><span className="plinks"><a className="plk" href="https://www.linkedin.com/in/devendra-pandey-6553782b/" target="_blank" rel="noopener" aria-label="Deepender Pandey on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
-          <li><span className="av" aria-hidden="true">NR</span><b>Narasimha Rao</b><span className="role">Professor of Energy Systems, Yale School of the Environment</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=cwli_mwAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Narasimha Rao on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a><a className="plk" href="https://www.linkedin.com/in/narasimhadrao/" target="_blank" rel="noopener" aria-label="Narasimha Rao on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
-          <li><span className="av" aria-hidden="true">BJ</span><b>Bharath Jairaj</b><span className="role">Executive Director, WRI</span><span className="plinks"><a className="plk" href="https://www.linkedin.com/in/bharathjairaj/" target="_blank" rel="noopener" aria-label="Bharath Jairaj on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
-          <li><span className="av" aria-hidden="true">AS</span><b>Ajay Shankar</b><span className="role">The Energy & Resources Institute (TERI)</span></li>
-          <li><span className="av" aria-hidden="true">GS</span><b>Gauri Singh</b><span className="role">International Renewable Energy Agency (IRENA)</span></li>
-          <li><span className="av" aria-hidden="true">PS</span><b>Praveer Sinha</b><span className="role">Tata Power</span></li>
+          {sanityAdvisory && sanityAdvisory.length > 0 ? (
+            sanityAdvisory.map((m, idx) => (
+              <li key={m._id || idx}>
+                <span className="av" aria-hidden="true">{m.initials || m.name?.slice(0, 2)?.toUpperCase()}</span>
+                <b>{m.name}</b>
+                {m.role && <span className="role">{m.role}</span>}
+                {(m.scholar || m.linkedin) && (
+                  <span className="plinks">
+                    {m.scholar && (
+                      <a className="plk" href={m.scholar} target="_blank" rel="noopener" aria-label={`${m.name} on Google Scholar (opens in a new tab)`} title="Google Scholar">
+                        <GsIcon />
+                      </a>
+                    )}
+                    {m.linkedin && (
+                      <a className="plk" href={m.linkedin} target="_blank" rel="noopener" aria-label={`${m.name} on LinkedIn (opens in a new tab)`} title="LinkedIn">
+                        <LiIcon />
+                      </a>
+                    )}
+                  </span>
+                )}
+              </li>
+            ))
+          ) : (
+            <>
+              <li><span className="av" aria-hidden="true">AM</span><b>Ajay Mathur</b><span className="role">SPP, IIT Delhi</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=kCsLryIAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Ajay Mathur on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a><a className="plk" href="https://www.linkedin.com/in/ajay-mathur-3666b3334/" target="_blank" rel="noopener" aria-label="Ajay Mathur on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
+              <li><span className="av" aria-hidden="true">NR</span><b>NH Ravindranath</b><span className="role">Professor, Indian Institute of Science</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=INRlltAAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="NH Ravindranath on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a></span></li>
+              <li><span className="av" aria-hidden="true">SB</span><b>Sutirtha Bhattacharya</b><span className="role">Former Chairman & MD, Coal India Limited</span></li>
+              <li><span className="av" aria-hidden="true">JR</span><b>Joyashree Roy</b><span className="role">Asian Institute of Technology, Thailand</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=BUPe_h4AAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Joyashree Roy on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a><a className="plk" href="https://www.linkedin.com/in/joyashree-roy-716722182/" target="_blank" rel="noopener" aria-label="Joyashree Roy on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
+              <li><span className="av" aria-hidden="true">ND</span><b>Navroz Dubash</b><span className="role">Professor, Princeton University</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=jfpM418AAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Navroz Dubash on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a><a className="plk" href="https://www.linkedin.com/in/navroz-k-dubash-bb2b58151/" target="_blank" rel="noopener" aria-label="Navroz Dubash on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
+              <li><span className="av" aria-hidden="true">AL</span><b>Ashok Lavasa</b><span className="role">Former Finance and MoEFCC Secretary</span><span className="plinks"><a className="plk" href="https://www.linkedin.com/in/ashok-lavasa-31322480/" target="_blank" rel="noopener" aria-label="Ashok Lavasa on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
+              <li><span className="av" aria-hidden="true">BP</span><b>Balachandra Patil</b><span className="role">Professor, Indian Institute of Science</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=adNmZG4AAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Balachandra Patil on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a><a className="plk" href="https://www.linkedin.com/in/balachandra-patil-685b126/" target="_blank" rel="noopener" aria-label="Balachandra Patil on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
+              <li><span className="av" aria-hidden="true">MP</span><b>Minal Pathak</b><span className="role">Ahmedabad University</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=SbnZ-BsAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Minal Pathak on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a><a className="plk" href="https://www.linkedin.com/in/minal-pathak-318827130/" target="_blank" rel="noopener" aria-label="Minal Pathak on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
+              <li><span className="av" aria-hidden="true">KA</span><b>Kiran Ananth</b><span className="role">Executive Director – Energy Efficiency, Renewable Energy & Green Entrepreneurship, CII</span><span className="plinks"><a className="plk" href="https://www.linkedin.com/in/kiranananth/" target="_blank" rel="noopener" aria-label="Kiran Ananth on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
+              <li><span className="av" aria-hidden="true">SC</span><b>Shoibal Chakravarty</b><span className="role">Professor, Indian Institute of Science</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=BMNFCO8AAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Shoibal Chakravarty on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a><a className="plk" href="https://www.linkedin.com/in/shoibalc/" target="_blank" rel="noopener" aria-label="Shoibal Chakravarty on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
+              <li><span className="av" aria-hidden="true">NA</span><b>Nagaraj Adve</b><span className="role">Founder member, Teachers Against the Climate Crisis (TACC)</span></li>
+              <li><span className="av" aria-hidden="true">GT</span><b>Gautam Talukdar</b><span className="role">Wildlife Institute of India</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=RGeadBIAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Gautam Talukdar on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a></span></li>
+              <li><span className="av" aria-hidden="true">PR</span><b>PS Roy</b><span className="role">Former Director, NRSC Hyderabad</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=DyxITKYAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="PS Roy on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a><a className="plk" href="https://www.linkedin.com/in/parth-sarathi-roy-74831761/" target="_blank" rel="noopener" aria-label="PS Roy on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
+              <li><span className="av" aria-hidden="true">SS</span><b>Sushil Saigal</b><span className="role">TNC</span></li>
+              <li><span className="av" aria-hidden="true">DP</span><b>Deepender Pandey</b><span className="role">Former Director, Forest Survey of India (FSI)</span><span className="plinks"><a className="plk" href="https://www.linkedin.com/in/devendra-pandey-6553782b/" target="_blank" rel="noopener" aria-label="Deepender Pandey on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
+              <li><span className="av" aria-hidden="true">NR</span><b>Narasimha Rao</b><span className="role">Professor of Energy Systems, Yale School of the Environment</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=cwli_mwAAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Narasimha Rao on Google Scholar (opens in a new tab)" title="Google Scholar"><GsIcon /></a><a className="plk" href="https://www.linkedin.com/in/narasimhadrao/" target="_blank" rel="noopener" aria-label="Narasimha Rao on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
+              <li><span className="av" aria-hidden="true">BJ</span><b>Bharath Jairaj</b><span className="role">Executive Director, WRI</span><span className="plinks"><a className="plk" href="https://www.linkedin.com/in/bharathjairaj/" target="_blank" rel="noopener" aria-label="Bharath Jairaj on LinkedIn (opens in a new tab)" title="LinkedIn"><LiIcon /></a></span></li>
+              <li><span className="av" aria-hidden="true">AS</span><b>Ajay Shankar</b><span className="role">The Energy & Resources Institute (TERI)</span></li>
+              <li><span className="av" aria-hidden="true">GS</span><b>Gauri Singh</b><span className="role">International Renewable Energy Agency (IRENA)</span></li>
+              <li><span className="av" aria-hidden="true">PS</span><b>Praveer Sinha</b><span className="role">Tata Power</span></li>
+            </>
+          )}
         </ul>
       </section>
 

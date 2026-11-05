@@ -1,8 +1,12 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../styles/about.css";
+import { useSanity } from "../sanity/useSanity";
+import { aboutPageQuery } from "../sanity/queries";
 
 export const AboutPage = () => {
+  const { data: cms } = useSanity(aboutPageQuery);
+
   useEffect(() => {
     // 1. Draw small corner dot clusters
     const ns = "http://www.w3.org/2000/svg";
@@ -241,10 +245,13 @@ export const AboutPage = () => {
     <div className="container page about-wrapper w-full">
       <section className="hero" id="overview">
       <div className="hero-text">
-        <h1>Building a deeper understanding of India’s path to <span className="teal">net&nbsp;zero.</span></h1>
+        <h1>
+          {cms?.heroHeadline || "Building a deeper understanding of India’s path to"}{" "}
+          <span className="teal">{cms?.heroHeadlineAccent || "net\u00A0zero."}</span>
+        </h1>
         <hr className="rule" />
-        <p className="lead">The Net Zero India Initiative is a research initiative led by the School of Public Policy, IIT Delhi, aimed at building rigorous, spatially detailed, and accessible evidence that can inform policy and enable more inclusive conversations about India’s&nbsp;transition.</p>
-        <p className="lead">Started in 2024, the NZII comprises a diverse team of more than 30 researchers across 4&nbsp;institutions.</p>
+        <p className="lead">{cms?.heroParagraph1 || "The Net Zero India Initiative is a research initiative led by the School of Public Policy, IIT Delhi, aimed at building rigorous, spatially detailed, and accessible evidence that can inform policy and enable more inclusive conversations about India’s\u00A0transition."}</p>
+        <p className="lead">{cms?.heroParagraph2 || "Started in 2024, the NZII comprises a diverse team of more than 30 researchers across 4\u00A0institutions."}</p>
       </div>
       {/*  Hero dots (2 Nov, Aswini): one dot per person listed in "The people behind the NZII" (past researchers left out),
            in their team colour; hover shows the name, a click jumps to the person  */}
@@ -252,17 +259,28 @@ export const AboutPage = () => {
     </section>
 
     <section className="section" id="principles">
-      <h2>Our principles</h2>
+      <h2>{cms?.principlesTitle || "Our principles"}</h2>
       <ul className="p2">
-        <li style={{ "--c": "var(--teal)" }}><b>Rigorous</b><span>Research designed to withstand&nbsp;scrutiny.</span></li>
-        <li style={{ "--c": "var(--lime)" }}><b>Independent</b><span>NZII does not advocate for a predetermined&nbsp;pathway.</span></li>
-        <li style={{ "--c": "var(--coral)" }}><b>Collaborative</b><span>We work across institutions, disciplines and stakeholder&nbsp;groups.</span></li>
-        <li style={{ "--c": "var(--pink)" }}><b>Open</b><span>We aim to make research, methods, models and data increasingly&nbsp;accessible.</span></li>
+        {cms?.principles && cms.principles.length > 0 ? (
+          cms.principles.map((pr, idx) => (
+            <li key={idx} style={{ "--c": `var(--${pr.color || "teal"})` }}>
+              <b>{pr.title}</b>
+              <span>{pr.description}</span>
+            </li>
+          ))
+        ) : (
+          <>
+            <li style={{ "--c": "var(--teal)" }}><b>Rigorous</b><span>Research designed to withstand&nbsp;scrutiny.</span></li>
+            <li style={{ "--c": "var(--lime)" }}><b>Independent</b><span>NZII does not advocate for a predetermined&nbsp;pathway.</span></li>
+            <li style={{ "--c": "var(--coral)" }}><b>Collaborative</b><span>We work across institutions, disciplines and stakeholder&nbsp;groups.</span></li>
+            <li style={{ "--c": "var(--pink)" }}><b>Open</b><span>We aim to make research, methods, models and data increasingly&nbsp;accessible.</span></li>
+          </>
+        )}
       </ul>
     </section>
 
     <section className="section" id="partners">
-      <h2>Built through partnership</h2>
+      <h2>{cms?.partnersTitle || "Built through partnership"}</h2>
       <div className="partners">
         <div className="partner card"><span className="lg"><img src="assets/logos/spp-iit-delhi.png" alt="School of Public Policy, IIT Delhi" /></span><span className="eyebrow">Lead Institution</span><b>School of Public Policy, IIT&nbsp;Delhi</b><span className="muted">Leading the initiative and bringing together its research, policy and interdisciplinary&nbsp;dimensions.</span></div>
         <div className="partner card"><span className="lg"><img src="assets/logos/prayas-energy-group.png" alt="Prayas (Energy Group)" /></span><span className="eyebrow">Core Partner</span><b>Prayas (Energy Group)</b><span className="muted">Energy-related analysis, including energy-demand&nbsp;modelling.</span></div>
@@ -279,8 +297,8 @@ export const AboutPage = () => {
     </section>
 
     <section className="section" id="people">
-      <h2>The people behind the Net Zero India&nbsp;Initiative</h2>
-      <p className="muted">A multidisciplinary team for a multidimensional&nbsp;challenge.</p>
+      <h2>{cms?.peopleTitle || "The people behind the Net Zero India\u00A0Initiative"}</h2>
+      <p className="muted">{cms?.peopleSubtitle || "A multidisciplinary team for a multidimensional\u00A0challenge."}</p>
       <span className="eyebrow pi-label"><span>Meet the PI<span className="nc">s</span></span></span>
       <ul className="pis big compact">
         <li className="card"><img className="photo" src="assets/people/pi-kaveri-iychettira.jpg" alt="" loading="lazy" /><span className="pi-txt"><b>Kaveri Iychettira</b><span className="label">Principal Investigator</span><span className="muted">IIT&nbsp;Delhi</span><span className="plinks"><a className="plk" href="https://scholar.google.com/citations?user=0yQF0u8AAAAJ&amp;hl=en" target="_blank" rel="noopener" aria-label="Kaveri Iychettira on Google Scholar (opens in a new tab)" title="Google Scholar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V16h2V9L12 3z"/><path d="M5 13.18v3.6L12 21l7-4.22v-3.6L12 17l-7-3.82z"/></svg></a><a className="plk" href="https://www.linkedin.com/in/kiychettira/" target="_blank" rel="noopener" aria-label="Kaveri Iychettira on LinkedIn (opens in a new tab)" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3V9.5zm6.5 0h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.27c0-1.26-.02-2.88-1.75-2.88-1.76 0-2.03 1.37-2.03 2.79V21h-4V9.5z"/></svg></a></span></span></li>
