@@ -276,7 +276,7 @@ export const HomePage = () => {
       </p>
     </div>
     <figure className="photo rv" style={{margin: 0}}>
-      <img src="/assets/photos/12_Urbanisation_Sep2024_photo2_group_exercise.jpg" alt="Participants working together in a group exercise at an NZII workshop on urbanisation, IIT Delhi" loading="lazy" />
+      <img src={cms?.whyPhoto || "/assets/photos/12_Urbanisation_Sep2024_photo2_group_exercise.jpg"} alt="Participants working together in a group exercise at an NZII workshop on urbanisation, IIT Delhi" loading="lazy" />
       <svg className="cluster" data-cluster viewBox="0 0 120 90" aria-hidden="true"></svg>
     </figure>
   </div>
@@ -312,7 +312,7 @@ export const HomePage = () => {
 <section className="wrap sec" aria-labelledby="h-led">
   <div className="led">
     <figure className="photo rv" style={{margin: 0}}>
-      <img src="/assets/photos/12_Agriculture_Dec2024_photo2_room.jpg" alt="Researchers and practitioners in discussion at an NZII workshop on agriculture, IIT Delhi" loading="lazy" />
+      <img src={cms?.pillarsPhoto || "/assets/photos/12_Agriculture_Dec2024_photo2_room.jpg"} alt="Researchers and practitioners in discussion at an NZII workshop on agriculture, IIT Delhi" loading="lazy" />
       <svg className="cluster" data-cluster viewBox="0 0 120 90" aria-hidden="true"></svg>
     </figure>
     <div className="led-copy">

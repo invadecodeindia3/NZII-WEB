@@ -33,6 +33,7 @@ export const homePageQuery = `*[_type == "homePage"][0] {
   whySubhead,
   whyChoices,
   whyClosing,
+  "whyPhoto": whyPhoto.asset->url,
   pillarsTitle,
   pillarsIntro,
   pillars[] {
@@ -40,6 +41,7 @@ export const homePageQuery = `*[_type == "homePage"][0] {
     title,
     description
   },
+  "pillarsPhoto": pillarsPhoto.asset->url,
   ledEyebrow,
   ledTitle,
   ledTitleAccent,

@@ -5,5 +5,6 @@ export default defineCliConfig({
     projectId: "bz23ff6t",
     dataset: "production",
   },
+  studioHost: "nzii-website",
 });
 

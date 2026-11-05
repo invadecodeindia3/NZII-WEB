@@ -128,6 +128,12 @@ export default {
         "These questions cannot be understood in isolation. We study the connections between energy, development, land, water, biodiversity, health, employment, and equity to understand both, whether India can reach net zero, and, what different ways of getting there could mean.",
     },
     {
+      name: "whyPhoto",
+      title: "Why Section Photo (Workshop Group Exercise)",
+      type: "image",
+      options: { hotspot: true },
+    },
+    {
       name: "pillarsTitle",
       title: "Pillars Title",
       type: "string",
@@ -153,6 +159,12 @@ export default {
           ],
         },
       ],
+    },
+    {
+      name: "pillarsPhoto",
+      title: "Pillars Section Photo (Workshop Discussion Room)",
+      type: "image",
+      options: { hotspot: true },
     },
 
     // Led by India Section
