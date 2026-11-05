@@ -71,7 +71,6 @@ export const SolutionsPage = () => {
           className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-45 scale-105"
         >
           <source src="/hero-video.mp4" type="video/mp4" />
-          <source src="/hero-video (1).mp4" type="video/mp4" />
         </video>
 
         {/* Cinematic Gradient Overlays */}
