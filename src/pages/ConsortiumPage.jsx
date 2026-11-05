@@ -290,6 +290,32 @@ export const ConsortiumPage = () => {
         <h2>{pageCms?.collaboratorsTitle || "Meet the collaborators"}</h2>
         <div className="group current">
           <ul className="pis big compact collab-cards">
+            {sanityCollabs && sanityCollabs.length > 0 ? (
+              sanityCollabs.map((c, i) => (
+                <li key={c._id || i} className="card">
+                  {c.photo ? (
+                    <img className="photo" src={c.photo} alt={c.name || ""} loading="lazy" />
+                  ) : (
+                    <img className="photo" src={`/assets/people/collab-${(c.name||'').toLowerCase().replace(/\s+/g,'-')}.jpg`} alt="" loading="lazy" onError={(e)=>{e.target.style.display='none'}} />
+                  )}
+                  <span className="pi-txt">
+                    <b>{c.name}</b>
+                    {c.role && <span className="muted">{c.role}</span>}
+                    {(c.scholar || c.linkedin) && (
+                      <span className="plinks">
+                        {c.scholar && (
+                          <a className="plk" href={c.scholar} target="_blank" rel="noopener" aria-label={`${c.name} on Google Scholar`} title="Google Scholar"><GsIcon /></a>
+                        )}
+                        {c.linkedin && (
+                          <a className="plk" href={c.linkedin} target="_blank" rel="noopener" aria-label={`${c.name} on LinkedIn`} title="LinkedIn"><LiIcon /></a>
+                        )}
+                      </span>
+                    )}
+                  </span>
+                </li>
+              ))
+            ) : (
+              <>
             <li className="card">
               <img className="photo" src="/assets/people/collab-anurag-gumber.jpg" alt="" loading="lazy" />
               <span className="pi-txt">
@@ -366,6 +392,8 @@ export const ConsortiumPage = () => {
                 </span>
               </span>
             </li>
+              </>
+            )}
           </ul>
         </div>
       </section>

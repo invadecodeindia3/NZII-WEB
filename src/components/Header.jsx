@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useGame } from '../context/GameContext';
+import { useSanity } from '../sanity/useSanity';
+import { siteSettingsQuery } from '../sanity/queries';
 
 export const Header = () => {
   const { displayMode, changeDisplayMode } = useGame();
+  const { data: settings } = useSanity(siteSettingsQuery);
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -28,18 +31,18 @@ export const Header = () => {
   return (
     <header className={`site-header ${scrolled ? 'scrolled' : ''}`} id="site-header">
       <div className="hd-row">
-        <Link to="/" className="hd-logo" aria-label="Net Zero India Initiative homepage">
+        <Link to="/" className="hd-logo" aria-label={settings?.title ? `${settings.title} homepage` : "Net Zero India Initiative homepage"}>
           <img
             className="logo-l"
-            alt="Net Zero India Initiative"
-            src="/assets/logos/nzii-logo-colour.svg"
+            alt={settings?.title || "Net Zero India Initiative"}
+            src={settings?.logoLight || "/assets/logos/nzii-logo-colour.svg"}
             width="1497"
             height="692"
           />
           <img
             className="logo-d"
-            alt="Net Zero India Initiative"
-            src="/assets/logos/nzii-logo-pale-yellow.svg"
+            alt={settings?.title || "Net Zero India Initiative"}
+            src={settings?.logoDark || "/assets/logos/nzii-logo-pale-yellow.svg"}
             width="1497"
             height="692"
           />

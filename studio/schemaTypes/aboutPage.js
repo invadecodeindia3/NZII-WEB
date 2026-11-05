@@ -83,5 +83,110 @@ export default {
       type: "string",
       initialValue: "A multidisciplinary team for a multidimensional challenge.",
     },
+    {
+      name: "piSectionTitle",
+      title: "PIs Section Title",
+      type: "string",
+      initialValue: "Meet the PIs",
+    },
+    {
+      name: "pis",
+      title: "Principal Investigators (PIs)",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            { name: "name", title: "Full Name", type: "string" },
+            { name: "role", title: "Role", type: "string", initialValue: "Principal Investigator" },
+            { name: "institution", title: "Institution", type: "string", initialValue: "IIT Delhi" },
+            { name: "photo", title: "Photo", type: "image", options: { hotspot: true } },
+            { name: "scholar", title: "Google Scholar URL", type: "url" },
+            { name: "linkedin", title: "LinkedIn URL", type: "url" },
+          ],
+        },
+      ],
+    },
+    {
+      name: "iitdResearchers",
+      title: "IIT Delhi Researchers",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            { name: "name", title: "Full Name", type: "string" },
+            { name: "initials", title: "Initials (e.g. TK)", type: "string" },
+            { name: "role", title: "Role", type: "string" },
+            { name: "isLead", title: "Is Lead?", type: "boolean", initialValue: false },
+            { name: "scholar", title: "Google Scholar URL", type: "url" },
+            { name: "linkedin", title: "LinkedIn URL", type: "url" },
+          ],
+        },
+      ],
+    },
+    {
+      name: "adminTeam",
+      title: "Admin and Communications Team",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            { name: "name", title: "Full Name", type: "string" },
+            { name: "initials", title: "Initials", type: "string" },
+            { name: "role", title: "Role", type: "string" },
+            { name: "linkedin", title: "LinkedIn URL", type: "url" },
+          ],
+        },
+      ],
+    },
+    {
+      name: "pastResearchers",
+      title: "Past Researchers",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            { name: "name", title: "Full Name", type: "string" },
+            { name: "initials", title: "Initials", type: "string" },
+            { name: "role", title: "Role", type: "string" },
+            { name: "scholar", title: "Google Scholar URL", type: "url" },
+          ],
+        },
+      ],
+    },
+    {
+      name: "partnerTeams",
+      title: "Core Partner Teams",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            { name: "orgName", title: "Organization Name", type: "string" },
+            { name: "orgId", title: "CSS ID (prayas, princeton)", type: "string" },
+            {
+              name: "members",
+              title: "Members",
+              type: "array",
+              of: [
+                {
+                  type: "object",
+                  fields: [
+                    { name: "name", title: "Full Name", type: "string" },
+                    { name: "initials", title: "Initials", type: "string" },
+                    { name: "role", title: "Role (optional)", type: "string" },
+                    { name: "isLead", title: "Is Lead?", type: "boolean" },
+                    { name: "scholar", title: "Google Scholar URL", type: "url" },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
   ],
 };

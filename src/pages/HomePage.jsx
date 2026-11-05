@@ -353,19 +353,19 @@ export const HomePage = () => {
   </div>
   <div className="work">
     <div className="card feat c-teal rv static">
-      <div className="photo"><img src="/assets/photos/12_Agriculture_Dec2024_photo1_room.jpg" alt="" loading="lazy" /><svg className="cluster" data-cluster viewBox="0 0 120 90" aria-hidden="true"></svg></div>
+      <div className="photo"><img src={cms?.workFeaturedPhoto || "/assets/photos/12_Agriculture_Dec2024_photo1_room.jpg"} alt="" loading="lazy" /><svg className="cluster" data-cluster viewBox="0 0 120 90" aria-hidden="true"></svg></div>
       <div className="body">
-        <span className="eyebrow c-teal">Featured research</span>
-        <h3>First results from NZII’s Reference scenario</h3>
-        <p>A baseline of how India’s energy demand, electricity supply and land-sector emissions could evolve to 2070, presented to NZII’s Advisory Committee in September 2026.</p>
+        <span className="eyebrow c-teal">{cms?.workFeaturedEyebrow || "Featured research"}</span>
+        <h3>{cms?.workFeaturedTitle || "First results from NZII’s Reference scenario"}</h3>
+        <p>{cms?.workFeaturedDescription || "A baseline of how India’s energy demand, electricity supply and land-sector emissions could evolve to 2070, presented to NZII’s Advisory Committee in September 2026."}</p>
       </div>
     </div>
     <div className="side">
-      <a className="card c-teal rv" href="/consortium">
-        <span className="eyebrow c-teal">Get involved</span>
-        <h3>Explore Our Collaborations</h3>
-        <p>Explore opportunities to collaborate, contribute to ongoing research, participate in programmes, or engage with the Net Zero India Initiative.</p>
-        <span className="go">Explore opportunities <span className="ar" aria-hidden="true">→</span></span>
+      <a className="card c-teal rv" href={cms?.workGetInvolvedButtonLink || "/consortium"}>
+        <span className="eyebrow c-teal">{cms?.workGetInvolvedEyebrow || "Get involved"}</span>
+        <h3>{cms?.workGetInvolvedTitle || "Explore Our Collaborations"}</h3>
+        <p>{cms?.workGetInvolvedDescription || "Explore opportunities to collaborate, contribute to ongoing research, participate in programmes, or engage with the Net Zero India Initiative."}</p>
+        <span className="go">{cms?.workGetInvolvedButtonText || "Explore opportunities"} <span className="ar" aria-hidden="true">→</span></span>
       </a>
     </div>
   </div>
@@ -383,18 +383,36 @@ export const HomePage = () => {
     </div>
   </div>
   <div className="news">
-    <div className="card c-teal rv static">
-      <div className="photo"><img src="/assets/photos/03_Launch_Jul2024_photo1_room.jpg" alt="" loading="lazy" /><svg className="cluster" data-cluster viewBox="0 0 120 90" aria-hidden="true"></svg></div>
-      <div className="body"><span className="eyebrow c-teal">News &amp; Updates</span><h3>NZII presents its development-compatible approach at Princeton’s NZx workshop</h3><time datetime="2026-09">September 2026</time></div>
-    </div>
-    <div className="card c-teal rv static">
-      <div className="photo"><img src="/assets/photos/12_Urbanisation_Sep2024_photo1_group.jpg" alt="" loading="lazy" /><svg className="cluster" data-cluster viewBox="0 0 120 90" aria-hidden="true"></svg></div>
-      <div className="body"><span className="eyebrow c-teal">Workshops &amp; Events</span><h3>Workshop asks how land for solar and wind can be governed fairly</h3><time datetime="2026-05">May 2026</time></div>
-    </div>
-    <div className="card c-teal rv static">
-      <div className="photo"><img src="/assets/photos/12_Industry_Dec2024_photo1_room.jpg" alt="" loading="lazy" /><svg className="cluster" data-cluster viewBox="0 0 120 90" aria-hidden="true"></svg></div>
-      <div className="body"><span className="eyebrow c-teal">Research &amp; Publications</span><h3>NZII researchers write the opening chapter of the ICEF report</h3><time datetime="2026-04">April 2026</time></div>
-    </div>
+    {cms?.newsCards && cms.newsCards.length > 0 ? (
+      cms.newsCards.map((n, i) => (
+        <div key={i} className="card c-teal rv static">
+          <div className="photo">
+            {n.photo && <img src={n.photo} alt={n.title || ""} loading="lazy" />}
+            <svg className="cluster" data-cluster viewBox="0 0 120 90" aria-hidden="true"></svg>
+          </div>
+          <div className="body">
+            <span className="eyebrow c-teal">{n.eyebrow || "News & Updates"}</span>
+            <h3>{n.title}</h3>
+            {n.date && <time>{n.date}</time>}
+          </div>
+        </div>
+      ))
+    ) : (
+      <>
+        <div className="card c-teal rv static">
+          <div className="photo"><img src="/assets/photos/03_Launch_Jul2024_photo1_room.jpg" alt="" loading="lazy" /><svg className="cluster" data-cluster viewBox="0 0 120 90" aria-hidden="true"></svg></div>
+          <div className="body"><span className="eyebrow c-teal">News &amp; Updates</span><h3>NZII presents its development-compatible approach at Princeton’s NZx workshop</h3><time dateTime="2026-09">September 2026</time></div>
+        </div>
+        <div className="card c-teal rv static">
+          <div className="photo"><img src="/assets/photos/12_Urbanisation_Sep2024_photo1_group.jpg" alt="" loading="lazy" /><svg className="cluster" data-cluster viewBox="0 0 120 90" aria-hidden="true"></svg></div>
+          <div className="body"><span className="eyebrow c-teal">Workshops &amp; Events</span><h3>Workshop asks how land for solar and wind can be governed fairly</h3><time dateTime="2026-05">May 2026</time></div>
+        </div>
+        <div className="card c-teal rv static">
+          <div className="photo"><img src="/assets/photos/12_Industry_Dec2024_photo1_room.jpg" alt="" loading="lazy" /><svg className="cluster" data-cluster viewBox="0 0 120 90" aria-hidden="true"></svg></div>
+          <div className="body"><span className="eyebrow c-teal">Research &amp; Publications</span><h3>NZII researchers write the opening chapter of the ICEF report</h3><time dateTime="2026-04">April 2026</time></div>
+        </div>
+      </>
+    )}
   </div>
 </section>
 

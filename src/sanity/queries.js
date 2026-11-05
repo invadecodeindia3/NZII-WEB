@@ -46,8 +46,24 @@ export const homePageQuery = `*[_type == "homePage"][0] {
   ledDescription,
   workTitle,
   workTitleAccent,
+  "workFeaturedPhoto": workFeaturedPhoto.asset->url,
+  workFeaturedEyebrow,
+  workFeaturedTitle,
+  workFeaturedDescription,
+  workGetInvolvedEyebrow,
+  workGetInvolvedTitle,
+  workGetInvolvedDescription,
+  workGetInvolvedButtonText,
+  workGetInvolvedButtonLink,
   newsTitle,
   newsTitleAccent,
+  newsCards[] {
+    "photo": photo.asset->url,
+    eyebrow,
+    title,
+    date,
+    link
+  },
   ctaTitle,
   ctaTitleAccent,
   ctaDescription,
@@ -69,7 +85,47 @@ export const aboutPageQuery = `*[_type == "aboutPage"][0] {
   },
   partnersTitle,
   peopleTitle,
-  peopleSubtitle
+  peopleSubtitle,
+  piSectionTitle,
+  pis[] {
+    name,
+    role,
+    institution,
+    "photo": photo.asset->url,
+    scholar,
+    linkedin
+  },
+  iitdResearchers[] {
+    name,
+    initials,
+    role,
+    isLead,
+    scholar,
+    linkedin
+  },
+  adminTeam[] {
+    name,
+    initials,
+    role,
+    linkedin
+  },
+  pastResearchers[] {
+    name,
+    initials,
+    role,
+    scholar
+  },
+  partnerTeams[] {
+    orgName,
+    orgId,
+    members[] {
+      name,
+      initials,
+      role,
+      isLead,
+      scholar
+    }
+  }
 }`;
 
 // Collaborations Page

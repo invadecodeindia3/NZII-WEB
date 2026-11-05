@@ -196,6 +196,64 @@ export default {
       type: "string",
       initialValue: "our work",
     },
+    {
+      name: "workFeaturedPhoto",
+      title: "Featured Research Photo",
+      type: "image",
+      options: { hotspot: true },
+    },
+    {
+      name: "workFeaturedEyebrow",
+      title: "Featured Research Eyebrow",
+      type: "string",
+      initialValue: "Featured research",
+    },
+    {
+      name: "workFeaturedTitle",
+      title: "Featured Research Title",
+      type: "string",
+      initialValue: "First results from NZII’s Reference scenario",
+    },
+    {
+      name: "workFeaturedDescription",
+      title: "Featured Research Description",
+      type: "text",
+      rows: 3,
+      initialValue:
+        "A baseline of how India’s energy demand, electricity supply and land-sector emissions could evolve to 2070, presented to NZII’s Advisory Committee in September 2026.",
+    },
+    {
+      name: "workGetInvolvedEyebrow",
+      title: "Get Involved Eyebrow",
+      type: "string",
+      initialValue: "Get involved",
+    },
+    {
+      name: "workGetInvolvedTitle",
+      title: "Get Involved Title",
+      type: "string",
+      initialValue: "Explore Our Collaborations",
+    },
+    {
+      name: "workGetInvolvedDescription",
+      title: "Get Involved Description",
+      type: "text",
+      rows: 3,
+      initialValue:
+        "Explore opportunities to collaborate, contribute to ongoing research, participate in programmes, or engage with the Net Zero India Initiative.",
+    },
+    {
+      name: "workGetInvolvedButtonText",
+      title: "Get Involved Button Text",
+      type: "string",
+      initialValue: "Explore opportunities",
+    },
+    {
+      name: "workGetInvolvedButtonLink",
+      title: "Get Involved Button Link",
+      type: "string",
+      initialValue: "/consortium",
+    },
 
     // Latest News Section
     {
@@ -209,6 +267,23 @@ export default {
       title: "News Section Title Accent",
       type: "string",
       initialValue: "Net Zero India Initiative",
+    },
+    {
+      name: "newsCards",
+      title: "Latest News Cards",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            { name: "photo", title: "Photo", type: "image", options: { hotspot: true } },
+            { name: "eyebrow", title: "Category Eyebrow", type: "string" },
+            { name: "title", title: "Headline", type: "string" },
+            { name: "date", title: "Date / Time Label", type: "string" },
+            { name: "link", title: "Optional Link", type: "string" },
+          ],
+        },
+      ],
     },
 
     // CTA / Final Section
