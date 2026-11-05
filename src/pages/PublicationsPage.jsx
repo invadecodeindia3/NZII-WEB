@@ -102,16 +102,8 @@ export const PublicationsPage = () => {
       {/* ── SECTION 1: CINEMATIC HERO HEADER (CENTER ALIGNED) ── */}
       <section className="relative w-full min-h-[580px] lg:min-h-[640px] flex flex-col justify-end pt-36 pb-20 px-[3vw] overflow-hidden select-none border-b border-white/10 bg-[#14263D] text-white">
         
-        {/* Background Video Layer */}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-45 scale-105"
-        >
-          <source src="/hero-video.mp4" type="video/mp4" />
-        </video>
+        {/* Background Gradient Layer (replaces video to save bandwidth) */}
+        <div className="absolute inset-0 w-full h-full pointer-events-none" style={{background:'radial-gradient(ellipse at 60% 40%, #1a4a6b 0%, #0d2a40 50%, #060f1a 100%)'}} />
 
         {/* Cinematic Gradient Overlays */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-black/60 to-black/80 pointer-events-none z-10"></div>

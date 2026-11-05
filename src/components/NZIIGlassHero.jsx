@@ -181,7 +181,7 @@ export const NZIIGlassHero = () => {
         preload="none"
         className="absolute inset-0 w-full h-full object-cover pointer-events-none scale-105"
       >
-        <source src="/hero-video.mp4" type="video/mp4" />
+        
       </video>
 
       {/* ── 2. CINEMATIC OVERLAY & NATURAL NEUTRAL CONTRAST ── */}
