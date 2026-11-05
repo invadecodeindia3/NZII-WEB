@@ -6,6 +6,7 @@ import advisoryMember from "./advisoryMember";
 import collaborator from "./collaborator";
 import openCall from "./openCall";
 import newsEvent from "./newsEvent";
+import mediaAsset from "./mediaAsset";
 
 export const schemaTypes = [
   siteSettings,
@@ -16,4 +17,5 @@ export const schemaTypes = [
   collaborator,
   openCall,
   newsEvent,
+  mediaAsset,
 ];
