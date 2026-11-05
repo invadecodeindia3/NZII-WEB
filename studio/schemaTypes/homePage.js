@@ -320,4 +320,11 @@ export default {
       initialValue: "/collaborations",
     },
   ],
+  preview: {
+    prepare() {
+      return {
+        title: "Home Page (Live)",
+      };
+    },
+  },
 };

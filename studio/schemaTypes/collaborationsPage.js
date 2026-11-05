@@ -79,4 +79,11 @@ export default {
       initialValue: "Advisory Committee",
     },
   ],
+  preview: {
+    prepare() {
+      return {
+        title: "Collaborations Page (Live)",
+      };
+    },
+  },
 };

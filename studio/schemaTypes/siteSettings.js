@@ -42,4 +42,11 @@ export default {
       initialValue: "Made for curiosity, grounded in evidence.",
     },
   ],
+  preview: {
+    prepare() {
+      return {
+        title: "Site Settings (Header & Footer)",
+      };
+    },
+  },
 };

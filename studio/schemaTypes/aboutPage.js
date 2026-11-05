@@ -189,4 +189,11 @@ export default {
       ],
     },
   ],
+  preview: {
+    prepare() {
+      return {
+        title: "About Page (Live)",
+      };
+    },
+  },
 };
