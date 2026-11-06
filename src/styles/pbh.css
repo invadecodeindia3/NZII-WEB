@@ -153,7 +153,7 @@ p,li{text-wrap:pretty}
 .btns{display:flex;flex-wrap:wrap;gap:12px}
 
 /* Reveal on scroll (only when JS is on) */
-.js .rv{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.js .rv{opacity:1;transform:none;transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
 .js .rv.in{opacity:1;transform:none}
 /* CMS-rendered dynamic content is always visible regardless of scroll observer */
 .qual .card:not(.rv),.news .card:not(.rv){opacity:1;transform:none}
