@@ -268,23 +268,12 @@ export const ConsortiumPage = () => {
     };
   }, []);
 
-  // Re-observe rv elements that render after CMS data loads
+  // Make all rv elements visible immediately after CMS data loads
   useEffect(() => {
     if (!pageCms && !sanityAdvisory && !sanityCollabs) return;
-    const all = [].slice.call(document.querySelectorAll('.rv'));
-    if ('IntersectionObserver' in window) {
-      const io = new IntersectionObserver(function (es) {
-        es.forEach(function (e) {
-          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-        });
-      }, { rootMargin: '0px 0px -10% 0px' });
-      all.forEach(function (el, i) {
-        if (!el.classList.contains('in')) { el.style.transitionDelay = ((i % 4) * 70) + 'ms'; io.observe(el); }
-      });
-      return () => io.disconnect();
-    } else {
-      all.forEach(function (el) { el.classList.add('in'); });
-    }
+    document.querySelectorAll('.rv').forEach(function (el) {
+      el.classList.add('in');
+    });
   }, [pageCms, sanityAdvisory, sanityCollabs]);
 
   return (

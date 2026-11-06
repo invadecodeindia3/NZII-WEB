@@ -187,29 +187,12 @@ export const HomePage = () => {
     };
   }, []);
 
-  // Re-observe any .rv elements that loaded after CMS data arrived (pillars, choices, etc.)
+  // Make all rv elements visible immediately after CMS data loads
   useEffect(() => {
     if (!cms) return;
-    const all = [].slice.call(document.querySelectorAll('.rv'));
-    if ('IntersectionObserver' in window) {
-      const io2 = new IntersectionObserver(function (es) {
-        es.forEach(function (e) {
-          if (e.isIntersecting) {
-            e.target.classList.add('in');
-            io2.unobserve(e.target);
-          }
-        });
-      }, { rootMargin: '0px 0px -10% 0px' });
-      all.forEach(function (el, i) {
-        if (!el.classList.contains('in')) {
-          el.style.transitionDelay = ((i % 4) * 70) + 'ms';
-          io2.observe(el);
-        }
-      });
-      return () => io2.disconnect();
-    } else {
-      all.forEach(function (el) { el.classList.add('in'); });
-    }
+    document.querySelectorAll('.rv').forEach(function (el) {
+      el.classList.add('in');
+    });
   }, [cms]);
 
   return (
