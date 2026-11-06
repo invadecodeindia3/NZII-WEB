@@ -298,7 +298,7 @@ export const HomePage = () => {
     <div className="qual">
       {cms?.pillars && cms.pillars.length > 0 ? (
         cms.pillars.map((p, idx) => (
-          <article key={idx} className="card c-teal rv">
+          <article key={idx} className="card c-teal">
             <span className="num">{p.num || `0${idx + 1}`}</span>
             <b>{p.title}</b>
             <p>{p.description}</p>
@@ -393,7 +393,7 @@ export const HomePage = () => {
   <div className="news">
     {cms?.newsCards && cms.newsCards.length > 0 ? (
       cms.newsCards.map((n, i) => (
-        <div key={i} className="card c-teal rv static">
+        <div key={i} className="card c-teal static">
           <div className="photo">
             {n.photo && <img src={n.photo} alt={n.title || ""} loading="lazy" />}
             <svg className="cluster" data-cluster viewBox="0 0 120 90" aria-hidden="true"></svg>

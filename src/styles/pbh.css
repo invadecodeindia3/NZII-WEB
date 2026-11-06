@@ -155,6 +155,8 @@ p,li{text-wrap:pretty}
 /* Reveal on scroll (only when JS is on) */
 .js .rv{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
 .js .rv.in{opacity:1;transform:none}
+/* CMS-rendered dynamic content is always visible regardless of scroll observer */
+.qual .card:not(.rv),.news .card:not(.rv){opacity:1;transform:none}
 
 /* ---------- Card: lift + "dot spotlight" that follows the cursor ---------- */
 .card{position:relative;isolation:isolate;overflow:hidden;background:var(--surface);border:1px solid var(--line);border-radius:16px;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s}
