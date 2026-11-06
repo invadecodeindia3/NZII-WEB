@@ -8,7 +8,7 @@ export const apiVersion = import.meta.env.VITE_SANITY_API_VERSION || "2024-03-01
 export const client = createClient({
   projectId,
   dataset,
-  useCdn: true, // fast response via edge cache
+  useCdn: false, // always fetch live data, no CDN cache delay
   apiVersion,
 });
 
