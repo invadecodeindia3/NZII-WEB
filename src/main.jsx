@@ -10,12 +10,13 @@ const isOld = pathname === '/old' || pathname.startsWith('/old/')
 const isV2  = pathname === '/v2'  || pathname.startsWith('/v2/')
 const isV4  = pathname === '/v4'  || pathname.startsWith('/v4/') || pathname === '/technology' || pathname.startsWith('/technology/')
 
-if (isOld) {
-  import('./old/entry.jsx')
-} else if (isV2) {
-  import('./v2/entry.jsx')
-} else if (isV4) {
-  import('./v4/entry.jsx')
-} else {
-  import('./entry.jsx')
+// One loader per version, kept as separate functions. (Written as an if/else chain, the production bundler
+// folded the four imports into one expression and attached only the last version's stylesheet to all of them,
+// so V1, V2 and V4 loaded with V3's CSS.)
+const versions = {
+  old: () => import('./old/entry.jsx'),
+  v2: () => import('./v2/entry.jsx'),
+  v4: () => import('./v4/entry.jsx'),
+  v3: () => import('./entry.jsx'),
 }
+versions[isOld ? 'old' : isV2 ? 'v2' : isV4 ? 'v4' : 'v3']()
