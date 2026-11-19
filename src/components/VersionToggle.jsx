@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 
 const OLD_PREFIX = '/old';
 const V2_PREFIX  = '/v2';
+const V4_PREFIX  = '/v4';
 
 // ── Path helpers ─────────────────────────────────────────────────────────────
 
@@ -24,6 +25,8 @@ const toOldHref = (p) => {
   if (p === OLD_PREFIX || p.startsWith(`${OLD_PREFIX}/`)) return p;
   if (p === V2_PREFIX  || p.startsWith(`${V2_PREFIX}/`))
     return `${OLD_PREFIX}${stripPrefix(p, V2_PREFIX)}`;
+  if (p === V4_PREFIX  || p.startsWith(`${V4_PREFIX}/`))
+    return `${OLD_PREFIX}${stripPrefix(p, V4_PREFIX)}`;
   return `${OLD_PREFIX}${p && p !== '/' ? p : '/'}`;
 };
 
@@ -32,6 +35,8 @@ const toV2Href = (p) => {
   if (p === V2_PREFIX  || p.startsWith(`${V2_PREFIX}/`))  return p;
   if (p === OLD_PREFIX || p.startsWith(`${OLD_PREFIX}/`))
     return `${V2_PREFIX}${stripPrefix(p, OLD_PREFIX)}`;
+  if (p === V4_PREFIX  || p.startsWith(`${V4_PREFIX}/`))
+    return `${V2_PREFIX}${stripPrefix(p, V4_PREFIX)}`;
   return `${V2_PREFIX}${p && p !== '/' ? p : '/'}`;
 };
 
@@ -39,7 +44,14 @@ const toV2Href = (p) => {
 const toV3Href = (p) => {
   if (p === OLD_PREFIX || p.startsWith(`${OLD_PREFIX}/`)) return stripPrefix(p, OLD_PREFIX);
   if (p === V2_PREFIX  || p.startsWith(`${V2_PREFIX}/`))  return stripPrefix(p, V2_PREFIX);
+  if (p === V4_PREFIX  || p.startsWith(`${V4_PREFIX}/`))  return stripPrefix(p, V4_PREFIX);
   return p;
+};
+
+/** Convert any full pathname → the equivalent V4 (Cura Climate tech) href. */
+const toV4Href = (p) => {
+  if (p === V4_PREFIX  || p.startsWith(`${V4_PREFIX}/`))  return p;
+  return '/v4';
 };
 
 // ── Responsive hook ───────────────────────────────────────────────────────────
@@ -131,12 +143,17 @@ export const VersionToggle = ({ current }) => {
     ? current === 'v2'
     : !onOld && (pathname === V2_PREFIX || pathname.startsWith(`${V2_PREFIX}/`));
 
-  const onV3 = !onOld && !onV2;
+  const onV4 = current
+    ? current === 'v4'
+    : !onOld && !onV2 && (pathname === V4_PREFIX || pathname.startsWith(`${V4_PREFIX}/`) || pathname === '/technology');
+
+  const onV3 = !onOld && !onV2 && !onV4;
 
   // Build hrefs
   const oldHref = toOldHref(pathname);
   const v2Href  = toV2Href(pathname);
   const v3Href  = toV3Href(pathname);
+  const v4Href  = toV4Href(pathname);
 
   const edge = narrow ? 12 : 24;
 
@@ -185,6 +202,7 @@ export const VersionToggle = ({ current }) => {
       <Segment label="V1" href={oldHref} active={onOld} narrow={narrow} />
       <Segment label="V2" href={v2Href}  active={onV2}  narrow={narrow} />
       <Segment label="V3" href={v3Href}  active={onV3}  narrow={narrow} />
+      <Segment label="V4" href={v4Href}  active={onV4}  narrow={narrow} />
     </div>
   );
 };
