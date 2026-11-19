@@ -1,0 +1,164 @@
+/* Hand-written additions to the V4 'News & Events' page (news-events.css is generated): the timeline navigator
+   (NewsRail.jsx), month tabs beside the spine, the year as a large outline behind each block, and livelier cards. */
+
+/* ── Timeline navigator: stays under the header ───────────────────────────── */
+.v4-p-news main#content .nv-rail { position: sticky; top: clamp(78px, 8vw, 104px); z-index: 30; display: flex; align-items: center; gap: clamp(14px, 2.4vw, 32px); margin: 0 0 clamp(8px, 1.4vw, 18px); padding: 10px 18px 10px 20px; border-radius: 999px; border: 1px solid var(--line); background: color-mix(in srgb, var(--surface) 86%, transparent); backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2); box-shadow: 0 14px 34px -22px color-mix(in srgb, var(--navy) 60%, transparent); animation: nvIn .9s .2s cubic-bezier(.2, .7, .2, 1) both; }
+@keyframes nvIn { from { opacity: 0; translate: 0 -14px; } to { opacity: 1; translate: none; } }
+.v4-p-news main#content .nv-years { display: flex; align-items: center; gap: clamp(12px, 2vw, 26px); flex: none; }
+.v4-p-news main#content .nv-year { display: flex; align-items: center; gap: 10px; }
+.v4-p-news main#content .nv-y { font: 600 .82rem var(--f-serif); letter-spacing: .02em; color: var(--ink-2); font-variant-numeric: tabular-nums; transition: color .4s; }
+.v4-p-news main#content .nv-year.on .nv-y { color: var(--ink); }
+.v4-p-news main#content .nv-dots { display: flex; align-items: center; gap: 2px; }
+.v4-p-news main#content .nv-dot { position: relative; width: 20px; height: 26px; padding: 0; border: 0; background: none; cursor: pointer; }
+.v4-p-news main#content .nv-dot::before { content: ""; position: absolute; left: 50%; top: 50%; width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; border-radius: 50%; border: 2px solid var(--teal); background: transparent; transition: scale .45s cubic-bezier(.2, 1.4, .3, 1), background .35s, border-color .35s, box-shadow .35s; }
+.v4-p-news main#content .nv-dot.read::before { background: var(--teal); }
+.v4-p-news main#content .nv-dot.on::before { scale: 1.55; background: var(--coral); border-color: var(--coral); box-shadow: 0 0 0 4px transparent; }
+.v4-p-news main#content .nv-dot:hover::before, .v4-p-news main#content .nv-dot:focus-visible::before { scale: 1.55; background: var(--lime); border-color: var(--ink); }
+.v4-p-news main#content .nv-dot:focus-visible { outline: 2px solid var(--teal); outline-offset: 0; border-radius: 8px; }
+.v4-p-news main#content .nv-now { flex: 1; min-width: 0; margin: 0; max-width: none !important; display: flex; align-items: baseline; gap: 12px; padding-left: clamp(12px, 2vw, 26px); border-left: 1px solid var(--line); font-size: .86rem; line-height: 1.3; }
+.v4-p-news main#content .nv-now b { flex: none; font: 700 .64rem var(--f-head); letter-spacing: .16em; text-transform: uppercase; color: var(--accent); animation: nvSwap .5s cubic-bezier(.2, .7, .2, 1) both; }
+.v4-p-news main#content .nv-now span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-weight: 600; color: var(--ink); animation: nvSwap .5s .04s cubic-bezier(.2, .7, .2, 1) both; }
+@keyframes nvSwap { from { opacity: 0; translate: 0 6px; } to { opacity: 1; translate: none; } }
+.v4-p-news main#content .nv-count { flex: none; font: 600 .7rem var(--f-head); letter-spacing: .14em; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+
+/* ── Month tabs beside the spine (wide screens make room for them) ────────── */
+.v4-p-news main#content .nv-month { display: none; }
+.v4-p-news main#content .nv-month i { font-style: normal; }
+.v4-p-news main#content .nv-month b { display: none; }
+@media (min-width: 1000px) {
+  .v4-p-news main#content .ev-time { --tl: 104px; }
+  .v4-p-news main#content .nv-month { display: block; position: absolute; left: calc(30px - var(--tl)); top: 22px; width: calc(var(--tl) - 44px); font: 700 .72rem/1 var(--f-head); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-2); transition: color .4s, translate .5s cubic-bezier(.2, .7, .2, 1); }
+  .v4-p-news main#content .nv-month::after { content: ""; display: block; width: 100%; height: 1px; margin-top: 8px; background: var(--line); transform-origin: left; transition: background .4s; }
+  .v4-p-news main#content .ev:hover .nv-month, .v4-p-news main#content .ev.flash .nv-month { color: var(--accent); translate: 3px 0; }
+  .v4-p-news main#content .ev:hover .nv-month::after, .v4-p-news main#content .ev.flash .nv-month::after { background: var(--teal); }
+}
+
+/* ── The year, as a large outline drifting behind its block ───────────────── */
+.v4-p-news main#content .ev-year { position: relative; isolation: isolate; }
+.v4-p-news main#content .ev-year::after { content: attr(data-year); position: absolute; z-index: -1; right: -.04em; top: -.42em; font: 600 clamp(6rem, 17vw, 16rem)/1 var(--f-serif); letter-spacing: -.04em; color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--ink) 13%, transparent); translate: 0 calc(var(--nv-y, 0) * 1px); pointer-events: none; user-select: none; }
+.v4-p-news main#content #content h3.ev-y, .v4-p-news main#content h3.ev-y { background: transparent; }
+
+/* ── Cards: a brand-colour edge on hover, each in turn; the lead photograph breathes ── */
+.v4-p-news main#content .ev-list > .ev { --ac: var(--teal); }
+.v4-p-news main#content .ev-list > .ev:nth-child(4n+2) { --ac: var(--coral); }
+.v4-p-news main#content .ev-list > .ev:nth-child(4n+3) { --ac: var(--lime); }
+.v4-p-news main#content .ev-list > .ev:nth-child(4n+4) { --ac: var(--pink); }
+.v4-p-news main#content .card.ev-card { transition: box-shadow .45s cubic-bezier(.2, .7, .2, 1), border-color .35s, translate .45s cubic-bezier(.2, .7, .2, 1); }
+.v4-p-news main#content .ev:hover .card.ev-card { translate: 4px 0; border-color: var(--ac); box-shadow: inset 4px 0 0 var(--ac), 0 22px 44px -30px color-mix(in srgb, var(--navy) 70%, transparent); }
+.v4-p-news main#content .ev:hover .ev-node { background: var(--ac); border-color: var(--ac); }
+.v4-p-news main#content .ev-open:hover svg { transform: translateX(4px); }
+.v4-p-news main#content .ev-feature .ev-media img { animation: nvBreathe 22s ease-in-out infinite alternate; }
+@keyframes nvBreathe { from { transform: scale(1); } to { transform: scale(1.07) translate(-1%, -1%); } }
+
+/* ── Wide screens: the transition-sequence layout ─────────────────────────────
+   A central spine with a slow double helix around it; events alternate left and right; each lights up as it is
+   reached, its node glows and its date appears as a chip across the spine. (After nzii-web's carbon sequence.) */
+@media (min-width: 1100px) {
+  .v4-p-news main#content .ev-time { --gap: 62px; padding-left: 0; }
+
+  /* the helix, drifting slowly downwards, and the bright line that fills as far as you have read */
+  .v4-p-news main#content .ev-time::before { left: 50%; top: 64px; width: 50px; margin-left: -25px; opacity: .5;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='200' viewBox='0 0 50 200'%3E%3Cg fill='none' stroke='%232b9d8f' stroke-width='1.3' stroke-dasharray='3 4'%3E%3Cpath d='M25 0Q50 50 25 100T25 200'/%3E%3Cpath d='M25 0Q0 50 25 100T25 200'/%3E%3C/g%3E%3C/svg%3E") 0 0 / 50px 200px repeat-y;
+    animation: nvHelix 14s linear infinite; }
+  @keyframes nvHelix { to { background-position: 0 200px; } }
+  .v4-p-news main#content.wm .ev-time::after, .v4-p-news main#content .ev-time::after { content: ""; position: absolute; left: 50%; top: 64px; width: 2px; margin-left: -1px; height: calc((100% - 64px) * var(--wm-line, 1)); border-radius: 2px; background: linear-gradient(var(--teal), var(--lime)); box-shadow: 0 0 14px transparent; transition: height .35s linear; }
+
+  /* the end of the line: the helix and the bright line stop short and fade, and a ring closes the spine */
+  .v4-p-news main#content .ev-time { padding-bottom: 84px; }
+  .v4-p-news main#content .ev-time::before { bottom: 30px; -webkit-mask-image: linear-gradient(#000 calc(100% - 90px), transparent); mask-image: linear-gradient(#000 calc(100% - 90px), transparent); }
+  .v4-p-news main#content.wm .ev-time::after, .v4-p-news main#content .ev-time::after { height: calc((100% - 64px - 34px) * var(--wm-line, 1)); }
+  .v4-p-news main#content .ev-year:last-child::before { content: ""; position: absolute; left: 50%; bottom: -76px; width: 20px; height: 20px; margin-left: -10px; border-radius: 50%; background: var(--bg); border: 2px solid var(--teal); box-shadow: 0 0 0 6px var(--bg), 0 0 0 7px transparent, inset 0 0 0 4px var(--bg), inset 0 0 0 10px var(--lime); }
+
+  /* each year's block sits above the spine, so the line runs behind the lead story and shows in the gap between the columns */
+  .v4-p-news main#content .ev-year { z-index: 1; }
+
+  /* the year sits on the spine as a marker */
+  .v4-p-news main#content h3.ev-y { justify-content: center; gap: 12px; z-index: 2; }
+  .v4-p-news main#content h3.ev-y::before, .v4-p-news main#content h3.ev-y::after { display: none; }
+  .v4-p-news main#content h3.ev-y { align-self: center; padding: 10px 26px; border-radius: 999px; background: var(--ink); color: var(--bg); font-size: clamp(22px, 2vw, 28px); box-shadow: 0 0 0 8px var(--bg); }
+  .v4-p-news main#content .ev-year.folded h3.ev-y { background: var(--surface); color: var(--ink-2); box-shadow: 0 0 0 1px var(--line), 0 0 0 8px var(--bg); }
+  .v4-p-news main#content h3.ev-y .ev-fold { order: 0; background: transparent; border-color: color-mix(in srgb, currentColor 35%, transparent); color: inherit; min-height: 32px; padding: 4px 12px; }
+  .v4-p-news main#content .ev-year::after { right: auto; left: 50%; top: -.34em; translate: -50% calc(var(--nv-y, 0) * 1px); }
+
+  /* Events pair up either side of the spine (.nv-l / .nv-r, set by NewsRail). The two cards of a pair are the same
+     height, so no row has a ragged gap; the right-hand one starts a step lower, so their nodes never share a line.
+     When a year has an odd number of events its last one (.nv-mid) closes the year centred on the spine.
+     The lead story keeps the full width above. */
+  .v4-p-news main#content .ev-list { --step: 54px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-auto-flow: row dense; column-gap: calc(var(--gap) * 2); row-gap: clamp(14px, 1.6vw, 24px); align-items: stretch; }
+  .v4-p-news main#content .ev-list > .ev { display: flex; flex-direction: column; }
+  .v4-p-news main#content .ev-list > .ev > .card.ev-card { flex: 1; }
+  .v4-p-news main#content .ev-list > .ev.nv-l { grid-column: 1; margin-bottom: var(--step); }
+  .v4-p-news main#content .ev-list > .ev.nv-r { grid-column: 2; margin-top: var(--step); }
+  .v4-p-news main#content .ev-list > .ev.ev-feature { grid-column: 1 / -1; z-index: 1; }
+  .v4-p-news main#content .ev-list > .ev.nv-mid { grid-column: 1 / -1; justify-self: center; width: min(100%, 820px); z-index: 1; }
+  .v4-p-news main#content .ev-list > .ev.nv-mid:has(.has-media) { width: 100%; }
+  .v4-p-news main#content .ev-list > .ev-more-li { grid-column: 1 / -1; justify-self: center; z-index: 2; }
+  .v4-p-news main#content .ev-list > .ev:is(.nv-l, .nv-r) .card.ev-card.has-media { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  .v4-p-news main#content .ev-list > .ev:is(.nv-l, .nv-r) .ev-media { aspect-ratio: 16 / 9; min-height: 0; }
+  /* a little tighter inside, too */
+  .v4-p-news main#content .ev-list > .ev:not(.ev-feature) .ev-txt { gap: 9px; padding: clamp(18px, 1.8vw, 24px) clamp(20px, 2vw, 26px); }
+  .v4-p-news main#content .ev-feature .ev-media { min-height: clamp(260px, 24vw, 340px); }
+  .v4-p-news main#content .ev-feature .ev-txt { padding-block: clamp(20px, 2.2vw, 32px); }
+  .v4-p-news main#content .ev-time { gap: clamp(30px, 3.4vw, 46px); }
+
+  /* node on the spine */
+  .v4-p-news main#content .ev-list > .ev .ev-node { top: 34px; width: 16px; height: 16px; border-width: 2px; border-color: color-mix(in srgb, var(--ink) 35%, transparent); background: var(--bg); box-shadow: 0 0 0 5px var(--bg); }
+  .v4-p-news main#content .ev-list > .ev.nv-l .ev-node { left: auto; right: calc(-1 * var(--gap) - 8px); }
+  .v4-p-news main#content .ev-list > .ev.nv-r .ev-node { left: calc(-1 * var(--gap) - 8px); }
+  .v4-p-news main#content .ev-list > .ev.ev-feature .ev-node { display: none; }
+  /* the closing event wears its node on its top edge, where the spine meets it */
+  .v4-p-news main#content .ev-list > .ev.nv-mid { margin-top: 12px; }
+  .v4-p-news main#content .ev-list > .ev.nv-mid .ev-node { left: 50%; top: -8px; margin-left: -8px; z-index: 3; }
+  .v4-p-news main#content .ev-list > .ev.lit .ev-node, .v4-p-news main#content.wm .ev-list > .ev.lit.wm-in .ev-node { background: var(--lime); border-color: var(--teal); box-shadow: 0 0 0 5px var(--bg), 0 0 0 9px transparent, 0 0 18px var(--lime); }
+
+  /* the date, as a chip that appears when the event lights up */
+  .v4-p-news main#content .nv-month { display: block; position: absolute; z-index: 2; top: -13px; left: auto; right: auto; width: max-content; padding: 7px 12px; border-radius: 8px; background: var(--ink); color: var(--lime); font: 700 .66rem/1 var(--f-head); letter-spacing: .16em; text-transform: uppercase; opacity: 0; translate: 0 8px; transition: opacity .6s .15s, translate .7s .15s cubic-bezier(.2, .7, .2, 1); }
+  html[data-mode="dark"] .v4-p-news main#content .nv-month, html[data-mode="eco"] .v4-p-news main#content .nv-month { background: #0e1a2b; }
+  .v4-p-news main#content .nv-month::after { display: none; }
+  .v4-p-news main#content .nv-month i { display: none; }
+  .v4-p-news main#content .nv-month b { display: inline; font-weight: 700; }
+  /* (it sits on the card's top edge, at the corner nearest the spine) */
+  .v4-p-news main#content .ev-list > .ev.nv-l .nv-month { right: 20px; }
+  .v4-p-news main#content .ev-list > .ev.nv-r .nv-month { left: 20px; }
+  .v4-p-news main#content .ev-list > .ev.nv-mid .nv-month { left: 24px; }
+  .v4-p-news main#content .ev-list > .ev.ev-feature .nv-month { display: none; }
+  .v4-p-news main#content .ev-list > .ev.lit .nv-month { opacity: 1; translate: none; }
+  .v4-p-news main#content .ev:hover .nv-month, .v4-p-news main#content .ev.flash .nv-month { color: var(--lime); translate: none; }
+
+  /* cards wait dimmed, and light up when reached */
+  .v4-p-news main#content .ev-list > .ev:not(.ev-feature) .card.ev-card { opacity: .42; filter: saturate(.5); transition: opacity .8s, filter .8s, box-shadow .45s cubic-bezier(.2, .7, .2, 1), border-color .5s, translate .45s cubic-bezier(.2, .7, .2, 1); }
+  .v4-p-news main#content .ev-list > .ev.lit .card.ev-card { opacity: 1; filter: none; border-color: var(--teal); box-shadow: 0 24px 50px -36px transparent; }
+  .v4-p-news main#content .ev-list > .ev.nv-l:hover .card.ev-card { translate: -4px 0; box-shadow: inset -4px 0 0 var(--ac), 0 22px 44px -30px color-mix(in srgb, var(--navy) 70%, transparent); }
+  .v4-p-news main#content .ev-list > .ev.nv-mid:hover .card.ev-card { translate: 0 -3px; box-shadow: inset 0 4px 0 var(--ac), 0 22px 44px -30px color-mix(in srgb, var(--navy) 70%, transparent); }
+}
+@media (min-width: 1100px) and (prefers-reduced-motion: reduce) { .v4-p-news main#content .ev-time::before { animation: none; } }
+html[data-mode="eco"] .v4-p-news main#content .ev-time::before { animation: none; }
+
+@media (max-width: 900px) {
+  .v4-p-news main#content .nv-rail { border-radius: 18px; padding: 8px 12px; gap: 10px; overflow-x: auto; scrollbar-width: none; }
+  .v4-p-news main#content .nv-rail::-webkit-scrollbar { display: none; }
+  .v4-p-news main#content .nv-now, .v4-p-news main#content .nv-count { display: none; }
+  .v4-p-news main#content .nv-dot { width: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .v4-p-news main#content .nv-rail, .v4-p-news main#content .nv-now b, .v4-p-news main#content .nv-now span, .v4-p-news main#content .ev-feature .ev-media img { animation: none !important; }
+}
+html[data-mode="eco"] .v4-p-news main#content .ev-feature .ev-media img { animation: none !important; }
+
+/* ── Type: four sizes on this page and no more ────────────────────────────────
+   display (the page title) · title 22px (event titles, year markers) · body 1rem (summaries) · small 13px
+   (dates, labels, buttons, the navigator). */
+.v4-p-news main#content { --t-title: 22px; --t-body: 1rem; --t-small: 13px; }
+.v4-p-news main#content :is(h3.ev-y, .ev-card h4) { font-size: var(--t-title); }
+.v4-p-news main#content .ev-sum { font-size: var(--t-body); }
+.v4-p-news main#content :is(.ev-meta, .ev-latest, .ev-open, .ev-fold, .ev-play, .nv-month, .nv-month b, .nv-month i, .nv-y, .nv-count, .nv-now, .nv-now b, .nv-now span) { font-size: var(--t-small); }
+.v4-p-news dialog.evd :is(h1, h2, h3, h4) { font-size: 22px !important; }
+.v4-p-news dialog.evd :is(p, li, figcaption, a, button, time, span) { font-size: 1rem; }
+.v4-p-news dialog.evd :is(.ev-meta, .evd-meta, figcaption, time, small) { font-size: 13px; }
+
+/* ── Room between the lead story and the events beneath it ── */
+@media (min-width: 1100px) {
+  .v4-p-news main#content .ev-list > .ev.ev-feature { margin-bottom: clamp(44px, 4.6vw, 72px); }
+  .v4-p-news main#content .ev-list { row-gap: clamp(26px, 2.6vw, 40px); }
+}
+@media (max-width: 1099px) { .v4-p-news main#content .ev-list > .ev.ev-feature { margin-bottom: 20px; } }

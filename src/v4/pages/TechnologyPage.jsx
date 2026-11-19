@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 export const TechnologyPage = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   const steps = [
     {
       num: '01',
       title: 'Power Systems & Industrial Balancing',
       tag: 'ELECTROLYSIS & DISPATCH',
+      accentColor: 'var(--nzii-teal)',
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
@@ -21,6 +23,7 @@ export const TechnologyPage = () => {
       num: '02',
       title: 'Spatial Leaching & Resource Downscaling',
       tag: 'SPATIAL RESOLUTION',
+      accentColor: 'var(--nzii-lime)',
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
@@ -35,6 +38,7 @@ export const TechnologyPage = () => {
       num: '03',
       title: 'Multi-System Development Coupling',
       tag: 'PRECIPITATION OF OUTCOMES',
+      accentColor: 'var(--nzii-coral)',
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
@@ -50,6 +54,7 @@ export const TechnologyPage = () => {
       num: '04',
       title: 'Milestone & Policy Calibration',
       tag: 'HEATING & EXECUTION',
+      accentColor: 'var(--nzii-teal-light)',
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <circle cx="12" cy="12" r="10" />
@@ -61,10 +66,20 @@ export const TechnologyPage = () => {
     }
   ];
 
+  // Auto-cycle through the 4 steps gently if the user hasn't manually interacted
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+    const timer = setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % steps.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [isAutoPlaying, steps.length]);
+
   const constraints = [
     {
       title: 'Chemical & Industrial Origin',
       desc: 'Nearly 45% of industrial emissions in cement and steel stem directly from chemical process reactions (such as limestone calcination) that cannot be eliminated by renewable power alone.',
+      badgeColor: 'var(--nzii-teal)',
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
@@ -75,6 +90,7 @@ export const TechnologyPage = () => {
     {
       title: 'Not Solved by Fuel Switching',
       desc: 'Switching boilers to electricity or biomass does not address feedstocks. Solving deep decarbonization requires novel electrochemical pathways, green hydrogen, and carbon capture integration.',
+      badgeColor: 'var(--nzii-coral)',
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
@@ -85,6 +101,7 @@ export const TechnologyPage = () => {
     {
       title: 'Growing Proportion of Emissions',
       desc: 'As India’s passenger transport and urban electricity grids green rapidly, hard-to-abate industrial processes and agricultural emissions expand to over 65% of the residual footprint.',
+      badgeColor: 'var(--nzii-lime)',
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
@@ -95,6 +112,7 @@ export const TechnologyPage = () => {
     {
       title: 'Structural Spatial Constraints',
       desc: 'Solar and wind require 10-50x more land per MW than thermal plants. Land tenure, water scarcity, and state-level political economy make spatial planning the ultimate bottleneck.',
+      badgeColor: 'var(--nzii-pink)',
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
@@ -108,28 +126,36 @@ export const TechnologyPage = () => {
     {
       period: '2023 - 2024',
       title: 'Institutional Foundation at IIT Delhi',
-      desc: 'Establishment of NZII Secretariat, constitution of National Advisory Committee, and development of multi-model integration protocols.'
+      desc: 'Establishment of NZII Secretariat, constitution of National Advisory Committee, and development of multi-model integration protocols.',
+      color: 'var(--nzii-teal)'
     },
     {
       period: '2024 - 2025',
       title: 'Reference Scenario Formulation',
-      desc: 'First baseline scenario modeling India’s energy demand, electricity supply, and land-sector emissions to 2070 presented to advisory leaders.'
+      desc: 'First baseline scenario modeling India’s energy demand, electricity supply, and land-sector emissions to 2070 presented to advisory leaders.',
+      color: 'var(--nzii-lime)'
     },
     {
       period: '2025 - 2026',
       title: 'Spatial Modeling & Consortium Expansion',
-      desc: 'Downscaling to district-level land and transmission corridors in partnership with Princeton University’s NZx and leading Indian research bodies.'
+      desc: 'Downscaling to district-level land and transmission corridors in partnership with Princeton University’s NZx and leading Indian research bodies.',
+      color: 'var(--nzii-coral)'
     },
     {
       period: '2026 - 2030',
       title: 'State Roadmaps & Capital Mobilization',
-      desc: 'Calibrated state implementation toolkits, industrial decarbonization pilots, and financial frameworks targeting India’s 2030 milestones.'
+      desc: 'Calibrated state implementation toolkits, industrial decarbonization pilots, and financial frameworks targeting India’s 2030 milestones.',
+      color: 'var(--nzii-teal-light)'
     }
   ];
 
   return (
     <div className="v4-root">
-      {/* Background Architectural Grid Lines */}
+      {/* Dynamic Ambient Glow Nodes */}
+      <div className="cura-hero-ambient" aria-hidden="true"></div>
+      <div className="cura-hero-ambient-2" aria-hidden="true"></div>
+
+      {/* Background Architectural Grid Lines with Animated Light Pulses */}
       <div className="cura-line-grid" aria-hidden="true">
         <div className="cura-vertical-line"></div>
         <div className="cura-vertical-line hide-mobile"></div>
@@ -142,15 +168,19 @@ export const TechnologyPage = () => {
         <div className="cura-container">
           <div className="cura-hero-grid">
             <div>
-              <div className="cura-pill is-orange">TECHNOLOGY &amp; SYSTEMS MODELING</div>
+              <div className="cura-pill">
+                <span className="cura-pill-dot"></span>
+                <span>TECHNOLOGY &amp; SYSTEMS MODELING</span>
+              </div>
               <h1 className="cura-h1" style={{ marginBottom: '24px' }}>
-                Electrochemical &amp; spatial modeling of India’s net-zero transition
+                Electrochemical &amp; spatial modeling for India’s{' '}
+                <span className="teal-gradient-text">net-zero transition</span>
               </h1>
               <p className="cura-lead" style={{ marginBottom: '36px' }}>
                 NZII has engineered an integrated analytical architecture that targets decarbonization at the source: resolving energy supply, heavy industrial processes, and land-use systems.
               </p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
-                <a href="#how-it-works" className="cura-btn cura-btn-orange">
+                <a href="#how-it-works" className="cura-btn cura-btn-teal">
                   Explore Architecture ↓
                 </a>
                 <a href="#structural-constraints" className="cura-btn cura-btn-ghost">
@@ -170,12 +200,12 @@ export const TechnologyPage = () => {
                 left: 0,
                 right: 0,
                 padding: '24px',
-                background: 'linear-gradient(to top, rgba(21, 19, 15, 0.95), transparent)'
+                background: 'linear-gradient(to top, rgba(11, 19, 32, 0.95), transparent)'
               }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--accent-orange-soft)', textTransform: 'uppercase', marginBottom: '4px' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--nzii-lime)', textTransform: 'uppercase', marginBottom: '4px' }}>
                   LABORATORY &amp; POLICY INTERFACE
                 </div>
-                <div style={{ fontSize: '0.95rem', fontWeight: 600 }}>
+                <div style={{ fontSize: '0.95rem', fontWeight: 600, color: '#ffffff' }}>
                   Decarbonization Systems Modeling Room • IIT Delhi
                 </div>
               </div>
@@ -187,35 +217,39 @@ export const TechnologyPage = () => {
       {/* 02 TECHNOLOGY OVERVIEW / ABOUT */}
       <section className="cura-sec" id="overview">
         <div className="cura-container">
-          <div className="cura-pill">TECHNOLOGY OVERVIEW</div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
+          <div className="cura-pill is-lime">
+            <span className="cura-pill-dot"></span>
+            <span>APPROACH OVERVIEW</span>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1.05fr 0.95fr', gap: 'clamp(40px, 6vw, 70px)', alignItems: 'center' }}>
             <div>
               <h2 className="cura-h2" style={{ marginBottom: '24px' }}>
-                Designed to remove transition bottlenecks at their source
+                Designed to remove transition bottlenecks{' '}
+                <span className="teal-gradient-text">at their source</span>
               </h2>
               <h4 className="cura-h4" style={{ color: 'var(--text-secondary)', marginBottom: '20px' }}>
                 NZII models the structural interactions between energy, heavy industry, land, and water — moving beyond high-level national averages.
               </h4>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.7, marginBottom: '24px' }}>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.7, marginBottom: '28px' }}>
                 Traditional climate models often evaluate mitigation in isolation, missing the physical bottlenecks on the ground: electricity line congestion, district water stress, and the livelihood shifts of industrial workforces. Our analytical framework bridges macroeconomic ambition with spatial engineering reality.
               </p>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', paddingTop: '16px', borderTop: '1px solid var(--line-guide)' }}>
-                <div>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.6rem', fontWeight: 700, color: 'var(--accent-orange)' }}>85%+</div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Emissions Covered</div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', paddingTop: '20px', borderTop: '1px solid var(--line-guide)' }}>
+                <div style={{ padding: '12px', background: 'rgba(43, 157, 143, 0.08)', borderRadius: '8px', border: '1px solid rgba(43, 157, 143, 0.2)' }}>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.7rem', fontWeight: 700, color: 'var(--nzii-teal-light)' }}>85%+</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginTop: '4px' }}>Emissions Covered</div>
                 </div>
-                <div>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.6rem', fontWeight: 700, color: 'var(--text-primary)' }}>700+</div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Districts Resolved</div>
+                <div style={{ padding: '12px', background: 'rgba(167, 201, 87, 0.08)', borderRadius: '8px', border: '1px solid rgba(167, 201, 87, 0.2)' }}>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.7rem', fontWeight: 700, color: 'var(--nzii-lime)' }}>700+</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginTop: '4px' }}>Districts Resolved</div>
                 </div>
-                <div>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.6rem', fontWeight: 700, color: 'var(--accent-green-text)', background: 'var(--accent-green-bg)', display: 'inline-block', padding: '2px 8px', borderRadius: '4px' }}>2070</div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '4px' }}>Zero Milestone</div>
+                <div style={{ padding: '12px', background: 'rgba(231, 111, 81, 0.08)', borderRadius: '8px', border: '1px solid rgba(231, 111, 81, 0.2)' }}>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.7rem', fontWeight: 700, color: '#ff8a6e' }}>2070</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginTop: '4px' }}>Net Zero Goal</div>
                 </div>
               </div>
             </div>
 
-            <div style={{ position: 'relative', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--line-strong)', aspectRatio: '16/11' }}>
+            <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--line-strong)', aspectRatio: '16/11', boxShadow: '0 20px 50px rgba(0,0,0,0.5)' }}>
               <img
                 src="/assets/photos/12_Agriculture_Dec2024_photo1_room.jpg"
                 alt="System Modeling Work"
@@ -230,7 +264,10 @@ export const TechnologyPage = () => {
       <section className="cura-sec" id="structural-constraints">
         <div className="cura-container">
           <div style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 60px' }}>
-            <div className="cura-pill">STRUCTURAL CONSTRAINTS</div>
+            <div className="cura-pill is-coral">
+              <span className="cura-pill-dot"></span>
+              <span>STRUCTURAL CONSTRAINTS</span>
+            </div>
             <h2 className="cura-h2" style={{ marginBottom: '16px' }}>
               Why structural bottlenecks dominate India’s net-zero footprint
             </h2>
@@ -240,21 +277,21 @@ export const TechnologyPage = () => {
           </div>
 
           <div className="cura-tech-grid">
-            <div style={{ position: 'relative', borderRadius: '6px', overflow: 'hidden', border: '1px solid var(--line-card)' }}>
+            <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--line-card)', boxShadow: '0 20px 40px rgba(0,0,0,0.4)' }}>
               <img
                 src="/assets/photos/12_Urbanisation_Sep2024_photo2_group_exercise.jpg"
                 alt="Analytical Working Session"
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(21,19,15,0.95) 10%, transparent 60%)', padding: '28px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--accent-orange-soft)', textTransform: 'uppercase' }}>
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(11,19,32,0.95) 15%, transparent 65%)', padding: '28px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--nzii-lime)', textTransform: 'uppercase' }}>
                   CRITICAL METRICS
                 </div>
-                <div style={{ fontSize: '1.2rem', fontWeight: 600, marginTop: '4px' }}>
+                <div style={{ fontSize: '1.25rem', fontWeight: 600, color: '#ffffff', marginTop: '4px' }}>
                   Industrial &amp; Spatial Decoupling
                 </div>
                 <div style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', marginTop: '8px' }}>
-                  Moving from national averages to local implementation pathways.
+                  Moving from national averages to local implementation pathways across India's core sectors.
                 </div>
               </div>
             </div>
@@ -262,7 +299,7 @@ export const TechnologyPage = () => {
             <div className="cura-tech-grid-cards">
               {constraints.map((c, i) => (
                 <div key={i} className="cura-card">
-                  <div className="cura-card-icon">
+                  <div className="cura-card-icon" style={{ color: c.badgeColor, background: `color-mix(in srgb, ${c.badgeColor} 15%, transparent)` }}>
                     {c.icon}
                   </div>
                   <h4 className="cura-h4">{c.title}</h4>
@@ -276,14 +313,17 @@ export const TechnologyPage = () => {
         </div>
       </section>
 
-      {/* 04 HOW IT WORKS (INTERACTIVE PROCESS PIPELINE) */}
+      {/* 04 HOW IT WORKS (INTERACTIVE PROCESS PIPELINE WITH AUTO-CYCLE & SMOOTH ANIMATION) */}
       <section className="cura-sec" id="how-it-works">
         <div className="cura-container">
-          <div className="cura-pill">HOW IT WORKS</div>
+          <div className="cura-pill">
+            <span className="cura-pill-dot"></span>
+            <span>HOW IT WORKS</span>
+          </div>
           <h2 className="cura-h2" style={{ marginBottom: '16px' }}>
-            Addressing emissions at the source
+            Addressing emissions <span className="teal-gradient-text">at the source</span>
           </h2>
-          <p className="cura-lead" style={{ maxWidth: '720px', marginBottom: '50px' }}>
+          <p className="cura-lead" style={{ maxWidth: '720px', marginBottom: '45px' }}>
             NZII’s multi-layered analytical framework processes energy, industrial feedstock, spatial geography, and socio-economic indicators in a closed feedback loop.
           </p>
 
@@ -293,10 +333,18 @@ export const TechnologyPage = () => {
                 <div
                   key={idx}
                   className={`cura-step-item ${activeStep === idx ? 'is-active' : ''}`}
-                  onClick={() => setActiveStep(idx)}
+                  onClick={() => {
+                    setActiveStep(idx);
+                    setIsAutoPlaying(false);
+                  }}
                 >
-                  <div className="cura-step-num">{s.num} • {s.tag}</div>
-                  <h3 className="cura-h3" style={{ fontSize: '1.25rem', marginBottom: '8px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div className="cura-step-num" style={{ color: s.accentColor }}>{s.num} • {s.tag}</div>
+                    {activeStep === idx && (
+                      <span style={{ fontSize: '0.7rem', color: 'var(--nzii-teal-light)', fontWeight: 600 }}>Active</span>
+                    )}
+                  </div>
+                  <h3 className="cura-h3" style={{ fontSize: '1.25rem', marginBottom: '8px', color: '#ffffff' }}>
                     {s.title}
                   </h3>
                   <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
@@ -307,26 +355,21 @@ export const TechnologyPage = () => {
             </div>
 
             <div style={{ position: 'sticky', top: '120px' }}>
-              <div style={{
-                backgroundColor: 'var(--bg-card)',
-                border: '1px solid var(--line-strong)',
-                borderRadius: '8px',
-                padding: '40px',
-                position: 'relative'
-              }}>
+              <div className="cura-step-detail-box" key={activeStep}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--accent-orange-soft)' }}>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: steps[activeStep].accentColor, fontWeight: 700 }}>
                     PHASE {steps[activeStep].num} ARCHITECTURE
                   </div>
                   <div style={{
-                    width: '36px',
-                    height: '36px',
+                    width: '42px',
+                    height: '42px',
                     borderRadius: '50%',
-                    backgroundColor: 'rgba(231,73,24,0.15)',
-                    color: 'var(--accent-orange)',
+                    backgroundColor: 'rgba(43, 157, 143, 0.2)',
+                    color: steps[activeStep].accentColor,
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    boxShadow: '0 0 20px rgba(43, 157, 143, 0.25)'
                   }}>
                     {steps[activeStep].icon}
                   </div>
@@ -336,20 +379,20 @@ export const TechnologyPage = () => {
                   {steps[activeStep].title}
                 </h3>
 
-                <p style={{ color: 'var(--text-primary)', fontSize: '1rem', lineHeight: 1.7, marginBottom: '24px' }}>
+                <p style={{ color: 'var(--text-primary)', fontSize: '1.02rem', lineHeight: 1.75, marginBottom: '28px' }}>
                   {steps[activeStep].detail}
                 </p>
 
                 <div style={{
-                  padding: '20px',
-                  backgroundColor: 'rgba(0,0,0,0.3)',
-                  borderRadius: '6px',
-                  border: '1px solid var(--line-guide)'
+                  padding: '22px',
+                  backgroundColor: 'rgba(0, 0, 0, 0.35)',
+                  borderRadius: '8px',
+                  border: '1px solid rgba(43, 157, 143, 0.2)'
                 }}>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '6px' }}>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--nzii-lime)', textTransform: 'uppercase', marginBottom: '6px' }}>
                     KEY MODELING OUTPUT
                   </div>
-                  <div style={{ fontSize: '0.88rem', color: 'var(--text-secondary)' }}>
+                  <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
                     Coupled optimization datasets feeding directly into the NZII Reference Scenario repository.
                   </div>
                 </div>
@@ -363,16 +406,19 @@ export const TechnologyPage = () => {
       <section className="cura-sec">
         <div className="cura-container">
           <div className="cura-spotlight">
-            <div style={{ maxWidth: '800px' }}>
-              <div className="cura-pill is-dark">CORE MODELING ASSET</div>
-              <h2 className="cura-h2" style={{ marginBottom: '20px' }}>
+            <div style={{ maxWidth: '820px', position: 'relative', zIndex: 2 }}>
+              <div className="cura-pill is-lime">
+                <span className="cura-pill-dot"></span>
+                <span>CORE MODELING ASSET</span>
+              </div>
+              <h2 className="cura-h2" style={{ marginBottom: '20px', color: '#ffffff' }}>
                 NZII Reference Scenario™
               </h2>
               <p className="cura-lead" style={{ marginBottom: '32px' }}>
                 A multi-model consensus baseline charting how India’s energy demand, electricity supply, and land-sector emissions could evolve to 2070 — presented to the NZII Advisory Committee.
               </p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
-                <Link to="/v4/scenarios" className="cura-btn cura-btn-white">
+                <Link to="/v4/scenarios" className="cura-btn cura-btn-lime">
                   Inspect Reference Results →
                 </Link>
                 <Link to="/v4/collaborate" className="cura-btn cura-btn-ghost">
@@ -387,7 +433,10 @@ export const TechnologyPage = () => {
       {/* 06 PROGRESS ROADMAP */}
       <section className="cura-sec" id="roadmap">
         <div className="cura-container">
-          <div className="cura-pill">PROGRESS ROADMAP</div>
+          <div className="cura-pill is-coral">
+            <span className="cura-pill-dot"></span>
+            <span>PROGRESS ROADMAP</span>
+          </div>
           <h2 className="cura-h2" style={{ marginBottom: '16px' }}>
             From analytical foundations to national deployment
           </h2>
@@ -399,14 +448,16 @@ export const TechnologyPage = () => {
             {milestones.map((m, idx) => (
               <div key={idx} className="cura-milestone">
                 <div>
-                  <div className="cura-milestone-year">{m.period}</div>
+                  <div className="cura-milestone-year" style={{ color: m.color, borderColor: `color-mix(in srgb, ${m.color} 30%, transparent)`, background: `color-mix(in srgb, ${m.color} 15%, transparent)` }}>
+                    {m.period}
+                  </div>
                   <h4 className="cura-h4" style={{ marginBottom: '12px' }}>{m.title}</h4>
                   <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', lineHeight: 1.6 }}>
                     {m.desc}
                   </p>
                 </div>
                 <div style={{ paddingTop: '20px', borderTop: '1px solid var(--line-card)', display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)', fontSize: '0.75rem' }}>
-                  <div style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: idx <= 2 ? 'var(--accent-orange)' : 'var(--text-muted)' }}></div>
+                  <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: idx <= 2 ? m.color : 'var(--text-muted)', boxShadow: idx <= 2 ? `0 0 10px ${m.color}` : 'none' }}></div>
                   {idx <= 2 ? 'Completed / Active' : 'Target Milestone'}
                 </div>
               </div>
@@ -418,7 +469,10 @@ export const TechnologyPage = () => {
       {/* 07 ECOSYSTEM & COLLABORATORS */}
       <section className="cura-sec" id="collaborators">
         <div className="cura-container">
-          <div className="cura-pill">THE NZII ECOSYSTEM</div>
+          <div className="cura-pill">
+            <span className="cura-pill-dot"></span>
+            <span>THE NZII ECOSYSTEM</span>
+          </div>
           <h2 className="cura-h2" style={{ marginBottom: '16px' }}>
             Partners &amp; Collaborators
           </h2>
@@ -440,15 +494,18 @@ export const TechnologyPage = () => {
       <section className="cura-final-cta">
         <div className="cura-container">
           <div className="cura-final-cta-in">
-            <div className="cura-pill is-orange">GET INVOLVED</div>
-            <h2 className="cura-h2">
+            <div className="cura-pill is-lime">
+              <span className="cura-pill-dot"></span>
+              <span>GET INVOLVED</span>
+            </div>
+            <h2 className="cura-h2" style={{ color: '#ffffff' }}>
               An upstream, systemic approach to India’s decarbonization
             </h2>
             <p className="cura-lead">
               NZII is building practical analytical pathways for decision-makers this decade — without losing sight of human development, economic growth, and regional equity.
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', justifyContent: 'center' }}>
-              <Link to="/v4/collaborate" className="cura-btn cura-btn-orange">
+              <Link to="/v4/collaborate" className="cura-btn cura-btn-teal">
                 Speak with our research team →
               </Link>
               <Link to="/v4/scenarios" className="cura-btn cura-btn-ghost">

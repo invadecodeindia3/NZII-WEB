@@ -1,0 +1,59 @@
+/* Layout polish for the animated Home designs (<main class="fx-a"> / "fx-b"). Hand-written. */
+
+/* ── "Supported by": the label, then the three logos in equal, evenly spaced tiles across the strip ── */
+@media (min-width: 761px) {
+  .v4-p-home main#content[class*="fx-"] .support { display: grid; grid-template-columns: auto repeat(3, minmax(0, 1fr)); align-items: center; gap: 16px; padding: 18px 20px 18px 28px; }
+  .v4-p-home main#content[class*="fx-"] .support .eyebrow { margin-right: clamp(8px, 2vw, 32px); }
+  .v4-p-home main#content[class*="fx-"] .support .lg { display: flex; justify-content: center; height: 68px; padding: 14px 20px; }
+  .v4-p-home main#content[class*="fx-"] .support .lg img, .v4-p-home main#content[class*="fx-"] .support .lg img[src*="princeton"] { height: 100%; width: auto; max-width: 100%; }
+}
+
+/* ── "Explore our work": a shorter lead picture, so the two cards beside it are not stretched tall; what room
+   is left in them holds the link on a ruled foot and a small cluster of brand dots in the corner ── */
+.v4-p-home main#content[class*="fx-"] .feat .photo { aspect-ratio: 2.2 / 1; }
+.v4-p-home main#content[class*="fx-"] .feat .photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.v4-p-home main#content[class*="fx-"] .side .card { padding: 26px 28px 22px; gap: 10px; background-repeat: no-repeat; background-position: right 18px bottom 58px; background-size: 132px 88px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 132 88'%3E%3Cg opacity='.55'%3E%3Ccircle cx='120' cy='76' r='9' fill='%232b9d8f'/%3E%3Ccircle cx='96' cy='78' r='6' fill='%23a7c957'/%3E%3Ccircle cx='122' cy='52' r='6.5' fill='%23e76f51'/%3E%3Ccircle cx='100' cy='56' r='4.5' fill='%232b9d8f'/%3E%3Ccircle cx='76' cy='80' r='4' fill='%23f28482'/%3E%3Ccircle cx='124' cy='31' r='4' fill='%23a7c957'/%3E%3Ccircle cx='104' cy='37' r='3' fill='%23f28482'/%3E%3Ccircle cx='80' cy='61' r='3' fill='%231d3658'/%3E%3Ccircle cx='58' cy='82' r='2.5' fill='%232b9d8f'/%3E%3Ccircle cx='126' cy='13' r='2.5' fill='%231d3658'/%3E%3Ccircle cx='86' cy='43' r='2' fill='%23a7c957'/%3E%3Ccircle cx='42' cy='84' r='1.8' fill='%23e76f51'/%3E%3C/g%3E%3C/svg%3E"); }
+.v4-p-home main#content[class*="fx-"] .side .card .go { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line); width: 100%; }
+
+/* ── Colour: each section takes one brand colour as its own ─────────────────────
+   teal → coral → lime → pink → teal down the page. The colour (--acc) drives that section's small marks
+   (eyebrow dots, rules, bullets, card hovers, crosshairs) and a soft wash in one corner. Text keeps to the two
+   brand colours that read well on cream (--acc-ink: deep teal or deep coral). */
+.v4-p-home main#content[class*="fx-"] > section { --acc: var(--teal); --acc-ink: var(--accent); --wash: 88% 0%; }
+.v4-p-home main#content[class*="fx-"] > section[aria-labelledby="h-why"] { --acc: var(--coral); --acc-ink: #b5472a; --wash: 0% 12%; }
+.v4-p-home main#content[class*="fx-"] > section[aria-labelledby="h-led"] { --acc: var(--lime); --wash: 100% 8%; }
+.v4-p-home main#content[class*="fx-"] > section[aria-labelledby="h-work"] { --acc: var(--pink); --acc-ink: #b5472a; --wash: 0% 0%; }
+.v4-p-home main#content[class*="fx-"] > section[aria-labelledby="h-news"] { --wash: 100% 0%; }
+html[data-mode="dark"] .v4-p-home main#content[class*="fx-"] > section, html[data-mode="eco"] .v4-p-home main#content[class*="fx-"] > section { --acc-ink: var(--acc); }
+
+.v4-p-home main#content[class*="fx-"] > section, .v4-p-home main#content[class*="fx-"] > section .c-teal { --c: var(--acc); }
+.v4-p-home main#content[class*="fx-"] > section :is(.hl, .pic-head, .final-in) > .rule { background: var(--acc); }
+.v4-p-home main#content[class*="fx-"] > section h2 .teal { color: var(--acc-ink); }
+.v4-p-home main#content[class*="fx-"] > section .go { color: var(--acc-ink); }
+.v4-p-home main#content[class*="fx-"] > section .fxa-x { background: linear-gradient(var(--acc), var(--acc)) center / 1.5px 100% no-repeat, linear-gradient(var(--acc), var(--acc)) center / 100% 1.5px no-repeat; }
+.v4-p-home main#content[class*="fx-"] > section .btn.line:hover { background: var(--acc); border-color: var(--acc); color: var(--navy); }
+
+/* the six questions run through the palette, one colour each */
+.v4-p-home main#content[class*="fx-"] .choices li:nth-child(4n+1) { --c: var(--coral); }
+.v4-p-home main#content[class*="fx-"] .choices li:nth-child(4n+2) { --c: var(--teal); }
+.v4-p-home main#content[class*="fx-"] .choices li:nth-child(4n+3) { --c: var(--lime); }
+.v4-p-home main#content[class*="fx-"] .choices li:nth-child(4n+4) { --c: var(--pink); }
+
+/* the four qualities: a colour each, on its number and the disc behind its picture */
+.v4-p-home main#content[class*="fx-"] .qcard:nth-child(1) { --q: var(--coral); }
+.v4-p-home main#content[class*="fx-"] .qcard:nth-child(2) { --q: var(--lime); }
+.v4-p-home main#content[class*="fx-"] .qcard:nth-child(3) { --q: var(--pink); }
+.v4-p-home main#content[class*="fx-"] .qcard:nth-child(4) { --q: var(--teal); }
+.v4-p-home main#content[class*="fx-"] .qcard .num { display: inline-flex; align-items: center; gap: 10px; }
+.v4-p-home main#content[class*="fx-"] .qcard .num::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--q); }
+.v4-p-home main#content.fx-a .qual.fxa-steps .qcard .fxa-count i.on { background: var(--q); }
+
+/* the five targets, the three news cards and the two work cards each take the next colour along */
+.v4-p-home main#content[class*="fx-"] :is(.fp-targets li, .news .card, .side .card):nth-child(4n+1) { --c: var(--teal); }
+.v4-p-home main#content[class*="fx-"] :is(.fp-targets li, .news .card, .side .card):nth-child(4n+2) { --c: var(--coral); }
+.v4-p-home main#content[class*="fx-"] :is(.fp-targets li, .news .card, .side .card):nth-child(4n+3) { --c: var(--lime); }
+.v4-p-home main#content[class*="fx-"] :is(.fp-targets li, .news .card, .side .card):nth-child(4n+4) { --c: var(--pink); }
+.v4-p-home main#content[class*="fx-"] :is(.fp-targets li, .news .card, .side .card) .c-teal { --c: inherit; }
+.v4-p-home main#content[class*="fx-"] .fp-targets li.card.on { border-color: var(--c); box-shadow: inset 0 3px 0 var(--c); }
+.v4-p-home main#content[class*="fx-"] .news .card { box-shadow: inset 0 3px 0 var(--c); }

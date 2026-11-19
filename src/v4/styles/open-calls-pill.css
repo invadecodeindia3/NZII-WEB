@@ -1,0 +1,23 @@
+/* The open-calls notice in its "smart" form on the animated Home designs (OpenCallsPopup.jsx): it sits above the
+   version switcher instead of over it, folds to a small pill, and steps aside when it would only repeat the page. */
+
+.v4-p-home .oc-pop.oc-smart { right: 16px; bottom: 74px; transition: opacity .45s ease, transform .55s cubic-bezier(.2, .7, .2, 1); transform-origin: 100% 100%; }
+.v4-p-home .oc-pop.oc-smart:not(.is-pill) { animation: ocUnfold .5s cubic-bezier(.2, .8, .3, 1) backwards; }
+@keyframes ocUnfold { from { opacity: 0; scale: .9; translate: 0 10px; } to { opacity: 1; scale: 1; translate: none; } }
+.v4-p-home .oc-pop.oc-smart.is-tucked { opacity: 0; transform: translateY(16px); pointer-events: none; animation: none; }
+
+/* the pill */
+.v4-p-home .oc-pop.oc-smart.is-pill { width: auto; padding: 0; border: 0; border-radius: 999px; background: none; box-shadow: none; animation: ocUnfold .45s cubic-bezier(.2, .8, .3, 1) backwards; }
+.v4-p-home .oc-pill { display: inline-flex; align-items: center; gap: 10px; padding: 7px 14px 7px 8px; border-radius: 999px; border: 1px solid var(--line); background: color-mix(in srgb, var(--surface) 92%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 12px 28px -16px rgba(20, 36, 58, .5); color: var(--ink); font: 600 .8rem var(--f-head); cursor: pointer; transition: border-color .3s, box-shadow .3s, translate .4s cubic-bezier(.2, .7, .2, 1); }
+.v4-p-home .oc-pill:hover, .v4-p-home .oc-pill:focus-visible { border-color: var(--teal); translate: 0 -2px; box-shadow: 0 16px 30px -16px transparent; outline: none; }
+.v4-p-home .oc-pill .oc-live { font: 700 .66rem var(--f-head); letter-spacing: .08em; text-transform: uppercase; }
+.v4-p-home .oc-pill b { font-weight: 600; }
+.v4-p-home .oc-pill-go { display: inline-flex; align-items: center; gap: 4px; padding-left: 10px; border-left: 1px solid var(--line); color: var(--accent); }
+.v4-p-home .oc-pill-go svg { transition: transform .3s; }
+.v4-p-home .oc-pill:hover .oc-pill-go svg { transform: translate(2px, -2px); }
+
+@media (max-width: 640px) {
+  .v4-p-home .oc-pop.oc-smart { right: 12px; bottom: 116px; }
+  .v4-p-home .oc-pill b { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .v4-p-home .oc-pop.oc-smart, .v4-p-home .oc-pop.oc-smart.is-pill { animation: none !important; transition: none; } }

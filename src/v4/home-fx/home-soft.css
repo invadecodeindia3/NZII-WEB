@@ -1,0 +1,45 @@
+/* Home "A · Subtle": the Blueprint design with the colour turned down. Hand-written; applies with
+   <main class="fx-a fx-soft">. Teal is the one accent throughout, as on the rest of the site; coral, lime and
+   pink appear only as small touches (the chart, the rings' arcs, the closing discs). */
+
+.v4-p-home main#content.fx-soft > section { --acc: var(--teal) !important; --acc-ink: var(--accent) !important; }
+.v4-p-home main#content.fx-soft .choices li,
+.v4-p-home main#content.fx-soft :is(.fp-targets li, .news .card, .side .card) { --c: var(--teal) !important; }
+.v4-p-home main#content.fx-soft .news .card { box-shadow: none; }
+
+/* the four qualities: cream sheets with a hairline, the photograph in a fine ring */
+@media (min-width: 1000px) {
+  .v4-p-home main#content.fx-soft .qual.fxa-steps .qcard { background: var(--bg); border-top: 1px solid var(--line); border-radius: 0; padding-inline: 0; box-shadow: 0 -14px 26px -24px rgba(29, 54, 88, .22);
+    --ink: inherit; --ink-2: inherit; --accent: inherit; color: inherit; }
+  .v4-p-home main#content.fx-soft .qual.fxa-steps .qcard h4 { color: var(--ink); }
+  .v4-p-home main#content.fx-soft .qual.fxa-steps .qcard p { color: var(--ink-2); }
+  .v4-p-home main#content.fx-soft .qual.fxa-steps .qcard .num { color: var(--accent); }
+  .v4-p-home main#content.fx-soft .qual.fxa-steps .qcard .fxa-ring { background: none; }
+  /* the ring round each photograph is that quality's brand colour, solid: coral, lime, pink, teal */
+  .v4-p-home main#content.fx-soft .qual.fxa-steps .qcard .fxa-ring .r1 { stroke: var(--q) !important; stroke-opacity: 1; stroke-width: 5; }
+  .v4-p-home main#content.fx-soft .qual.fxa-steps .qcard .fxa-ring .r2 { stroke: var(--q) !important; stroke-opacity: 1; stroke-width: 1.5; }
+  .v4-p-home main#content.fx-soft .qual.fxa-steps .qcard .fxa-ring :is(.arc, .arc2) { display: none; }
+  .v4-p-home main#content.fx-soft .qual.fxa-steps .qcard .fxa-ring .tk path { stroke: var(--navy); stroke-opacity: 1; }
+  .v4-p-home main#content.fx-soft .qual.fxa-steps .qcard .num::before { background: var(--q); }
+  .v4-p-home main#content.fx-soft .qual.fxa-steps .qcard .fxa-count i.on { background: var(--q); }
+  .v4-p-home main#content.fx-soft .qual.fxa-steps .qcard .photo { box-shadow: none; }
+  .v4-p-home main#content.fx-soft .qual.fxa-steps .qcard .fxa-count { color: var(--ink-2); }
+  .v4-p-home main#content.fx-soft .qual.fxa-steps .qcard .fxa-count i { background: var(--line); }
+}
+
+/* ── "Where India stands" stays light in this version: no navy, the page's own colour throughout ── */
+.v4-p-home main#content.fx-soft > section.fp { --ink: inherit; --ink-2: inherit; --line: inherit; --surface: inherit; --bg: inherit; --accent: inherit; --acc-ink: var(--accent) !important; color: inherit;
+  padding-bottom: clamp(52px, 5.5vw, 80px) !important; }
+.v4-p-home main#content.fx-soft > section.fp::before { display: none; }
+.v4-p-home main#content.fx-soft > section.fp + section { padding-top: clamp(52px, 5.5vw, 80px) !important; }
+
+/* ── The Earth leaves like a slow camera move: it keeps turning, drifts down at about half the page's speed and
+   comes a little closer, its orbit opening out, and it has faded away cleanly before the next heading reaches it.
+   Nothing blurred, nothing behind the text. ── */
+.v4-p-home main#content.fx-soft .fxa-globe {
+  translate: 0 calc(var(--fxa-h, 0) * 30vh);
+  scale: calc(1 + var(--fxa-h, 0) * .16);
+  opacity: clamp(0, calc(1.32 - var(--fxa-h, 0) * 2.2), 1); }
+.v4-p-home main#content.fx-soft .fxa-globe :is(.fp-globe-ball, .fp-globe-shade) { -webkit-mask-image: none; mask-image: none; filter: none; }
+.v4-p-home main#content.fx-soft .fxa-orbit { scale: calc(1 + var(--fxa-h, 0) * .28); opacity: clamp(0, calc(1 - var(--fxa-h, 0) * 2.4), 1); }
+.v4-p-home main#content.fx-soft .hero-in > div:first-child { opacity: clamp(0, calc(1.15 - var(--fxa-h, 0) * 1.6), 1); translate: 0 calc(var(--fxa-h, 0) * -28px); }

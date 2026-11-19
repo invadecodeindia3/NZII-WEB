@@ -1,0 +1,69 @@
+/* "Where India stands, and the road to 2070" (FootprintStory.jsx), shown in the animated Home variants.
+   Hand-written. It borrows the Home page's own section, headline, eyebrow and card styles, sits on the page's
+   alternate section background (--band), and uses only the brand palette through the page tokens. */
+
+.v4-p-home main#content section.fp { --fx-ease: cubic-bezier(.2, .7, .2, 1); background: var(--band); }
+.v4-p-home main#content .fp > .hl { margin-bottom: clamp(28px, 4vw, 52px); }
+.v4-p-home main#content .fp-grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(28px, 5vw, 88px); align-items: start; }
+
+/* ── The figure and its sectors ───────────────────────────────────────────── */
+.v4-p-home main#content .fp-total { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 .28em; margin: 0; max-width: none; font-family: var(--f-serif); font-weight: 500; line-height: 1; letter-spacing: -.03em; color: var(--ink); }
+.v4-p-home main#content .fp-num { font-size: clamp(3.4rem, 7vw, 6rem); font-variant-numeric: tabular-nums; }
+.v4-p-home main#content .fp-unit { font-size: clamp(1.4rem, 2.4vw, 2.1rem); letter-spacing: -.01em; color: var(--accent); }
+.v4-p-home main#content .fp-unit sub { font-size: .6em; }
+.v4-p-home main#content .fp-sub { margin: 12px 0 0; max-width: 30rem !important; font-size: 1.02rem; line-height: 1.55; color: var(--ink-2); }
+.v4-p-home main#content .fp-bars { list-style: none; margin: clamp(18px, 2.4vw, 30px) 0 0; padding: 0; display: grid; gap: 11px; }
+.v4-p-home main#content .fp-bars li { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; align-items: baseline; }
+.v4-p-home main#content .fp-bar-k { font: 600 .9rem var(--f-head); color: var(--ink); }
+.v4-p-home main#content .fp-bar-v { font: 600 .86rem var(--f-head); font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.v4-p-home main#content .fp-bar-t { grid-column: 1 / -1; height: 5px; border-radius: 5px; background: color-mix(in srgb, var(--ink) 9%, transparent); overflow: hidden; }
+.v4-p-home main#content .fp-bar-t i { display: block; height: 100%; width: var(--w); border-radius: 5px; background: var(--c); transform-origin: left; transform: scaleX(0); transition: transform 1.3s var(--d) var(--fx-ease); }
+.v4-p-home main#content .fp.fp-in .fp-bar-t i { transform: none; }
+
+/* ── The chart: measured emissions, then the many routes to 2070 ──────────── */
+.v4-p-home main#content .fp-chart { margin: 0; padding: clamp(14px, 2vw, 26px) clamp(12px, 2vw, 26px) clamp(12px, 1.6vw, 20px); border-radius: 18px; border: 1px solid var(--line); background: var(--surface); }
+.v4-p-home main#content .fp-chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.v4-p-home main#content .fp-gridline line { stroke: var(--line); stroke-width: 1; }
+.v4-p-home main#content .fp-gridline text, .v4-p-home main#content .fp-xt, .v4-p-home main#content .fp-yl { font: 600 12px var(--f-head); fill: var(--ink-2); font-variant-numeric: tabular-nums; }
+.v4-p-home main#content .fp-hist { fill: none; stroke: var(--coral); stroke-width: 3.2; stroke-linejoin: round; stroke-linecap: round; }
+.v4-p-home main#content .fp-fan { fill: none; stroke: var(--teal); stroke-width: 2.2; stroke-dasharray: 2 7; stroke-linecap: round; }
+.v4-p-home main#content .fp-fan:nth-of-type(2) { stroke: var(--ink); opacity: .55; }
+.v4-p-home main#content .fp-fan:nth-of-type(3) { stroke: var(--pink); }
+.v4-p-home main#content .fp-now { fill: var(--surface); stroke: var(--coral); stroke-width: 3; }
+.v4-p-home main#content .fp-mile { stroke: color-mix(in srgb, var(--ink) 28%, transparent); stroke-width: 1; stroke-dasharray: 2 5; transition: stroke .5s; }
+.v4-p-home main#content .fp-mile.on { stroke: var(--teal); }
+.v4-p-home main#content .fp-cursor { stroke: var(--ink); stroke-width: 1; opacity: .35; }
+.v4-p-home main#content .fp-zero { fill: var(--surface); stroke: color-mix(in srgb, var(--ink) 45%, transparent); stroke-width: 2; transition: fill .5s, stroke .5s; }
+.v4-p-home main#content .fp-zero.on { fill: var(--lime); stroke: var(--ink); }
+.v4-p-home main#content .fp-year rect { fill: var(--ink); }
+.v4-p-home main#content .fp-year text { font: 700 14px var(--f-head); fill: var(--bg); font-variant-numeric: tabular-nums; }
+.v4-p-home main#content .fp-chart figcaption { display: flex; flex-wrap: wrap; gap: 6px 24px; margin-top: 10px; padding-left: 8px; font: 500 .78rem var(--f-head); color: var(--ink-2); }
+.v4-p-home main#content .fp-chart .k { display: inline-flex; align-items: center; gap: 9px; }
+.v4-p-home main#content .fp-chart .k::before { content: ""; width: 26px; height: 0; border-top: 3px solid var(--coral); }
+.v4-p-home main#content .fp-chart .k.fan::before { border-top: 2px dotted var(--teal); }
+
+/* ── India's stated targets: cards that light up as the years pass them ───── */
+.v4-p-home main#content .fp-targets { list-style: none; margin: clamp(20px, 2.6vw, 34px) 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+.v4-p-home main#content .fp-targets li.card { display: flex; flex-direction: column; gap: 8px; padding: 18px 18px 20px; background: var(--surface); opacity: .45; transform: translateY(8px); transition: opacity .6s, transform .7s var(--fx-ease), border-color .5s, box-shadow .5s; }
+.v4-p-home main#content .fp-targets li.card.on { opacity: 1; transform: none; border-color: var(--teal); }
+.v4-p-home main#content .fp-targets li.card:nth-child(2) { transition-delay: .07s; }
+.v4-p-home main#content .fp-targets li.card:nth-child(3) { transition-delay: .14s; }
+.v4-p-home main#content .fp-targets li.card:nth-child(4) { transition-delay: .21s; }
+.v4-p-home main#content .fp-targets li.card.end.on { border-color: var(--teal); box-shadow: inset 0 3px 0 var(--lime); }
+.v4-p-home main#content .fp-targets h3 { margin: 0; font-size: 1.02rem; line-height: 1.3; color: var(--ink); }
+.v4-p-home main#content .fp-targets p { margin: 0; font-size: .86rem; line-height: 1.5; color: var(--ink-2); }
+
+.v4-p-home main#content .fp-source { margin: clamp(16px, 2vw, 24px) 0 0; font-size: .78rem; line-height: 1.6; color: var(--ink-2); }
+.v4-p-home main#content .fp-source a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.v4-p-home main#content .fp-live { display: inline-block; width: 7px; height: 7px; margin-right: 6px; border-radius: 50%; background: var(--teal); animation: fpPulse 1.8s ease-in-out infinite; }
+@keyframes fpPulse { 50% { opacity: .35; transform: scale(.8); } }
+
+@media (max-width: 1100px) {
+  .v4-p-home main#content .fp-targets { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .v4-p-home main#content .fp-grid { grid-template-columns: 1fr; }
+  .v4-p-home main#content .fp-targets { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .v4-p-home main#content .fp-targets li.card.end { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) { .v4-p-home main#content .fp-live { animation: none; } }

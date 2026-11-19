@@ -1,0 +1,46 @@
+/* The 3D Earth and its labels (Globe3D.jsx). Hand-written; uses the page's own tokens so it sits on any
+   of the site's backgrounds, light or dark. */
+
+.v4-p-home main#content .fp-globe { position: relative; width: 100%; aspect-ratio: 1; }
+.v4-p-home main#content .fp-globe-ball { position: absolute; inset: 0; border-radius: 50%; cursor: grab; touch-action: pan-y; }
+.v4-p-home main#content .fp-globe-ball:active { cursor: grabbing; }
+.v4-p-home main#content .fp-globe-ball canvas { display: block; }
+.v4-p-home main#content .fp-globe::before { content: ""; position: absolute; inset: 7%; z-index: -1; border-radius: 50%; box-shadow: 0 0 60px 10px transparent, 0 46px 60px -34px color-mix(in srgb, var(--navy) 50%, transparent); }
+.v4-p-home main#content .fp-globe.is-still .fp-globe-ball { inset: 5%; background: radial-gradient(circle at 34% 30%, #3f8fb0, #1d5a7a 42%, #123a57 70%, #0b2238); box-shadow: inset -30px -40px 80px rgba(0, 0, 0, .55); cursor: default; }
+
+/* depth: a soft highlight from the upper left and a darker limb, over the rendered sphere (which fills 92% of the box) */
+.v4-p-home main#content .fp-globe-shade { position: absolute; inset: 4%; border-radius: 50%; pointer-events: none; background: radial-gradient(circle at 30% 26%, rgba(255, 255, 255, .16), transparent 42%), radial-gradient(circle at 50% 50%, transparent 60%, rgba(8, 22, 40, .22) 69%, rgba(8, 22, 40, .46) 71%); box-shadow: 0 0 0 1px transparent; }
+
+.v4-p-home main#content .fp-globe-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.v4-p-home main#content .fp-globe-lines line { stroke: #fffcf6; stroke-width: 1.4; stroke-opacity: .95; stroke-dasharray: 2 4; transition: opacity .4s; }
+.v4-p-home main#content .fp-globe-lines g { transition: opacity .4s; }
+.v4-p-home main#content .fp-globe-lines .pin { fill: currentColor; stroke: #fffcf6; stroke-width: 2.2; }
+.v4-p-home main#content .fp-globe-lines .pulse { fill: none; stroke: currentColor; stroke-width: 1.6; transform-box: fill-box; transform-origin: center; animation: fpRing 3s cubic-bezier(.2, .6, .3, 1) infinite; }
+.v4-p-home main#content .fp-globe-lines .pulse.late { animation-delay: 1.5s; }
+@keyframes fpRing { from { transform: scale(.6); opacity: .9; } to { transform: scale(6.5); opacity: 0; } }
+.v4-p-home main#content .fp-globe-chips { position: absolute; inset: 0; pointer-events: none; }
+.v4-p-home main#content .fp-chip { position: absolute; left: 0; top: 0; display: grid; justify-items: start; gap: 1px; padding: 9px 13px 10px; border-radius: 12px; border: 1px solid var(--line); border-left: 3px solid var(--c); background: color-mix(in srgb, var(--surface) 94%, transparent); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 16px 34px -18px color-mix(in srgb, var(--navy) 60%, transparent); opacity: 0; transition: opacity .4s; white-space: nowrap; will-change: transform; }
+.v4-p-home main#content .fp-chip span { font: 700 .56rem var(--f-head); letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
+.v4-p-home main#content .fp-chip b { margin: 1px 0 2px; font: 500 1.12rem/1.15 var(--f-serif); letter-spacing: -.01em; color: var(--ink); }
+.v4-p-home main#content .fp-chip small { font: 500 .66rem/1.45 var(--f-head); color: var(--ink-2); }
+@media (prefers-reduced-motion: reduce) { .v4-p-home main#content .fp-globe-lines .pulse { animation: none; opacity: 0; } }
+html[data-mode="eco"] .v4-p-home main#content .fp-globe-lines .pulse { animation: none; opacity: 0; }
+/* one card, several facts: each fades up as it arrives; the pips show which one is showing */
+.v4-p-home main#content .fp-chip-in { display: grid; justify-items: start; gap: 1px; animation: fpFact .7s cubic-bezier(.2, .7, .2, 1) both; }
+@keyframes fpFact { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.v4-p-home main#content .fp-chip { min-width: 15.5rem; }
+.v4-p-home main#content .fp-chip b { font-size: 1.5rem; }
+.v4-p-home main#content .fp-chip-steps { display: flex; gap: 5px; margin-top: 8px; }
+.v4-p-home main#content .fp-chip-steps i { width: 14px; height: 3px; border-radius: 3px; background: color-mix(in srgb, var(--ink) 16%, transparent); transition: background .4s, width .4s; }
+.v4-p-home main#content .fp-chip-steps i.on { width: 26px; background: var(--c); }
+/* a small tag for a place */
+.v4-p-home main#content .fp-chip.tag { min-width: 0; padding: 5px 10px; border: 0; border-radius: 999px; background: var(--ink); box-shadow: none; }
+.v4-p-home main#content .fp-chip.tag span { color: var(--bg); letter-spacing: .14em; }
+@media (prefers-reduced-motion: reduce) { .v4-p-home main#content .fp-chip-in { animation: none; } }
+
+@media (max-width: 900px) {
+  .v4-p-home main#content .fp-chip { min-width: 12rem; }
+  .v4-p-home main#content .fp-chip b { font-size: 1.15rem; }
+  .v4-p-home main#content .fp-chip { padding: 7px 10px; }
+  .v4-p-home main#content .fp-chip small { display: none; }
+}

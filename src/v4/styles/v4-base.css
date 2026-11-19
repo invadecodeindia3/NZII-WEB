@@ -1,0 +1,20 @@
+/* Hand-written base for V4. The page stylesheets beside this file are generated from the prototype. */
+
+/* The prototype styles <body> as the page column; in V4 that role is played by the shell (.v4-body),
+   so the real <body> only needs its margin removed and a matching colour behind the page. */
+body {
+  margin: 0;
+  background: #fffcf6;
+}
+html[data-mode="dark"] body {
+  background: #14243a;
+}
+html[data-mode="eco"] body {
+  background: #101e31;
+}
+
+/* The prototype's beige (#f3efe4 alternate sections, #f4f1e8 footer) is not in the brand palette. In light mode
+   every page background is the brand cream; a hairline marks where the alternate sections and the footer begin. */
+html[data-mode="light"] .v4-shell, html:not([data-mode]) .v4-shell { --band: #fffcf6; --ft-bg: #fffcf6; --ft-border: #e6e3da; }
+html[data-mode="light"] .v4-p-who main#content :is(#iit-delhi-team, #funders),
+html[data-mode="light"] .v4-p-oc main#content #home > .section:nth-of-type(even) { border-top: 1px solid var(--line); }

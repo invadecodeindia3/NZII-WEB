@@ -1,0 +1,53 @@
+/* Hand-written additions to the V4 'Collaborate with us' page (collaborate.css is generated):
+   the collaboration network graphic beside the open calls, and a little character for each call tile. */
+
+/* ── A soft field of brand dots behind the opening, so the page reads as an invitation ── */
+.v4-p-collab main#content .oc-start { position: relative; isolation: isolate; }
+.v4-p-collab main#content .oc-start::before { content: ""; position: absolute; z-index: -1; inset: -60px calc(-1 * clamp(16px, 5vw, 120px)) auto; height: 460px; pointer-events: none;
+  background: radial-gradient(circle, transparent 1.4px, transparent 1.8px) 0 0 / 26px 26px;
+  -webkit-mask-image: radial-gradient(70% 90% at 82% 20%, #000, transparent 72%); mask-image: radial-gradient(70% 90% at 82% 20%, #000, transparent 72%); }
+
+/* ── The network: NZII, its collaborators, and an open place ──────────────── */
+.v4-p-collab main#content .cn { margin: 4px 0 0; }
+.v4-p-collab main#content .cn svg { display: block; width: 100%; height: auto; overflow: visible; }
+.v4-p-collab main#content .cn-orbit { fill: none; stroke: color-mix(in srgb, var(--ink) 18%, transparent); stroke-width: 1; stroke-dasharray: 2 6; transform-origin: 50% 50%; animation: cnTurn 90s linear infinite; }
+@keyframes cnTurn { to { transform: rotate(360deg); } }
+.v4-p-collab main#content .cn-link line { stroke: var(--teal); stroke-width: 1.4; stroke-opacity: .55; stroke-dasharray: 1; stroke-dashoffset: 1; animation: cnDraw 1s calc(.5s + var(--i) * .1s) cubic-bezier(.2, .7, .2, 1) forwards; }
+.v4-p-collab main#content .cn-link.open line { stroke: var(--coral); stroke-dasharray: .04 .05; stroke-dashoffset: 0; opacity: 0; animation: cnFade 1s 1.6s forwards; }
+@keyframes cnDraw { to { stroke-dashoffset: 0; } }
+@keyframes cnFade { to { opacity: 1; } }
+.v4-p-collab main#content .cn-pulse { fill: var(--lime); stroke: var(--surface); stroke-width: 1.2; }
+.v4-p-collab main#content .cn-node { transform-box: fill-box; transform-origin: center; opacity: 0; animation: cnPop .8s calc(.9s + var(--i) * .1s) cubic-bezier(.2, 1.4, .3, 1) forwards; }
+@keyframes cnPop { from { opacity: 0; transform: scale(.5); } to { opacity: 1; transform: none; } }
+.v4-p-collab main#content .cn-ring { fill: var(--surface); stroke: var(--ring); stroke-width: 2.6; }
+.v4-p-collab main#content .cn-node.you .cn-you { fill: var(--surface); stroke: var(--coral); stroke-width: 2; stroke-dasharray: 4 5; transform-box: fill-box; transform-origin: center; animation: cnTurn 18s linear infinite; }
+.v4-p-collab main#content .cn-node.you .cn-you-halo { fill: none; stroke: var(--coral); stroke-width: 1.4; transform-box: fill-box; transform-origin: center; animation: cnHalo 2.8s 2.4s ease-out infinite; opacity: 0; }
+@keyframes cnHalo { from { transform: scale(.9); opacity: .7; } to { transform: scale(1.7); opacity: 0; } }
+.v4-p-collab main#content .cn-node.you path { stroke: var(--coral); stroke-width: 2.4; stroke-linecap: round; }
+.v4-p-collab main#content .cn-node.you text { font: 700 12px var(--f-head); letter-spacing: .14em; text-transform: uppercase; fill: var(--coral); }
+.v4-p-collab main#content .cn-core circle { fill: var(--navy); }
+html[data-mode="dark"] .v4-p-collab main#content .cn-core circle, html[data-mode="eco"] .v4-p-collab main#content .cn-core circle { fill: var(--teal); }
+.v4-p-collab main#content .cn-core .halo { fill: transparent; transform-box: fill-box; transform-origin: center; animation: cnBreathe 5s ease-in-out infinite; }
+@keyframes cnBreathe { 50% { transform: scale(1.12); } }
+.v4-p-collab main#content .cn-core text { font: 600 21px var(--f-serif); letter-spacing: .02em; fill: #fffcf6; }
+.v4-p-collab main#content .cn-core text.sub { font: 700 7.5px var(--f-head); letter-spacing: .22em; fill: rgba(255, 252, 246, .75); }
+
+/* ── Call tiles: an icon and a colour for each theme ──────────────────────── */
+.v4-p-collab main#content .tile a { overflow: hidden; padding-top: 22px; }
+.v4-p-collab main#content .tile a::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: var(--tc); transform: scaleX(.18); transform-origin: left; transition: transform .6s cubic-bezier(.2, .7, .2, 1); }
+.v4-p-collab main#content .tile a:hover::before, .v4-p-collab main#content .tile a:focus-visible::before { transform: none; }
+.v4-p-collab main#content .tile a:hover { border-color: var(--tc); }
+.v4-p-collab main#content .tile-ic { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: var(--tc); color: #1d3658; transition: transform .5s cubic-bezier(.2, 1.3, .3, 1), background .3s; }
+.v4-p-collab main#content .tile a:hover .tile-ic { transform: scale(1.08) rotate(-4deg); }
+.v4-p-collab main#content .tile-ic svg { width: 21px; height: 21px; }
+
+@media (max-width: 1000px) { .v4-p-collab main#content .cn { max-width: 380px; margin-inline: auto; } }
+@media (prefers-reduced-motion: reduce) {
+  .v4-p-collab main#content .cn * { animation: none !important; }
+  .v4-p-collab main#content .cn-link line { stroke-dashoffset: 0; }
+  .v4-p-collab main#content .cn-link.open line, .v4-p-collab main#content .cn-node { opacity: 1; }
+  .v4-p-collab main#content .cn-pulse { display: none; }
+}
+html[data-mode="eco"] .v4-p-collab main#content .cn-link line { stroke-dashoffset: 0; }
+html[data-mode="eco"] .v4-p-collab main#content .cn-link.open line, html[data-mode="eco"] .v4-p-collab main#content .cn-node { opacity: 1; }
+html[data-mode="eco"] .v4-p-collab main#content .cn-pulse { display: none; }

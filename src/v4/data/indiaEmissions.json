@@ -1,0 +1,117 @@
+{
+  "source": "Climate TRACE",
+  "sourceUrl": "https://climatetrace.org/explore",
+  "api": "https://api.climatetrace.org/v6/country/emissions",
+  "fetchedAt": "2026-11-19",
+  "unit": "tonnes CO2e (100-year GWP)",
+  "latestYear": 2025,
+  "total": 4157358004.4298196,
+  "co2": 3062251291.1600137,
+  "worldTotal": 57649213337.746605,
+  "rank": 3,
+  "population": {
+    "source": "World Bank",
+    "sourceUrl": "https://data.worldbank.org/indicator/SP.POP.TOTL",
+    "year": 2025,
+    "india": 1463865525,
+    "world": 8215424893
+  },
+  "series": [
+    {
+      "year": 2015,
+      "total": 3032489726.819076
+    },
+    {
+      "year": 2016,
+      "total": 3089810981.640721
+    },
+    {
+      "year": 2017,
+      "total": 3217917114.8836784
+    },
+    {
+      "year": 2018,
+      "total": 3342187102.7502813
+    },
+    {
+      "year": 2019,
+      "total": 3369000947.7282543
+    },
+    {
+      "year": 2020,
+      "total": 3198935698.7817054
+    },
+    {
+      "year": 2021,
+      "total": 3478095275.4122596
+    },
+    {
+      "year": 2022,
+      "total": 3732886905.9073253
+    },
+    {
+      "year": 2023,
+      "total": 3979541277.8800707
+    },
+    {
+      "year": 2024,
+      "total": 4143451221.1707554
+    },
+    {
+      "year": 2025,
+      "total": 4157358004.4298196
+    }
+  ],
+  "sectors": [
+    {
+      "id": "power",
+      "label": "Power",
+      "value": 1491057488.0884643
+    },
+    {
+      "id": "manufacturing",
+      "label": "Manufacturing",
+      "value": 875775186.254413
+    },
+    {
+      "id": "agriculture",
+      "label": "Agriculture",
+      "value": 678823386.1760494
+    },
+    {
+      "id": "fossil-fuel-operations",
+      "label": "Fossil fuel operations",
+      "value": 317116484.3169129
+    },
+    {
+      "id": "buildings",
+      "label": "Buildings",
+      "value": 295968842.50005054
+    },
+    {
+      "id": "forestry-and-land-use",
+      "label": "Forestry & land use",
+      "value": 273214104.45191455
+    },
+    {
+      "id": "transportation",
+      "label": "Transport",
+      "value": 244460770.58241597
+    },
+    {
+      "id": "waste",
+      "label": "Waste",
+      "value": 156694998.96803048
+    },
+    {
+      "id": "fluorinated-gases",
+      "label": "Fluorinated gases",
+      "value": 83994411.26414198
+    },
+    {
+      "id": "mineral-extraction",
+      "label": "Mineral extraction",
+      "value": 13466436.27934094
+    }
+  ]
+}

@@ -1,0 +1,254 @@
+/* Home variant A · "Blueprint". Hand-written; layered over home.css while <main class="fx-a"> is mounted.
+   Uses the page's own tokens (--ink, --line, --bg, --teal, --coral, --lime, --f-serif, --f-head). */
+
+.v4-p-home main#content.fx-a { --gut: clamp(16px, 5vw, 120px); --fx-ease: cubic-bezier(.2, .7, .2, 1); }
+.v4-p-home main#content.fx-a > section { position: relative; }
+
+/* ── Guide lines: the drawing board behind everything ─────────────────────── */
+.v4-p-home .fxa-guides { position: fixed; inset: 0; z-index: 40; pointer-events: none; }
+.v4-p-home .fxa-guides i { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--ink); opacity: .09; transform-origin: top; animation: fxaGuide 1.4s cubic-bezier(.2, .7, .2, 1) both; }
+.v4-p-home .fxa-guides i:nth-child(1) { left: clamp(16px, 5vw, 120px); }
+.v4-p-home .fxa-guides i:nth-child(2) { left: calc(clamp(16px, 5vw, 120px) + (100% - 2 * clamp(16px, 5vw, 120px)) / 3); animation-delay: .1s; opacity: .055; }
+.v4-p-home .fxa-guides i:nth-child(3) { left: 50%; animation-delay: .2s; }
+.v4-p-home .fxa-guides i:nth-child(4) { right: calc(clamp(16px, 5vw, 120px) + (100% - 2 * clamp(16px, 5vw, 120px)) / 3); animation-delay: .3s; opacity: .045; }
+.v4-p-home .fxa-guides i:nth-child(5) { right: clamp(16px, 5vw, 120px); animation-delay: .4s; }
+@keyframes fxaGuide { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+/* ── Section marks: crosshairs on the edge, index in the corner ───────────── */
+.v4-p-home .fxa-mark { position: absolute; inset: 0 0 auto 0; height: 0; pointer-events: none; z-index: 2; }
+.v4-p-home .fxa-x { position: absolute; top: -7px; width: 15px; height: 15px; opacity: 0; transform: rotate(-90deg) scale(.4); transition: opacity .5s, transform .8s var(--fx-ease);
+  background: linear-gradient(var(--teal), var(--teal)) center / 1.5px 100% no-repeat, linear-gradient(var(--teal), var(--teal)) center / 100% 1.5px no-repeat; }
+.v4-p-home .fxa-x.l { left: calc(var(--gut) - 7px); }
+.v4-p-home .fxa-x.r { right: calc(var(--gut) - 7px); transition-delay: .12s; }
+.v4-p-home .fxa-idx { position: absolute; top: 16px; right: calc(var(--gut) + 14px); font: 600 .68rem/1 var(--f-head); letter-spacing: .18em; color: var(--ink); font-variant-numeric: tabular-nums; opacity: 0; transform: translateY(6px); transition: opacity .6s .2s, transform .6s .2s var(--fx-ease); }
+.v4-p-home .fxa-idx em { font-style: normal; color: var(--ink-2); opacity: .7; }
+.v4-p-home .fxa-mark.fxa-in .fxa-x { opacity: .9; transform: none; }
+.v4-p-home .fxa-mark.fxa-in .fxa-idx { opacity: 1; transform: none; }
+.v4-p-home main#content.fx-a .hero .fxa-mark { inset: auto 0 0 0; }
+.v4-p-home main#content.fx-a .hero .fxa-x { top: auto; bottom: -8px; }
+.v4-p-home main#content.fx-a .hero .fxa-idx { display: none; }
+
+/* ── Hero: lines of the headline rise out of a mask; an orbit draws round the collage ── */
+.v4-p-home main#content.fx-a .hero h1 { animation: none; }
+.v4-p-home main#content.fx-a .hero h1 > span { clip-path: inset(0 0 100% 0); transform: translateY(.4em); animation: fxaLine 1s var(--fx-ease) both; }
+.v4-p-home main#content.fx-a .hero h1 > .hl-1 { animation-delay: .1s; }
+.v4-p-home main#content.fx-a .hero h1 > .hl-2 { animation-delay: .24s; }
+.v4-p-home main#content.fx-a .hero h1 > .hl-3 { animation-delay: .38s; }
+@keyframes fxaLine { to { clip-path: inset(-10% 0 -20% 0); transform: none; } }
+
+/* the Earth takes the collage's place; the orbit is drawn just outside it */
+.v4-p-home main#content.fx-a .hero .ah { display: none; }
+.v4-p-home main#content.fx-a .hero-art { justify-content: center; }
+.v4-p-home .fxa-globe { position: relative; width: min(80%, 62svh, 600px); margin: 8% 7% calc(8% + 56px) auto; opacity: 0; transform: scale(.94); animation: fxaGlobe 1.4s .2s cubic-bezier(.2, .7, .2, 1) forwards; }
+/* Leaving the hero. The Earth lingers and swells, at full strength, while the next section — in the brand's
+   navy, the colour of the Earth's own seas — rises over it like a sheet and takes it from below. Nothing is ever
+   laid over the text. Its orbit, labels and the hero's words let go first. (--fxa-h runs 0 → 1 over the hero's scroll.) */
+.v4-p-home main#content.fx-a { overflow-x: clip; }
+.v4-p-home main#content.fx-a .hero { overflow: visible; z-index: 0; }
+.v4-p-home main#content.fx-a .fxa-globe { will-change: transform; opacity: 1; animation: fxaGlobe 1.4s .2s cubic-bezier(.2, .7, .2, 1) backwards;
+  translate: calc(var(--fxa-h, 0) * -5vw) calc(var(--fxa-h, 0) * 34vh);
+  scale: calc(1 + var(--fxa-h, 0) * var(--fxa-h, 0) * 1.5); }
+/* the Earth melts as it goes: its rim feathers inwards, it softens, and it thins out into the navy */
+.v4-p-home main#content.fx-a .fxa-globe { opacity: clamp(0, calc(1.5 - var(--fxa-h, 0) * 1.7), 1); }
+.v4-p-home main#content.fx-a .fxa-globe :is(.fp-globe-ball, .fp-globe-shade) {
+  -webkit-mask-image: radial-gradient(closest-side, #000 calc(100% - var(--fxa-h, 0) * 85%), transparent calc(100% + (1 - min(1, var(--fxa-h, 0) * 12)) * 40%));
+  mask-image: radial-gradient(closest-side, #000 calc(100% - var(--fxa-h, 0) * 85%), transparent calc(100% + (1 - min(1, var(--fxa-h, 0) * 12)) * 40%));
+  filter: blur(calc(var(--fxa-h, 0) * 5px)); }
+.v4-p-home main#content.fx-a .fxa-globe .fp-globe::before { opacity: clamp(0, calc(1 - var(--fxa-h, 0) * 3), 1); }
+.v4-p-home main#content.fx-a .fxa-orbit { scale: calc(1 + var(--fxa-h, 0) * .5); opacity: clamp(0, calc(1 - var(--fxa-h, 0) * 3), 1); }
+.v4-p-home main#content.fx-a .fxa-globe :is(.fp-globe-chips, .fp-globe-lines) { opacity: clamp(0, calc(1 - var(--fxa-h, 0) * 4), 1); }
+.v4-p-home main#content.fx-a .fxa-globe-src { opacity: clamp(0, calc(1 - var(--fxa-h, 0) * 5), 1); animation: none; }
+.v4-p-home main#content.fx-a .hero-in > div:first-child { animation: none !important; opacity: clamp(0, calc(1 - var(--fxa-h, 0) * 1.7), 1); translate: 0 calc(var(--fxa-h, 0) * -46px); }
+.v4-p-home main#content.fx-a.fxa-past .fxa-globe, .v4-p-home main#content.fx-a.fxa-past .fxa-globe * { pointer-events: none; }
+.v4-p-home main#content.fx-a.fxa-gone .fxa-globe { visibility: hidden; }
+
+/* "Where India stands" turns to the Earth's navy as it arrives. It comes up in the hero's own colour with no
+   edge; then navy spreads across it as a soft-edged pool from where the Earth went under, and the text, chart and
+   cards cross from dark-on-light to light-on-dark with it. (--fxa-n runs 0 → 1 as the section climbs the screen.) */
+.v4-p-home main#content.fx-a { --fxa-page: var(--hero-bg, var(--bg)); }
+.v4-p-home main#content.fx-a > section.fp { --n: var(--fxa-n, 1); --p: calc(var(--n) * 100%);
+  z-index: 2; isolation: isolate; overflow: hidden; border: 0; border-radius: 0; box-shadow: none;
+  --ink: color-mix(in srgb, #fffcf6 var(--p), #1d3658);
+  --ink-2: color-mix(in srgb, #b9c6d6 var(--p), #55657a);
+  --line: color-mix(in srgb, rgba(255, 252, 246, .18) var(--p), #e6e3da);
+  --surface: color-mix(in srgb, #223f66 var(--p), #ffffff);
+  --bg: color-mix(in srgb, #1d3658 var(--p), #fffcf6);
+  --accent: color-mix(in srgb, #6cc4b7 var(--p), #207d72);
+  --acc-ink: var(--accent);
+  color: var(--ink);
+  background: linear-gradient(to bottom, transparent, var(--fxa-page) 220px) !important; }
+.v4-p-home main#content.fx-a > section.fp > .fxa-mark { display: none; }
+.v4-p-home main#content.fx-a > section.fp::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; --r: calc(var(--n) * var(--n) * 170vmax);
+  background: #1d3658;
+  -webkit-mask-image: radial-gradient(circle at 80% 60px, #000 calc(var(--r) - 22vmax), transparent var(--r)), linear-gradient(to bottom, transparent, #000 220px), linear-gradient(to top, transparent, #000 240px);
+  mask-image: radial-gradient(circle at 80% 60px, #000 calc(var(--r) - 22vmax), transparent var(--r)), linear-gradient(to bottom, transparent, #000 220px), linear-gradient(to top, transparent, #000 240px);
+  -webkit-mask-composite: source-in, source-in; mask-composite: intersect; }
+/* the navy melts back into the page at the foot of the section too: room below the last line for it to fade in,
+   and no rule or crosshairs where the next section begins */
+.v4-p-home main#content.fx-a > section.fp { padding-bottom: 230px !important; }
+.v4-p-home main#content.fx-a > section.fp + section { background: none; padding-top: clamp(12px, 2vw, 28px) !important; }
+.v4-p-home main#content.fx-a > section.fp + section > .fxa-mark { display: none; }
+.v4-p-home main#content.fx-a > section.fp :is(h2, h3, .fp-total) { color: var(--ink); }
+.v4-p-home main#content.fx-a > section.fp + section { border-top: 0; }
+.v4-p-home .fxa-orbit { position: absolute; left: 50%; top: 50%; width: 124%; aspect-ratio: 1; transform: translate(-50%, -50%); overflow: visible; pointer-events: none; }
+@media (max-width: 900px) { .v4-p-home .fxa-globe { width: min(70%, 420px); margin: 12% auto calc(9% + 84px); } }
+.v4-p-home .fxa-globe-src { position: absolute; left: 50%; top: calc(112% + 22px); width: 118%; margin: 0; transform: translateX(-50%); text-align: center; font: 500 .68rem/1.5 var(--f-head); color: var(--ink-2); opacity: 0; animation: fxaFade 1s 2s forwards; }
+.v4-p-home .fxa-globe-src a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+.v4-p-home .fxa-orbit circle, .v4-p-home .fxa-orbit path { fill: none; vector-effect: non-scaling-stroke; }
+.v4-p-home .fxa-orbit .o1 { stroke: var(--ink); stroke-opacity: .22; stroke-width: 1; stroke-dasharray: 1; stroke-dashoffset: 1; animation: fxaDraw 2.2s .3s var(--fx-ease) forwards; }
+.v4-p-home .fxa-orbit .o2 { stroke: var(--ink); stroke-opacity: .16; stroke-width: 1; stroke-dasharray: 2 7; opacity: 0; animation: fxaFade 1.2s 1s forwards; }
+.v4-p-home .fxa-orbit .ot path { stroke: var(--ink); stroke-opacity: .55; stroke-width: 1.2; opacity: 0; animation: fxaFade .8s 1.3s forwards; }
+.v4-p-home .fxa-orbit .spin { transform-origin: 320px 320px; animation: fxaSpin 46s linear infinite; }
+.v4-p-home .fxa-orbit .oa { stroke: var(--teal); stroke-width: 2.4; stroke-linecap: round; opacity: 0; animation: fxaFade 1s 1.2s forwards; }
+.v4-p-home .fxa-orbit .ob { stroke: var(--coral); stroke-width: 2.4; stroke-linecap: round; opacity: 0; animation: fxaFade 1s 1.5s forwards; }
+.v4-p-home .fxa-orbit .trav { transform-origin: 320px 320px; transform: rotate(calc(-90deg + var(--fxa-p, 0) * 2200deg)); transition: transform .5s cubic-bezier(.2, .7, .2, 1); }
+.v4-p-home .fxa-orbit .trav circle { fill: var(--lime); stroke: var(--bg); stroke-width: 3; opacity: 0; animation: fxaFade .6s 1.8s forwards; }
+.v4-p-home .fxa-orbit .oy { font: 600 13px var(--f-head); letter-spacing: .16em; fill: var(--ink); opacity: 0; animation: fxaFade .8s 1.6s forwards; }
+@keyframes fxaDraw { to { stroke-dashoffset: 0; } }
+@keyframes fxaFade { to { opacity: 1; } }
+@keyframes fxaSpin { to { transform: rotate(360deg); } }
+
+/* ── Choices: each question is ruled in, one after another ────────────────── */
+.v4-p-home main#content.fx-a .choices li { opacity: 0; transform: translateX(-14px); transition: opacity .6s, transform .7s var(--fx-ease), padding .35s; }
+.v4-p-home main#content.fx-a .choices.fxa-in li { opacity: 1; transform: none; }
+.v4-p-home main#content.fx-a .choices.fxa-in li:nth-child(2) { transition-delay: .08s; }
+.v4-p-home main#content.fx-a .choices.fxa-in li:nth-child(3) { transition-delay: .16s; }
+.v4-p-home main#content.fx-a .choices.fxa-in li:nth-child(4) { transition-delay: .24s; }
+.v4-p-home main#content.fx-a .choices.fxa-in li:nth-child(5) { transition-delay: .32s; }
+.v4-p-home main#content.fx-a .choices.fxa-in li:nth-child(6) { transition-delay: .4s; }
+
+/* ── Photographs: wipe in from the edge, then sit inside a drafted frame ──── */
+.v4-p-home main#content.fx-a .why .photo, .v4-p-home main#content.fx-a .led .photo { clip-path: inset(0 100% 0 0 round 18px); outline: 1px solid transparent; outline-offset: 0; transition: clip-path 1.3s var(--fx-ease), outline-color .8s 1s, outline-offset .9s 1s var(--fx-ease), opacity .7s ease, transform .7s var(--fx-ease); }
+.v4-p-home main#content.fx-a .led .photo { clip-path: inset(0 0 0 100% round 18px); }
+.v4-p-home main#content.fx-a .why .photo.fxa-in, .v4-p-home main#content.fx-a .led .photo.fxa-in { clip-path: inset(-14px round 18px); outline-color: color-mix(in srgb, var(--ink) 28%, transparent); outline-offset: 10px; }
+.v4-p-home main#content.fx-a .why .photo img, .v4-p-home main#content.fx-a .led .photo img { transform: scale(1.14); transition: transform 1.8s var(--fx-ease); }
+.v4-p-home main#content.fx-a .why .photo.fxa-in img, .v4-p-home main#content.fx-a .led .photo.fxa-in img { transform: none; }
+
+/* ── The four qualities: ring and counter (shown in the step-through) ─────── */
+.v4-p-home .fxa-ring, .v4-p-home .fxa-count { display: none; }
+.v4-p-home .fxa-ring svg { width: 100%; height: 100%; overflow: visible; }
+.v4-p-home .fxa-ring circle, .v4-p-home .fxa-ring path { fill: none; vector-effect: non-scaling-stroke; }
+.v4-p-home .fxa-ring .r1 { stroke: var(--ink); stroke-opacity: .2; }
+.v4-p-home .fxa-ring .r2 { stroke: var(--ink); stroke-opacity: .14; stroke-dasharray: 2 6; }
+.v4-p-home .fxa-ring .arc { stroke: var(--coral); stroke-width: 2; stroke-linecap: round; transform-origin: 100px 100px; animation: fxaSpin 14s linear infinite; }
+.v4-p-home .fxa-ring .arc2 { stroke: var(--teal); stroke-width: 2; stroke-linecap: round; transform-origin: 100px 100px; animation: fxaSpin 22s linear infinite reverse; }
+.v4-p-home .fxa-ring .tk path { stroke: var(--ink); stroke-opacity: .6; }
+
+/* Each quality pins under the header and the next slides up over it, like a sheet laid on top. */
+@media (min-width: 1000px) {
+  .v4-p-home main#content.fx-a .qual.fxa-steps { --stage: min(66vh, 600px); display: block; }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .qcard {
+    position: sticky; top: clamp(92px, 14vh, 150px); min-height: var(--stage); margin: 0 0 26vh;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .95fr); grid-template-rows: 1fr auto auto 1fr;
+    column-gap: clamp(32px, 6vw, 96px); row-gap: 14px; padding: clamp(20px, 3vw, 44px) 0;
+    background: var(--q); border: 0; border-radius: clamp(22px, 2.6vw, 36px); padding-inline: clamp(28px, 4vw, 64px); box-shadow: 0 -18px 30px -26px rgba(29, 54, 88, .5);
+    --ink: #1d3658; --ink-2: #1d3658; --accent: #1d3658; color: #1d3658;
+    opacity: 1 !important; transform: none !important; animation: none !important;
+  }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .qcard:last-child { margin-bottom: 0; }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .qcard .photo { grid-column: 2; grid-row: 1 / -1; place-self: center; width: min(calc(100% - 96px), 48vh, 430px); aspect-ratio: 1; border-radius: 50%; margin: 0; }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .qcard .photo img { transition: transform 1.6s var(--fx-ease); }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .qcard:hover .photo img { transform: scale(1.07); }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .qcard .photo .cluster { display: none; }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .fxa-ring { display: block; grid-column: 2; grid-row: 1 / -1; place-self: center; width: min(100%, calc(48vh + 96px), 526px); aspect-ratio: 1; pointer-events: none; }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .qcard:nth-child(2) .fxa-ring .arc { stroke: var(--lime); }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .qcard:nth-child(3) .fxa-ring .arc { stroke: var(--pink); }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .qcard:nth-child(4) .fxa-ring .arc { stroke: var(--teal); }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .qcard:nth-child(4) .fxa-ring .arc2 { stroke: var(--coral); }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .qcard .num { grid-column: 1; grid-row: 1; align-self: end; font: 600 .8rem var(--f-head); letter-spacing: .2em; color: var(--accent); }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .qcard h4 { grid-column: 1; grid-row: 2; margin: 0; font: 500 clamp(2.1rem, 3.6vw, 3.4rem)/1.05 var(--f-serif); letter-spacing: -.02em; }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .qcard p { grid-column: 1; grid-row: 3; max-width: 36ch; font-size: 1.14rem; line-height: 1.6; }
+  /* which of the four is showing */
+  .v4-p-home main#content.fx-a .qual.fxa-steps .fxa-count { grid-column: 1; grid-row: 4; align-self: end; display: flex; align-items: center; gap: 7px; font: 600 .74rem var(--f-head); letter-spacing: .14em; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .fxa-count i { width: 22px; height: 3px; border-radius: 3px; background: color-mix(in srgb, var(--ink) 16%, transparent); }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .fxa-count i.on { width: 44px; background: var(--teal); }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .fxa-count b { margin-left: 8px; font-weight: 700; color: var(--ink); }
+}
+
+/* ── Closing: "2070" in outline behind the last line, and a fine timeline beneath it ── */
+.v4-p-home main#content.fx-a .final { overflow: hidden; }
+.v4-p-home main#content.fx-a .final-in { position: relative; isolation: isolate; }
+.v4-p-home .fxa-ghost { position: absolute; left: 50%; top: 40%; transform: translate(-50%, -50%); z-index: -1; font: 600 clamp(9rem, 26vw, 24rem)/1 var(--f-serif); letter-spacing: -.04em; color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--ink) 15%, transparent); opacity: 0; transition: opacity .8s, letter-spacing 1.2s cubic-bezier(.2, .7, .2, 1); pointer-events: none; user-select: none; }
+/* the closing block is in place before it scrolls into view (no late fade-in of the whole block) */
+.v4-p-home main#content.fx-a .final-in.rv { opacity: 1; transform: none; }
+.v4-p-home .final-in.fxa-in .fxa-ghost { opacity: 1; letter-spacing: 0; }
+
+/* six rings on a hairline, one for the start and each decade: the disc inside each is smaller than the last,
+   until the ring for 2070 stands empty */
+.v4-p-home .fxa-rings { width: min(100%, 760px); margin-top: clamp(28px, 3.6vw, 50px); }
+.v4-p-home .fxa-rings svg { display: block; width: 100%; height: auto; overflow: visible; }
+.v4-p-home .fxa-rings .thread { stroke: color-mix(in srgb, var(--ink) 26%, transparent); stroke-width: 1; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.5s cubic-bezier(.3, .7, .2, 1); }
+.v4-p-home .fxa-rings.go .thread { stroke-dashoffset: 0; }
+.v4-p-home .fxa-rings g { opacity: 0; scale: .6; transform-box: fill-box; transform-origin: center; transition: opacity .5s calc(var(--i) * .2s), scale .8s calc(var(--i) * .2s) cubic-bezier(.2, 1.4, .3, 1); }
+.v4-p-home .fxa-rings.go g { scale: 1; }
+.v4-p-home .fxa-rings.go g { opacity: 1; }
+.v4-p-home .fxa-rings .rim { fill: var(--bg); stroke: var(--ink); stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+.v4-p-home .fxa-rings .disc { transform-box: fill-box; transform-origin: center; scale: 0; transition: scale .9s calc(.25s + var(--i) * .2s) cubic-bezier(.2, 1.5, .3, 1); }
+.v4-p-home .fxa-rings.go .disc { scale: 1; }
+.v4-p-home .fxa-rings g:last-of-type .rim { stroke: var(--teal); stroke-width: 2; }
+.v4-p-home .fxa-rings .halo { fill: none; stroke: var(--teal); stroke-width: 1; vector-effect: non-scaling-stroke; transform-box: fill-box; transform-origin: center; opacity: 0; }
+.v4-p-home .fxa-rings.go .halo { animation: fxaZero 3.6s 1.8s ease-out infinite; }
+@keyframes fxaZero { from { transform: scale(1); opacity: .6; } to { transform: scale(1.7); opacity: 0; } }
+.v4-p-home .fxa-rings text { font: 600 10.5px var(--f-head); letter-spacing: .16em; fill: var(--ink-2); }
+.v4-p-home .fxa-rings g:last-of-type text { fill: var(--ink); font-weight: 700; }
+@media (prefers-reduced-motion: reduce) { .v4-p-home .fxa-rings.go .halo { animation: none; } }
+html[data-mode="eco"] .v4-p-home .fxa-rings.go .halo { animation: none; }
+
+/* ── Rail: the scroll, read as years ──────────────────────────────────────── */
+.v4-p-home .fxa-rail { position: fixed; right: max(10px, calc(clamp(16px, 5vw, 120px) / 2 - 16px)); top: 50%; z-index: 41; transform: translateY(-50%); display: none; flex-direction: column; align-items: center; gap: 10px; pointer-events: none; }
+.v4-p-home .fxa-rail-k { font: 600 .62rem var(--f-head); letter-spacing: .14em; color: var(--ink-2); writing-mode: vertical-rl; }
+.v4-p-home .fxa-rail-track { position: relative; width: 1px; height: min(34vh, 300px); background: color-mix(in srgb, var(--ink) 22%, transparent); }
+.v4-p-home .fxa-rail-track i { position: absolute; inset: 0; background: var(--teal); transform-origin: top; transform: scaleY(0); }
+.v4-p-home .fxa-rail-track b { position: absolute; left: 50%; top: 0; width: 9px; height: 9px; margin: -4px 0 0 -4.5px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 0 4px transparent; }
+.v4-p-home .fxa-rail-track b span { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); padding: 3px 7px; border-radius: 6px; background: var(--ink); color: var(--bg); font: 700 .66rem var(--f-head); letter-spacing: .08em; font-variant-numeric: tabular-nums; }
+@media (min-width: 1280px) { .v4-p-home .fxa-rail { display: flex; } }
+
+/* ── Calm: reduced motion and Eco mode show everything in place ───────────── */
+@media (prefers-reduced-motion: reduce) {
+  .v4-p-home .fxa-guides i, .v4-p-home main#content.fx-a .hero h1 > span, .v4-p-home .fxa-orbit *, .v4-p-home .fxa-globe, .v4-p-home .fxa-globe-src { animation: none !important; }
+  .v4-p-home .fxa-globe-src { opacity: 1; }
+  .v4-p-home .fxa-globe { opacity: 1; transform: none; }
+  .v4-p-home main#content.fx-a .hero h1 > span { clip-path: none; transform: none; }
+  .v4-p-home .fxa-orbit .o1 { stroke-dashoffset: 0; }
+  .v4-p-home .fxa-orbit .o2, .v4-p-home .fxa-orbit .ot path, .v4-p-home .fxa-orbit .oa, .v4-p-home .fxa-orbit .ob, .v4-p-home .fxa-orbit .trav circle, .v4-p-home .fxa-orbit .oy { opacity: 1; }
+  .v4-p-home main#content.fx-a .choices li { opacity: 1; transform: none; }
+  .v4-p-home main#content.fx-a .why .photo, .v4-p-home main#content.fx-a .led .photo { clip-path: none; }
+}
+html[data-mode="eco"] .v4-p-home main#content.fx-a .hero h1 > span { clip-path: none; transform: none; }
+html[data-mode="eco"] .v4-p-home .fxa-orbit .o1 { stroke-dashoffset: 0; }
+html[data-mode="eco"] .v4-p-home .fxa-orbit .o2, html[data-mode="eco"] .v4-p-home .fxa-orbit .ot path, html[data-mode="eco"] .v4-p-home .fxa-orbit .oa, html[data-mode="eco"] .v4-p-home .fxa-orbit .ob, html[data-mode="eco"] .v4-p-home .fxa-orbit .trav circle, html[data-mode="eco"] .v4-p-home .fxa-orbit .oy { opacity: 1; }
+html[data-mode="eco"] .v4-p-home main#content.fx-a .choices li { opacity: 1; transform: none; }
+html[data-mode="eco"] .v4-p-home main#content.fx-a .why .photo, html[data-mode="eco"] .v4-p-home main#content.fx-a .led .photo { clip-path: none; }
+html[data-mode="eco"] .v4-p-home .fxa-globe { opacity: 1; transform: none; }
+html[data-mode="eco"] .v4-p-home .fxa-globe-src { opacity: 1; }
+
+/* the four quality slides sit on their brand colour at full strength; everything on them is navy or cream */
+@media (min-width: 1000px) {
+  .v4-p-home main#content.fx-a .qual.fxa-steps .qcard :is(h4, p, .num) { color: #1d3658; }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .qcard .num::before { background: #fffcf6; }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .qcard .fxa-ring { background: radial-gradient(closest-side, transparent 80%, #fffcf6 81% 99%, transparent 100%); }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .qcard .fxa-ring :is(.arc, .arc2) { stroke: #1d3658 !important; }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .qcard .fxa-ring :is(.r1, .r2, .tk path) { stroke: #1d3658; }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .qcard .photo { box-shadow: 0 0 0 6px #fffcf6; }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .qcard .fxa-count { color: #1d3658; }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .qcard .fxa-count i { background: #fffcf6; }
+  .v4-p-home main#content.fx-a .qual.fxa-steps .qcard .fxa-count i.on { background: #1d3658; }
+}
+
+/* ── Round, not square ─────────────────────────────────────────────────────────
+   The drawing-board grid (vertical guides, a rule across every section edge, crosshairs) is replaced by circles:
+   where each section begins, a set of fine concentric rings is centred on the join, alternately at the right and
+   the left edge, fading outwards; the section marks are small rings. */
+.v4-p-home .fxa-guides { display: none; }
+.v4-p-home main#content.fx-a { isolation: isolate; }
+.v4-p-home main#content.fx-a > section { border-top: 0 !important; }
+.v4-p-home main#content.fx-a > section.sec:is([aria-labelledby="h-led"], [aria-labelledby="h-news"]) { background: transparent; }
+.v4-p-home main#content.fx-a > section .fxa-x { top: -6px; width: 12px; height: 12px; border-radius: 50%; background: none !important; border: 1.5px solid var(--acc); transform: scale(.3); }
+.v4-p-home main#content.fx-a > section .fxa-mark.fxa-in .fxa-x { transform: none; }
+.v4-p-home main#content.fx-a > section .fxa-mark::before { content: ""; position: absolute; z-index: -1; top: 0; right: 0; width: min(92vw, 1040px); aspect-ratio: 1; translate: 38% -50%; border-radius: 50%; pointer-events: none;
+  background: repeating-radial-gradient(circle, transparent 0 63px, var(--line) 63px 64px);
+  -webkit-mask-image: radial-gradient(closest-side, #000 30%, transparent 100%); mask-image: radial-gradient(closest-side, #000 30%, transparent 100%);
+  scale: .9; opacity: 0; transition: opacity 1.4s, scale 2.2s cubic-bezier(.2, .7, .2, 1); }
+.v4-p-home main#content.fx-a > section:nth-of-type(odd) .fxa-mark::before { right: auto; left: 0; translate: -38% -50%; }
+.v4-p-home main#content.fx-a > section .fxa-mark.fxa-in::before { opacity: 1; scale: 1; }
+.v4-p-home main#content.fx-a > section.hero .fxa-mark { display: none; }
