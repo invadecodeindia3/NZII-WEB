@@ -1,0 +1,285 @@
+/*
+ * V4 Animation Layer — visual effects only.
+ * Does NOT touch fonts, colours, layout, or spacing.
+ * All effects respect prefers-reduced-motion and eco mode.
+ */
+
+/* ─── Keyframes ─────────────────────────────────────────── */
+
+@keyframes v4FadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes v4FadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes v4SlideLeft {
+  from { opacity: 0; transform: translateX(32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes v4PulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(43,157,143,0); }
+  50%       { box-shadow: 0 0 24px 6px rgba(43,157,143,.18); }
+}
+
+@keyframes v4FloatY {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes v4Spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes v4Shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes v4BlobDrift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(30px, -20px) scale(1.04); }
+  66%       { transform: translate(-20px, 15px) scale(.97); }
+}
+
+@keyframes v4UnderlineGrow {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+
+/* ─── Ambient background blobs ──────────────────────────── */
+/* Subtle radial blobs that drift behind page content */
+
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: .07;
+  animation: v4BlobDrift 18s ease-in-out infinite;
+}
+body::before {
+  width: 520px; height: 520px;
+  background: var(--teal);
+  top: -120px; right: -80px;
+  animation-duration: 20s;
+}
+body::after {
+  width: 400px; height: 400px;
+  background: var(--lime);
+  bottom: 10vh; left: -100px;
+  animation-duration: 25s;
+  animation-delay: -8s;
+}
+
+
+/* ─── Hero section ──────────────────────────────────────── */
+
+/* Animate the hero heading in */
+.hero h1 {
+  animation: v4FadeUp .8s cubic-bezier(.2,.7,.2,1) both;
+}
+.hero .lead,
+.hero p {
+  animation: v4FadeUp .8s .15s cubic-bezier(.2,.7,.2,1) both;
+}
+.hero .btns,
+.hero .btn {
+  animation: v4FadeUp .8s .3s cubic-bezier(.2,.7,.2,1) both;
+}
+
+/* Floating illustration / photo card in hero */
+.hero-photo,
+.hero-img-wrap,
+.hero .editorial-photo {
+  animation: v4FloatY 6s ease-in-out infinite;
+}
+
+
+/* ─── Scroll-reveal enhancement ─────────────────────────── */
+/* Existing .rv class gets richer entrance */
+.js .rv {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1);
+}
+.js .rv.in {
+  opacity: 1;
+  transform: none;
+}
+/* Stagger siblings inside a grid */
+.js .rv:nth-child(2) { transition-delay: .1s; }
+.js .rv:nth-child(3) { transition-delay: .2s; }
+.js .rv:nth-child(4) { transition-delay: .3s; }
+.js .rv:nth-child(5) { transition-delay: .4s; }
+.js .rv:nth-child(6) { transition-delay: .5s; }
+
+
+/* ─── Card hover lifts ───────────────────────────────────── */
+
+.card {
+  transition: transform .28s cubic-bezier(.2,.7,.2,1),
+              box-shadow .28s ease;
+  will-change: transform;
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px rgba(29,54,88,.12), 0 4px 12px rgba(43,157,143,.1);
+}
+
+
+/* ─── Buttons ───────────────────────────────────────────── */
+
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition: transform .22s ease, box-shadow .22s ease,
+              background .25s, border-color .25s, color .25s;
+}
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg,
+    transparent 0%,
+    rgba(255,255,255,.18) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  background-position: -200% center;
+  transition: background-position .4s ease;
+  pointer-events: none;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(43,157,143,.25);
+}
+.btn:hover::after {
+  background-position: 200% center;
+}
+.btn:active {
+  transform: translateY(0);
+}
+
+
+/* ─── Nav link animated underline ───────────────────────── */
+
+.main-nav a {
+  position: relative;
+}
+.main-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 4px; left: 50%;
+  width: 0; height: 2px;
+  background: var(--teal);
+  border-radius: 2px;
+  transform: translateX(-50%);
+  transition: width .25s ease;
+}
+.main-nav a:hover::after,
+.main-nav a[aria-current="page"]::after {
+  width: 60%;
+}
+
+
+/* ─── Section headings animated rule ────────────────────── */
+
+.hl .rule,
+.hero .rule {
+  transform-origin: left;
+  animation: v4UnderlineGrow .6s .4s cubic-bezier(.2,.7,.2,1) both;
+}
+
+
+/* ─── Teal accent glow on pills ─────────────────────────── */
+
+.pill {
+  transition: box-shadow .3s ease;
+}
+.pill:hover {
+  box-shadow: 0 0 0 3px rgba(43,157,143,.2);
+}
+
+
+/* ─── Version toggle entrance ───────────────────────────── */
+
+.version-toggle-wrap,
+[class*="version-pill"],
+[class*="v-toggle"] {
+  animation: v4FadeIn .6s 1s both;
+}
+
+
+/* ─── Image hover zoom ───────────────────────────────────── */
+
+.photo-wrap,
+.editorial-photo,
+.hero-photo {
+  overflow: hidden;
+  border-radius: inherit;
+}
+.photo-wrap img,
+.editorial-photo img,
+.hero-photo img {
+  transition: transform .6s cubic-bezier(.2,.7,.2,1);
+}
+.photo-wrap:hover img,
+.editorial-photo:hover img,
+.hero-photo:hover img {
+  transform: scale(1.04);
+}
+
+
+/* ─── Dot cluster pulse (home page dots) ────────────────── */
+
+@keyframes v4DotPulse {
+  0%, 100% { opacity: .6; transform: scale(1); }
+  50%       { opacity: 1;  transform: scale(1.15); }
+}
+circle.pl {
+  animation: v4DotPulse 2.4s ease-in-out infinite;
+  animation-delay: var(--dl, 0s);
+}
+
+
+/* ─── Smooth focus rings ────────────────────────────────── */
+
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 3px;
+  transition: outline-offset .2s ease;
+}
+
+
+/* ─── Respect reduced motion & eco mode ─────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  body::before,
+  body::after { display: none; }
+}
+
+html[data-mode="eco"] *,
+html[data-mode="eco"] *::before,
+html[data-mode="eco"] *::after {
+  animation: none !important;
+  transition: none !important;
+}
+html[data-mode="eco"] body::before,
+html[data-mode="eco"] body::after { display: none; }
