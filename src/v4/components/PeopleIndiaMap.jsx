@@ -7,7 +7,7 @@
 import React, { useMemo } from 'react';
 import { INDIA_COLOURS, INDIA_DOTS, INDIA_H, INDIA_W } from '../data/indiaDots';
 
-const DELHI = { x: 372, y: 318 }; // roughly where Delhi sits in the logo's map box
+const DELHI = { x: 347, y: 296 }; // roughly where Delhi sits in the logo's map box
 const PAD = 70;
 const FURTHEST = 820; // distance from Delhi to the far corner of the map, for the timing of the wave
 
