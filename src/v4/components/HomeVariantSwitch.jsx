@@ -3,8 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 
 const HOME_VARIANTS = [
   { to: '/v4', label: 'Original' },
-  { to: '/v4/home-a', label: 'A · Colour' },
-  { to: '/v4/home-soft', label: 'A · Subtle' },
+  { to: '/v4/home-a', label: 'V4 A' },
+  { to: '/v4/home-soft', label: 'V4 B' },
 ];
 
 /**

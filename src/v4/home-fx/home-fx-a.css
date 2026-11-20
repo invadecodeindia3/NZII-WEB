@@ -39,7 +39,7 @@
 /* the Earth takes the collage's place; the orbit is drawn just outside it */
 .v4-p-home main#content.fx-a .hero .ah { display: none; }
 .v4-p-home main#content.fx-a .hero-art { justify-content: center; }
-.v4-p-home .fxa-globe { position: relative; width: min(80%, 62svh, 600px); margin: 8% 7% calc(8% + 56px) auto; opacity: 0; transform: scale(.94); animation: fxaGlobe 1.4s .2s cubic-bezier(.2, .7, .2, 1) forwards; }
+.v4-p-home .fxa-globe { position: relative; width: min(76%, 62svh, 600px); margin: 8% auto calc(8% + 56px); opacity: 0; transform: scale(.94); animation: fxaGlobe 1.4s .2s cubic-bezier(.2, .7, .2, 1) forwards; }
 /* Leaving the hero. The Earth lingers and swells, at full strength, while the next section — in the brand's
    navy, the colour of the Earth's own seas — rises over it like a sheet and takes it from below. Nothing is ever
    laid over the text. Its orbit, labels and the hero's words let go first. (--fxa-h runs 0 → 1 over the hero's scroll.) */
@@ -237,18 +237,20 @@ html[data-mode="eco"] .v4-p-home .fxa-globe-src { opacity: 1; }
 
 /* ── Round, not square ─────────────────────────────────────────────────────────
    The drawing-board grid (vertical guides, a rule across every section edge, crosshairs) is replaced by circles:
-   where each section begins, a set of fine concentric rings is centred on the join, alternately at the right and
-   the left edge, fading outwards; the section marks are small rings. */
+   where each section begins one of the brand patterns sits at the page edge; the section marks are small rings. */
 .v4-p-home .fxa-guides { display: none; }
 .v4-p-home main#content.fx-a { isolation: isolate; }
 .v4-p-home main#content.fx-a > section { border-top: 0 !important; }
 .v4-p-home main#content.fx-a > section.sec:is([aria-labelledby="h-led"], [aria-labelledby="h-news"]) { background: transparent; }
 .v4-p-home main#content.fx-a > section .fxa-x { top: -6px; width: 12px; height: 12px; border-radius: 50%; background: none !important; border: 1.5px solid var(--acc); transform: scale(.3); }
 .v4-p-home main#content.fx-a > section .fxa-mark.fxa-in .fxa-x { transform: none; }
-.v4-p-home main#content.fx-a > section .fxa-mark::before { content: ""; position: absolute; z-index: -1; top: 0; right: 0; width: min(92vw, 1040px); aspect-ratio: 1; translate: 38% -50%; border-radius: 50%; pointer-events: none;
-  background: repeating-radial-gradient(circle, transparent 0 63px, var(--line) 63px 64px);
-  -webkit-mask-image: radial-gradient(closest-side, #000 30%, transparent 100%); mask-image: radial-gradient(closest-side, #000 30%, transparent 100%);
-  scale: .9; opacity: 0; transition: opacity 1.4s, scale 2.2s cubic-bezier(.2, .7, .2, 1); }
-.v4-p-home main#content.fx-a > section:nth-of-type(odd) .fxa-mark::before { right: auto; left: 0; translate: -38% -50%; }
-.v4-p-home main#content.fx-a > section .fxa-mark.fxa-in::before { opacity: 1; scale: 1; }
+.v4-p-home main#content.fx-a > section .fxa-mark::before { content: none; }
 .v4-p-home main#content.fx-a > section.hero .fxa-mark { display: none; }
+/* the pattern is the section's mark now: the small index and ring markers would only sit on top of it */
+.v4-p-home main#content.fx-a > section :is(.fxa-idx, .fxa-x) { display: none; }
+
+/* the hero keeps to the page's own margins: its text starts on the same line as the logo and every section
+   below, and the Earth is centred in its half so the orbit ends where the navigation does */
+.v4-p-home main#content.fx-a .hero { padding-inline: clamp(16px, 5vw, 120px); }
+.v4-p-home main#content.fx-a .hero-in { max-width: none; }
+.v4-p-home main#content.fx-a .hero-art { justify-content: center; overflow: visible; }

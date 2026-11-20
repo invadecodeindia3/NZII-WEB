@@ -141,6 +141,32 @@ export const HomeFxA = ({ rootRef }) => {
       });
     }
 
+    // The small dot cluster in a work card's corner shows only when the card has room to spare under its text
+    const sideCards = [...root.querySelectorAll('.side .card')];
+    const fitClusters = () => sideCards.forEach((card) => {
+      const text = card.querySelector('p');
+      const foot = card.querySelector('.go');
+      let room = false;
+      if (text && foot) {
+        const gap = foot.getBoundingClientRect().top - text.getBoundingClientRect().bottom;
+        // room below the text, or a last line short enough to leave the corner clear
+        const range = document.createRange();
+        range.selectNodeContents(text);
+        const lines = [...range.getClientRects()];
+        const last = lines[lines.length - 1];
+        room = gap > 84 || (gap > 40 && !!last && last.right < card.getBoundingClientRect().right - 190);
+      }
+      card.classList.toggle('has-room', room);
+    });
+    fitClusters();
+    const fitLater = setTimeout(fitClusters, 1200);
+    window.addEventListener('resize', fitClusters);
+    undo.push(() => {
+      clearTimeout(fitLater);
+      window.removeEventListener('resize', fitClusters);
+      sideCards.forEach((card) => card.classList.remove('has-room'));
+    });
+
     // Photographs wipe in, sections draw their marks, when they scroll into view
     undo.push(revealOnce([...root.querySelectorAll('.why .photo, .led .photo, .fxa-mark, .choices')], 'fxa-in'));
     // the closing rings start early, while the section is still below the screen, so they are there when it arrives
