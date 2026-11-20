@@ -27,19 +27,6 @@
   .v4-p-home main#content.fx-soft .qual.fxa-steps .qcard .fxa-count i { background: var(--line); }
 }
 
-/* ── "Where India stands" stays light in this version: no navy, the page's own colour throughout ── */
-.v4-p-home main#content.fx-soft > section.fp { --ink: inherit; --ink-2: inherit; --line: inherit; --surface: inherit; --bg: inherit; --accent: inherit; --acc-ink: var(--accent) !important; color: inherit;
-  padding-bottom: clamp(52px, 5.5vw, 80px) !important; }
-.v4-p-home main#content.fx-soft > section.fp::before { display: none; }
-.v4-p-home main#content.fx-soft > section.fp + section { padding-top: clamp(52px, 5.5vw, 80px) !important; }
-
-/* ── The Earth leaves like a slow camera move: it keeps turning, drifts down at about half the page's speed and
-   comes a little closer, its orbit opening out, and it has faded away cleanly before the next heading reaches it.
-   Nothing blurred, nothing behind the text. ── */
-.v4-p-home main#content.fx-soft .fxa-globe {
-  translate: 0 calc(var(--fxa-h, 0) * 30vh);
-  scale: calc(1 + var(--fxa-h, 0) * .16);
-  opacity: clamp(0, calc(1.32 - var(--fxa-h, 0) * 2.2), 1); }
-.v4-p-home main#content.fx-soft .fxa-globe :is(.fp-globe-ball, .fp-globe-shade) { -webkit-mask-image: none; mask-image: none; filter: none; }
-.v4-p-home main#content.fx-soft .fxa-orbit { scale: calc(1 + var(--fxa-h, 0) * .28); opacity: clamp(0, calc(1 - var(--fxa-h, 0) * 2.4), 1); }
-.v4-p-home main#content.fx-soft .hero-in > div:first-child { opacity: clamp(0, calc(1.15 - var(--fxa-h, 0) * 1.6), 1); translate: 0 calc(var(--fxa-h, 0) * -28px); }
+/* "Where India stands" turns to the Earth's navy as it arrives, and the Earth melts into it, exactly as built in
+   home-fx-a.css. In this quieter version the section's accents stay teal on the navy. */
+.v4-p-home main#content.fx-soft > section.fp { --acc-ink: var(--accent) !important; }
