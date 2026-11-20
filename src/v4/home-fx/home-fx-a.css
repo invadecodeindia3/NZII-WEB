@@ -254,3 +254,6 @@ html[data-mode="eco"] .v4-p-home .fxa-globe-src { opacity: 1; }
 .v4-p-home main#content.fx-a .hero { padding-inline: clamp(16px, 5vw, 120px); }
 .v4-p-home main#content.fx-a .hero-in { max-width: none; }
 .v4-p-home main#content.fx-a .hero-art { justify-content: center; overflow: visible; }
+
+/* the hero is the whole first screen: nothing of the next section shows until the visitor scrolls */
+.v4-p-home main#content.fx-a .hero { min-height: 100svh !important; padding-bottom: clamp(28px, 4vh, 56px) !important; }

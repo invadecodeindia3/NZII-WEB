@@ -86,7 +86,8 @@ export const HomePage = ({ variant = 'exact' }) => {
           </div>
         </div>
       </section>
-      {variant !== 'exact' && <FootprintStory />}
+      {/* the emissions section is part of V4 B only */}
+      {variant === 'soft' && <FootprintStory />}
       <section className="wrap sec" aria-labelledby="h-why">
         <div className="why">
           <div className="why-copy">
