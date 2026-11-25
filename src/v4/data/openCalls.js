@@ -6,13 +6,13 @@
 //   "Closing soon" in the last 14 days and hides itself after the last date.
 export const OPEN_CALLS_DATA = {
   programme: 'Academic Research Collaboration Programme',
-  site: '/v4/open-calls',
+  site: '/open-calls/index.html',
   opens: null,
   lastDate: null,
   shortlisting: null,
   themes: [
     {
-      id: 'agent-based-modelling',
+      id: 'agent-based',
       no: 1,
       open: true,
       title: 'Agent-based modelling of India’s energy transition',

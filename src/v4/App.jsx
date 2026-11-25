@@ -14,7 +14,6 @@ import { HomePage } from './pages/HomePage';
 import { WhoWeArePage } from './pages/WhoWeArePage';
 import { NewsEventsPage } from './pages/NewsEventsPage';
 import { CollaboratePage } from './pages/CollaboratePage';
-import { OpenCallsPage } from './pages/OpenCallsPage';
 import { DraftPage } from './pages/DraftPage';
 import './styles/v4-base.css';
 
@@ -29,7 +28,6 @@ const PAGES = [
   { path: '/v4/publications', key: 'draft', element: <DraftPage name="Publications" /> },
   { path: '/v4/news-events', key: 'news', element: <NewsEventsPage /> },
   { path: '/v4/collaborate', key: 'collab', element: <CollaboratePage /> },
-  { path: '/v4/open-calls', key: 'oc', element: <OpenCallsPage /> },
   { path: '/v4/contact', key: 'draft', element: <DraftPage name="Contact" /> },
 ];
 
@@ -45,8 +43,15 @@ const REDIRECTS = {
   '/v4/NZII_Publications_Page.html': '/v4/publications',
   '/v4/NZII_News_Events_Page.html': '/v4/news-events',
   '/v4/NZII_People_Page.html': '/v4/collaborate',
-  '/v4/NZII_Open_Calls_Microsite.html': '/v4/open-calls',
   '/v4/NZII_Contact_Page.html': '/v4/contact',
+};
+
+// The Open Calls microsite is a page of its own outside this app (public/open-calls/index.html).
+const ToOpenCalls = () => {
+  useEffect(() => {
+    window.location.replace('/open-calls/index.html' + window.location.hash);
+  }, []);
+  return null;
 };
 
 const normalise = (pathname) => pathname.replace(/\/+$/, '') || '/';
@@ -65,7 +70,7 @@ const AppContent = () => {
   return (
     <div className={`v4-shell v4-body v4-p-${current.key}`}>
       <a className="skip" href="#content">Skip to content</a>
-      <SiteHeader microsite={current.key === 'oc'} />
+      <SiteHeader />
       <Routes>
         {PAGES.map((p) => (
           <Route key={p.path} path={p.path} element={p.element} />
@@ -73,6 +78,8 @@ const AppContent = () => {
         {Object.entries(REDIRECTS).map(([from, to]) => (
           <Route key={from} path={from} element={<Navigate to={to} replace />} />
         ))}
+        <Route path="/v4/open-calls" element={<ToOpenCalls />} />
+        <Route path="/v4/NZII_Open_Calls_Microsite.html" element={<ToOpenCalls />} />
         <Route path="*" element={<Navigate to="/v4" replace />} />
       </Routes>
       <SiteFooter />

@@ -16,5 +16,4 @@ html[data-mode="eco"] body {
 /* The prototype's beige (#f3efe4 alternate sections, #f4f1e8 footer) is not in the brand palette. In light mode
    every page background is the brand cream; a hairline marks where the alternate sections and the footer begin. */
 html[data-mode="light"] .v4-shell, html:not([data-mode]) .v4-shell { --band: #fffcf6; --ft-bg: #fffcf6; --ft-border: #e6e3da; }
-html[data-mode="light"] .v4-p-who main#content :is(#iit-delhi-team, #funders),
-html[data-mode="light"] .v4-p-oc main#content #home > .section:nth-of-type(even) { border-top: 1px solid var(--line); }
+html[data-mode="light"] .v4-p-who main#content :is(#iit-delhi-team, #funders) { border-top: 1px solid var(--line); }

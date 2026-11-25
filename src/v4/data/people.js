@@ -123,8 +123,9 @@ export const HERO_PEOPLE = [
   ),
 ].map((p) => ({ ...p, id: personId(p.name) }));
 
-// The Open Calls microsite (opens in a new tab, as in the prototype).
-export const OPEN_CALLS_SITE = '/v4/open-calls';
+// The Open Calls microsite: the prototype's own page, served as it stands from public/open-calls/index.html
+// (opens in a new tab, as in the prototype). Its addresses: #all-calls, #call-<id>, #how-it-works, #faqs, #apply.
+export const OPEN_CALLS_SITE = '/open-calls/index.html';
 
 // Set `deadline` to 'YYYY-MM-DD' once confirmed; the status and countdown then update themselves.
 export const OPEN_CALLS = {

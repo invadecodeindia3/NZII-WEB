@@ -148,7 +148,7 @@ export const OpenCallsPopup = ({ heroSelector, smart = false }) => {
       <ul className="oc-pop-list">
         {open.slice(0, 3).map((t) => (
           <li key={t.id}>
-            <a href={`${site}#theme-${t.id}`} target="_blank" rel="noopener">
+            <a href={`${site}#call-${t.id}`} target="_blank" rel="noopener">
               {t.title}<span className="sr-only"> (opens in a new tab)</span>
             </a>
           </li>
@@ -156,7 +156,7 @@ export const OpenCallsPopup = ({ heroSelector, smart = false }) => {
         {n > 3 && <li>and {n - 3} more</li>}
       </ul>
       <span className="oc-pop-d">{dateText}</span>
-      <a className="btn" href={site + (n === 1 ? `#theme-${open[0].id}` : '#themes')} target="_blank" rel="noopener">
+      <a className="btn" href={site + (n === 1 ? `#call-${open[0].id}` : '#all-calls')} target="_blank" rel="noopener">
         Explore the themes <span className="ar" aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span>
       </a>
     </aside>

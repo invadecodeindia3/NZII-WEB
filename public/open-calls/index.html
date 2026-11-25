@@ -1,0 +1,1708 @@
+<!doctype html>
+<html lang="en-GB" data-mode="light">
+<head>
+<!-- The Open Calls microsite, taken as it stands from the NZII prototype (nzii-research-home.lovable.app/NZII_Open_Calls_Microsite.html).
+     Only asset paths and the links back to the main site were changed. To update: replace this file with the new prototype and redo those links. -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/logos/nzii-icon-192.png">
+<link rel="apple-touch-icon" href="/assets/logos/nzii-touch-icon-180.png">
+<title>Open Calls | Net Zero India Initiative</title>
+<meta name="description" content="Research collaboration calls from the Net Zero India Initiative at the School of Public Policy, IIT Delhi, funded by Schmidt Sciences.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+/* NZII brand (PurpleBlue House guidelines). Header and footer match the live PBH site (nzii2.vercel.app). */
+:root{
+  --navy:#1d3658; --teal:#2b9d8f; --teal-dark:#207d72; --lime:#a7c957; --coral:#e76f51; --pink:#f28482; --cream:#fffcf6;
+  --f-head:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-serif:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-body:"Inter",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  /* Light mode (default) */
+  --bg:#fffcf6; --surface:#ffffff; --ink:#1d3658; --ink-2:#55657a; --line:#e6e3da; --accent:#207d72; --grey:#b9b6ad; --dot-base:#1d3658;
+  --tint:#e2f2ee; --error:#b4412a; --error-bg:#fbe9e4;
+  --btn-bg:#1d3658; --btn-ink:#ffffff;
+  /* Header (light) */
+  --hd-scrolled:rgba(255,252,246,.9); --hd-shadow:0 1px 2px rgba(0,0,0,.05); --hd-border:transparent;
+  --pill-bg:rgba(255,252,246,.92); --pill-border:rgba(29,54,88,.12); --pill-ink:#1d3658; --pill-shadow:0 1px 3px rgba(0,0,0,.1);
+  --nav-ink:#4a607a; --nav-hover:#f4f1e8; --nav-on-bg:#e2f2ee; --nav-on-ink:#207d72;
+  --mode-bg:#f4f1e8; --mode-hover:rgba(255,255,255,.6); --burger-border:rgba(29,54,88,.15);
+  --menu-bg:#fffcf6; --menu-border:#e6e2d8; --menu-on-bg:rgba(43,157,143,.2); --menu-on-ink:#2b9d8f;
+  /* Footer (light) */
+  --ft-bg:#f4f1e8; --ft-ink:#1d3658; --ft-border:#e6e2d8;
+  --logo-light:block; --logo-dark:none;
+  color-scheme:light;
+}
+html[data-mode="dark"],html[data-mode="eco"]{
+  --bg:#14243a; --surface:#1a2e48; --ink:#fffcf6; --ink-2:#b3c0d0; --line:#2b4363; --accent:#52b5a8; --grey:#6b7d93; --dot-base:#fffcf6;
+  --tint:#173a3d; --error:#f08b72; --error-bg:#3a2420;
+  --btn-bg:#2b9d8f; --btn-ink:#ffffff;
+  --hd-scrolled:rgba(29,54,88,.9); --hd-shadow:0 4px 6px rgba(0,0,0,.15); --hd-border:rgba(255,255,255,.1);
+  --pill-bg:rgba(29,54,88,.88); --pill-border:rgba(255,255,255,.2); --pill-ink:#ffffff; --pill-shadow:none;
+  --nav-ink:rgba(255,255,255,.8); --nav-hover:rgba(255,255,255,.1); --nav-on-bg:rgba(43,157,143,.25); --nav-on-ink:#a7c957;
+  --mode-bg:rgba(255,255,255,.1); --mode-hover:rgba(255,255,255,.15); --burger-border:rgba(255,255,255,.25);
+  --menu-bg:#1d3658; --menu-border:rgba(255,255,255,.15); --menu-on-bg:rgba(43,157,143,.2); --menu-on-ink:#2b9d8f;
+  --ft-bg:#162b46; --ft-ink:#fffcf6; --ft-border:rgba(255,255,255,.15);
+  --logo-light:none; --logo-dark:block;
+  color-scheme:dark;
+}
+html[data-mode="eco"]{ --bg:#101e31; --surface:#15263c; --ft-bg:#13243a; --ft-border:#243e5c }
+html[data-mode="eco"] *{transition:none!important;animation:none!important}
+
+*{box-sizing:border-box}
+/* Fluid sizing: text scales from 15px (phones) to 20px (large screens); layout always fills the screen */
+html{scroll-behavior:smooth;font-size:clamp(15px,0.55vw + 9px,20px)}
+body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:1rem;line-height:1.6;transition:background .3s,color .3s}
+.container{width:100%;padding-inline:clamp(16px,5vw,120px)}
+/* Headlines in Space Grotesk Medium; body, header, footer and labels in Inter */
+h1,h2,h3{font-family:var(--f-serif);margin:0;line-height:1.12;letter-spacing:-.01em;text-wrap:balance;font-optical-sizing:auto}
+h1{font-size:clamp(2.3rem,5.4vw,3.5rem);font-weight:500}
+h2{font-size:clamp(1.45rem,3vw,1.9rem);font-weight:500}
+h3{font-size:1.2rem;font-weight:500;letter-spacing:0}
+p{margin:0;max-width:68ch;text-wrap:pretty}
+li,dd,dt,summary,small,td,th,label,.meta span{text-wrap:pretty}
+.nb{white-space:nowrap}
+a{color:inherit}
+.link{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+.link:hover{text-decoration-thickness:2px}
+svg{flex-shrink:0}
+.teal{color:var(--accent)}
+.muted{color:var(--ink-2)}
+.lead{font-size:1.08rem;color:var(--ink-2)}
+.rule{width:56px;height:3px;background:var(--teal);border:0;margin:0}
+.label{font-family:var(--f-head);font-weight:700;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:-999px}.skip:focus{left:16px;top:16px;background:var(--surface);padding:8px 12px;z-index:100}
+.logo-l{display:var(--logo-light)} .logo-d{display:var(--logo-dark)}
+[hidden]{display:none!important}
+
+/* ===== Header (as on PBH site) ===== */
+.site-header{position:fixed;top:0;left:0;right:0;z-index:50;padding:10px clamp(16px,5vw,120px);background:transparent;border-bottom:1px solid transparent;font-family:var(--f-head);transition:all .3s}
+@media (min-width:640px){.site-header{padding-block:12px}}
+.site-header.scrolled{background:var(--hd-scrolled);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:var(--hd-shadow);border-bottom-color:var(--hd-border)}
+.hd-row{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.hd-logo{display:flex;align-items:center;flex-shrink:0;transition:transform .3s}
+.hd-logo:hover{transform:scale(1.02)}
+.hd-logo img{width:auto;height:56px;object-fit:contain;transition:height .3s;filter:drop-shadow(0 1px 1px rgba(0,0,0,.05))}
+@media (min-width:640px){.hd-logo img{height:72px}}
+@media (min-width:768px){.hd-logo img{height:80px}}
+@media (min-width:1024px){.hd-logo img{height:88px}}
+.scrolled .hd-logo img{height:44px}
+@media (min-width:640px){.scrolled .hd-logo img{height:52px}}
+@media (min-width:768px){.scrolled .hd-logo img{height:56px}}
+.pill{display:flex;align-items:center;gap:8px;border-radius:999px;border:1px solid var(--pill-border);background:var(--pill-bg);color:var(--pill-ink);padding:8px 12px;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:var(--pill-shadow)}
+@media (min-width:640px){.pill{gap:12px;padding:10px 16px}}
+.main-nav{display:none;align-items:center;gap:2px;min-width:0}
+@media (min-width:1280px){.main-nav{display:flex}}
+.main-nav a{border-radius:999px;padding:8px 10px;font-size:11px;font-weight:600;white-space:nowrap;text-decoration:none;color:var(--nav-ink);transition:background .2s,color .2s}
+@media (min-width:1536px){.main-nav a{padding:8px 14px;font-size:12px}}
+.main-nav a:hover{background:var(--nav-hover);color:var(--pill-ink)}
+.main-nav a[aria-current="page"]{background:var(--nav-on-bg);color:var(--nav-on-ink)}
+.hd-tools{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.modes{display:none;align-items:center;border-radius:999px;padding:4px;background:var(--mode-bg)}
+@media (min-width:640px){.modes{display:flex}}
+.modes button{display:inline-flex;align-items:center;gap:6px;border:0;border-radius:999px;padding:6px 10px;font:600 11px var(--f-head);background:transparent;color:var(--nav-ink);cursor:pointer;transition:background .2s}
+.modes button:hover{background:var(--mode-hover)}
+.modes button[aria-pressed="true"]{background:var(--teal);color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.mode-select{display:block}
+@media (min-width:640px){.mode-select{display:none}}
+.mode-select select{max-width:84px;border-radius:999px;border:1px solid var(--pill-border);padding:6px 8px;font:700 12px var(--f-head);background:var(--pill-bg);color:var(--pill-ink)}
+.burger{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:999px;border:1px solid var(--burger-border);background:transparent;color:var(--pill-ink);cursor:pointer}
+@media (min-width:1280px){.burger{display:none}}
+.mobile-nav{margin-top:8px;display:grid;gap:4px;border-radius:16px;border:1px solid var(--menu-border);background:var(--menu-bg);color:var(--pill-ink);padding:12px;box-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);font-family:var(--f-head)}
+@media (min-width:1280px){.mobile-nav{display:none!important}}
+.mobile-nav a{display:flex;align-items:center;justify-content:space-between;border-radius:12px;padding:12px 16px;font-size:14px;font-weight:700;text-decoration:none}
+.mobile-nav a:hover{background:var(--nav-hover)}
+.mobile-nav a[aria-current="page"]{background:var(--menu-on-bg);color:var(--menu-on-ink)}
+
+/* ===== Footer (as on PBH site) ===== */
+.site-footer{border-top:1px solid var(--ft-border);background:var(--ft-bg);color:var(--ft-ink);padding:64px clamp(16px,5vw,120px);margin-top:96px;font-family:var(--f-head)}
+.ft-top{display:grid;gap:48px;padding-bottom:56px;border-bottom:1px solid color-mix(in srgb,currentColor 15%,transparent)}
+@media (min-width:1024px){.ft-top{grid-template-columns:1.2fr 1fr}}
+.ft-brand{max-width:36rem}
+.ft-brand img{height:56px;width:auto;object-fit:contain}
+@media (min-width:640px){.ft-brand img{height:64px}}   /* final logo (3 Nov): tall enough for "Led by IIT Delhi" to read */
+.ft-brand p{margin-top:20px;font-size:15px;line-height:2;opacity:.75}
+.ft-cta{margin-top:28px;display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#2b9d8f;text-decoration:none}
+.ft-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 20px;align-self:start;font-size:14px}
+@media (min-width:640px){.ft-nav{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.ft-nav a{min-width:0;font-weight:500;opacity:.8;text-decoration:none;transition:opacity .2s}
+.ft-nav a:hover{opacity:1}
+.ft-bottom{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding-top:28px;font-size:12px;opacity:.75}   /* 3 Nov: .6 gave 3.5:1 on the light footer; .75 gives 5.3:1 (WCAG AA), as .ft-brand p */
+
+/* ===== Microsite navigation ===== */
+main{display:block;flex:1 0 auto;padding-top:clamp(110px,10vw,150px)}
+.subnav{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;border-bottom:1px solid var(--line);padding-bottom:14px;font-family:var(--f-head)}
+.subnav .crumb{font-size:.82rem;font-weight:600;color:var(--ink-2)}
+.subnav .crumb a{color:var(--accent);text-decoration:none}
+.subnav nav{display:flex;flex-wrap:wrap;gap:4px}
+.subnav nav a{font-size:.82rem;font-weight:600;text-decoration:none;color:var(--ink-2);padding:6px 12px;border-radius:999px}
+.subnav nav a:hover{color:var(--ink);background:var(--nav-hover)}
+.subnav nav a[aria-current="page"]{color:var(--nav-on-ink);background:var(--nav-on-bg)}
+.page{display:flex;flex-direction:column;gap:48px;padding-block:32px 0;scroll-margin-top:240px}
+
+/* ===== Shared components ===== */
+.st{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-head);font-size:.78rem;font-weight:700;white-space:nowrap}
+.st::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--c)}
+.s-open{--c:var(--teal)} .s-soon{--c:var(--lime)} .s-closing{--c:var(--coral)} .s-closed{--c:var(--grey)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 .95rem var(--f-head);padding:12px 22px;border-radius:6px;border:1px solid var(--btn-bg);background:var(--btn-bg);color:var(--btn-ink);cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn:hover{background:var(--teal-dark);border-color:var(--teal-dark);color:#fff}
+.btn.line{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.line:hover{color:var(--accent);border-color:var(--accent);background:transparent}
+.btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
+.section{display:flex;flex-direction:column;gap:16px}
+.section > h2{display:flex;flex-direction:column;gap:14px}
+.section > h2::after{content:"";width:40px;height:3px;background:var(--teal)}
+.bullets{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max-width:72ch}
+.bullets li::marker{color:var(--teal)}
+.numbered{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px;max-width:72ch}
+.numbered li::marker{font-family:var(--f-head);font-weight:700;color:var(--accent)}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;vertical-align:top;padding:12px 18px;border-bottom:1px solid var(--line)}
+th{font-family:var(--f-head);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);font-weight:700;background:var(--bg)}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:500;min-width:11rem}
+td .muted{display:block;font-size:.88rem}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:12px}
+.note{border-left:3px solid var(--teal);padding:4px 0 4px 16px;color:var(--ink-2);max-width:72ch}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+
+/* ===== Open calls page ===== */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:clamp(24px,5vw,96px);align-items:center}
+.hero-text{display:flex;flex-direction:column;gap:18px}
+.dots{width:100%;height:auto;display:block}
+@media (max-width:900px){.hero{grid-template-columns:1fr}.dots{max-width:560px;max-height:200px}}
+.round-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px 32px}
+.list{display:flex;flex-direction:column;border-top:1px solid var(--line);margin:0;padding:0;list-style:none}
+.call{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 32px;padding-block:24px;border-bottom:1px solid var(--line);align-items:center}
+.call-main{display:flex;flex-direction:column;gap:8px;min-width:0}
+.call-top{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center}
+.call-no{font-family:var(--f-head);font-size:.78rem;font-weight:700;color:var(--ink-2)}
+.call h3{font-size:1.3rem}
+.call h3 a{text-decoration:none}
+.call h3 a:hover{color:var(--accent)}
+.call .meta{display:flex;flex-wrap:wrap;gap:4px 20px;font-size:.9rem;color:var(--ink-2)}
+.call .date{text-align:right;font-size:.85rem;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.call .date b{display:block;font-family:var(--f-head);font-size:1.02rem;color:var(--ink)}
+@media (max-width:640px){.call{grid-template-columns:1fr}.call .date{text-align:left}}
+.keydates{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.keydates div{padding:20px 24px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:4px}
+.keydates div:last-child{border-right:0}
+.keydates b{font-family:var(--f-head);font-size:1.05rem}
+@media (max-width:760px){.keydates{grid-template-columns:1fr}.keydates div{border-right:0;border-bottom:1px solid var(--line)}.keydates div:last-child{border-bottom:0}}
+
+/* ===== Call page ===== */
+.detail{display:grid;grid-template-columns:minmax(0,1fr) minmax(18rem,26%);gap:clamp(32px,5vw,96px);align-items:start}
+@media (max-width:900px){.detail{grid-template-columns:1fr}}
+.detail-main{display:flex;flex-direction:column;gap:44px;min-width:0;max-width:48rem}
+.cover{display:flex;flex-direction:column;gap:16px}
+.cover h1{font-size:clamp(1.9rem,4vw,2.7rem)}
+.facts{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:16px;position:sticky;top:120px}
+.facts dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:10px 16px;font-size:.92rem}
+.facts dt{color:var(--ink-2)}
+.facts dd{margin:0;font-weight:500;font-variant-numeric:tabular-nums}
+.facts small{font-size:.85rem;color:var(--ink-2)}
+.toc{display:flex;flex-direction:column;gap:2px;border-top:1px solid var(--line);padding-top:14px;font-size:.88rem}
+.toc a{text-decoration:none;color:var(--ink-2);padding:3px 0}
+.toc a:hover{color:var(--accent)}
+.sub{display:flex;flex-direction:column;gap:6px}
+.sub h3{font-size:1.05rem}
+.qs{counter-reset:q;list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.qs li{display:grid;grid-template-columns:2rem minmax(0,1fr) auto;gap:4px 16px;padding-block:12px;border-bottom:1px solid var(--line);align-items:baseline}
+.qs li::before{counter-increment:q;content:counter(q);font-family:var(--f-head);font-weight:700;color:var(--accent)}
+.qs .lim{font-size:.85rem;color:var(--ink-2);white-space:nowrap;font-variant-numeric:tabular-nums}
+@media (max-width:520px){.qs li{grid-template-columns:2rem minmax(0,1fr)}.qs .lim{grid-column:2}}
+.tag{display:inline-block;font-family:var(--f-head);font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);border:1px solid var(--line);border-radius:4px;padding:1px 6px;margin-left:6px;vertical-align:2px}
+.person{display:flex;flex-direction:column;gap:2px}
+.person b{font-family:var(--f-head)}
+
+/* ===== FAQs ===== */
+.faq-group{display:flex;flex-direction:column;gap:4px}
+details{border-bottom:1px solid var(--line);padding-block:14px}
+details:first-of-type{border-top:1px solid var(--line)}
+summary{cursor:pointer;font-weight:500;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--f-head);font-weight:700;color:var(--accent)}
+details[open] summary::after{content:"−"}
+details > div{margin-top:8px;color:var(--ink-2);display:flex;flex-direction:column;gap:8px;max-width:72ch}
+
+/* ===== Application form ===== */
+.form-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(16rem,24%);gap:clamp(32px,5vw,96px);align-items:start}
+@media (max-width:900px){.form-wrap{grid-template-columns:1fr}.form-side{order:-1;position:static!important}}
+form.apply{display:flex;flex-direction:column;gap:40px;max-width:48rem;min-width:0}
+fieldset{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:20px;min-width:0}
+legend{padding:0;margin-bottom:6px;width:100%}
+legend h2{display:flex;align-items:baseline;gap:12px;font-size:1.45rem}
+legend h2 span{font-family:var(--f-head);font-size:.8rem;font-weight:700;color:var(--accent)}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field > label,.field > .flabel{font-family:var(--f-head);font-weight:700;font-size:.92rem}
+.req{color:var(--coral);margin-left:2px}
+.hint{font-size:.86rem;color:var(--ink-2)}
+.row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:640px){.row2{grid-template-columns:1fr}}
+input[type=text],input[type=email],input[type=tel],select,textarea{font:400 1rem var(--f-body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:11px 13px;width:100%;min-width:0}
+textarea{min-height:8rem;resize:vertical;line-height:1.55}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--teal);outline-offset:0;border-color:var(--teal)}
+.count{font-size:.8rem;color:var(--ink-2);text-align:right;font-variant-numeric:tabular-nums}
+.count.over{color:var(--error);font-weight:500}
+.choices{display:flex;flex-direction:column;gap:8px}
+.choice{display:flex;gap:10px;align-items:flex-start;font-size:.95rem;cursor:pointer}
+.choice input{margin-top:.3em;accent-color:var(--teal);width:1rem;height:1rem;flex-shrink:0}
+.drop{display:flex;flex-wrap:wrap;align-items:center;gap:12px;border:1px dashed var(--line);border-radius:8px;padding:16px;background:var(--surface)}
+.drop input[type=file]{font:400 .9rem var(--f-body);color:var(--ink-2);max-width:100%}
+.drop .fname{font-size:.88rem;color:var(--accent);font-weight:500}
+.field.invalid input,.field.invalid select,.field.invalid textarea,.field.invalid .dz,.field.invalid .callopt,.field.invalid .mchip span{border-color:var(--error)}
+.err{font-size:.86rem;color:var(--error);font-weight:500}
+.errbox{background:var(--error-bg);color:var(--error);border-radius:8px;padding:14px 18px;font-size:.92rem}
+.errbox ul{margin:6px 0 0;padding-left:18px}
+.errbox a{color:inherit}
+.form-side{position:sticky;top:120px;display:flex;flex-direction:column;gap:14px}
+.steps-nav{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.steps-nav li{border-bottom:1px solid var(--line)}
+.steps-nav a{display:flex;justify-content:space-between;gap:8px;padding:10px 0;text-decoration:none;font-size:.9rem;color:var(--ink-2)}
+.steps-nav a:hover{color:var(--ink)}
+.steps-nav .tick{font-family:var(--f-head);font-weight:700;color:var(--grey)}
+.steps-nav li.done .tick{color:var(--teal)}
+.form-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;border-top:1px solid var(--line);padding-top:24px}
+.saved{font-size:.85rem;color:var(--ink-2)}
+
+/* ===== Confirmation ===== */
+.confirm{max-width:48rem;display:flex;flex-direction:column;gap:28px}
+.ref{font-family:var(--f-head);font-weight:800;font-size:1.3rem;letter-spacing:.04em}
+.summary{margin:0;display:grid;grid-template-columns:minmax(9rem,auto) 1fr;gap:10px 24px;font-size:.95rem}
+.summary dt{color:var(--ink-2)}
+.summary dd{margin:0;font-weight:500;min-width:0;overflow-wrap:anywhere}
+.next{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.next li{display:grid;grid-template-columns:10rem 1fr;gap:16px;padding-block:12px;border-bottom:1px solid var(--line)}
+.next time{color:var(--ink-2);font-variant-numeric:tabular-nums}
+@media (max-width:520px){.next li{grid-template-columns:1fr;gap:0}}
+
+/* ===== Home: announcement with a right-hand panel (structure follows the SPP news post) ===== */
+.section,.band{scroll-margin-top:140px}
+.home{display:grid;grid-template-columns:minmax(0,1fr) minmax(18rem,26%);gap:clamp(32px,5vw,96px);align-items:start}
+@media (max-width:900px){.home{grid-template-columns:1fr}.home-side{order:-1;position:static!important}.home-side .toc,#open-calls .dots{display:none}}
+.home-main{display:flex;flex-direction:column;gap:44px;min-width:0;max-width:52rem}
+.home-side{position:sticky;top:120px;display:flex;flex-direction:column;gap:16px}
+.feature{gap:14px}
+.feature h3{font-size:1.25rem;line-height:1.25}
+.feature h3 a{text-decoration:none}
+.feature h3 a:hover{color:var(--accent)}
+.feature dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:.88rem}
+.feature dt{color:var(--ink-2)}
+.feature dd{margin:0;font-weight:500}
+.feature .btn{align-self:stretch}
+.band{display:flex;flex-direction:column;gap:12px;border-top:1px solid var(--line);padding-top:32px}
+.band .label{color:var(--accent)}
+.band h2{font-size:clamp(1.7rem,3.6vw,2.3rem)}
+.themes{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.themes li{display:grid;grid-template-columns:2.4rem minmax(0,1fr) auto;gap:4px 16px;padding-block:14px;border-bottom:1px solid var(--line);align-items:baseline}
+.themes .n{font-family:var(--f-head);font-weight:800;color:var(--accent)}
+.themes a.t{font-weight:500;text-decoration:none}
+.themes a.t:hover{color:var(--accent)}
+.themes .d{font-size:.85rem;white-space:nowrap}
+@media (max-width:560px){.themes li{grid-template-columns:2.4rem minmax(0,1fr)}.themes .d{grid-column:2}}
+.now{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;align-self:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 18px;font-size:.92rem}
+.now b{font-family:var(--f-head)}
+
+/* ===== Open calls listing ===== */
+.ac-head{display:flex;flex-direction:column;gap:16px;max-width:48rem}
+.ac-head h1{font-size:clamp(2rem,4.4vw,2.9rem)}
+.round{display:flex;flex-direction:column;gap:24px}
+.round-top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 32px;border-bottom:1px solid var(--line);padding-bottom:20px}
+.round-top h2{font-size:clamp(1.35rem,2.6vw,1.7rem)}
+.round-dates{display:flex;flex-wrap:wrap;gap:6px 24px;margin:0;font-size:.88rem}
+.round-dates div{display:flex;gap:6px}
+.round-dates dt{color:var(--ink-2)}
+.round-dates dd{margin:0;font-weight:500;font-variant-numeric:tabular-nums}
+.filters{display:flex;flex-wrap:wrap;gap:8px;font-family:var(--f-head)}
+.filters button{font:600 .82rem var(--f-head);padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);cursor:pointer}
+.filters button:hover{color:var(--ink);border-color:var(--ink-2)}
+.filters button[aria-pressed="true"]{background:var(--nav-on-bg);border-color:transparent;color:var(--nav-on-ink)}
+.cards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+@media (max-width:860px){.cards{grid-template-columns:1fr}}
+.card{position:relative;display:flex;flex-direction:column;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:clamp(20px,2vw,28px);transition:border-color .2s,box-shadow .2s}
+.card:hover{border-color:var(--accent);box-shadow:0 6px 20px -12px rgba(29,54,88,.35)}
+.card:focus-within{border-color:var(--accent)}
+.card h3{font-size:1.22rem;line-height:1.25}
+.card h3 a{text-decoration:none}
+.card h3 a::after{content:"";position:absolute;inset:0;border-radius:12px}
+.card h3 a:focus-visible{outline:0}
+.card .promise{font-size:.93rem;color:var(--ink-2)}
+.card dl{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 20px;border-top:1px solid var(--line);padding-top:14px;margin-top:auto}
+.card dt{font-family:var(--f-head);font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.card dd{margin:2px 0 0;font-size:.88rem;font-weight:500}
+.card dl div:first-child{grid-column:1/-1}
+.card-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:.85rem;color:var(--ink-2)}
+.card-foot .go{font-family:var(--f-head);font-weight:700;color:var(--accent);white-space:nowrap}
+.empty{padding:28px;border:1px dashed var(--line);border-radius:12px;color:var(--ink-2);text-align:center}
+
+/* "Points to note": highlighted at the programme manager's request */
+.highlight{background:var(--tint);border:1px solid color-mix(in srgb,var(--teal) 30%,transparent);border-left:4px solid var(--teal);border-radius:12px;padding:clamp(20px,3vw,32px)}
+.highlight > .label{color:var(--accent)}
+.expect{list-style:none;counter-reset:ex;margin:4px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.expect.one{grid-template-columns:1fr}
+@media (max-width:640px){.expect{grid-template-columns:1fr}}
+.expect li{counter-increment:ex;display:grid;align-content:start;grid-template-columns:2rem minmax(0,1fr);gap:2px 12px;background:var(--surface);border-radius:10px;padding:16px}
+.expect li::before{content:counter(ex);grid-row:span 2;width:2rem;height:2rem;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font:800 .9rem var(--f-head)}
+.expect b{font-family:var(--f-head)}
+.expect span{font-size:.93rem;color:var(--ink-2)}
+.expect li:has(.t){align-items:center}
+.expect li:has(.t)::before{grid-row:auto}
+.expect span.t{font-size:1rem;color:var(--ink)}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+/* small dot cluster that sits in a corner (same as the Home page photos) */
+.cluster{position:absolute;width:96px;height:72px;pointer-events:none;z-index:1}
+
+/* Dot clusters: each dot is a place. A slow ripple runs out from the dense corner, like activity
+   spreading from one place to the next. Still in Eco mode and with reduced motion. */
+.cluster circle.pl{transform-box:fill-box;transform-origin:center;animation:cl-ripple 7s ease-in-out infinite;animation-delay:var(--dl,0s)}
+@keyframes cl-ripple{0%,55%,100%{transform:scale(1);opacity:1}25%{transform:scale(1.35);opacity:.8}}
+html[data-mode="eco"] .cluster circle.pl{animation:none}
+@media (prefers-reduced-motion:reduce){.cluster circle.pl{animation:none}}
+.highlight{position:relative;overflow:hidden}
+.highlight .cluster{right:-1px;bottom:-1px}
+/* ===== Overview refresh (29 Oct) ===== */
+/* Pill buttons and dot labels, as on the Home, About and People pages */
+.btn{border-radius:999px;padding:13px 22px}
+.btn.line{border-color:color-mix(in srgb,var(--ink) 25%,transparent)}
+.btn .ar,.sb .go .ar{display:inline-block;transition:transform .25s}.btn:hover .ar,.sb .go:hover .ar{transform:translateX(4px)}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font:700 .72rem var(--f-head);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.eyebrow::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--c,var(--teal))}
+.sb .go{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;font:700 .92rem var(--f-head);color:var(--accent);text-decoration:none}
+#open-calls .home-main > .section > h2{font-size:clamp(1.7rem,3vw,2.3rem);gap:16px}
+#open-calls .home-main > .section > h2::after{width:56px;border-radius:2px}
+#open-calls .home-main{gap:clamp(48px,5vw,64px)}
+
+/* Hero: one beacon for each call in this round */
+.hero-art{position:relative}
+.dots .beacon{cursor:pointer}
+.dots .beacon .hit{fill:transparent}
+.dots .beacon .core{transform-box:fill-box;transform-origin:center;transition:transform .25s cubic-bezier(.2,.7,.2,1)}
+.dots .beacon.on .core{transform:scale(1.35)}
+.dots .beacon .ring{fill:none;stroke-width:2;transform-box:fill-box;transform-origin:center;animation:beacon 2.8s cubic-bezier(.2,.6,.3,1) infinite;animation-delay:var(--bd,0s)}
+.dots .beacon.closed .ring{display:none}
+@keyframes beacon{0%{transform:scale(1);opacity:.75}75%,100%{transform:scale(3.4);opacity:0}}
+html[data-mode="eco"] .dots .beacon .ring{animation:none;transform:scale(1.9);opacity:.35}
+@media (prefers-reduced-motion:reduce){.dots .beacon .ring{animation:none;transform:scale(1.9);opacity:.35}}
+.dot-tip{position:absolute;z-index:5;pointer-events:none;transform:translate(-50%,calc(-100% - 14px));display:flex;flex-direction:column;gap:1px;padding:7px 12px;border-radius:10px;background:#1d3658;color:#fffcf6;box-shadow:0 10px 24px -12px rgba(29,54,88,.6);white-space:nowrap}
+.dot-tip b{font:700 .82rem var(--f-head)}
+.dot-tip span{font:500 .72rem var(--f-body);opacity:.75}
+html[data-mode="dark"] .dot-tip,html[data-mode="eco"] .dot-tip{background:#fffcf6;color:#1d3658}
+
+/* Round at a glance */
+.glance{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1.05fr .8fr 1.1fr 1.25fr .95fr;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+.glance li{display:flex;flex-direction:column;gap:6px;padding:20px 24px;border-left:1px solid var(--line);min-width:0}
+.glance li:first-child{border-left:0}
+.glance b{font:500 clamp(1.15rem,1.7vw,1.45rem)/1.2 var(--f-serif);color:var(--ink)}
+.glance span{font-size:.86rem;color:var(--ink-2)}
+.glance .st{align-self:flex-start;font-size:.74rem;color:var(--ink)}
+@media (max-width:1100px){.glance{grid-template-columns:repeat(3,minmax(0,1fr))}.glance li:nth-child(4){border-left:0}.glance li:nth-child(n+4){border-top:1px solid var(--line)}}
+@media (max-width:640px){.glance{grid-template-columns:repeat(2,minmax(0,1fr))}.glance li{border-left:0;border-top:1px solid var(--line)}.glance li:nth-child(-n+2){border-top:0}.glance li:nth-child(even){border-left:1px solid var(--line)}}
+
+/* Remuneration: two offer cards */
+.offers{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.offers li{display:flex;flex-direction:column;gap:4px;padding:22px 24px;background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--teal);border-radius:12px}
+.offers .who{font:600 .92rem/1.45 var(--f-head);color:var(--ink-2)}
+.offers b{margin-top:8px;font:500 clamp(1.5rem,2.6vw,2rem)/1.15 var(--f-serif);color:var(--ink)}
+.offers .per{font-size:.9rem;color:var(--ink-2)}
+@media (max-width:640px){.offers{grid-template-columns:1fr}}
+
+/* How to apply: five steps joined by a dotted path; step 4 (apply) is the filled one */
+.apply-steps{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column}
+.apply-steps > li{position:relative;display:grid;grid-template-columns:44px minmax(0,1fr);gap:0 20px;padding-bottom:34px}
+.apply-steps > li:last-child{padding-bottom:0}
+.apply-steps > li:not(:last-child)::before{content:"";position:absolute;left:21px;top:52px;bottom:8px;width:2px;background-image:radial-gradient(circle,var(--teal) 1.2px,transparent 1.6px);background-size:2px 9px;background-repeat:repeat-y}
+.sn{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--tint);color:var(--accent);font:800 1rem var(--f-head);border:1.5px solid color-mix(in srgb,var(--teal) 45%,transparent)}
+.apply-steps > li.key .sn{background:var(--teal);border-color:var(--teal);color:#fff}
+.sb{display:flex;flex-direction:column;gap:8px;padding-top:9px;min-width:0}
+.sb h3{font-size:1.2rem}
+.docs{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;margin-top:6px;align-items:start}
+.doc{display:flex;flex-direction:column;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;min-width:0}
+.doc b{font:700 1.02rem var(--f-head)}
+.doc .fmt{font:700 .7rem var(--f-head);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.doc p{font-size:.93rem}
+.doc .qs{margin-top:4px}
+.doc .qs li{padding-block:9px;font-size:.93rem}
+@media (max-width:760px){.docs{grid-template-columns:1fr}}
+.step-act{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:6px}
+
+/* Important dates: a timeline; past dates are filled and the next one pulses */
+.tline{list-style:none;margin:10px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));position:relative}
+.tline::before,.tline::after{content:"";position:absolute;left:9px;top:8px;height:2px}
+.tline::before{right:0;background:var(--line)}
+.tline::after{width:calc((100% - 9px) * var(--p,0));background:var(--teal)}
+.tline li{position:relative;display:flex;flex-direction:column;gap:4px;padding:32px 20px 0 0}
+.tline .td{position:absolute;left:0;top:0;width:18px;height:18px;border-radius:50%;background:var(--bg);border:2px solid var(--grey);z-index:1}
+.tline li.past .td,.tline li.next .td{background:var(--teal);border-color:var(--teal)}
+.tline li.next .td::after{content:"";position:absolute;inset:-2px;border-radius:50%;border:2px solid var(--teal);animation:beacon 2.8s cubic-bezier(.2,.6,.3,1) infinite}
+.tline b{font:700 .95rem var(--f-head);color:var(--ink-2)}
+.tline time{font:500 clamp(1.1rem,1.6vw,1.3rem)/1.25 var(--f-serif);color:var(--ink)}
+.tline .left{font:600 .82rem var(--f-head);color:var(--accent)}
+html[data-mode="eco"] .tline li.next .td::after{animation:none;opacity:0}
+@media (prefers-reduced-motion:reduce){.tline li.next .td::after{animation:none;opacity:0}}
+@media (max-width:640px){.tline{grid-template-columns:1fr;gap:26px}.tline::before{left:8px;right:auto;top:8px;bottom:8px;width:2px;height:auto}.tline::after{display:none}.tline li{padding:0 0 0 36px}}
+
+/* About NZII and Research Frontier Networks: two panels, each logo beside its text */
+.about-two{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.about-card{display:grid;grid-template-columns:170px minmax(0,1fr);gap:12px 32px;padding:clamp(22px,3vw,34px);align-content:start}
+.about-card + .about-card{border-top:1px solid var(--line)}
+.about-card .lg{grid-row:1 / span 6;align-self:start;display:flex;align-items:center;justify-content:center;height:76px;padding:10px 12px;border-radius:10px;background:#fffcf6;border:1px solid var(--line)}
+.about-card .lg img{max-width:100%;max-height:100%;object-fit:contain}
+.about-card > *:not(.lg){grid-column:2}
+.about-card h2{font-size:clamp(1.3rem,2.2vw,1.6rem)}
+.about-card .quote{font:500 1.2rem/1.4 var(--f-serif);color:var(--ink);border-left:3px solid var(--teal);padding:2px 0 2px 16px;max-width:none}
+@media (max-width:640px){.about-card{grid-template-columns:1fr}.about-card > *:not(.lg){grid-column:1}.about-card .lg{grid-row:auto;justify-self:start;width:170px}}
+
+/* Contact: one card per person; one button writes to all three */
+.contacts{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.contacts li{display:flex;flex-direction:column;gap:6px;padding:18px 20px;background:var(--surface);border:1px solid var(--line);border-radius:12px;min-width:0}
+.contacts li.primary{background:var(--tint);border-color:color-mix(in srgb,var(--teal) 45%,var(--line))}
+.contacts b{font:700 1rem var(--f-head)}
+.contacts a{overflow-wrap:anywhere;font-size:.92rem}
+.mail-act{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
+@media (max-width:760px){.contacts{grid-template-columns:1fr}}
+/* ===== Apply form (29 Oct) ===== */
+form.apply{gap:24px}
+/* Checklist before you start (the same requirements as step 3 of How to apply) */
+.before{display:flex;flex-direction:column;gap:14px;background:var(--tint);border:1px solid color-mix(in srgb,var(--teal) 30%,transparent);border-radius:16px;padding:clamp(20px,3vw,28px)}
+.before h2{font-size:1.25rem}
+.before ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 20px}
+.before li{position:relative;display:flex;flex-direction:column;gap:2px;padding-left:20px}
+.before li::before{content:"";position:absolute;left:0;top:.45em;width:9px;height:9px;border-radius:50%;background:var(--teal)}
+.before b{font:700 .95rem var(--f-head)}
+.before span{font-size:.86rem;color:var(--ink-2)}
+@media (max-width:760px){.before ul{grid-template-columns:1fr}}
+/* Each part in its own card, numbered like the steps on the overview; the number fills when the part is complete */
+.fcard{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:clamp(20px,3vw,32px)}
+legend{margin-bottom:10px}
+legend h2{display:flex;align-items:center;gap:14px;font-size:1.4rem}
+legend h2 span{flex:none;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--tint);border:1.5px solid color-mix(in srgb,var(--teal) 45%,transparent);color:var(--accent);font:800 .92rem var(--f-head);transition:background .25s,color .25s,border-color .25s}
+fieldset.done legend h2 span{background:var(--teal);border-color:var(--teal);color:#fff}
+.req{display:none}
+.opt{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;background:color-mix(in srgb,var(--ink) 8%,transparent);font:600 .72rem var(--f-head);color:var(--ink-2);vertical-align:2px}
+.field > .flabel{font-family:var(--f-head);font-weight:700;font-size:.92rem}
+/* The call: four cards */
+.callopts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.callopt{position:relative;display:flex;flex-direction:column;gap:6px;padding:16px 18px 16px 48px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);cursor:pointer;transition:border-color .2s,background .2s}
+.callopt input{position:absolute;left:18px;top:19px;width:18px;height:18px;margin:0;accent-color:var(--teal);cursor:pointer}
+.callopt:hover{border-color:color-mix(in srgb,var(--teal) 55%,var(--line))}
+.callopt:has(input:checked){border-color:var(--teal);background:var(--tint)}
+.callopt:has(input:focus-visible){outline:2px solid var(--teal);outline-offset:2px}
+.co-top{font:700 .68rem var(--f-head);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.callopt b{font:500 1rem/1.3 var(--f-serif);color:var(--ink)}
+.co-meta{font-size:.84rem;color:var(--ink-2)}
+@media (max-width:640px){.callopts{grid-template-columns:1fr}}
+/* Stay: one-tap chips */
+.mchips{display:flex;flex-wrap:wrap;gap:8px;min-height:42px;align-items:center}
+.mchip{position:relative;display:inline-flex}
+.mchip input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.mchip span{display:inline-flex;align-items:center;padding:9px 16px;border:1.5px solid var(--line);border-radius:999px;background:var(--bg);font:600 .9rem var(--f-head);color:var(--ink-2);transition:background .2s,border-color .2s,color .2s}
+.mchip:hover span{border-color:var(--teal);color:var(--ink)}
+.mchip input:checked + span{background:var(--teal);border-color:var(--teal);color:#fff}
+.mchip input:focus-visible + span{outline:2px solid var(--teal);outline-offset:2px}
+/* Documents: PDF drop zones */
+.dz{position:relative;display:flex;align-items:center;gap:16px;padding:16px 20px;border:1.5px dashed color-mix(in srgb,var(--teal) 45%,var(--line));border-radius:12px;background:var(--bg);cursor:pointer;transition:background .2s,border-color .2s}
+.field > label.dz{font:400 .95rem var(--f-body)}
+.dz:hover,.dz.over{background:var(--tint);border-color:var(--teal)}
+.dz:focus-within{outline:2px solid var(--teal);outline-offset:2px}
+.dz input[type=file]{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.dz-icon{flex:none;display:grid;place-items:center;width:42px;height:50px;border-radius:6px;background:var(--surface);border:1px solid var(--line);font:800 .66rem var(--f-head);letter-spacing:.06em;color:var(--coral)}
+.dz-text{font-size:.95rem;color:var(--ink-2)}
+.dz-text b{color:var(--accent);font-family:var(--f-head)}
+.dz.has{border-style:solid;border-color:var(--teal);background:var(--tint)}
+.dz.has .dz-text{display:none}
+.dz-file{display:flex;flex-direction:column;gap:2px;min-width:0}
+.dz-file b{font:600 .95rem var(--f-head);color:var(--ink);overflow-wrap:anywhere}
+.dz-file span{font-size:.82rem;color:var(--ink-2)}
+.dz-remove{align-self:flex-start;padding:0;border:0;background:none;font:600 .85rem var(--f-head);color:var(--accent);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+/* Submit row */
+.form-actions{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px clamp(20px,3vw,32px)}
+/* Progress: a bar that fills, and one dot per part (filled with a tick when complete, ringed when in view) */
+.prog{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.prog-bar{height:6px;border-radius:999px;background:var(--line);overflow:hidden}
+.prog-bar i{display:block;width:0;height:100%;border-radius:inherit;background:var(--teal);transition:width .4s ease}
+#prog-text{font-size:.82rem;color:var(--ink-2)}
+.steps-nav a{align-items:center;justify-content:flex-start;gap:12px}
+.sdot{flex:none;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);color:#fff;font:800 .68rem var(--f-head);transition:background .25s,border-color .25s}
+.steps-nav li.cur a{color:var(--ink);font-weight:600}
+.steps-nav li.cur .sdot{border-color:var(--teal)}
+.steps-nav li.done .sdot{background:var(--teal);border-color:var(--teal)}
+.steps-nav li.done .sdot::after{content:"✓"}
+@media (max-width:900px){.steps-nav{display:none}.form-side .panel{gap:8px}}
+/* ===== Live / closing / closed indicator (29 Oct): a pill; the dot pulses while a call is live ===== */
+.st{gap:7px;padding:4px 11px 4px 9px;border-radius:999px;background:color-mix(in srgb,var(--c) 15%,transparent);color:var(--ink);font-size:.74rem;letter-spacing:.02em}
+.st::before{width:8px;height:8px;animation:live 2s ease-out infinite}
+.s-closed::before,.st.static::before{animation:none}
+@keyframes live{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--c) 60%,transparent)}70%,100%{box-shadow:0 0 0 7px transparent}}
+html[data-mode="eco"] .st::before{animation:none}
+@media (prefers-reduced-motion:reduce){.st::before{animation:none}}
+/* Overview: compact call tiles */
+.tiles{list-style:none;margin:8px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.tile a{position:relative;display:flex;flex-direction:column;gap:10px;height:100%;padding:20px 64px 20px 22px;background:var(--surface);border:1px solid var(--line);border-radius:14px;color:inherit;text-decoration:none;transition:border-color .2s,transform .2s,box-shadow .2s}
+.tile a:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 10px 24px -16px rgba(29,54,88,.4)}
+.tile-top{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px}
+.tile b{font:500 1.08rem/1.3 var(--f-serif);color:var(--ink)}
+.tile-meta{font-size:.86rem;color:var(--ink-2)}
+.tile-go{position:absolute;right:18px;top:50%;margin-top:-17px;width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;font:700 .95rem var(--f-head);color:var(--accent);transition:background .2s,border-color .2s,color .2s}
+.tile a:hover .tile-go{background:var(--teal);border-color:var(--teal);color:#fff}
+@media (max-width:640px){.tiles{grid-template-columns:1fr}}
+.feature .btn{align-self:stretch}
+/* ===== Type system (30 Oct) — the same on every page =====
+   H1 Space Grotesk Medium 38–70px · H2 Space Grotesk Medium 30–43px · H3/subhead Inter SemiBold 18–22px
+   Lead Inter Regular 18–20px · Body Inter Regular 16px · Label Inter Bold capitals 12px.
+   Key figures (dates, amounts, round) and quotes stay in Space Grotesk Medium as display text. */
+#content h1,#content h2{font-family:var(--f-serif);font-weight:500}
+#content h2{font-size:clamp(30px,3vw,43px);line-height:1.15}
+#content .picture h3{font:500 clamp(30px,2.6vw,36px)/1.18 var(--f-serif);letter-spacing:-.01em}
+#content b,#content strong{font-weight:600}
+/* Subheads */
+#content h3,#content h4,#content .about-card h2,#content .before h2,#content legend h2,
+#content .card > b,#content #principles li > b,#content .insts b,#content .partner b,#content .pis b,
+#content .tile b,#content .callopt b,#content .panel b,#content .doc b,#content .names.wide b{font-family:var(--f-body);font-weight:600;letter-spacing:-.005em;line-height:1.3}
+#content .why-copy h3,#content .feat h3,#content a.card > h3,#content .about-card h2{font-size:22px}
+#content .card > b,#content #principles li > b,#content .news h3,#content .side h3,#content .card h3,#content legend h2,#content .before h2,#content .sb h3{font-size:20px}
+#content .insts b,#content .partner b,#content .pis b,#content .team h3,#content .group .sub,#content .tile b,#content .callopt b,#content .panel b,#content .doc b,#content .names.wide b{font-size:18px}
+/* Lead lines */
+#content .lead,#content .lead-in,#content .led-copy > p,#content .final-in > p{font-size:clamp(18px,1.3vw,20px)}
+/* Labels stay labels; display figures stay in the headline face */
+#content .group h3{font:700 12px var(--f-head);letter-spacing:.12em;text-transform:uppercase}
+#content .glance b,#content .offers b{font-family:var(--f-serif);font-weight:500}
+#content #open-calls .home-main > .section > h2{font-size:clamp(30px,3vw,43px)}
+#content h3 a{font-size:inherit;font-weight:inherit}
+#content .feature h3{font-size:20px}
+#content .names b,#content .names.wide b{font-size:16px}
+#content #side-call{font-family:var(--f-body);font-size:18px;font-weight:600}
+/* ===== Design pass (31 Oct): readable contrast in every mode =====
+   Accent text a shade deeper (passes 4.5:1 on cream and on the pale teal tint); the chosen
+   Light/Dark/Eco pill uses the deeper teal; dark and eco buttons get navy text on teal. */
+:root{--accent:#1d7369;--nav-on-ink:#1d7369}
+.modes button[aria-pressed="true"]{background:var(--teal-dark)}
+html[data-mode="dark"],html[data-mode="eco"]{--btn-ink:#14243a}
+/* Open Calls site (31 Oct) */
+.subnav[hidden]{display:none}
+.apply-steps > li.key .sn{background:var(--teal-dark);border-color:var(--teal-dark)}
+/* Round at a glance: the fifth fact fills the last row instead of leaving a gap */
+@media (max-width:1100px) and (min-width:641px){.glance li:nth-child(5){grid-column:span 2}}
+@media (max-width:640px){.glance li:nth-child(5){grid-column:1/-1}}
+.dz-icon{font-size:.72rem;color:#c4532f}
+html[data-mode="dark"] .dz-icon,html[data-mode="eco"] .dz-icon{color:#f08b72}
+
+/* Hero dots (2 Nov): fill the column; on wide screens the field gets more columns rather than bigger dots */
+.hero-art{width:100%}
+/* Round 2 (2 Nov): the master structure's eligibility table, references, the documents column,
+   and values still to be confirmed (muted until set) */
+.kv th{font:600 .92rem/1.45 var(--f-head);letter-spacing:0;text-transform:none;color:var(--ink);background:none;width:13rem}
+.kv tr:last-child th{border-bottom:0}
+@media (max-width:640px){.kv tr{display:grid}.kv th{width:auto;padding-bottom:2px;border-bottom:0}.kv td{padding-top:0}}
+.refs{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px;max-width:72ch;font-size:.88rem;color:var(--ink-2)}
+.refs a{overflow-wrap:anywhere}
+.doc-stack{display:flex;flex-direction:column;gap:16px;min-width:0}
+.tline .when{font:500 clamp(1.1rem,1.6vw,1.3rem)/1.25 var(--f-serif);color:var(--ink-2)}
+.next .when{color:var(--ink-2)}
+#content .glance b.tbc,#content .offers b.tbc{color:var(--ink-2)}
+@media (min-width:1101px){.glance{grid-template-columns:.95fr .8fr 1.05fr 1.15fr 1.15fr}}
+/* Call page (2 Nov): key facts sit beside the title and text on wide screens, and straight after the title on phones */
+.detail{grid-template-areas:"cover facts" "main facts";row-gap:44px}
+.detail > .cover{grid-area:cover;max-width:48rem}
+.detail > .detail-main{grid-area:main}
+.detail > .facts{grid-area:facts}
+@media (max-width:900px){.detail{grid-template-areas:"cover" "facts" "main"}.detail > .facts{position:static}.facts .toc{display:none}}   /* room for both "To be confirmed" values on one line */
+/* 2 Nov: Research, Publications, News & Events and Contact are not ready, so nothing links to them; cards that used to link stay as content */
+div.card.static{cursor:default}
+div.card.static:hover{transform:none;box-shadow:none;border-color:var(--line)}
+div.card.static:hover::before{opacity:0}
+.pp-news li{display:grid;gap:4px}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+
+<!-- ===== HEADER (Open Calls site, 31 Oct): its own tabs; the NZII site opens from the last tab ===== -->
+<header class="site-header" id="site-header">
+  <div class="hd-row">
+    <a class="hd-logo" href="#open-calls" aria-label="Open Calls home">
+      <img class="logo-l" alt="Net Zero India Initiative" src="/assets/logos/nzii-logo-colour.svg" width="1497" height="692">
+      <img class="logo-d" alt="Net Zero India Initiative" src="/assets/logos/nzii-logo-pale-yellow.svg" width="1497" height="692">
+    </a>
+    <div class="pill">
+      <nav class="main-nav" aria-label="Open Calls navigation">
+        <a href="#open-calls" data-sec="open-calls" aria-current="page">Home</a>
+        <a href="#all-calls" data-sec="all-calls">Open calls</a>
+        <a href="#faqs" data-sec="faqs">FAQs</a>
+        <a href="#apply" data-sec="apply">Apply</a>
+        <a href="/v4">NZII website</a>
+      </nav>
+      <div class="hd-tools">
+        <div class="modes" role="group" aria-label="Display mode">
+          <button type="button" data-mode="light" aria-pressed="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2m-7.07-17.07 1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><span>Light</span></button>
+          <button type="button" data-mode="dark" aria-pressed="false"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg><span>Dark</span></button>
+          <button type="button" data-mode="eco" aria-pressed="false"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20a10 10 0 0010-10 25.9 25.9 0 00-1.04-7.281 1 1 0 00-1.755-.325C15.833 5.5 13 5.5 9.8 6.1A7 7 0 0011 20"/><path d="M2 21a5 5 0 012.911-4.544C7.613 15.212 8.351 15.24 11 13"/></svg><span>Eco</span></button>
+        </div>
+        <label class="mode-select"><span class="sr-only">Display mode</span>
+          <select id="mode-select"><option value="light">Light</option><option value="dark">Dark</option><option value="eco">Eco</option></select>
+        </label>
+        <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="nzii-mobile-navigation" aria-label="Open navigation">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="nzii-mobile-navigation" aria-label="Mobile navigation" hidden>
+    <a href="#open-calls" data-sec="open-calls" aria-current="page">Home<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a>
+    <a href="#all-calls" data-sec="all-calls">Open calls<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a>
+    <a href="#faqs" data-sec="faqs">FAQs<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a>
+    <a href="#apply" data-sec="apply">Apply<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a>
+    <a href="/v4">NZII website<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a>
+  </nav>
+</header>
+
+<main id="content">
+  <div class="container">
+    <div class="subnav">
+      <span class="crumb" id="crumb">Home</span>
+    </div>
+  </div>
+
+  <!-- ================= HOME =================
+       Order (29 Oct, user): the calls and how to apply come first; About NZII and Research Frontier Networks sit
+       below Important dates and above Contact information. Copy follows the SPP news post (spp.iitd.ac.in/news/76)
+       and the Round 1 call documents; the step titles and card labels are short guides added at the user's request.
+       Round 2 (2 Nov): calls 2–4 from the Round_02 documents; dates and honorarium amounts to be confirmed. -->
+  <div class="container page" id="open-calls">
+    <section class="hero">
+      <div class="hero-text">
+        <span class="label">Net Zero India Initiative · School of Public Policy, IIT Delhi</span>
+        <h1>Collaborate on India’s net-zero transition.<br><span class="teal">IIT Delhi – Schmidt Sciences Open&nbsp;Calls.</span></h1>
+        <hr class="rule">
+        <p class="lead">IIT Delhi is collaborating with Schmidt Sciences under the Research Frontier Networks (RFN) programme as part of the Net Zero India Initiative. With Schmidt Sciences’ support, IIT Delhi is launching an open call for collaborative research to support India’s transition to achieving our net-zero emissions target by&nbsp;2070.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px"><a class="btn" href="#all-calls">See open calls</a><a class="btn line" href="#open-calls" data-goto="hw-proposal">How to apply</a></div>
+      </div>
+      <div class="hero-art"><svg class="dots" data-beacons viewBox="0 0 400 220" aria-hidden="true"></svg></div>
+    </section>
+
+    <!-- Round at a glance: facts from the call documents; status and days left update themselves.
+         Round 2 (2 Nov): honorarium and deadline to be confirmed (shown muted until they are set) -->
+    <ul class="glance" aria-label="Round 2 at a glance">
+      <li id="g-status"></li>
+      <li><b>4 calls</b><span>for collaboration in this&nbsp;round</span></li>
+      <li><b>Up to 6 months</b><span>at IIT&nbsp;Delhi</span></li>
+      <li><b class="tbc">To be confirmed</b><span>honorarium&nbsp;amount</span></li>
+      <li id="g-deadline"><b class="tbc">To be confirmed</b><span>application&nbsp;deadline</span></li>
+    </ul>
+
+    <div class="home">
+      <div class="home-main">
+      <section class="section" id="hw-calls">
+        <h2>IIT Delhi’s Open Calls for Collaboration under&nbsp;RFNs</h2>
+        <p>Through the open calls for collaboration, funded by Schmidt Sciences, the IIT Delhi NZII team aims to identify and address emergent capacity deficits across several thematic areas of the Net Zero India Initiative (NZII). In this round, we release four calls for collaboration along the following themes; each theme is described in detail in the corresponding links&nbsp;below.</p>
+        <ul class="tiles" id="theme-list"></ul>
+      </section>
+
+      <!-- Round 2 (2 Nov): amounts to be confirmed (user). The wording is the Biodiversity call's (the master structure),
+           the only Round 2 document that covers remuneration -->
+      <section class="section" id="hw-terms">
+        <h2>Remuneration terms</h2>
+        <ul class="offers">
+          <li><span class="who">Honorarium</span><b class="tbc">To be confirmed</b></li>
+        </ul>
+        <p>The honorarium is intended to contribute to living expenses during the assignment in&nbsp;India.</p>
+        <ul class="bullets">
+          <li>One economy class round-trip air ticket may be arranged by IIT Delhi, subject to programme approval and applicable travel rules.</li>
+          <li>A portion of the honorarium may be linked to submission and acceptance of agreed deliverables.</li>
+        </ul>
+      </section>
+
+      <section class="section highlight" id="hw-expect">
+        <span class="label">Please read before you apply</span>
+        <h2>Points to note</h2>
+        <ol class="expect one">
+          <li><span class="t">Raise any concerns with us early. We will work with you to resolve as many as we&nbsp;can.</span></li>
+          <li><span class="t">Once selected, we count on you to honour your&nbsp;commitment.</span></li>
+          <li><span class="t"><b>Deliverables</b> are agreed jointly by you and the NZII&nbsp;team.</span></li>
+        </ol>
+        <svg class="cluster" data-cluster viewBox="0 0 120 90" aria-hidden="true"></svg>
+      </section>
+
+      <section class="section" id="hw-proposal">
+        <h2>How to apply</h2>
+        <ol class="apply-steps">
+          <li>
+            <span class="sn" aria-hidden="true">1</span>
+            <div class="sb">
+              <h3>Read the open calls</h3>
+              <p>Each call sets out its theme, what we want to achieve, the deliverables and who can apply. Choose the call that fits your&nbsp;work.</p>
+              <a class="go" href="#all-calls">See the four calls <span class="ar" aria-hidden="true">→</span></a>
+            </div>
+          </li>
+          <li>
+            <span class="sn" aria-hidden="true">2</span>
+            <div class="sb">
+              <h3>Check that you are eligible</h3>
+              <p>Eligible applicants should be associated with an academic or not-for-profit organisation or NGO (non-governmental) or think-tanks and will need their supervisor’s or institution’s permission to work on the open call. Each call page lists the exact&nbsp;conditions.</p>
+            </div>
+          </li>
+          <li id="hw-docs">
+            <span class="sn" aria-hidden="true">3</span>
+            <div class="sb">
+              <h3>Prepare your documents</h3>
+              <div class="docs">
+                <div class="doc"><b>Research plan</b><span class="fmt">2–3 pages · PDF only</span><p class="muted">From the application form: the research plan should ideally include the following aspects.</p><ol class="qs">
+          <li><span>Research objectives and scope</span></li>
+          <li><span>The methodology</span></li>
+          <li><span>A note on how the research objectives align with the objectives listed in the description of the specific open call theme</span></li>
+          <li><span>Timelines and deliverables</span></li>
+        </ol></div>
+                <!-- 2 Nov: the letter and certificate the form asks for, listed here too (labels from the form's checklist) -->
+                <div class="doc-stack">
+                  <div class="doc"><b>CV</b><span class="fmt">About 2–3 pages · PDF only</span><p class="muted">Your most recent CV, of about 2–3 pages, in PDF format&nbsp;only.</p></div>
+                  <div class="doc"><b>Letter of Recommendation</b><span class="fmt">PDF only</span></div>
+                  <div class="doc"><b>No Objection Certificate</b><span class="fmt">PDF only</span><p class="muted">From your supervisor or institution.</p></div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="key">
+            <span class="sn" aria-hidden="true">4</span>
+            <div class="sb">
+              <h3 id="st-apply">Apply online</h3>
+              <p>Submit a 2–3 page research plan, a CV, and other details regarding your&nbsp;application.</p>
+              <div class="step-act" id="step-act"><a class="btn" href="#apply">Start your application <span class="ar" aria-hidden="true">→</span></a><span class="muted" id="step-left"></span></div>
+            </div>
+          </li>
+          <li>
+            <span class="sn" aria-hidden="true">5</span>
+            <div class="sb">
+              <h3 id="st-hear">Hear back</h3>
+              <p id="hw-assess">Applicants will be assessed by a selection committee, based on their prior work and publications in the theme area and of the group they are associated&nbsp;with.</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <section class="section" id="hw-timeline">
+        <h2>Important dates</h2>
+        <!-- Round 2 (2 Nov): dates to be confirmed. When they are set, give each item data-date="YYYY-MM-DD" and a <time>;
+             past dates then fill and the next one pulses -->
+        <ol class="tline" id="tline">
+          <li><span class="td" aria-hidden="true"></span><b>Application deadline</b><span class="when">To be confirmed</span></li>
+          <li><span class="td" aria-hidden="true"></span><b>Selection of open call</b><span class="when">To be confirmed</span></li>
+          <li><span class="td" aria-hidden="true"></span><b>Collaboration period</b><span class="when">To be confirmed</span></li>
+        </ol>
+      </section>
+
+      <section class="section" id="hw-about" aria-label="About the programme">
+        <div class="about-two">
+          <article class="about-card" id="hw-programme">
+            <span class="lg"><img src="/assets/logos/spp-iit-delhi-tight.png" alt="School of Public Policy, IIT Delhi"></span>
+            <h2>About the Net Zero India Initiative</h2>
+        <p>The <a class="link" href="/v4/who-we-are" target="_blank" rel="noopener">Net Zero India Initiative</a> (NZII) is led by IIT Delhi’s School of Public Policy and supported by Prayas (Energy Group) and Princeton University’s Andlinger Center for Energy and Environment. Our work starts from one&nbsp;question:</p>
+        <p class="quote">What will it take for India to reach net&nbsp;zero?</p>
+        <p>We examine spatially resolved pathways to net-zero emissions by 2070 and their implications for employment, health, energy access, equity, capital allocation, land, water and biodiversity across India. All modelling tools and data used in the study are open access. Through the open calls, we aim to address emergent capacity deficits across the themes of the&nbsp;project.</p>
+          </article>
+          <article class="about-card" id="hw-funder">
+            <span class="lg"><img src="/assets/logos/schmidt-sciences.svg" alt="Schmidt Sciences"></span>
+            <h2>Research Frontier Networks by Schmidt&nbsp;Sciences</h2>
+        <p>The Schmidt Sciences Climate Center is funding Research Frontier Networks (RFNs), designed to cultivate regional talent and develop context-specific tools (e.g., regional databases, energy models, dashboards) that advance earth system research and inform energy and carbon transition pathways. Each RFN serves as an interdisciplinary, cross-sector research hub where academic institutes, research scientists, industry experts, and government representatives collaborate to address global climate challenges with solutions tailored to local needs. The RFN model targets national and sub-national scale research in the Global South, beginning in India with IIT Delhi as one hub, and expanding to other countries over time.</p>
+        <p>Research Frontier Networks (RFNs) seek to build indigenous expertise and support the development of data and models that reflect the specific economic, social, and resource contexts of the Global South – contexts that are distinct from those of developed economies where most currently existing tools and models are developed.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="hw-contact">
+        <h2>Contact information</h2>
+        <p>In case of any query, you may&nbsp;contact:</p>
+        <ul class="contacts">
+          <li class="primary"><span class="eyebrow">Write to</span><b>Ms Ashwini Mudgal</b><a class="link" href="mailto:ashwinim.cstaff@iitd.ac.in">ashwinim.cstaff@iitd.ac.in</a></li>
+          <li><span class="eyebrow">With a copy to</span><b>Dr Kaveri Iychettira</b><a class="link" href="mailto:Kaveri@iitd.ac.in">Kaveri@iitd.ac.in</a></li>
+          <li><span class="eyebrow">With a copy to</span><b>Dr Ekta Baranwal</b><a class="link" href="mailto:ekta1988.cstaff@iitd.ac.in">ekta1988.cstaff@iitd.ac.in</a></li>
+        </ul>
+        <div class="mail-act"><a class="btn" href="mailto:ashwinim.cstaff@iitd.ac.in?cc=Kaveri@iitd.ac.in,ekta1988.cstaff@iitd.ac.in&amp;subject=NZII%20open%20calls%20query">Email us <span class="ar" aria-hidden="true">→</span></a><span class="muted">Opens one email to Ashwini Mudgal, with Kaveri Iychettira and Ekta Baranwal in&nbsp;copy.</span></div>
+      </section>
+      </div>
+
+      <aside class="home-side" aria-label="Latest open call">
+        <div class="panel feature" id="feature"></div>
+        <nav class="toc" aria-label="On this page" style="border-top:0;padding-top:0">
+          <span class="label" style="margin-bottom:6px">On this page</span>
+          <a href="#open-calls" data-goto="hw-calls">Open calls under RFNs</a>
+          <a href="#open-calls" data-goto="hw-terms">Remuneration terms</a>
+          <a href="#open-calls" data-goto="hw-expect">Points to note</a>
+          <a href="#open-calls" data-goto="hw-proposal">How to apply</a>
+          <a href="#open-calls" data-goto="hw-timeline">Important dates</a>
+          <a href="#open-calls" data-goto="hw-programme">About NZII</a>
+          <a href="#open-calls" data-goto="hw-funder">Research Frontier Networks</a>
+          <a href="#open-calls" data-goto="hw-contact">Contact information</a>
+        </nav>
+      </aside>
+    </div>
+  </div>
+
+  <!-- ================= ALL OPEN CALLS ================= -->
+  <div class="container page" id="all-calls" hidden>
+    <div class="ac-head">
+      <span class="label">Research collaboration</span>
+      <h1>Open <span class="teal">calls</span></h1>
+      <hr class="rule">
+      <p class="lead">Every research collaboration call from the Net Zero India Initiative, newest round first. Choose a call to read its theme, eligibility and how to&nbsp;apply.</p>
+    </div>
+
+    <div class="filters" role="group" aria-label="Show calls" id="filters"></div>
+
+    <section class="round" aria-labelledby="h-round">
+      <div class="round-top">
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <span class="label">Round 2</span>
+          <h2 id="h-round">Four calls for research collaboration</h2>
+        </div>
+        <dl class="round-dates" id="round-dates"></dl>
+      </div>
+      <ul class="cards" id="call-list"></ul>
+      <p class="empty" id="call-empty" hidden>No calls match this&nbsp;filter.</p>
+    </section>
+  </div>
+
+  <!-- ================= CALL PAGE (filled from data) ================= -->
+  <div class="container page" id="call" hidden></div>
+
+  <!-- ================= FAQS ================= -->
+  <div class="container page" id="faqs" hidden>
+    <div class="cover" style="max-width:48rem">
+      <span class="label">Current round: Round 2</span>
+      <h1>Frequently asked <span class="teal">questions</span></h1>
+      <hr class="rule">
+      <p class="lead">Answers to the questions we receive most often. If yours is not here, write to <span class="nb">Ashwini Mudgal</span> at <a class="link" href="mailto:ashwinim.cstaff@iitd.ac.in">ashwinim.cstaff@iitd.ac.in</a>.</p>
+    </div>
+    <div class="detail-main" id="faq-list" style="max-width:52rem"></div>
+  </div>
+
+  <!-- ================= APPLY =================
+       Questions, wording and field names follow the Round 1 application form (Responses_OpenCallsApplicationForm.xlsx).
+       Design (29 Oct): a checklist before you start, each part in its own card, the call chosen from cards, stay length as
+       chips, PDF drop zones and a progress bar. All fields are required unless marked optional. -->
+  <div class="container page" id="apply" hidden>
+    <div class="cover" style="max-width:48rem">
+      <span class="label" id="apply-when">Round 2 · Deadline to be confirmed</span>
+      <h1>Apply for an open <span class="teal">call</span></h1>
+      <hr class="rule">
+      <p class="lead">All fields are required unless marked optional. New to the open calls? Read <a class="link" href="#open-calls" data-goto="hw-proposal">how to apply</a>&nbsp;first.</p>
+    </div>
+
+    <div class="form-wrap">
+      <form class="apply" id="apply-form" novalidate>
+        <div class="errbox" id="errbox" role="alert" tabindex="-1" hidden></div>
+
+        <section class="before" aria-labelledby="h-before">
+          <h2 id="h-before">Before you start, have these&nbsp;ready</h2>
+          <ul>
+            <li><b>Your research plan</b><span>2–3 pages, PDF only</span></li>
+            <li><b>Your most recent CV</b><span>About 2–3 pages, PDF only</span></li>
+            <li><b>Letter of Recommendation</b><span>PDF only</span></li>
+            <li><b>No Objection Certificate</b><span>From your supervisor or institution, PDF only</span></li>
+          </ul>
+        </section>
+
+        <div class="fcard"><fieldset id="fs-call">
+          <legend><h2><span>1</span>The call</h2></legend>
+          <div class="field">
+            <span class="flabel" id="l-call">The open call theme you are interested in</span>
+            <div class="callopts" id="callopts" role="radiogroup" aria-labelledby="l-call"></div>
+          </div>
+          <div class="field">
+            <span class="flabel" id="l-months">Number of months you would like to spend at IIT Delhi</span>
+            <span class="hint">The length of stay depends on the theme. See the call page for your&nbsp;theme.</span>
+            <div class="mchips" id="months" role="radiogroup" aria-labelledby="l-months"></div>
+          </div>
+        </fieldset></div>
+
+        <div class="fcard"><fieldset id="fs-you">
+          <legend><h2><span>2</span>About you</h2></legend>
+          <div class="row2">
+            <div class="field"><label for="f-name">Your name<span class="req">*</span></label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+            <div class="field"><label for="f-designation">Designation<span class="req">*</span></label><input id="f-designation" name="designation" type="text" placeholder="For example, PhD scholar" required></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="f-email">Official email ID<span class="req">*</span></label><input id="f-email" name="email" type="email" autocomplete="email" placeholder="name@institution.ac.in" required></div>
+            <div class="field"><label for="f-phone">Contact number<span class="req">*</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="+91 98765 43210" required><span class="hint">Include your country code.</span></div>
+          </div>
+        </fieldset></div>
+
+        <div class="fcard"><fieldset id="fs-org">
+          <legend><h2><span>3</span>Your organisation</h2></legend>
+          <div class="field"><label for="f-org">Institute or organisation you are affiliated with<span class="req">*</span></label><input id="f-org" name="organisation" type="text" autocomplete="organization" required></div>
+          <div class="row2">
+            <div class="field"><label for="f-orgtype">Institute type<span class="req">*</span></label>
+              <select id="f-orgtype" name="organisationType" required>
+                <option value="">Choose one</option><option>Academic</option><option>Research</option><option>Think tank</option><option>For-profit organisation</option><option value="Other">Others</option>
+              </select></div>
+            <div class="field" id="w-orgother" hidden><label for="f-orgother">Please specify<span class="req">*</span></label><input id="f-orgother" name="organisationOther" type="text"></div>
+          </div>
+          <div class="field"><label for="f-address">Official address<span class="req">*</span></label><textarea id="f-address" name="address" style="min-height:5rem" required></textarea></div>
+        </fieldset></div>
+
+        <div class="fcard"><fieldset id="fs-proposal">
+          <legend><h2><span>4</span>Your interest</h2></legend>
+          <div class="field"><label for="f-motivation">Motivation to be part of this collaborative exchange<span class="req">*</span></label><span class="hint">Up to 400 words.</span><textarea id="f-motivation" name="motivation" style="min-height:12rem" data-words="400" required></textarea><span class="count" data-for="f-motivation"></span></div>
+          <div class="field"><label for="f-senior">Is there a senior researcher from your research group who might be interested in visiting the School of Public Policy for a short duration along with you, to further deepen the exchange and collaboration?<span class="req">*</span></label><span class="hint">If yes, would they be open to giving a seminar or potentially conducting a short training session when they are&nbsp;here?</span><textarea id="f-senior" name="seniorVisit" style="min-height:6rem" required></textarea></div>
+        </fieldset></div>
+
+        <div class="fcard"><fieldset id="fs-docs">
+          <legend><h2><span>5</span>Documents</h2></legend>
+          <div class="field"><span class="flabel" id="l-cv">Your most recent curriculum vitae (CV)</span><span class="hint">About two to three pages, PDF only.<span data-lim></span></span>
+            <label class="dz"><input id="f-cv" name="cv" type="file" accept="application/pdf,.pdf" aria-labelledby="l-cv" required><span class="dz-icon" aria-hidden="true">PDF</span><span class="dz-text"><b>Choose a PDF</b> or drag it&nbsp;here</span><span class="dz-file" hidden><b class="fname"></b><span class="fsize"></span></span></label>
+            <button type="button" class="dz-remove" hidden>Remove file</button>
+          </div>
+          <div class="field"><span class="flabel" id="l-plan">Your research plan</span><span class="hint">Two to three pages, PDF only.<span data-lim></span> Cover your research objectives and scope, the methodology, how your objectives align with those of the call theme, and timelines and deliverables. See <a class="link" href="#open-calls" data-goto="hw-docs">what to include</a>.</span>
+            <label class="dz"><input id="f-plan" name="researchPlan" type="file" accept="application/pdf,.pdf" aria-labelledby="l-plan" required><span class="dz-icon" aria-hidden="true">PDF</span><span class="dz-text"><b>Choose a PDF</b> or drag it&nbsp;here</span><span class="dz-file" hidden><b class="fname"></b><span class="fsize"></span></span></label>
+            <button type="button" class="dz-remove" hidden>Remove file</button>
+          </div>
+                  <div class="field"><span class="flabel" id="l-lor">Letter of Recommendation</span><span class="hint">PDF only.</span>
+            <label class="dz"><input id="f-lor" name="letterOfRecommendation" type="file" accept="application/pdf,.pdf" aria-labelledby="l-lor" required><span class="dz-icon" aria-hidden="true">PDF</span><span class="dz-text"><b>Choose a PDF</b> or drag it&nbsp;here</span><span class="dz-file" hidden><b class="fname"></b><span class="fsize"></span></span></label>
+            <button type="button" class="dz-remove" hidden>Remove file</button>
+          </div>
+          <div class="field"><span class="flabel" id="l-noc">No Objection Certificate</span><span class="hint">From your supervisor or institution, PDF only.</span>
+            <label class="dz"><input id="f-noc" name="noObjectionCertificate" type="file" accept="application/pdf,.pdf" aria-labelledby="l-noc" required><span class="dz-icon" aria-hidden="true">PDF</span><span class="dz-text"><b>Choose a PDF</b> or drag it&nbsp;here</span><span class="dz-file" hidden><b class="fname"></b><span class="fsize"></span></span></label>
+            <button type="button" class="dz-remove" hidden>Remove file</button>
+          </div>
+        </fieldset></div>
+
+        <div class="fcard"><fieldset id="fs-declare">
+          <legend><h2><span>6</span>Anything else</h2></legend>
+          <div class="field"><label for="f-remarks">Remarks, special notes or queries, if any <span class="opt">Optional</span></label><textarea id="f-remarks" name="remarks" style="min-height:4.5rem"></textarea></div>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" id="c-privacy" name="agreePrivacy" required> <span>I agree that NZII may use my information to assess this application, as set out in the <a class="link" href="#privacy">privacy notice</a>.<span class="req">*</span></span></label>
+          </div>
+        </fieldset></div>
+
+        <div class="form-actions">
+          <button class="btn" type="submit">Submit application</button>
+          <span class="saved" id="saved">Your answers are saved on this device as you type. Files are not&nbsp;saved.</span>
+        </div>
+      </form>
+
+      <aside class="form-side" aria-label="Application progress">
+        <div class="panel" style="gap:10px">
+          <span class="label">Applying to</span>
+          <b id="side-call">No call chosen yet</b>
+          <span class="muted" style="font-size:.88rem" id="side-when">Deadline to be confirmed</span>
+          <div class="prog"><div class="prog-bar"><i id="prog-fill"></i></div><span id="prog-text">0 of 6 parts complete</span></div>
+        </div>
+        <ol class="steps-nav" id="steps-nav">
+          <li data-fs="fs-call"><a href="#apply" data-goto="fs-call"><span class="sdot" aria-hidden="true"></span>The call</a></li>
+          <li data-fs="fs-you"><a href="#apply" data-goto="fs-you"><span class="sdot" aria-hidden="true"></span>About you</a></li>
+          <li data-fs="fs-org"><a href="#apply" data-goto="fs-org"><span class="sdot" aria-hidden="true"></span>Your organisation</a></li>
+          <li data-fs="fs-proposal"><a href="#apply" data-goto="fs-proposal"><span class="sdot" aria-hidden="true"></span>Your interest</a></li>
+          <li data-fs="fs-docs"><a href="#apply" data-goto="fs-docs"><span class="sdot" aria-hidden="true"></span>Documents</a></li>
+          <li data-fs="fs-declare"><a href="#apply" data-goto="fs-declare"><span class="sdot" aria-hidden="true"></span>Anything else</a></li>
+        </ol>
+        <small class="muted">Questions? <a class="link" href="mailto:ashwinim.cstaff@iitd.ac.in">ashwinim.cstaff@iitd.ac.in</a></small>
+      </aside>
+    </div>
+  </div>
+
+  <!-- ================= SUBMITTED ================= -->
+  <div class="container page" id="submitted" hidden>
+    <div class="confirm">
+      <div class="cover">
+        <span class="st s-open static">Application received</span>
+        <h1>Thank you. We have your <span class="teal">application.</span></h1>
+        <hr class="rule">
+        <p class="lead">We have sent a copy to <b id="sub-email"></b>. Keep your reference number for any&nbsp;questions.</p>
+      </div>
+      <div class="panel"><span class="label">Your reference</span><span class="ref" id="sub-ref"></span></div>
+      <section class="section"><h2>What you sent</h2><dl class="summary" id="sub-summary"></dl></section>
+      <section class="section"><h2>What happens next</h2>
+        <ol class="next">
+          <li><span class="when" id="nx-close">Application deadline</span><span>Applications close. We check every application is complete.</span></li>
+          <li><span class="when" id="nx-decision">Selection of open call</span><span>We email you with the selection committee's decision.</span></li>
+          <li><span class="when">Collaboration period</span><span>If selected, we agree your start date, travel and deliverables with you.</span></li>
+        </ol>
+      </section>
+      <div style="display:flex;flex-wrap:wrap;gap:12px"><a class="btn" href="#open-calls">Back to open calls</a><a class="btn line" href="#faqs">Read the FAQs</a></div>
+    </div>
+  </div>
+
+  <!-- ================= PRIVACY ================= -->
+  <div class="container page" id="privacy" hidden>
+    <div class="cover" style="max-width:48rem">
+      <span class="label">Open calls</span>
+      <h1>Privacy <span class="teal">notice</span></h1>
+      <hr class="rule">
+      <p class="lead">How we handle the information you give us when you apply for an open&nbsp;call.</p>
+    </div>
+    <div class="detail-main" style="max-width:52rem">
+      <section class="section"><h2>Who we are</h2><p>The Net Zero India Initiative at the School of Public Policy, Indian Institute of Technology Delhi, Hauz Khas, New Delhi 110016. We decide how your information is used for these open&nbsp;calls.</p></section>
+      <section class="section"><h2>What we collect</h2><ul class="bullets"><li>Your name, contact details, designation and organisation.</li><li>Your answers, research plan and CV.</li></ul></section>
+      <section class="section"><h2>Why we use it</h2><ul class="bullets"><li>To assess your application and tell you the outcome.</li><li>To arrange your visit, honorarium and travel if you are selected.</li></ul><p>We use your information only with your consent, under India's Digital Personal Data Protection Act,&nbsp;2023.</p></section>
+      <section class="section"><h2>Who sees it</h2><p>The NZII team at IIT Delhi and the members of the selection committee. If you are selected, we share your name, project title and general-audience description with Schmidt Sciences and may publish them on our website. We do not sell your&nbsp;information.</p></section>
+      <section class="section"><h2>How long we keep it</h2><p>[Retention period to be confirmed by IIT Delhi.] You can ask us to delete your information at any time before a decision is&nbsp;made.</p></section>
+      <section class="section"><h2>Your rights</h2><p>You can ask to see, correct or delete your information, or withdraw your consent. Write to Ashwini Mudgal at <a class="link" href="mailto:ashwinim.cstaff@iitd.ac.in">ashwinim.cstaff@iitd.ac.in</a>.</p></section>
+    </div>
+  </div>
+</main>
+
+<!-- ===== FOOTER (as on PBH site) ===== -->
+<footer class="site-footer">
+  <div class="ft-top">
+    <div class="ft-brand">
+      <a href="/v4" style="display:inline-flex">
+        <img class="logo-l" alt="Net Zero India Initiative" src="/assets/logos/nzii-logo-colour.svg" width="1497" height="692" loading="lazy">
+        <img class="logo-d" alt="Net Zero India Initiative" src="/assets/logos/nzii-logo-pale-yellow.svg" width="1497" height="692" loading="lazy">
+      </a>
+      <p>The Net Zero India Initiative brings together research, modelling and diverse expertise to understand the pathways India could take, and their implications for development, people and the&nbsp;environment.</p>
+    </div>
+    <nav class="ft-nav" aria-label="Footer navigation">
+      <a href="/v4/who-we-are">About NZII</a>
+      <a href="/v4/collaborate">People &amp; Partners</a>
+    </nav>
+  </div>
+  <div class="ft-bottom"><span>Net Zero India Initiative · Research, pathways and evidence</span><span>Made for curiosity, grounded in evidence.</span></div>
+</footer>
+
+<script>
+/* ============================================================
+   SETTINGS
+   Round 2 (2 Nov): the call documents leave the dates "to be confirmed", so DEADLINE and DECISION are null.
+   Until DEADLINE is set every call shows as Live with no countdown, and "To be confirmed" appears wherever
+   a date would go. SITE_TODAY can hold a review date (YYYY-MM-DD); null uses the real date.
+   ============================================================ */
+var ROUND = 'Round 2';
+var SITE_TODAY = null;
+var DEADLINE = null;          /* application deadline, e.g. '2027-01-31T23:59:00+05:30' */
+var DECISION = null;          /* selection of open call, e.g. '2027-03-01' */
+var TBC = 'To be confirmed';
+/* The call shown in the right-hand panel on the home page. Its "View more" button opens the Open calls listing. */
+var FEATURED = 'employment';
+
+/* Dates as the site writes them: 15 April 2026 (long) and 15 Apr 2026 (short) */
+var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+function longDate(s){ var p=String(s).slice(0,10).split('-'); return (+p[2])+' '+MONTHS[p[1]-1]+' '+p[0]; }
+function shortDate(s){ var p=String(s).slice(0,10).split('-'); return (+p[2])+' '+MONTHS[p[1]-1].slice(0,3)+' '+p[0]; }
+
+/* ===== Round 2 calls (2 Nov) =====
+   Call 1 is the Round 1 document (Feb 2026); its dates for this round are to be confirmed.
+   Calls 2-4 come from the Round_02 documents: Biodiversity (the master structure for open calls), Capital
+   mobilisation ("Open Call 1") and Agent-based modelling ("Open Call 2"). Their text follows the documents,
+   with British spelling and the NZII name. Nothing is said twice within a call page (user, 2 Nov): where two parts said the same thing, the copy in the
+   section where it belongs stays and the other goes. Opening lines for Calls 2–4 follow the house style of Call 1
+   ("We fund a researcher to…", NZII voice); Call 2's document Aim repeated its objectives word for word. */
+/* Who can apply for Calls 1, 3 and 4. Stay and dates sit in the call's key facts, so they are not repeated here */
+var ELIG_PHD = [
+  'The applicant should be a PhD Scholar or Post-doctoral Fellow associated with an academic institution.',
+  'Applicants will need the supervisor’s permission to work on the open call.'
+];
+var CALLS = [
+  { id:'employment', no:1, theme:'Employment',
+    title:'Modelling employment shifts in India’s energy transition',
+    promise:'We fund a researcher to estimate where, when and for whom jobs are created and lost as India moves to net zero.',
+    pi:'Dr Kaveri Iychettira', piRole:'Assistant Professor, School of Public Policy, IIT Delhi',
+    who:'PhD scholars and postdoctoral fellows', months:[3,6], monthsLabel:'3 to 6 months', window:null, positions:null, elig:ELIG_PHD,
+    about:[
+      'The energy transition is an economic and social transformation as much as a technical one. It reshapes infrastructure, supply chains and the workforce. In 2023 renewable energy employed 16.2 million people worldwide, 1.02 million of them in India (ILO, 2024).',
+      'Earlier studies have estimated jobs in renewables and, to a lesser extent, losses in fossil-fuel industries. Few look at direct, indirect and induced effects along supply chains, or at the quality of the jobs involved. No study yet links high-resolution maps of India’s future energy infrastructure to net employment shifts. NZII’s spatial modelling makes that possible.'
+    ],
+    objectives:[
+      'Choose the best method to project net direct and indirect employment shifts from NZII’s high-resolution energy-system results for FY2026 to FY2071.',
+      'Estimate spatial and temporal patterns of employment shifts across technologies and lifecycle stages (fossil-fuel generation and fuel supply, renewables and grids, manufacturing, construction, operation and decommissioning), by sector (such as transport, steel, cement, aluminium and chemicals) and region.',
+      'Assess the distributional effects, including changes in the nature of jobs, skills needs and gender equity.',
+      'Select, calibrate and validate a spatially resolved employment model for India that can join the NZII framework, or adapt one where existing models fall short.'
+    ],
+    deliverables:['A report on spatially detailed net employment projections for India.','Open datasets of employment-shift estimates by place, year and scenario.','One paper submitted to a peer-reviewed journal within one year of the visit.'],
+    workplan:null, expertise:null },
+  { id:'biodiversity', no:2, theme:'Biodiversity',
+    title:'Modelling multitaxa habitat suitability and optimising spatial buffers for long-term biodiversity persistence',
+    promise:'We fund a researcher to map where India’s species could find suitable habitat in a changing climate, and to design buffers that keep those habitats connected.',
+    pi:'Dr Rajarshi Dasgupta', piRole:'Associate Professor, School of Public Policy, IIT Delhi',
+    who:'Researchers affiliated with a university or research institution', months:[1,6], monthsLabel:'Up to 6 months', window:null,
+    positions:'1 visiting researcher or postdoctoral fellow',
+    about:[
+      'This call is intended to contribute a focused biodiversity-modelling capability to the NZII modelling effort, using transparent and reproducible geospatial analysis.',
+      'Biodiversity persistence depends on the availability, quality, configuration, and connectivity of suitable habitats, as well as the capacity of species to respond to changing environmental and climatic conditions. However, conservation planning often faces the challenge of accounting for the differing habitat requirements and spatial distributions of multiple taxonomic groups while anticipating how these patterns may change under alternative future scenarios.',
+      'Multitaxa species distribution modelling offers an opportunity to assess habitat suitability across species and taxonomic groups within a common analytical framework, identify areas of shared habitat importance, and examine relationships between species distributions, environmental conditions, and landscape characteristics. Integrating these predictions with alternative environmental and climate scenarios can help identify potential shifts in habitat suitability, changes in habitat connectivity, and areas where conservation priorities may remain stable or become more vulnerable in the future.'
+    ],
+    objIntro:null,
+    objectives:[
+      'Developing and validating a multitaxa species distribution modelling approach.',
+      'Predicting habitat suitability under baseline conditions and a feasible set of alternative scenarios.',
+      'Identifying priority habitat areas and optimising spatial habitat buffers to support biodiversity conservation under changing conditions.',
+      'Assess landscape connectivity among priority habitats under alternative scenarios.'
+    ],
+    deliverables:[
+      'A validated and reproducible modelling workflow integrating biodiversity records and environmental predictors for selected taxonomic groups.',
+      'Spatial predictions identifying potential habitat persistence, loss, gain, and redistribution.',
+      'Spatial identification of priority habitats, accompanied by an assessment of habitat representation, fragmentation, and connectivity across selected taxonomic groups. Connectivity maps and comparative metrics will identify potential ecological connections, isolated habitat patches, and changes in landscape connectivity across baseline and alternative scenarios.',
+      'Comparative evaluation of alternative habitat-buffer configurations to identify spatial priorities that improve habitat representation and connectivity under baseline and alternative scenarios.',
+      'A set of biodiversity-sensitive spatial planning outputs.'
+    ],
+    expected:[
+      'Work closely with the NZII modelling team and agree on a feasible workplan and deliverables during inception.',
+      'Work on two or more objectives respective to the duration he/she wants to spend at IIT Delhi.',
+      'Provide brief progress updates at agreed intervals and raise data or execution risks early.',
+      'Share outputs and documentation in formats agreed with IIT Delhi.'
+    ],
+    eligRows:[
+      ['Duration','Full-time engagement is preferred, subject to final programme arrangements.'],
+      ['Institutional affiliation','Applicants should be affiliated with a university, research institution or recognised academic organisation. Independent unaffiliated applicants are not eligible unless the programme confirms otherwise.'],
+      ['Permission','Applicants must obtain permission/NOC from their supervisor or institution to undertake the assignment.'],
+      ['Relevant expertise','Species distribution modelling; ecological or habitat modelling; biodiversity informatics; GIS and remote sensing; spatial statistics; landscape ecology; conservation planning; optimisation or multi-criteria spatial analysis.'],
+      ['Preferred skills','Experience with R or Python and reproducible geospatial workflows; familiarity with presence-only or presence–absence biodiversity data; ability to document assumptions and uncertainty.'],
+      ['Selection basis','Relevant prior work, publications or research outputs, methodological fit, and feasibility of the proposed approach.']
+    ],
+    docs:[
+      'A research plan (max 2 MB).',
+      'A CV (max 2 MB) including relevant publications, reports, code repositories, or research outputs.',
+      'The student must submit a letter of recommendation from their supervisor for a research visit to IIT Delhi, acknowledging that they will be visiting for the intended number of months.'
+    ],
+    maxMB:2,
+    contact:{name:'Dr Ekta Baranwal', email:'ekta1988.cstaff@iitd.ac.in', cc:[['Ashwini Mudgal','ashwinim.cstaff@iitd.ac.in'],['Rajarshi Dasgupta','rajarshidg1@iitd.ac.in']]},
+    workplan:null, expertise:null },
+  { id:'capital', no:3, theme:'Capital mobilisation',
+    title:'Modelling capital mobilisation for India’s energy transition',
+    promise:'We fund a researcher to estimate how much capital India’s net-zero pathways need, where and how fast it can be raised, and who bears the cost.',
+    pi:'Dr Kaveri Iychettira', piRole:'Assistant Professor, School of Public Policy, IIT Delhi',
+    who:'PhD scholars and postdoctoral fellows', months:[3,6], monthsLabel:'3 to 6 months', window:'Apr to Oct 2027', positions:null,
+    elig:ELIG_PHD,
+    about:[
+      'It is commonly asserted that an abundance of financial capital will be committed to a global net-zero economy (Glasgow Financial Alliance for Net Zero, 2022 in Greig & Finch 2025). However, there is a mismatch between the traditional investment parameters associated with global financial capital supplies and the infrastructure investment opportunities of net-zero transitions. Net-zero transitions are highly capital-intensive as they involve technologies with higher upfront capital costs, but typically lower operating costs compared to conventional energy systems.',
+      'System level supply side costs in particular are determined by models that optimise clean energy and industrial decarbonisation technology deployment to meet the projected demand for energy and materials while satisfying an emissions constraint on a least-cost basis. Such models assume frictionless allocation of unlimited capital and simulate perfect coordination among stakeholders which make assets materialise instantaneously as needed. In reality, project developers proceed in deliberate, discrete stages, and must deal with path dependency and chicken-and-egg challenges. This module will draw on reverse-engineering methods (Greig et al. 2023; Uden et al. 2022) applied in prior net-zero projects (Greig and Finch 2025).'
+      /* The document's third paragraph ("The objective of this module is to interrogate…") is left out: objective 2 says the same */
+    ],
+    objIntro:'Collaborative work will:',
+    objectives:[
+      'Conduct research to analyse the incremental costs of the demand side transition, with a particular view towards how those costs are distributed across India’s consumers (especially households and businesses) and the policies needed to enable demand side transitions and mitigate the impacts of costs on those populations. It is likely that the assessment of incremental demand side costs will lead to the re-running of demand side models.',
+      'Interrogate NZII’s results from the perspective of the mobilisation of investment capital needed to deliver the infrastructure associated with envisioned transitions, specifically incorporating the timescales and sequencing of investment decision-making and capital-allocation for real-world infrastructure projects.',
+      'Evaluate potential sources of both domestic and international capital (equity and debt) and policy options to align the investment risk profile with the risk profile of various capital supplies.'
+    ],
+    deliverables:[
+      'Capital spends over time by sector, state, and technology for low-carbon and energy-efficient devices purchased by consumers; impact on households and options to maintain affordability.',
+      'Capital investment for clean energy and industrial infrastructure over time by sector, state, and technology to be mobilised; evaluation of financing options and policy opportunities to increase the supply and reduce the cost of capital.'
+    ],
+    refs:[
+      ['Glasgow Financial Alliance for Net Zero, Press Release 3 November 2021, Amount of Finance Committed to Achieving 1.5°C Now at Scale Needed to Deliver the Transition.','https://www.gfanzero.com/'],
+      ['Greig, Chris, and Benjamin T Finch. 2025. “Downscaling – Capital Mobilisation.” In <i>Net Zero Australia</i>, Rev 2.','https://www.netzeroaustralia.net.au/wp-content/uploads/2023/04/Downscaling-Capital-mobilisation.pdf'],
+      ['Greig, Chris, David Keto, Scott Hobart, Benjamin Finch, and Ryan Winkler. 2023. “Speeding up Risk Capital Allocation to Deliver Net-Zero Ambitions.” <i>Joule</i> 7 (2): 239–43.','https://doi.org/10.1016/j.joule.2023.01.003'],
+      ['Uden, Sam, Robert Socolow, and Chris Greig. 2022. “Bridging Capital Discipline and Energy Scenarios.” <i>Energy &amp; Environmental Science</i> 15 (8): 3114–18.','https://doi.org/10.1039/D2EE01244H']
+    ],
+    workplan:null, expertise:null },
+  { id:'agent-based', no:4, theme:'Agent-based modelling',
+    title:'Agent-based modelling of India’s energy transition',
+    promise:'We fund a researcher to build an agent-based model of how the separate choices of many different actors together shape India’s energy transition.',
+    pi:'Dr Kaveri Iychettira', piRole:'Assistant Professor, School of Public Policy, IIT Delhi',
+    who:'PhD scholars and postdoctoral fellows', months:[3,6], monthsLabel:'3 to 6 months', window:'Apr to Oct 2027', positions:null,
+    elig:ELIG_PHD,
+    about:[
+      'India’s transition towards a net-zero economy will involve investment and technology-adoption decisions by a diverse set of actors, including electricity generators, investors, financial institutions, policymakers, technology providers and consumers. These actors differ in their objectives, expectations, access to information and finance, risk perceptions, and responses to policy and market conditions. Their individual decisions and interactions can have important implications for the pace, direction and distribution of the energy transition.',
+      'Conventional energy-system models typically represent the energy system through system-wide optimisation and aggregate decision-making. This research will explore an alternative approach by developing an agent-based model (ABM) of India’s energy system that explicitly represents heterogeneous actors and their decentralised decisions.',
+      'The work will contribute to the broader objective of the Net Zero India Initiative of developing transparent, open and reproducible tools for understanding alternative pathways for India’s energy transition.'
+    ],
+    objIntro:'The study is expected to include, but need not be limited to, the following:',
+    objLabels:true,
+    objectives:[
+      'Identification and characterisation of key actors: Identify the relevant actors in India’s energy system and characterise their objectives, constraints, incentives, information and decision-making processes.',
+      'Development of the agent-based framework: Design an agent-based model that represents interactions across electricity markets, financial markets, technology choices and policy environments.',
+      'Representation of decision-making: Develop rules and mechanisms to represent investment, financing and technology-adoption decisions under different economic, technological and policy conditions. Where appropriate, the model may incorporate bounded rationality, heterogeneous expectations, risk perceptions, learning and adaptive behaviour.',
+      'Financing and investment constraints: Examine how availability and cost of finance, risk, expected returns, access to capital and other financial constraints influence investment decisions and technology adoption.',
+      'Technology adoption and diffusion: Represent the adoption and deployment of different energy technologies and examine how technology costs, performance, expectations, learning and interactions among actors influence their diffusion.',
+      'Policy and institutional interactions: Represent relevant policy instruments and institutional conditions and examine how changes in policy design, incentives and regulations affect the decisions of different actors.',
+      'Integration of empirical data: Identify and integrate relevant empirical data on energy technologies, investment, financing, electricity markets, technology adoption and policy conditions to inform model parameters and decision rules.',
+      'Scenario development and analysis: Develop scenarios exploring alternative technological, economic, financial and policy conditions and analyse the resulting energy-transition pathways.',
+      'Emergent system-level outcomes: Examine how decentralised decisions and interactions among heterogeneous actors give rise to aggregate outcomes, including investment patterns, technology deployment and the pace and direction of the energy transition.',
+      'Model validation and robustness: Conduct sensitivity analysis, calibration and validation where feasible, and assess the robustness of results to alternative assumptions, behavioural rules and parameter values.'
+    ],
+    delivIntro:'The selected researcher(s) will be expected to contribute to:',
+    deliverables:[
+      'A conceptual framework identifying key actors, interactions and decision-making processes relevant to India’s energy transition.',
+      'A functional agent-based model of India’s energy system, with clearly documented actor characteristics, decision rules and interactions.',
+      'A database of relevant empirical inputs, parameters and assumptions supporting the model.',
+      'Open-source and reproducible model code and associated documentation.',
+      'Research papers, reports and presentations communicating the methodology and findings.'
+    ],
+    workplan:null, expertise:null }
+];
+
+var FAQS = [
+  ['Eligibility', [
+    ['Who can apply?', 'Eligible applicants should be associated with an academic or not-for-profit organisation or NGO (non-governmental) or think-tanks, and will need their supervisor’s or institution’s permission to work on the open call. Each call page lists the exact conditions.'],
+    ['I am based outside India. Can I apply?', 'The call documents do not require an affiliation with an institution in India. Calls 1, 3 and 4 are for PhD Scholars or Post-doctoral Fellows associated with an academic institution. Call 2 is for applicants affiliated with a university, research institution or recognised academic organisation.'],
+    ['I am an independent researcher. Can I apply?', 'Applicants should be associated with an academic or not-for-profit organisation, NGO or think-tank. Call 2 states that independent unaffiliated applicants are not eligible unless the programme confirms otherwise.'],
+    ['Do I need permission from my supervisor or institution?', 'Yes. You will need your supervisor’s or institution’s permission to work on the open call.']
+  ]],
+  ['Your application', [
+    ['Can I propose work outside the listed objectives?', 'Call 1 says: we are also open to well-reasoned proposals outside of this scope but broadly aligned with the ideas identified in this theme. For the other calls, see the objectives on each call page.'],
+    ['What should my research plan include?', 'Research objectives and scope, the methodology, a note on how the research objectives align with the objectives listed in the description of the specific open call theme, and timelines and deliverables. It should be 2–3 pages long and in PDF format only.']
+  ]],
+  ['Funding and logistics', [
+    ['What does the honorarium cover?', 'The honorarium is intended to contribute to living expenses during the assignment in India. One economy class round-trip air ticket may be arranged by IIT Delhi, subject to programme approval and applicable travel rules.'],
+    ['How is the honorarium paid?', 'The amount is to be confirmed. A portion of the honorarium may be linked to submission and acceptance of agreed deliverables.'],
+    ['How long will I spend at IIT Delhi?', '3–6 months for Calls 1, 3 and 4, and up to 6 months for Call 2. Calls 3 and 4 run between April 2027 and October 2027; dates for Calls 1 and 2 are to be confirmed.'],
+    ['Can a senior colleague visit with me?', 'The application form asks whether a senior researcher from your research group might be interested in visiting the School of Public Policy for a short duration along with you, and whether they would be open to giving a seminar or conducting a short training session.']
+  ]],
+  ['Selection and after', [
+    ['How are applications assessed?', 'Applicants will be assessed by a selection committee, based on their prior work and publications in the theme area and of the group they are associated with. For Call 2, the selection basis is relevant prior work, publications or research outputs, methodological fit, and feasibility of the proposed approach.'],
+    ['When will I hear back?', 'Selection of open call: '+(DECISION?longDate(DECISION):'to be confirmed')+'.'],
+    ['What will I need to deliver?', 'The deliverables set out in your call. For example, Call 1 asks for a report and open-source datasets.']
+  ]]
+];
+
+/* ============================================================ */
+(function(){
+  var root=document.documentElement;
+  function today(){ return SITE_TODAY ? new Date(SITE_TODAY+'T12:00:00+05:30') : new Date(); }
+  function status(){
+    if(!DEADLINE) return {cls:'s-open',label:'Live',open:true,days:null};      /* deadline to be confirmed: open, no countdown */
+    var t=today(), d=new Date(DEADLINE), days=Math.ceil((d-t)/86400000);
+    if(days<0) return {cls:'s-closed',label:'Closed',open:false};
+    if(days<=14) return {cls:'s-closing',label:'Closing soon',open:true,days:days};
+    return {cls:'s-open',label:'Live',open:true,days:days};
+  }
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function byId(id){return document.getElementById(id)}
+  function findCall(id){for(var i=0;i<CALLS.length;i++) if(CALLS[i].id===id) return CALLS[i]; return null}
+
+  /* ---------- Display mode ---------- */
+  var btns=[].slice.call(document.querySelectorAll('.modes button')),sel=byId('mode-select');
+  function setMode(m){
+    root.setAttribute('data-mode',m);
+    btns.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.mode===m))});
+    sel.value=m;
+    try{localStorage.setItem('nzii-mode',m)}catch(e){}
+    drawDots();drawClusters();
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){setMode(b.dataset.mode)})});
+  sel.addEventListener('change',function(){setMode(sel.value)});
+
+  /* ---------- Header ---------- */
+  var hd=byId('site-header');
+  function onScroll(){hd.classList.toggle('scrolled',window.scrollY>24)}
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  var burger=byId('burger'),menu=byId('nzii-mobile-navigation');
+  burger.addEventListener('click',function(){
+    var open=menu.hidden;menu.hidden=!open;
+    burger.setAttribute('aria-expanded',String(open));
+    burger.setAttribute('aria-label',open?'Close navigation':'Open navigation');
+  });
+  menu.addEventListener('click',function(e){if(e.target.closest('a')){menu.hidden=true;burger.setAttribute('aria-expanded','false')}});
+
+  /* ---------- Dot pattern ---------- */
+  var ns='http://www.w3.org/2000/svg';
+
+  /* ---------- Small dot clusters in corners (same drawing as the Home page) ---------- */
+  function drawClusters(){var PAL=['#2b9d8f','#a7c957','#e76f51','#f28482'],bg=getComputedStyle(root).getPropertyValue('--bg').trim();
+    document.querySelectorAll('svg[data-cluster]').forEach(function(svg,i){
+      while(svg.firstChild)svg.removeChild(svg.firstChild);
+      var seed=11+i*5;function r(){seed=(seed*9301+49297)%233280;return seed/233280}
+      for(var y=0;y<5;y++)for(var x=0;x<7;x++){
+        var d=(x+y)/10;if(r()>d)continue;               // denser towards the corner
+        var c=document.createElementNS(ns,'circle');
+        c.setAttribute('cx',8+x*17);c.setAttribute('cy',8+y*18);
+        c.setAttribute('r',(1.5+d*5*r()).toFixed(1));
+        c.setAttribute('fill',d>.75?bg:PAL[Math.floor(r()*PAL.length)]);
+        if(d<=.75){c.setAttribute('class','pl');c.style.setProperty('--dl',((6-x)+(4-y))*.22+'s')}
+        svg.appendChild(c);
+      }
+    })}
+  function drawDots(){ document.querySelectorAll('svg.dots').forEach(drawDotsIn) }
+  // Hero field size (2 Nov): columns from the width at about 32px per dot, rows from the height of the text beside it,
+  // so the field fills the space next to the text instead of every dot growing
+  function heroField(svg){
+    var sw=svg.parentNode.getBoundingClientRect().width||0, C=Math.max(16,Math.min(28,Math.floor((sw/1.28-24)/25)+1));
+    var k=sw/(24+(C-1)*25)||1, ht=document.querySelector('.hero .hero-text'), th=ht?ht.getBoundingClientRect().height:0, R=Math.max(9,Math.min(14,Math.floor((th/k-24)/24.5)+1));   // at most 14 rows: about the height of the About field (user, 2 Nov)
+    return {cols:C,rows:R,key:C+'x'+R};
+  }
+  (function(){ var t=0; function check(){ var svg=document.querySelector('svg.dots[data-beacons]'); if(svg&&svg.getBoundingClientRect().width&&heroField(svg).key!==svg.dataset.cols) drawDotsIn(svg) }
+    addEventListener('resize',function(){ clearTimeout(t); t=setTimeout(check,150) });
+    if(document.fonts&&document.fonts.ready) document.fonts.ready.then(check);
+  })();
+  /* Hero: the brand dot pattern (same as About and People), with one beacon for each call in this round.
+     A beacon pulses while its call is open, turns coral when the deadline is close and goes grey and still
+     once the round has closed. Hover shows the call; click opens it. */
+  var BEACONS=[[10,1],[13,3],[9,5],[12,7]];
+  function drawDotsIn(svg){
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var base=getComputedStyle(root).getPropertyValue('--dot-base').trim();
+    var cols=[base,'#2b9d8f','#a7c957','#e76f51','#f28482'],withB=svg.hasAttribute('data-beacons');
+    // Wide screens (2 Nov): more columns at about 32px per dot, so the field fills the column instead of every dot growing;
+    // the beacons keep their place counted from the right
+    var C=16, R=9; if(withB){ var L=heroField(svg); C=L.cols; R=L.rows; svg.setAttribute('viewBox','0 0 '+(24+(C-1)*25)+' '+(24+(R-1)*24.5)); svg.dataset.cols=L.key }
+    var shift=C-16;
+    function by(b){return Math.round(b[1]/8*(R-1))}                // beacons keep their place, spread over the rows
+    function isB(x,y){for(var i=0;i<BEACONS.length;i++)if(BEACONS[i][0]+shift===x&&by(BEACONS[i])===y)return true;return false}
+    var seed=7;function r(){seed=(seed*9301+49297)%233280;return seed/233280;}
+    for(var y=0;y<R;y++)for(var x=0;x<C;x++){
+      var px=x/(C-1); if(r()>0.25+px*0.7) continue;
+      var c=document.createElementNS(ns,'circle');
+      c.setAttribute('cx',12+x*25);c.setAttribute('cy',12+y*24.5);
+      c.setAttribute('r',(2+px*8*r()).toFixed(1));
+      c.setAttribute('fill',px<.35?base:cols[Math.floor(r()*cols.length)]);
+      if(withB&&isB(x,y)) continue;                      // that cell belongs to a beacon
+      svg.appendChild(c);
+    }
+    if(!withB) return;
+    var col=S.cls==='s-closed'?getComputedStyle(root).getPropertyValue('--grey').trim():(S.cls==='s-closing'?'#e76f51':'#2b9d8f');
+    CALLS.forEach(function(call,i){
+      var b=BEACONS[i];if(!b)return;
+      var g=document.createElementNS(ns,'g'),cx=12+(b[0]+shift)*25,cy=12+by(b)*24.5;
+      g.setAttribute('class','beacon'+(S.open?'':' closed'));g.dataset.call=call.id;g.style.setProperty('--bd',(i*.7)+'s');
+      [['hit',16],['ring',7],['core',7]].forEach(function(p){
+        var e=document.createElementNS(ns,'circle');e.setAttribute('class',p[0]);e.setAttribute('cx',cx);e.setAttribute('cy',cy);e.setAttribute('r',p[1]);
+        if(p[0]==='ring')e.setAttribute('stroke',col);if(p[0]==='core')e.setAttribute('fill',col);g.appendChild(e);
+      });
+      svg.appendChild(g);
+    });
+  }
+
+  /* ---------- Call cards (listing page and overview) ---------- */
+  var S=status();
+  /* Between rounds (31 Oct): the listing says Closed and the Apply tab is hidden until a call opens */
+  if(!S.open){ document.querySelectorAll('.main-nav a[data-sec="apply"],.mobile-nav a[data-sec="apply"]').forEach(function(a){a.style.display='none'}); }
+  function cardHTML(c){
+    return '<li class="card" data-open="'+S.open+'">'+
+      '<div class="call-top"><span class="st '+S.cls+'">'+S.label+'</span><span class="call-no">Call '+c.no+' · '+esc(c.theme)+'</span></div>'+
+      '<h3><a href="#call-'+c.id+'">'+esc(c.title)+'</a></h3>'+
+      (c.promise?'<p class="promise">'+esc(c.promise)+'</p>':'')+
+      '<dl><div><dt>Open to</dt><dd>'+esc(c.who)+'</dd></div><div><dt>Stay</dt><dd>'+c.monthsLabel+'</dd></div>'+(DEADLINE?'<div><dt>'+(S.open?'Closes':'Closed')+'</dt><dd>'+shortDate(DEADLINE)+'</dd></div>':'')+'</dl>'+
+      '<div class="card-foot"><span>Host: '+esc(c.pi)+'</span><span class="go" aria-hidden="true">Read the call →</span></div></li>';
+  }
+  byId('call-list').innerHTML=CALLS.map(cardHTML).join('');
+  /* The round's dates on the listing (Round 2: to be confirmed) */
+  byId('round-dates').innerHTML='<div><dt>'+(S.open?'Closes':'Closed')+'</dt><dd>'+(DEADLINE?shortDate(DEADLINE):TBC)+'</dd></div>'+(DECISION?'<div><dt>Decision</dt><dd>'+shortDate(DECISION)+'</dd></div>':'');
+  /* Filter by status; counts update themselves as calls open and close */
+  var nOpen=S.open?CALLS.length:0, FILTERS=[['all','All',CALLS.length],['open','Live',nOpen],['closed','Closed',CALLS.length-nOpen]];
+  byId('filters').innerHTML=FILTERS.map(function(f,i){return '<button type="button" data-f="'+f[0]+'" aria-pressed="'+(i===0)+'">'+f[1]+' ('+f[2]+')</button>'}).join('');
+  byId('filters').addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    this.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});
+    var shown=0;
+    document.querySelectorAll('#call-list .card').forEach(function(li){
+      var ok=b.dataset.f==='all'||(b.dataset.f==='open')===(li.dataset.open==='true');
+      li.hidden=!ok; if(ok) shown++;
+    });
+    byId('call-empty').hidden=shown>0;
+  });
+
+  /* ---------- Home: round at a glance (status and days left update themselves) ---------- */
+  byId('g-status').innerHTML='<span class="st '+S.cls+'">'+S.label+'</span><b>'+ROUND+'</b>'+(!S.open?'<span>Closed on '+longDate(DEADLINE)+'</span>':S.days!=null?'<span>'+(S.days===1?'1 day':S.days+' days')+' left to apply</span>':'');
+  if(DEADLINE) byId('g-deadline').innerHTML='<b>'+longDate(DEADLINE)+'</b><span>application&nbsp;deadline</span>';
+
+  /* ---------- How to apply, step 4: the button only while the round is open ---------- */
+  if(DEADLINE) byId('st-apply').textContent='Apply online by '+longDate(DEADLINE);
+  if(DECISION) byId('st-hear').textContent='Hear back by '+longDate(DECISION);
+  if(S.open) byId('step-left').textContent=S.days!=null?(S.days===1?'1 day':S.days+' days')+' left':'Deadline to be confirmed';
+  else byId('step-act').innerHTML='<span class="muted">Applications for this round closed on '+longDate(DEADLINE)+'.</span>';
+  /* Dates elsewhere: the apply page, its side panel and the confirmation page */
+  if(DEADLINE){ byId('apply-when').textContent=ROUND+' · Closes '+longDate(DEADLINE); byId('side-when').textContent='Closes '+longDate(DEADLINE); byId('nx-close').textContent=longDate(DEADLINE); }
+  if(DECISION) byId('nx-decision').textContent=longDate(DECISION);
+
+  /* ---------- Important dates: past dates filled, the next one pulses ---------- */
+  (function(){
+    var lis=[].slice.call(document.querySelectorAll('#tline li')),t=today(),next=-1;
+    lis.forEach(function(li,i){if(!li.dataset.date)return;var d=new Date(li.dataset.date+'T23:59:00+05:30');if(d<t)li.classList.add('past');else if(next<0)next=i});   /* items without a date (to be confirmed) stay plain */
+    if(next>=0){
+      lis[next].classList.add('next');
+      var n=Math.ceil((new Date(lis[next].dataset.date+'T23:59:00+05:30')-t)/86400000),sp=document.createElement('span');
+      sp.className='left';sp.textContent=n===1?'1 day to go':n+' days to go';lis[next].appendChild(sp);
+    }
+    byId('tline').style.setProperty('--p',!lis.some(function(li){return li.dataset.date})?0:next<0?1:next/lis.length);
+  })();
+
+  /* ---------- Home: list of calls and the featured call ---------- */
+  /* Overview: compact tiles (status, call, title, stay); the Open calls page keeps the full details */
+  byId('theme-list').innerHTML=CALLS.map(function(c){
+    return '<li class="tile"><a href="#call-'+c.id+'">'+
+      '<span class="tile-top"><span class="st '+S.cls+'">'+S.label+'</span><span class="call-no">Call '+c.no+' · '+esc(c.theme)+'</span></span>'+
+      '<b>'+esc(c.title)+'</b><span class="tile-meta">Stay: '+c.monthsLabel+'</span>'+
+      '<span class="tile-go" aria-hidden="true">→</span></a></li>';
+  }).join('');
+  var F=findCall(FEATURED)||CALLS[0], more=CALLS.length-1;
+  byId('feature').innerHTML=
+    '<span class="label">'+(S.open?'Live now':'Latest call')+'</span>'+
+    '<div class="call-top"><span class="st '+S.cls+'">'+S.label+'</span><span class="call-no">Call '+F.no+' · '+esc(F.theme)+'</span></div>'+
+    '<h3><a href="#call-'+F.id+'">'+esc(F.title)+'</a></h3>'+
+    '<p class="muted" style="font-size:.88rem">'+(!S.open?'Closed on '+longDate(DEADLINE):S.days!=null?'Closes '+shortDate(DEADLINE)+' · '+S.days+' days left':'Deadline to be confirmed')+'</p>'+
+    '<a class="btn" href="#call-'+F.id+'">Read this call</a>'+
+    '<a class="btn line" href="#all-calls">View more</a>';
+
+  /* ---------- Hero beacons: tooltip and click ---------- */
+  (function(){
+    var svg=document.querySelector('svg.dots[data-beacons]');if(!svg)return;
+    var art=svg.parentNode,tip=document.createElement('div');
+    tip.className='dot-tip';tip.hidden=true;tip.innerHTML='<b></b><span></span>';art.appendChild(tip);
+    function hit(e){var g=e.target.closest&&e.target.closest('g.beacon');return g?{g:g,c:findCall(g.dataset.call)}:null}
+    svg.addEventListener('pointerover',function(e){var h=hit(e);if(!h)return;
+      h.g.classList.add('on');tip.querySelector('b').textContent='Call '+h.c.no+' · '+h.c.theme;
+      tip.querySelector('span').textContent=!S.open?'Closed on '+longDate(DEADLINE):S.label+(DEADLINE?' · closes '+longDate(DEADLINE):' · deadline to be confirmed');
+      var cr=h.g.querySelector('.core').getBoundingClientRect(),ar=art.getBoundingClientRect();
+      tip.style.left=(cr.left+cr.width/2-ar.left)+'px';tip.style.top=(cr.top-ar.top)+'px';tip.hidden=false});
+    svg.addEventListener('pointerout',function(e){var h=hit(e);if(!h)return;h.g.classList.remove('on');tip.hidden=true});
+    svg.addEventListener('click',function(e){var h=hit(e);if(h)location.hash='call-'+h.c.id});
+  })();
+
+  /* ---------- Call page ----------
+     Sections as on the Round 1 pages. The master structure (Call 2, Nov 2026) adds "What you will be expected to do",
+     an eligibility table, its own documents and contact; Call 3 adds references. A section shows only when the call has it.
+     The contents links keep the call's own address, so they scroll the page instead of leaving it. */
+  var CONTACT={name:'Ms Ashwini Mudgal',email:'ashwinim.cstaff@iitd.ac.in'};
+  function renderCall(c){
+    function list(a,labels){return '<ul class="bullets">'+a.map(function(x){
+      var i=labels?x.indexOf(': '):-1;                                   /* "Label: text" items get a bold label */
+      return '<li>'+(i>0?'<b>'+esc(x.slice(0,i))+'</b>: '+esc(x.slice(i+2)):esc(x))+'</li>'}).join('')+'</ul>'}
+    function link(id,txt){return '<a class="link" href="#open-calls" data-goto="'+id+'">'+txt+'</a>'}
+    var by=DEADLINE?' by <b>'+longDate(DEADLINE)+'</b>':'';
+    var applyBtn=S.open?'<a class="btn" href="#apply" data-apply="'+c.id+'">Apply to this call</a>':'<a class="btn" aria-disabled="true">Applications closed</a>';
+    var wp=c.workplan?'<div class="sub"><h3>Suggested work plan</h3><div class="tbl"><table><tbody>'+c.workplan.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+esc(r[1])+'</td></tr>'}).join('')+'</tbody></table></div></div>':'';
+    var ex=c.expertise?'<div class="sub"><h3>Expertise we are looking for</h3><p>'+esc(c.expertise)+'</p></div>':'';
+    var intro=c.objIntro===undefined?'Your work could advance one or more of these objectives. We also welcome well-reasoned proposals outside them that stay close to the&nbsp;theme.':(c.objIntro?esc(c.objIntro):'');
+    var k=c.contact||CONTACT, mail='mailto:'+k.email+(k.cc?'?cc='+k.cc.map(function(x){return x[1]}).join(','):'');
+    var secs=[
+      ['c-about','About this call',c.about.map(function(p){return '<p>'+esc(p)+'</p>'}).join('')],
+      ['c-scope','What we want to achieve',(intro?'<p>'+intro+'</p>':'')+list(c.objectives,c.objLabels)+ex],
+      ['c-deliver','What you will deliver',(c.delivIntro?'<p>'+esc(c.delivIntro)+'</p>':'')+list(c.deliverables)+wp]
+    ];
+    if(c.expected) secs.push(['c-expect','What you will be expected to do',list(c.expected)]);
+    secs.push(['c-elig','Who can apply',c.eligRows?
+      '<div class="tbl kv"><table><tbody>'+c.eligRows.map(function(r){return '<tr><th scope="row">'+esc(r[0])+'</th><td>'+esc(r[1])+'</td></tr>'}).join('')+'</tbody></table></div>':
+      '<ol class="numbered">'+c.elig.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ol>']);
+    secs.push(['c-terms','Remuneration terms','<p>Honorarium amounts are to be confirmed. See the full '+link('hw-terms','remuneration terms')+'.</p>']);
+    secs.push(['c-apply','How to apply',(c.docs?
+      '<p>Submit the following through the online form'+by+':</p>'+list(c.docs)+'<p>See '+link('hw-docs','what to include')+'.</p>':
+      '<p>Complete the online form'+by+'. You will need a research plan of two to three pages and your CV, both as PDFs. See '+link('hw-docs','what to include')+' and '+link('hw-assess','how we assess applications')+'.</p>')+
+      '<div>'+applyBtn+'</div>']);
+    secs.push(['c-contact','People','<div class="two"><div class="person"><span class="label">Host PI</span><b>'+esc(c.pi)+'</b><span class="muted">'+esc(c.piRole)+'</span></div>'+
+      '<div class="person"><span class="label">Questions</span><b>'+esc(k.name)+'</b><a class="link" href="'+mail+'">'+k.email+'</a>'+
+      (k.cc?'<span class="muted">Opens one email with '+k.cc.map(function(x){return esc(x[0])}).join(' and ')+' in&nbsp;copy.</span>':'')+'</div></div>']);
+    if(c.refs) secs.push(['c-refs','References','<ol class="refs">'+c.refs.map(function(r){return '<li>'+r[0]+' <a class="link" href="'+r[1]+'" target="_blank" rel="noopener">'+r[1]+'</a>.</li>'}).join('')+'</ol>']);
+    byId('call').innerHTML=
+      '<div class="detail">'+
+        '<div class="cover"><div class="call-top"><span class="st '+S.cls+'">'+S.label+'</span><span class="call-no">'+ROUND+' · Call '+c.no+' · '+esc(c.theme)+'</span></div>'+
+        '<h1>'+esc(c.title)+'</h1><hr class="rule">'+(c.promise?'<p class="lead">'+esc(c.promise)+'</p>':'')+'</div>'+
+      '<aside class="facts" aria-label="Key facts"><dl>'+
+        '<dt>'+(S.open?'Closes':'Closed')+'</dt><dd>'+(DEADLINE?shortDate(DEADLINE):TBC)+'</dd>'+
+        (DECISION?'<dt>Decision</dt><dd>'+shortDate(DECISION)+'</dd>':'')+
+        '<dt>Stay</dt><dd>'+c.monthsLabel+'</dd>'+
+        '<dt>Window</dt><dd>'+(c.window||TBC)+'</dd>'+
+        (c.positions?'<dt>Places</dt><dd>'+esc(c.positions)+'</dd>':'')+
+      '</dl>'+applyBtn.replace('class="btn"','class="btn" style="align-self:stretch"')+
+      '<nav class="toc" aria-label="On this page">'+secs.map(function(s){return '<a href="#call-'+c.id+'" data-goto="'+s[0]+'">'+s[1]+'</a>'}).join('')+'</nav>'+
+      (S.open&&S.days!=null?'<small>'+S.days+' days left to apply</small>':'')+
+      '</aside>'+
+      '<article class="detail-main">'+secs.map(function(s){return '<section class="section" id="'+s[0]+'"><h2>'+s[1]+'</h2>'+s[2]+'</section>'}).join('')+'</article>'+
+      '</div>';
+  }
+
+  /* ---------- FAQs ---------- */
+  byId('faq-list').innerHTML=FAQS.map(function(g){
+    return '<section class="section faq-group"><h2>'+esc(g[0])+'</h2><div>'+g[1].map(function(q){
+      return '<details><summary>'+esc(q[0])+'</summary><div><p>'+esc(q[1])+'</p></div></details>';
+    }).join('')+'</div></section>';
+  }).join('');
+
+  /* ---------- Routing ---------- */
+  var PAGES=['open-calls','all-calls','faqs','apply','submitted','privacy'];
+  var titles={'open-calls':'Open Calls','all-calls':'Open calls by round','faqs':'FAQs','apply':'Apply','submitted':'Application received','privacy':'Privacy notice'};
+  var lastSubmission=null;
+  function route(){
+    var h=location.hash.slice(1)||'open-calls', page=h, call=null, jump=null;
+    if(h.indexOf('call-')===0){ call=findCall(h.slice(5)); page=call?'call':'open-calls'; }
+    /* How it works used to be its own page; old links now land on that section of the home page */
+    if(h==='how-it-works'){ page='open-calls'; jump='hw-proposal'; }
+    if(page!=='call' && PAGES.indexOf(page)<0) page='open-calls';
+    if(page==='submitted' && !lastSubmission) page='apply';
+    if(page==='apply' && !S.open) page='open-calls';
+    document.querySelectorAll('main > .page').forEach(function(p){p.hidden=(p.id!==page)});
+    if(call) renderCall(call);
+    var sec=page==='call'?'all-calls':page;
+    document.querySelector('.subnav').hidden=(page==='open-calls');
+    document.querySelectorAll('.main-nav a[data-sec], .mobile-nav a[data-sec]').forEach(function(a){ if(a.dataset.sec===sec) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
+    byId('crumb').innerHTML= page==='open-calls' ? 'Home' : '<a href="#open-calls">Home</a> / '+(call?'<a href="#all-calls">Open calls</a> / Call '+call.no:(page==='all-calls'?'Open calls':esc(titles[page])));
+    document.title=(call?'Call '+call.no+': '+call.title:titles[page])+' | Net Zero India Initiative';
+    window.scrollTo({top:0,behavior:'instant'});
+    if(jump) setTimeout(function(){var el=byId(jump); if(el) window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-130,behavior:'instant'})},0);
+  }
+  window.addEventListener('hashchange',route);
+
+  /* In-page links to a section on another page: data-goto="sectionId" */
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[data-goto]'); if(!a) return;
+    var target=a.dataset.goto, href=a.getAttribute('href');
+    e.preventDefault();
+    if(href && href!=='#'+(location.hash.slice(1)||'open-calls')){ location.hash=href.slice(1); }
+    setTimeout(function(){var el=byId(target); if(el){var y=el.getBoundingClientRect().top+window.scrollY-130; window.scrollTo({top:y,behavior:'smooth'});}},60);
+  });
+
+  /* ---------- Application form ---------- */
+  var form=byId('apply-form'), callBox=byId('callopts'), monthsBox=byId('months');
+  function callVal(){var x=form.querySelector('input[name="call"]:checked');return x?x.value:''}
+  function monthsVal(){var x=form.querySelector('input[name="months"]:checked');return x?x.value:''}
+  /* The call: one card per call, from the same data as the call pages */
+  callBox.innerHTML=CALLS.map(function(c){
+    return '<label class="callopt"><input type="radio" name="call" value="'+c.id+'" required>'+
+      '<span class="co-top">Call '+c.no+' · '+esc(c.theme)+'</span><b>'+esc(c.title)+'</b>'+
+      '<span class="co-meta">'+c.monthsLabel+' · '+esc(c.who)+'</span></label>';
+  }).join('');
+  /* Stay: one chip for each length the chosen call allows */
+  function fillMonths(){
+    var c=findCall(callVal()), keep=monthsVal();
+    /* A call may cap the CV and research plan size (Call 2: max 2 MB); the two hints say so */
+    form.querySelectorAll('[data-lim]').forEach(function(s){s.textContent=c&&c.maxMB?' Max '+c.maxMB+' MB.':''});
+    if(!c){monthsBox.innerHTML='<span class="muted">Choose a call first.</span>';byId('side-call').textContent='No call chosen yet';return}
+    var h='';
+    for(var m=c.months[0];m<=c.months[1];m++) h+='<label class="mchip"><input type="radio" name="months" value="'+m+'" required'+(String(m)===keep?' checked':'')+'><span>'+(m===1?'1 month':m+' months')+'</span></label>';
+    monthsBox.innerHTML=h;
+    byId('side-call').textContent='Call '+c.no+': '+c.title;
+  }
+  callBox.addEventListener('change',fillMonths);
+  /* "Apply to this call" preselects the call */
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[data-apply]'); if(!a) return;
+    var x=form.querySelector('input[name="call"][value="'+a.dataset.apply+'"]'); if(x) x.checked=true;
+    fillMonths(); saveDraft(); progress();
+  });
+  byId('f-orgtype').addEventListener('change',function(){var o=this.value==='Other';byId('w-orgother').hidden=!o;byId('f-orgother').required=o});
+
+  function words(s){s=s.trim();return s?s.split(/\s+/).length:0}
+  document.querySelectorAll('[data-words]').forEach(function(el){
+    var out=form.querySelector('.count[data-for="'+el.id+'"]'), max=+el.dataset.words;
+    function upd(){var n=words(el.value);out.textContent=n+' / '+max+' words';out.classList.toggle('over',n>max)}
+    el.addEventListener('input',upd);el._upd=upd;upd();
+  });
+
+  /* Documents: click or drop a PDF on the zone; it then shows the file, its size and a way to remove it */
+  form.querySelectorAll('.dz').forEach(function(z){
+    var inp=z.querySelector('input[type=file]'), rm=z.parentNode.querySelector('.dz-remove');
+    function show(){
+      var f=inp.files[0]; z.classList.toggle('has',!!f); z.querySelector('.dz-file').hidden=!f; rm.hidden=!f;
+      if(f){z.querySelector('.fname').textContent=f.name;z.querySelector('.fsize').textContent=(f.size<1048576?Math.max(1,Math.round(f.size/1024))+' KB':(f.size/1048576).toFixed(1)+' MB')}
+    }
+    z._show=show; inp.addEventListener('change',show);
+    ['dragenter','dragover'].forEach(function(t){z.addEventListener(t,function(){z.classList.add('over')})});
+    ['dragleave','drop'].forEach(function(t){z.addEventListener(t,function(){z.classList.remove('over')})});
+    rm.addEventListener('click',function(){inp.value='';inp.dispatchEvent(new Event('change',{bubbles:true}));inp.focus()});
+  });
+
+  /* Save drafts on this device (text fields only) */
+  var KEY='nzii-oc-r1-draft';
+  function saveDraft(){
+    var d={};form.querySelectorAll('input[type=text],input[type=email],input[type=tel],textarea,select').forEach(function(el){d[el.id]=el.value});
+    form.querySelectorAll('input[type=radio]:checked').forEach(function(el){d['r:'+el.name]=el.value});
+    try{localStorage.setItem(KEY,JSON.stringify(d))}catch(e){}
+  }
+  function loadDraft(){
+    var d=null;try{d=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){}
+    if(!d){fillMonths();return}
+    var cv=d['r:call']||d['f-call'];                     /* drafts saved before the redesign used a select */
+    if(cv){var x=form.querySelector('input[name="call"][value="'+cv+'"]');if(x)x.checked=true}
+    if(!d['r:months']&&d['f-months']) d['r:months']=d['f-months'];
+    fillMonths();
+    Object.keys(d).forEach(function(k){
+      if(k==='r:call') return;
+      if(k.indexOf('r:')===0){var r=form.querySelector('input[name="'+k.slice(2)+'"][value="'+d[k]+'"]');if(r&&!r.disabled)r.checked=true;return}
+      var el=byId(k);if(el){el.value=d[k];if(el._upd)el._upd()}
+    });
+    byId('f-orgtype').dispatchEvent(new Event('change'));
+  }
+
+  function fieldOf(el){return el.closest('.field')||el.closest('.choice')}
+  function clearErr(el){var f=fieldOf(el);if(!f)return;f.classList.remove('invalid');var m=f.querySelector('.err');if(m)m.remove()}
+  function setErr(el,msg){var f=fieldOf(el);if(!f)return;f.classList.add('invalid');if(!f.querySelector('.err')){var s=document.createElement('span');s.className='err';s.textContent=msg;f.appendChild(s)}}
+  form.addEventListener('input',function(e){clearErr(e.target);saveDraft();progress()});
+  form.addEventListener('change',function(e){clearErr(e.target);saveDraft();progress()});
+  function labelText(el){
+    var f=el.closest('.field'),l=f&&(f.querySelector('.flabel')||f.querySelector('label[for="'+el.id+'"]'));
+    if(l) return l.childNodes[0].textContent.trim();
+    var c=el.closest('.choice'); return c?c.textContent.replace(/\*$/,'').trim():el.name;
+  }
+  function limitMB(el){ var c=findCall(callVal()); return c&&c.maxMB&&(el.id==='f-cv'||el.id==='f-plan')?c.maxMB:100 }
+  function check(el){
+    if(el.disabled) return null;
+    if(el.type==='radio'){ if(!el.required) return null; return form.querySelector('input[name="'+el.name+'"]:checked')?null:(el.name==='call'?'Choose the call you are applying to.':el.name==='months'?'Choose how many months you would like to spend.':'Choose one option.'); }
+    if(el.type==='checkbox') return el.required&&!el.checked?'Tick this box to continue.':null;
+    if(el.type==='file'){
+      var f=el.files[0]; if(!f) return el.required?'Upload a PDF.':null;
+      if(!/\.pdf$/i.test(f.name)) return 'Upload a PDF file.';
+      var lim=limitMB(el); if(f.size>lim*1024*1024) return 'This file is larger than '+lim+' MB. Reduce its size and upload it again.';
+      return null;
+    }
+    var v=el.value.trim();
+    if(el.required&&!v) return el.tagName==='SELECT'?'Choose an option.':'Enter an answer.';
+    if(v&&el.type==='email'&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return 'Enter an email address like name@institution.ac.in.';
+    if(v&&el.type==='tel'&&v.replace(/\D/g,'').length<8) return 'Enter a phone number with your country code.';
+    if(el.dataset.words&&words(v)>+el.dataset.words) return 'Shorten this to '+el.dataset.words+' words or fewer.';
+    return null;
+  }
+  function progress(){
+    var lis=[].slice.call(document.querySelectorAll('#steps-nav li')),n=0;
+    lis.forEach(function(li){
+      var fs=byId(li.dataset.fs), ok=true, seen={};
+      fs.querySelectorAll('input,select,textarea').forEach(function(el){
+        if(el.closest('.field[hidden]')) return;
+        if(el.type==='radio'){if(seen[el.name])return;seen[el.name]=1}
+        if(el.required&&check(el)) ok=false;
+      });
+      li.classList.toggle('done',ok); fs.classList.toggle('done',ok); if(ok) n++;
+    });
+    byId('prog-fill').style.width=(n/lis.length*100)+'%';
+    byId('prog-text').textContent=n+' of '+lis.length+' parts complete';
+  }
+  /* Highlight the part in view */
+  if('IntersectionObserver' in window){
+    var cio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)document.querySelectorAll('#steps-nav li').forEach(function(li){li.classList.toggle('cur',li.dataset.fs===e.target.id)})})},{rootMargin:'-35% 0px -60% 0px'});
+    document.querySelectorAll('#apply-form fieldset').forEach(function(f){cio.observe(f)});
+  }
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var errs=[],seen={};
+    form.querySelectorAll('input,select,textarea').forEach(function(el){
+      if(el.closest('.field[hidden]')) return;
+      if(el.type==='radio'){if(seen[el.name])return;seen[el.name]=1}
+      var m=check(el);
+      if(m){setErr(el,m);errs.push({el:el,label:labelText(el),msg:m})}
+    });
+    var box=byId('errbox');
+    if(errs.length){
+      box.innerHTML='<b>'+errs.length+(errs.length===1?' answer needs':' answers need')+' attention before you can submit.</b><ul>'+errs.map(function(x,i){return '<li><a href="#apply" data-err="'+i+'">'+esc(x.label.replace(/\*$/,''))+'</a>: '+esc(x.msg)+'</li>'}).join('')+'</ul>';
+      box.hidden=false;
+      box.querySelectorAll('a[data-err]').forEach(function(a){a.addEventListener('click',function(ev){ev.preventDefault();var t=errs[+a.dataset.err].el;var y=t.getBoundingClientRect().top+window.scrollY-160;window.scrollTo({top:y,behavior:'smooth'});setTimeout(function(){t.focus({preventScroll:true})},300)})});
+      var y=box.getBoundingClientRect().top+window.scrollY-140;window.scrollTo({top:y,behavior:'smooth'});box.focus({preventScroll:true});
+      return;
+    }
+    box.hidden=true;
+    /* Prototype: no server yet. Connect this to the submission service (for example a Google Form or the IIT Delhi portal). */
+    var c=findCall(callVal());
+    var ref='NZII-R2-C'+c.no+'-'+String(Date.now()).slice(-6);
+    lastSubmission={ref:ref};
+    byId('sub-ref').textContent=ref;
+    byId('sub-email').textContent=byId('f-email').value.trim();
+    var rows=[['Call','Call '+c.no+': '+c.title],['Name',byId('f-name').value],['Organisation',byId('f-org').value],['Stay',monthsVal()==='1'?'1 month':monthsVal()+' months'],['CV',byId('f-cv').files[0].name],['Research plan',byId('f-plan').files[0].name],['Letter of Recommendation',byId('f-lor').files[0].name],['No Objection Certificate',byId('f-noc').files[0].name]];
+    byId('sub-summary').innerHTML=rows.map(function(r){return '<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>'}).join('');
+    try{localStorage.removeItem(KEY)}catch(err){}
+    form.reset();fillMonths();form.querySelectorAll('.dz').forEach(function(z){z._show()});document.querySelectorAll('[data-words]').forEach(function(el){el._upd&&el._upd()});progress();
+    location.hash='submitted';
+  });
+
+
+  /* ---------- No single words on the last line ---------- */
+  function fixWidows(scope){
+    (scope||document).querySelectorAll('main p,main li,main dd,main td,main summary,main h1,main h2,main h3,main small,.site-footer p').forEach(function(el){
+      var w=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null),n,last=null;
+      while((n=w.nextNode())) if(/\S\s+\S/.test(n.nodeValue)) last=n;
+      if(last) last.nodeValue=last.nodeValue.replace(/\s+(\S+\s*)$/,'\u00a0$1');
+    });
+  }
+  var _route=route; route=function(){_route();fixWidows(byId('call'))};
+  window.removeEventListener('hashchange',_route); window.addEventListener('hashchange',route);
+
+  /* ---------- Start ---------- */
+  var saved='light';try{saved=localStorage.getItem('nzii-mode')||'light'}catch(e){}
+  setMode(saved);
+  loadDraft();progress();form.querySelectorAll('.dz').forEach(function(z){z._show()});
+  fixWidows();
+  route();
+})();
+</script>
+</body>
+</html>

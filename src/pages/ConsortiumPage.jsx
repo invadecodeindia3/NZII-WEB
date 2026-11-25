@@ -68,7 +68,7 @@ const OC_CALLS = [
   { id: "capital", no: 3, theme: "Capital mobilisation", title: "Modelling capital mobilisation for India's energy transition", stay: "3 to 6 months" },
   { id: "agent-based", no: 4, theme: "Agent-based modelling", title: "Agent-based modelling of India's energy transition", stay: "3 to 6 months" }
 ];
-const OC_SITE = "/collaborations";
+const OC_SITE = "/open-calls/index.html"; // the Open Calls microsite (public/open-calls/index.html)
 
 /* ====================================================================
    SVG icons
@@ -103,7 +103,7 @@ export const ConsortiumPage = () => {
       const when = "Deadline to be confirmed";
 
       list.innerHTML = OC_CALLS.map(c =>
-        `<li class="tile"><a href="${OC_SITE}#call-${c.id}">` +
+        `<li class="tile"><a href="${OC_SITE}#call-${c.id}" target="_blank" rel="noopener">` +
         `<span class="tile-top"><span class="call-no">Call ${c.no} · ${c.theme}</span></span>` +
         `<b>${c.title}</b><span class="tile-meta">Stay: ${c.stay}</span>` +
         `<span class="tile-go" aria-hidden="true">↗</span></a></li>`
@@ -113,8 +113,8 @@ export const ConsortiumPage = () => {
         `<div class="call-top"><span class="st ${S.cls}">${S.label}</span><b class="round">Round 2</b></div>` +
         `<dl class="facts-mini"><div><dt>Deadline</dt><dd class="tbc">To be confirmed</dd></div>` +
         `<div><dt>Honorarium</dt><dd class="tbc">To be confirmed</dd></div></dl>` +
-        `<a class="btn" href="${OC_SITE}">Explore Open Calls <span class="ar" aria-hidden="true">↗</span></a>` +
-        `<a class="go" href="${OC_SITE}#how-it-works">How to apply <span class="ar" aria-hidden="true">→</span></a>`;
+        `<a class="btn" href="${OC_SITE}" target="_blank" rel="noopener">Explore Open Calls <span class="ar" aria-hidden="true">↗</span></a>` +
+        `<a class="go" href="${OC_SITE}#how-it-works" target="_blank" rel="noopener">How to apply <span class="ar" aria-hidden="true">→</span></a>`;
     }
 
     // ---- Dot field (SVG, one dot per person) ----
