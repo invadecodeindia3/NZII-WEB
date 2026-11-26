@@ -11,6 +11,7 @@ import { ProfileLinks, TeamMember } from '../components/PeopleBits';
 import { goToAnchor, spotlight } from '../utils/dom';
 import { ADMIN, COLLABORATORS, CORE_PARTNERS, OPEN_CALLS_SITE, PAST, PIS, RESEARCHERS, personId } from '../data/people';
 import { usePageTitle } from '../hooks/usePrototypeBehaviours';
+import { Highlights } from '../components/Highlights';
 import '../styles/who-we-are.css';
 import '../styles/who-motion.css';
 
@@ -49,6 +50,7 @@ export const WhoWeArePage = () => {
   return (
     <main id="content" ref={root}>
         <div className="container page">
+          <Highlights />
           <div className="ww-part" id="about-nzii">
             <section className="hero" id="overview">
               <div className="hero-text">

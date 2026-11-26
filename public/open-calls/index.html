@@ -2,7 +2,7 @@
 <html lang="en-GB" data-mode="light">
 <head>
 <!-- The Open Calls microsite, taken as it stands from the NZII prototype (nzii-research-home.lovable.app/NZII_Open_Calls_Microsite.html).
-     Only asset paths and the links back to the main site were changed. To update: replace this file with the new prototype and redo those links. -->
+     Only asset paths and the links back to the main site were changed, and a motion layer (fx.css, fx.js) is linked in. To update: replace this file with the new prototype and redo those links. -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/logos/nzii-icon-192.png">
@@ -618,6 +618,8 @@ div.card.static:hover{transform:none;box-shadow:none;border-color:var(--line)}
 div.card.static:hover::before{opacity:0}
 .pp-news li{display:grid;gap:4px}
 </style>
+<!-- Motion layer added for this site (not part of the prototype): see fx.css and fx.js beside this file. -->
+<link rel="stylesheet" href="/open-calls/fx.css">
 </head>
 <body>
 <a class="skip" href="#content">Skip to content</a>
@@ -1704,5 +1706,6 @@ var FAQS = [
   route();
 })();
 </script>
+<script src="/open-calls/fx.js" defer></script>
 </body>
 </html>

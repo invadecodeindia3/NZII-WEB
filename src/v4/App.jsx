@@ -8,7 +8,6 @@ import { GameProvider } from '../context/GameContext';
 import { VersionToggle } from '../components/VersionToggle';
 import { SiteHeader } from './components/SiteHeader';
 import { SiteFooter } from './components/SiteFooter';
-import { HomeVariantSwitch } from './components/HomeVariantSwitch';
 import { ScrollThread } from './components/ScrollThread';
 import { HomePage } from './pages/HomePage';
 import { WhoWeArePage } from './pages/WhoWeArePage';
@@ -19,9 +18,9 @@ import './styles/v4-base.css';
 
 // Route → the page key used to pick that page's header/footer styling (`v4-p-<key>` on the shell).
 const PAGES = [
-  { path: '/v4', key: 'home', element: <HomePage key="exact" /> },
-  // Two animated designs of the same Home page, for comparison
-  { path: '/v4/home-a', key: 'home', element: <HomePage key="a" variant="a" /> },
+  // Home is the V4 A design, the one NZII chose. The other two designs stay reachable at their own addresses.
+  { path: '/v4', key: 'home', element: <HomePage key="a" variant="a" /> },
+  { path: '/v4/home-original', key: 'home', element: <HomePage key="exact" /> },
   { path: '/v4/home-soft', key: 'home', element: <HomePage key="soft" variant="soft" /> },
   { path: '/v4/who-we-are', key: 'who', element: <WhoWeArePage /> },
   { path: '/v4/research', key: 'draft', element: <DraftPage name="Research" /> },
@@ -34,6 +33,7 @@ const PAGES = [
 // Old addresses and the prototype's own file names lead to the matching V4 page.
 const REDIRECTS = {
   '/': '/v4',
+  '/v4/home-a': '/v4',
   '/v4/home-b': '/v4/home-soft',
   '/v4/about': '/v4/who-we-are',
   '/v4/consortium': '/v4/collaborate',
@@ -94,7 +94,6 @@ export default function App() {
         <ScrollToTop />
         <AppContent />
         <ScrollThread />
-        <HomeVariantSwitch />
         <VersionToggle current="v4" />
       </GameProvider>
     </BrowserRouter>

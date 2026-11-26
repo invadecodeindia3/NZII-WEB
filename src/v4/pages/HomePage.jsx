@@ -3,6 +3,7 @@
  * Markup converted from the NZII Version 2 prototype (NZII_Home_Page.html); styles in ../styles/home.css.
  */
 import React, { useEffect, useRef } from 'react';
+import { Highlights } from '../components/Highlights';
 import { Link } from 'react-router-dom';
 import { usePageTitle, usePrototypeBehaviours } from '../hooks/usePrototypeBehaviours';
 import { OpenCallsPopup } from '../components/OpenCallsPopup';
@@ -35,6 +36,7 @@ export const HomePage = ({ variant = 'exact' }) => {
         <div className="hero-in">
           <div>
             <h1 id="h-hero"><span className="hl-1">What will it take</span> <span className="hl-2">for India to reach</span> <span className="hl-3">net&nbsp;zero?</span></h1>
+            <p className="hero-sub">Envisioning development-enhancing net-zero pathways for&nbsp;India</p>
             <div className="hero-txt">
               <p>India has committed to achieving net-zero emissions by 2070. Getting there will transform how the country produces and uses energy, builds infrastructure, uses land and resources, and creates livelihoods.</p>
               <p>The Net Zero India Initiative brings together research, modelling and diverse expertise to understand the pathways India could take, and their implications for development, people and the environment.</p>
@@ -86,6 +88,7 @@ export const HomePage = ({ variant = 'exact' }) => {
           </div>
         </div>
       </section>
+      <Highlights />
       {/* the emissions section is part of V4 B only */}
       {variant === 'soft' && <FootprintStory />}
       <section className="wrap sec" aria-labelledby="h-why">

@@ -5,6 +5,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useGame } from '../../context/GameContext';
+import { SiteSearch } from './SiteSearch';
 
 const SITE_NAV = [
   { to: '/v4', label: 'Home' },
@@ -120,7 +121,7 @@ export const SiteHeader = ({ microsite = false }) => {
   }, [pathname, hash]);
 
   const bare = pathname.replace(/\/$/, '') || '/v4';
-  const path = bare === '/v4/home-a' || bare === '/v4/home-soft' ? '/v4' : bare; // the Home design variants are Home
+  const path = bare === '/v4/home-original' || bare === '/v4/home-soft' ? '/v4' : bare; // the Home design variants are Home
   const isCurrent = (item) =>
     path === item.to || (item.sections || []).some((s) => !s.to.includes('#') && s.to === path);
 
@@ -164,6 +165,7 @@ export const SiteHeader = ({ microsite = false }) => {
             </nav>
           )}
           <div className="hd-tools">
+            {!microsite && <SiteSearch />}
             <div className="modes" role="group" aria-label="Display mode">
               {MODES.map((m) => (
                 <button key={m.mode} type="button" data-mode={m.mode} aria-pressed={displayMode === m.mode} onClick={() => changeDisplayMode(m.mode)}>

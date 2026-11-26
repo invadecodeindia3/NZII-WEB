@@ -7,6 +7,7 @@ import { usePageTitle, usePrototypeBehaviours } from '../hooks/usePrototypeBehav
 import { useEventDialogs, useYearFolding } from '../hooks/useNewsEvents';
 import { useNewsMotion } from '../hooks/pageMotions';
 import { NewsRail } from '../components/NewsRail';
+import { Highlights } from '../components/Highlights';
 import '../styles/news-events.css';
 import '../styles/news-extras.css';
 
@@ -28,17 +29,44 @@ export const NewsEventsPage = () => {
               <hr className="rule" />
             </div>
           </section>
+          <Highlights />
           <section className="ev-sec" aria-labelledby="h-events">
             <h2 id="h-events" className="sr-only">Events</h2>
             <NewsRail rootRef={root} />
             <div className="ev-time">
+            <section className="ev-year" aria-labelledby="y-2027">
+              <h3 className="ev-y" id="y-2027">2027</h3>
+              <ol className="ev-list">
+              <li className="ev" id="2027-01-winter-school">
+                <span className="ev-node" aria-hidden="true"></span>
+                <article className="card ev-card">
+                  <div className="ev-txt">
+                    <span className="ev-flag up">Upcoming</span>
+                    <p className="ev-meta">January 2027 · IIT Delhi</p><h4>Winter School 2027: Nature-based Solutions for Resilience in a Warming World</h4>
+                    <p className="ev-sum">A three-day residential Winter School on Nature-based Solutions at IIT Delhi, 11–13 January 2027, for postgraduate students, doctoral scholars and early-career researchers.</p>
+                    <button type="button" className="ev-open" data-dialog="d-2027-01-winter-school" aria-haspopup="dialog">Read more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></button>
+                  </div>
+                </article>
+              </li>
+              </ol>
+            </section>
             <section className="ev-year" aria-labelledby="y-2026">
               <h3 className="ev-y" id="y-2026">2026</h3>
               <ol className="ev-list">
+              <li className="ev" id="2026-11-cop31">
+                <span className="ev-node" aria-hidden="true"></span>
+                <article className="card ev-card">
+                  <div className="ev-txt">
+                    <span className="ev-flag">Latest</span>
+                    <div className="ev-who"><img className="ev-face" src="/assets/people/pi-kaveri-iychettira.jpg" alt="Kaveri Iychettira" width="900" height="900" loading="lazy" /><div><p className="ev-meta">November 2026 · COP 31</p><h4>Kaveri Iychettira speaks at COP 31</h4></div></div>
+                    <p className="ev-sum">Kaveri Iychettira, Principal Investigator of the Net Zero India Initiative, gave talks at COP 31. A fuller account will follow.</p>
+                  </div>
+                </article>
+              </li>
               <li className="ev ev-feature" id="2026-09-nzx-princeton">
                 <span className="ev-node" aria-hidden="true"></span>
                 <article className="card ev-card has-media">
-                  <figure className="ev-media"><span className="ev-latest">Latest</span><img src="/assets/photos/events/2026-09-nzx.jpg" srcSet="/assets/photos/events/2026-09-nzx-sm.jpg 500w, /assets/photos/events/2026-09-nzx.jpg 1000w, /assets/photos/events/2026-09-nzx-xl.jpg 1600w" sizes="(max-width:999px) 92vw, 34vw" width="1000" height="667" alt="NZII researchers with colleagues at the Global Net Zero X workshop, Princeton University, September 2026" loading="lazy" /><svg className="cluster" data-cluster viewBox="0 0 120 90" aria-hidden="true"></svg></figure><div className="ev-txt">
+                  <figure className="ev-media"><img src="/assets/photos/events/2026-09-nzx.jpg" srcSet="/assets/photos/events/2026-09-nzx-sm.jpg 500w, /assets/photos/events/2026-09-nzx.jpg 1000w, /assets/photos/events/2026-09-nzx-xl.jpg 1600w" sizes="(max-width:999px) 92vw, 34vw" width="1000" height="667" alt="NZII researchers with colleagues at the Global Net Zero X workshop, Princeton University, September 2026" loading="lazy" /><svg className="cluster" data-cluster viewBox="0 0 120 90" aria-hidden="true"></svg></figure><div className="ev-txt">
                     <p className="ev-meta">September 2026 · Princeton University, United States</p><h4>NZII presents its development-compatible approach at Princeton’s NZx workshop</h4>
                     <p className="ev-sum">At Princeton, NZII shared its finding that most Indian energy scenarios give little attention to development, along with its participatory approach and early results.</p>
                     <button type="button" className="ev-open" data-dialog="d-2026-09-nzx-princeton" aria-haspopup="dialog">Read more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></button>
@@ -190,6 +218,19 @@ export const NewsEventsPage = () => {
             </div>
           </section>
         </div>
+      <dialog className="evd" id="d-2027-01-winter-school" aria-labelledby="dt-2027-01-winter-school" closedby="any">
+        <div className="evd-in">
+          <button type="button" className="evd-x" aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg></button>
+          <div className="evd-txt">
+            <p className="ev-meta">11–13 January 2027 · IIT Delhi, New Delhi</p><h2 id="dt-2027-01-winter-school">Winter School 2027: Nature-based Solutions for Resilience in a Warming World</h2>
+            <p className="evd-sum">A three-day residential Winter School on Nature-based Solutions at IIT Delhi, 11–13 January 2027, for postgraduate students, doctoral scholars and early-career researchers.</p>
+            <p className="evd-body">IIT Delhi, with Schmidt Sciences under the Research Frontier Networks programme and as part of the Net Zero India Initiative, is organising a three-day residential, interdisciplinary Winter School on Nature-based Solutions (NbS). It brings together perspectives from climate change, ecology, geospatial science, socio-ecological systems and public policy to examine the growing role of Nature-based Solutions in addressing interconnected environmental and societal challenges.</p>
+            <p className="evd-body">Day 1 covers the concepts, evolution and principles of NbS, global frameworks and socio-ecological resilience. Day 2 turns to spatial thinking and Earth Observation, landscapes and ecosystems, and evidence for decision-making. Day 3 looks at benefits and trade-offs, governance, finance and incentives, and translating evidence into policy and scaling NbS.</p>
+            <p className="evd-body">The experts are Dr. Emmanuelle Cohen-Shacham, Dr. Parth Sarathi Roy, Dr. Shalini Dhyani (CSIR-NEERI) and Dr. Rajarshi Dasgupta (School of Public Policy, IIT Delhi). The Winter School is open to postgraduate students, doctoral scholars and early-career researchers; seats are limited and only shortlisted candidates are invited. Applications closed on 15 November 2026, with participants selected by 30 November 2026.</p>
+            <p className="evd-body"><a href="https://spp.iitd.ac.in/news" target="_blank" rel="noopener">More information on the School of Public Policy website<span className="sr-only"> (opens in a new tab)</span></a></p>
+          </div>
+        </div>
+      </dialog>
       <dialog className="evd" id="d-2024-07-launch" aria-labelledby="dt-2024-07-launch" closedby="any">
         <div className="evd-in">
           <button type="button" className="evd-x" aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg></button>

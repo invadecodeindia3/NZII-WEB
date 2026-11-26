@@ -9,6 +9,7 @@ import { COLLABORATORS, OPEN_CALLS, OPEN_CALLS_SITE } from '../data/people';
 import { usePageTitle } from '../hooks/usePrototypeBehaviours';
 import { useCollabMotion } from '../hooks/pageMotions';
 import { CollabNetwork } from '../components/CollabNetwork';
+import { Highlights } from '../components/Highlights';
 import '../styles/collaborate.css';
 import '../styles/collab-extras.css';
 
@@ -77,6 +78,7 @@ export const CollaboratePage = () => {
   return (
     <main id="content" ref={root}>
         <div className="container page">
+          <Highlights />
           <section className="oc-start" id="open-calls">
             <div className="oc-head">
               <h1>IIT Delhi’s Open Calls for Collaboration under&nbsp;<abbr title="Research Frontier Networks">RFNs</abbr></h1>

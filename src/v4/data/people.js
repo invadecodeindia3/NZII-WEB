@@ -8,9 +8,9 @@ export const personId = (name) =>
   'person-' + name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 export const PIS = [
-  { name: 'Ambuj Sagar', photo: '/assets/people/pi-ambuj-sagar.jpg', scholar: gs('k8Lrh_4AAAAJ'), linkedin: li('ambuj-sagar-1983379/') },
   { name: 'Kaveri Iychettira', photo: '/assets/people/pi-kaveri-iychettira.jpg', scholar: gs('0yQF0u8AAAAJ'), linkedin: li('kiychettira/') },
   { name: 'Rajarshi Dasgupta', photo: '/assets/people/pi-rajarshi-dasgupta.jpg', scholar: gs('KfcluxcAAAAJ'), linkedin: li('drrajarshidasgupta/') },
+  { name: 'Ambuj Sagar', photo: '/assets/people/pi-ambuj-sagar.jpg', scholar: gs('k8Lrh_4AAAAJ'), linkedin: li('ambuj-sagar-1983379/') },
 ];
 
 export const RESEARCHERS = [
@@ -115,7 +115,7 @@ export const COLLABORATORS = [
 
 // One dot per current team member in the 'Who we are' hero, in team order (past researchers left out).
 export const HERO_PEOPLE = [
-  ...['Kaveri Iychettira', 'Ambuj Sagar', 'Rajarshi Dasgupta'].map((name) => ({ g: 'pi', lead: true, name, role: 'Principal Investigator' })),
+  ...['Kaveri Iychettira', 'Rajarshi Dasgupta', 'Ambuj Sagar'].map((name) => ({ g: 'pi', lead: true, name, role: 'Principal Investigator' })),
   ...RESEARCHERS.filter((p) => !p.alsoPi).map((p) => ({ g: 'res', lead: !!p.lead, name: p.name, role: p.role })),
   ...ADMIN.map((p) => ({ g: 'adm', lead: false, name: p.name, role: p.role })),
   ...CORE_PARTNERS.flatMap((org) =>
