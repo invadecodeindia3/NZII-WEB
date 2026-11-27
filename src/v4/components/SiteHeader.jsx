@@ -25,7 +25,13 @@ const SITE_NAV = [
       { to: '/v4/publications', label: 'Publications' },
     ],
   },
-  { to: '/v4/news-events', label: 'News & Events' },
+  {
+    to: '/v4/news-events', label: 'News & Events', id: 'dd-news',
+    sections: [
+      { to: '/v4/news-events', label: 'News & Events' },
+      { to: '/v4/gallery', label: 'Gallery' },
+    ],
+  },
   { to: '/v4/collaborate', label: 'Collaborate with us' },
   { to: '/v4/contact', label: 'Contact' },
 ];

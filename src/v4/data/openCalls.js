@@ -20,5 +20,23 @@ export const OPEN_CALLS_DATA = {
       lead: 'Prof Kaveri Iychettira',
       photo: '/assets/people/pi-kaveri-iychettira.jpg',
     },
+    {
+      id: 'employment',
+      no: 2,
+      open: true,
+      title: 'Modelling employment shifts in India’s energy transition',
+    },
+    {
+      id: 'biodiversity',
+      no: 3,
+      open: true,
+      title: 'Modelling multitaxa habitat suitability and optimising spatial buffers for long-term biodiversity persistence',
+    },
+    {
+      id: 'capital',
+      no: 4,
+      open: true,
+      title: 'Modelling capital mobilisation for India’s energy transition',
+    },
   ],
 };

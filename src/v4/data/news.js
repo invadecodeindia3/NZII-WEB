@@ -3,7 +3,7 @@
 export const NEWS = [
   {
     "id": "2027-01-winter-school",
-    "meta": "January 2027 · IIT Delhi",
+    "meta": "January 2027 · R&I Park, IIT Delhi",
     "title": "Winter School 2027: Nature-based Solutions for Resilience in a Warming World",
     "text": "A three-day residential Winter School on Nature-based Solutions at IIT Delhi, 11–13 January 2027, for postgraduate students, doctoral scholars and early-career researchers."
   },

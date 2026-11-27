@@ -3,6 +3,9 @@
  * Markup converted from the NZII Version 2 prototype (NZII_News_Events_Page.html); styles in ../styles/news-events.css.
  */
 import React, { useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { galleryFor } from '../data/gallery';
+import { UPCOMING } from '../data/upcoming';
 import { usePageTitle, usePrototypeBehaviours } from '../hooks/usePrototypeBehaviours';
 import { useEventDialogs, useYearFolding } from '../hooks/useNewsEvents';
 import { useNewsMotion } from '../hooks/pageMotions';
@@ -42,7 +45,7 @@ export const NewsEventsPage = () => {
                 <article className="card ev-card">
                   <div className="ev-txt">
                     <span className="ev-flag up">Upcoming</span>
-                    <p className="ev-meta">January 2027 · IIT Delhi</p><h4>Winter School 2027: Nature-based Solutions for Resilience in a Warming World</h4>
+                    <p className="ev-meta">January 2027 · R&amp;I Park, IIT Delhi</p><h4>Winter School 2027: Nature-based Solutions for Resilience in a Warming World</h4>
                     <p className="ev-sum">A three-day residential Winter School on Nature-based Solutions at IIT Delhi, 11–13 January 2027, for postgraduate students, doctoral scholars and early-career researchers.</p>
                     <button type="button" className="ev-open" data-dialog="d-2027-01-winter-school" aria-haspopup="dialog">Read more <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></button>
                   </div>
@@ -222,12 +225,13 @@ export const NewsEventsPage = () => {
         <div className="evd-in">
           <button type="button" className="evd-x" aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg></button>
           <div className="evd-txt">
-            <p className="ev-meta">11–13 January 2027 · IIT Delhi, New Delhi</p><h2 id="dt-2027-01-winter-school">Winter School 2027: Nature-based Solutions for Resilience in a Warming World</h2>
+            <p className="ev-meta">11–13 January 2027 · R&amp;I Park, IIT Delhi</p><h2 id="dt-2027-01-winter-school">Winter School 2027: Nature-based Solutions for Resilience in a Warming World</h2>
             <p className="evd-sum">A three-day residential Winter School on Nature-based Solutions at IIT Delhi, 11–13 January 2027, for postgraduate students, doctoral scholars and early-career researchers.</p>
             <p className="evd-body">IIT Delhi, with Schmidt Sciences under the Research Frontier Networks programme and as part of the Net Zero India Initiative, is organising a three-day residential, interdisciplinary Winter School on Nature-based Solutions (NbS). It brings together perspectives from climate change, ecology, geospatial science, socio-ecological systems and public policy to examine the growing role of Nature-based Solutions in addressing interconnected environmental and societal challenges.</p>
             <p className="evd-body">Day 1 covers the concepts, evolution and principles of NbS, global frameworks and socio-ecological resilience. Day 2 turns to spatial thinking and Earth Observation, landscapes and ecosystems, and evidence for decision-making. Day 3 looks at benefits and trade-offs, governance, finance and incentives, and translating evidence into policy and scaling NbS.</p>
             <p className="evd-body">The experts are Dr. Emmanuelle Cohen-Shacham, Dr. Parth Sarathi Roy, Dr. Shalini Dhyani (CSIR-NEERI) and Dr. Rajarshi Dasgupta (School of Public Policy, IIT Delhi). The Winter School is open to postgraduate students, doctoral scholars and early-career researchers; seats are limited and only shortlisted candidates are invited. Applications closed on 15 November 2026, with participants selected by 30 November 2026.</p>
-            <p className="evd-body"><a href="https://spp.iitd.ac.in/news" target="_blank" rel="noopener">More information on the School of Public Policy website<span className="sr-only"> (opens in a new tab)</span></a></p>
+            <a className="evd-flyer" href={UPCOMING.pdf} target="_blank" rel="noopener"><img src={UPCOMING.flyer} width="1400" height="2027" loading="lazy" alt="Flyer: Winter School 2027, Nature-based Solutions for Resilience in a Warming World, 11–13 January 2027, R&I Park, IIT Delhi. Organised by the School of Public Policy, IIT Delhi, funded by Schmidt Sciences." /><span className="sr-only"> (opens the flyer as a PDF in a new tab)</span></a>
+            <p className="evd-links"><a href={UPCOMING.pdf} target="_blank" rel="noopener">Flyer (PDF)<span className="sr-only"> (opens in a new tab)</span></a><a href="https://spp.iitd.ac.in/news" target="_blank" rel="noopener">School of Public Policy notice<span className="sr-only"> (opens in a new tab)</span></a></p>
           </div>
         </div>
       </dialog>
@@ -238,6 +242,7 @@ export const NewsEventsPage = () => {
             <p className="ev-meta">July 2024 · IIT Delhi</p><h2 id="dt-2024-07-launch">Net Zero India Initiative launches by mapping the forces shaping India’s path to 2070</h2>
             <p className="evd-sum">Forty-five stakeholders ranked low-cost finance, global cooperation and the pace of innovation among the forces that could most shape India’s path to 2070.</p>
             <p className="evd-body">The Net Zero India Initiative (NZII) began with a launch and scenarios workshop that brought together 45 participants from government, industry, academia and civil society. Organisations represented included CEA, Grid India, IRENA, TERI and Yale University. Participants identified the factors that could most shape India’s development and mitigation pathways to 2070, then ranked them by impact and uncertainty. Five stood out: access to low-cost finance, global and domestic cooperation, shifts in consumer behaviour, the pace of technological innovation, and the variability and severity of climate change. These insights became the starting point for NZII’s scenarios.</p>
+            <p className="evd-links"><Link to={`/v4/gallery#${galleryFor('2024-07-launch')}`}>Photos in the gallery</Link></p>
           </div>
         </div>
       </dialog>
@@ -248,6 +253,7 @@ export const NewsEventsPage = () => {
             <p className="ev-meta">September to December 2024 · IIT Delhi</p><h2 id="dt-2024-09-sector-workshops">Four sector workshops ground NZII’s scenarios in real-world constraints</h2>
             <p className="evd-sum">Experts on cities, forests, industry and farming flagged where NZII’s scenarios meet practical limits, from gaps in urban policy implementation to the need for round-the-clock clean power.</p>
             <p className="evd-body">To ground its scenarios in the realities of individual sectors, NZII held four workshops with 65 experts from government, industry, academia and civil society. They covered the future of India’s urbanisation (September) and forests (October), emerging technologies for decarbonising steel, cement and petrochemicals (December), and the future of agriculture (December). Participants included NDMA, WRI India, The Nature Conservancy India, Jindal Steel and IOCL. Urban experts flagged gaps between policy and implementation in city governments. Industry experts expected steel and cement demand to keep rising, and saw efficiency, renewable power and recycling as the most realistic near-term routes to cutting emissions. Their inputs shaped NZII’s sector-level scenario narratives.</p>
+            <p className="evd-links"><Link to={`/v4/gallery#${galleryFor('2024-09-sector-workshops')}`}>Photos in the gallery</Link></p>
           </div>
         </div>
       </dialog>
@@ -269,6 +275,7 @@ export const NewsEventsPage = () => {
             <p className="ev-meta">January 2025 · India Habitat Centre, New Delhi</p><h2 id="dt-2025-01-conference">Conference explores how India’s path to net zero can also serve development</h2>
             <p className="evd-sum">Policymakers and researchers spent two days on the land, power, jobs and data questions that stand between India’s development goals and net zero.</p>
             <p className="evd-body">Organised by Prof. <a className="ev-person" href="https://scholar.google.com/citations?user=0yQF0u8AAAAJ&hl=en" target="_blank" rel="noopener">Kaveri Iychettira<span className="sr-only"> (Google Scholar, opens in a new tab)</span></a> and Prof. <a className="ev-person" href="https://scholar.google.com/citations?user=k8Lrh_4AAAAJ&hl=en" target="_blank" rel="noopener">Ambuj Sagar<span className="sr-only"> (Google Scholar, opens in a new tab)</span></a> of the School of Public Policy, IIT Delhi, with Schmidt Sciences, a two-day conference on India’s path to net zero brought together policymakers, researchers, industry experts and other stakeholders. Day 1 looked at the gap between development, mitigation and sustainability: land as a resource, the changing role of electricity distribution companies, and workforce transitions. Day 2 turned to modelling methods and data, equity and energy access, and the case for open data platforms and shared frameworks. TERI partnered on the event and hosted a third day, on finance, with its own invitations.</p>
+            <p className="evd-links"><Link to={`/v4/gallery#${galleryFor('2025-01-conference')}`}>Photos and videos in the gallery</Link></p>
           </div>
         </div>
       </dialog>
@@ -372,6 +379,7 @@ export const NewsEventsPage = () => {
             <p className="evd-sum">At Princeton, NZII shared its finding that most Indian energy scenarios give little attention to development, along with its participatory approach and early results.</p>
             <p className="evd-body">NZII researchers presented their work at the Global Net Zero X (NZx) workshop at Princeton University, which brought together teams from Princeton’s network of country-level net-zero studies. The network grew out of the Net-Zero America study and includes projects in Australia, China, Poland, Brazil and India. NZII shared why India needs a new kind of study: its review of Indian energy modelling studies found that most scenarios centre on mitigation and technology, with little attention to development or to stakeholders’ views. The team also presented its participatory approach to building scenarios and early results from its energy demand, electricity supply and land-sector models.</p>
             <p className="ev-links"><a className="ev-link" href="https://acee.princeton.edu/acee-news/the-ongoing-impact-of-princetons-net-zero-initiative/" target="_blank" rel="noopener">Read more from the Andlinger Center <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg><span className="sr-only"> (opens in a new tab)</span></a></p>
+            <p className="evd-links"><Link to={`/v4/gallery#${galleryFor('2026-09-nzx-princeton')}`}>Photos in the gallery</Link></p>
           </div>
         </div>
       </dialog>

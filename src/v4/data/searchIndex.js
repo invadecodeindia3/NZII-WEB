@@ -2,6 +2,7 @@
 // calls. People, calls and news come from their own data files, so the search follows them.
 import { ADMIN, COLLABORATORS, CORE_PARTNERS, OPEN_CALLS, OPEN_CALLS_SITE, PAST, PIS, RESEARCHERS, personId } from './people';
 import { NEWS } from './news';
+import { PUBLICATIONS, PUB_TYPES } from './publications';
 
 const WHO = '/v4/who-we-are';
 const person = (p, role, to) => ({ type: 'People', title: p.name, text: role || p.role || '', to });
@@ -15,7 +16,8 @@ const PAGES = [
   { title: 'Advisory Committee', text: 'Who we are. Experts from industry, policy, forestry, biodiversity and energy modelling', to: `${WHO}#advisory` },
   { title: 'Funders', text: 'Who we are. Schmidt Sciences, Research Frontier Networks, RFN, Giving Green, Princeton University', to: `${WHO}#funders` },
   { title: 'Research', text: 'Research themes, models, energy, land, employment', to: '/v4/research' },
-  { title: 'Publications', text: 'Papers, reports, working papers', to: '/v4/publications' },
+  { title: 'Publications', text: 'Journal articles, book chapters, reports, conference presentations, datasets, papers', to: '/v4/publications' },
+  { title: 'Gallery', text: 'Photos, pictures, videos from NZII workshops, conferences and events', to: '/v4/gallery' },
   { title: 'News & Events', text: 'Workshops, talks, conferences, seminars, announcements', to: '/v4/news-events' },
   { title: 'Collaborate with us', text: 'Open calls for collaboration under RFNs, Schmidt Sciences, visiting researchers', to: '/v4/collaborate' },
   { title: 'Contact', text: 'Email, address, get in touch', to: '/v4/contact' },
@@ -28,6 +30,7 @@ const PAGES = [
 export const SEARCH_INDEX = [
   ...PAGES,
   ...OPEN_CALLS.calls.map((c) => ({ type: 'Open call', title: c.title, text: `Call ${c.no} · ${c.theme} · ${OPEN_CALLS.round} · stay ${c.stay}`, to: `${OPEN_CALLS_SITE}#call-${c.id}`, ext: true })),
+  ...PUBLICATIONS.map((p) => ({ type: 'Publication', title: p.title, text: `${PUB_TYPES.find((t) => t.key === p.type).one} · ${p.venue}${p.date ? ' · ' + p.date : ''}${p.authors ? ' · ' + p.authors : ''}`, to: p.link || '/v4/publications', ext: !!p.link })),
   ...NEWS.map((n) => ({ type: 'News & Events', title: n.title, text: `${n.meta}. ${n.text}`, to: `/v4/news-events#${n.id}` })),
   ...PIS.map((p) => person(p, 'Principal Investigator, IIT Delhi', `${WHO}#${personId(p.name)}`)),
   ...RESEARCHERS.filter((p) => !p.alsoPi).map((p) => person(p, `${p.role}, IIT Delhi`, `${WHO}#${personId(p.name)}`)),

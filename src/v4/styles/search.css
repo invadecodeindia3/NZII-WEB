@@ -23,6 +23,7 @@
 .sx-wrap .sx-type.t-people { background: #f28482; }
 .sx-wrap .sx-type.t-news { background: #a7c957; }
 .sx-wrap .sx-type.t-open { background: #e76f51; }
+.sx-wrap .sx-type.t-publication { background: #1d3658; color: #fffcf6; }
 .sx-wrap .sx-type.t-partner { background: #fffcf6; box-shadow: inset 0 0 0 1.5px #1d3658; }
 .sx-wrap .sx-txt { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 .sx-wrap .sx-txt b { font: 600 15px/1.35 Inter, system-ui, sans-serif; }

@@ -443,7 +443,7 @@
     raf = 0;
     var max = Math.max(1, root.scrollHeight - window.innerHeight);
     thread.firstChild.style.transform = 'scaleX(' + Math.min(1, Math.max(0, window.scrollY / max)) + ')';
-    var steps = main.querySelector('.apply-steps');
+    var steps = main.querySelector('.page:not([hidden]) .apply-steps');
     if (steps && steps.offsetParent) {
       var line = window.innerHeight * 0.62, r = steps.getBoundingClientRect();
       steps.style.setProperty('--fx-p', Math.min(1, Math.max(0, (line - r.top - 44) / Math.max(1, r.height - 88))).toFixed(4));

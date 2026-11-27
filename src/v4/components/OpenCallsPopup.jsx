@@ -1,4 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { Link } from 'react-router-dom';
+import { UPCOMING, upcomingActive } from '../data/upcoming';
 import { OPEN_CALLS_DATA as O } from '../data/openCalls';
 import '../styles/open-calls-pill.css';
 
@@ -19,9 +22,13 @@ export const OpenCallsPopup = ({ heroSelector, smart = false }) => {
   const closed = useRef(false);
   const [expanded, setExpanded] = useState(!smart); // smart: the full card (true) or the pill (false)
   const [tucked, setTucked] = useState(false); // smart: stepped aside
+  const [flyerOpen, setFlyerOpen] = useState(false);
+  const flyerDlg = useRef(null);
+  const ws = upcomingActive();
   const fold = useRef(0);
   const foldSoon = (ms) => {
     clearTimeout(fold.current);
+    if (flyerOpen) return;
     fold.current = setTimeout(() => setExpanded(false), ms);
   };
 
@@ -86,7 +93,31 @@ export const OpenCallsPopup = ({ heroSelector, smart = false }) => {
     return () => io.disconnect();
   }, [smart]);
 
+  useEffect(() => {
+    const d = flyerDlg.current;
+    if (!d) return;
+    if (flyerOpen && !d.open) d.showModal();
+    if (!flyerOpen && d.open) d.close();
+  }, [flyerOpen]);
+
   if (!active) return null;
+
+  // the Winter School flyer, full size, over the page
+  const flyer = ws && createPortal(
+    <div className="v4-shell v4-p-home">
+      <dialog ref={flyerDlg} className="ws-flyer" aria-label={`${UPCOMING.name} flyer`} onClose={() => setFlyerOpen(false)} onClick={(e) => { if (e.target === e.currentTarget) setFlyerOpen(false); }}>
+        <div className="ws-flyer-in">
+          <img src={UPCOMING.flyer} width="1400" height="2027" alt={`Flyer: ${UPCOMING.title}, ${UPCOMING.when}, ${UPCOMING.where}. Organised by the School of Public Policy, IIT Delhi, funded by Schmidt Sciences.`} />
+          <div className="ws-flyer-bar">
+            <span>{UPCOMING.status}</span>
+            <a href={UPCOMING.pdf} target="_blank" rel="noopener" download>Download the flyer (PDF)</a>
+            <button type="button" onClick={() => setFlyerOpen(false)}>Close</button>
+          </div>
+        </div>
+      </dialog>
+    </div>,
+    document.body,
+  );
 
   const close = () => {
     closed.current = true;
@@ -107,6 +138,8 @@ export const OpenCallsPopup = ({ heroSelector, smart = false }) => {
 
   if (smart && !expanded) {
     return (
+      <>
+      {flyer}
       <aside className={`oc-pop oc-smart is-pill${closing ? ' closing' : ''}${on ? ' on' : ''}${tucked ? ' is-tucked' : ''}`} id="oc-pop" aria-label="Open calls" hidden={!visible}>
         <button
           type="button"
@@ -115,14 +148,17 @@ export const OpenCallsPopup = ({ heroSelector, smart = false }) => {
           onClick={() => setExpanded(true)}
         >
           <span className="oc-live">{closing ? 'Closing soon' : 'Live'}</span>
-          <b>{n}{n === 1 ? ' open theme' : ' open themes'}</b>
-          <span className="oc-pill-go">Collaborate <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></span>
+          <b>{n}{n === 1 ? ' open theme' : ' open themes'}{ws && <span className="oc-pill-ws"> · {UPCOMING.name}</span>}</b>
+          <span className="oc-pill-go">{ws ? 'See' : 'Collaborate'} <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></span>
         </button>
       </aside>
+      </>
     );
   }
 
   return (
+    <>
+    {flyer}
     <aside
       className={`oc-pop${smart ? ' oc-smart' : ''}${closing ? ' closing' : ''}${on ? ' on' : ''}${smart && tucked ? ' is-tucked' : ''}`}
       id="oc-pop"
@@ -159,6 +195,24 @@ export const OpenCallsPopup = ({ heroSelector, smart = false }) => {
       <a className="btn" href={site + (n === 1 ? `#call-${open[0].id}` : '#all-calls')} target="_blank" rel="noopener">
         Explore the themes <span className="ar" aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span>
       </a>
+      {ws && (
+        <div className="oc-ws">
+          <button type="button" className="oc-ws-flyer" onClick={() => setFlyerOpen(true)} aria-label={`Open the ${UPCOMING.name} flyer`}>
+            <img src={UPCOMING.flyerSm} width="560" height="811" alt="" />
+          </button>
+          <div className="oc-ws-txt">
+            <span className="oc-ws-tag">Upcoming event</span>
+            <b>{UPCOMING.name}</b>
+            <span className="oc-ws-sub">{UPCOMING.subtitle}</span>
+            <span className="oc-pop-d">{UPCOMING.when} · {UPCOMING.where}</span>
+            <span className="oc-ws-links">
+              <button type="button" onClick={() => setFlyerOpen(true)}>View flyer</button>
+              <Link to={UPCOMING.to}>Read more <span aria-hidden="true">→</span></Link>
+            </span>
+          </div>
+        </div>
+      )}
     </aside>
+    </>
   );
 };

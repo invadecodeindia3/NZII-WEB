@@ -14,6 +14,8 @@ import { WhoWeArePage } from './pages/WhoWeArePage';
 import { NewsEventsPage } from './pages/NewsEventsPage';
 import { CollaboratePage } from './pages/CollaboratePage';
 import { DraftPage } from './pages/DraftPage';
+import { PublicationsPage } from './pages/PublicationsPage';
+import { GalleryPage } from './pages/GalleryPage';
 import './styles/v4-base.css';
 
 // Route → the page key used to pick that page's header/footer styling (`v4-p-<key>` on the shell).
@@ -24,8 +26,9 @@ const PAGES = [
   { path: '/v4/home-soft', key: 'home', element: <HomePage key="soft" variant="soft" /> },
   { path: '/v4/who-we-are', key: 'who', element: <WhoWeArePage /> },
   { path: '/v4/research', key: 'draft', element: <DraftPage name="Research" /> },
-  { path: '/v4/publications', key: 'draft', element: <DraftPage name="Publications" /> },
+  { path: '/v4/publications', key: 'draft', element: <PublicationsPage /> },
   { path: '/v4/news-events', key: 'news', element: <NewsEventsPage /> },
+  { path: '/v4/gallery', key: 'draft', element: <GalleryPage /> },
   { path: '/v4/collaborate', key: 'collab', element: <CollaboratePage /> },
   { path: '/v4/contact', key: 'draft', element: <DraftPage name="Contact" /> },
 ];
